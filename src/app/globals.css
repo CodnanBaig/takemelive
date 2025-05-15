@@ -91,9 +91,9 @@ body {
 
 /* Hidden content */
 .hidden-content {
-  transition: opacity 0.5s, transform 0.5s;
-  mask-image: radial-gradient(circle at var(--x) var(--y), black var(--size), transparent 0);
-  -webkit-mask-image: radial-gradient(circle at var(--x) var(--y), black var(--size), transparent 0);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  mask-image: radial-gradient(circle at var(--x) var(--y), black var(--size), transparent calc(var(--size) + 50px));
+  -webkit-mask-image: radial-gradient(circle at var(--x) var(--y), black var(--size), transparent calc(var(--size) + 50px));
 }
 
 /* Mobile-specific styles for hidden content */
