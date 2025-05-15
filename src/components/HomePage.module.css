@@ -1,0 +1,277 @@
+.logo {
+  max-width: 150px;
+  cursor: none;
+}
+
+@media (min-width: 768px) {
+  .logo {
+    max-width: 200px;
+    cursor: none;
+  }
+}
+
+.content {
+  margin-top: 2rem;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+@media (min-width: 768px) {
+  .content {
+    margin-top: 4rem;
+  }
+}
+
+.content h1 {
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: black;
+}
+
+@media (min-width: 768px) {
+  .content h1 {
+    margin-bottom: 1.75rem;
+  }
+}
+
+.subtitle {
+  font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+  margin-bottom: 2.25rem;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #e2e3e4;
+}
+
+.hidden-content {
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+/* Mobile-specific styles for hidden content */
+@media (max-width: 767.98px) {
+  .hidden-content.d-block {
+    position: relative;
+    background: none;
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    padding-top: 2rem;
+    pointer-events: auto;
+    margin-bottom: 2rem;
+  }
+  
+  .hidden-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #121212;
+  }
+  
+  .hidden-content .hidden-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: #121212;
+  }
+}
+
+/* Customize hidden content text colors for mobile */
+@media (max-width: 767.98px) {
+  .hidden-content h1 {
+    color: white;
+  }
+  
+  .hidden-content .hidden-subtitle {
+    color: white;
+  }
+}
+
+.hidden-content h1 {
+  font-size: clamp(2.75rem, 5vw, 5.5rem);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: black;
+}
+
+@media (min-width: 768px) {
+  .hidden-content h1 {
+    margin-bottom: 1.75rem;
+  }
+}
+
+.hidden-content .hidden-subtitle {
+  font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  font-weight: 700;
+  color: black;
+}
+
+.notify-btn {
+  font-family: "Poppins", sans-serif;
+  background-color: #ed2939;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  padding: 1rem 2.5rem;
+  font-size: 1.35rem;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  margin-bottom: 2.25rem;
+  font-weight: 700;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .notify-btn {
+    padding: 1.25rem 3rem;
+    font-size: 1.5rem;
+  }
+}
+
+.notify-btn:hover {
+  transform: scale(1.05);
+  background-color: #d42231;
+}
+
+.social-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .social-links {
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+}
+
+.social-links a {
+  color: white;
+  font-size: 1.75rem;
+  transition: transform 0.2s, color 0.2s;
+}
+
+@media (min-width: 768px) {
+  .social-links a {
+    font-size: 2.25rem;
+  }
+}
+
+.social-links a:hover {
+  transform: scale(1.2);
+  color: #ed2939;
+}
+
+.city-section {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .city-section {
+    margin-bottom: 2rem;
+  }
+}
+
+.cities {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+@media (min-width: 576px) {
+  .cities {
+    font-size: 1.15rem;
+    gap: 0.6rem;
+    letter-spacing: 0.15em;
+  }
+}
+
+@media (min-width: 768px) {
+  .cities {
+    font-size: 1.6rem;
+    gap: 1.2rem;
+    letter-spacing: 0.2em;
+  }
+}
+
+/* Extra small devices (portrait phones) */
+@media (max-width: 575.98px) {
+  .logo {
+    max-width: 140px;
+  }
+
+  .content h1 {
+    font-size: clamp(2.4rem, 6.5vw, 3.25rem);
+  }
+
+  .subtitle, .hidden-subtitle {
+    font-size: clamp(1.35rem, 3.5vw, 1.7rem);
+  }
+  
+  .content {
+    margin-top: 1.5rem;
+  }
+}
+
+/* Cursor Styles */
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: all 0.3s ease;
+  will-change: width, height, transform, background-color;
+}
+
+/* Text hover state */
+.cursor.text-hover {
+  width: 100px !important;
+  height: 100px !important;
+  background-color: #d0df59;
+  /* backdrop-filter: blur(2px) !important; */
+  -webkit-backdrop-filter: blur(2px) !important;
+  transform: scale(1) !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Link and button hover state */
+.cursor.hover {
+  width: 25px !important;
+  height: 25px !important;
+  background-color: #ed2939 !important;
+  transform: scale(1.5);
+}
+
+/* Logo hover state */
+.cursor.logo-hover {
+  width: 25px !important;
+  height: 25px !important;
+  background-color: #d0df59 !important;
+  transform: scale(1.8);
+  mix-blend-mode: overlay;
+}
+
+/* Active state (when clicking) */
+.cursor:active {
+  transform: scale(1.5);
+  background-color: #ed2939 !important;
+}
+
+/* Ensure cursor is hidden on mobile */
+@media (max-width: 767.98px) {
+  .cursor {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+} 
