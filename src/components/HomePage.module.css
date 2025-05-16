@@ -238,10 +238,10 @@
   width: 100px !important;
   height: 100px !important;
   background-color: #d0df59;
-  /* backdrop-filter: blur(2px) !important; */
-  -webkit-backdrop-filter: blur(2px) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   transform: scale(1) !important;
-  mix-blend-mode: normal !important;
+  mix-blend-mode: normal !important; 
 }
 
 /* Link and button hover state */
@@ -274,4 +274,21 @@
     opacity: 0 !important;
     visibility: hidden !important;
   }
+}
+
+/* Remove box-shadow from cursor styles */
+.cursor.text-hover {
+  box-shadow: none !important;
+}
+
+.cursor.hover {
+  box-shadow: none !important;
+}
+
+.cursor.logo-hover {
+  box-shadow: none !important;
+}
+
+.cursor:active {
+  box-shadow: none !important;
 } 
