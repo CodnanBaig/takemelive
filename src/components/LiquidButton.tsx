@@ -1,6 +1,7 @@
 'use client';
 
 import {  useRef } from 'react';
+import HoverReveal from './HoverReveal';
 
 interface LiquidButtonProps {
   onClick: () => void;
@@ -94,7 +95,7 @@ export default function LiquidButton({ onClick, text }: LiquidButtonProps) {
             transition: 'color 0.3s, transform 0.2s',
             textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
           }}>
-            {text}
+            <HoverReveal text={text} />
           </p>
         </div>
         <span 

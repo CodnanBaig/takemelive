@@ -5,17 +5,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import SyncModal from './SyncModal';
 import LiquidButton from './LiquidButton';
+import HoverReveal from './HoverReveal';
 import styles from './HomePage.module.css';
 
 export default function HomePage() {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const cursorRef = useRef<HTMLDivElement>(null);
   const hiddenContentRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
   const [spotlightSize, setSpotlightSize] = useState(5);
 
   useEffect(() => {
@@ -45,10 +44,6 @@ export default function HomePage() {
         hiddenContentRef.current.style.setProperty('--y', `${y}px`);
         hiddenContentRef.current.style.setProperty('--size', `${spotlightSize}px`);
       }
-      
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(${x}px, ${y}px)`;
-      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -56,7 +51,6 @@ export default function HomePage() {
   }, [isMobile, spotlightSize]);
 
   const handleTextHover = () => {
-    setIsHovering(true);
     setSpotlightSize(250);
     if (hiddenContentRef.current) {
       hiddenContentRef.current.style.opacity = '1';
@@ -66,7 +60,6 @@ export default function HomePage() {
   };
 
   const handleTextLeave = () => {
-    setIsHovering(false);
     setSpotlightSize(5);
     if (hiddenContentRef.current) {
       hiddenContentRef.current.style.opacity = '0';
@@ -123,24 +116,13 @@ export default function HomePage() {
   return (
     <>
       <div 
-        ref={cursorRef} 
-        className="cursor" 
-        style={{ 
-          opacity: isMobile ? '0' : '1', 
-          display: isMobile ? 'none' : 'block',
-          pointerEvents: 'none',
-          transform: `translate(${cursorPosition.x}px, ${cursorPosition.y}px)`,
-          transition: 'width 0.3s, height 0.3s, transform 0.1s'
-        }}
-      ></div>
-      
-      <div 
         className="container-fluid d-flex flex-column min-vh-100"
         style={{
-          background: "url('/assets/background.gif')",
+          background: "linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.65)), url('/assets/Take-Me-Live-Under-Construction.jpg')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+          backgroundColor: '#0b0b0b',
           cursor: isMobile ? 'auto' : 'none',
         }}
       >
@@ -166,7 +148,18 @@ export default function HomePage() {
                 onMouseEnter={!isMobile ? handleTextHover : undefined}
                 onMouseLeave={!isMobile ? handleTextLeave : undefined}
               >
-                <h1 className="display-4 fw-bold">COMING SOON</h1>
+                <h1 className="display-4 fw-bold">
+                  <span className="sr-only">COMING SOON</span>
+                  <HoverReveal 
+                    text="COMING SOON" 
+                    outlined 
+                    style={{ 
+                      fontSize: 'inherit', 
+                      fontWeight: 'inherit',
+                      color: 'inherit'
+                    }}
+                  />
+                </h1>
                 <p className={styles.subtitle}>
                   You&apos;ve seen the hype,<br />Now wait till you see the site.
                 </p>
@@ -219,7 +212,7 @@ export default function HomePage() {
                 onClick={openModal}
                 style={{ cursor: isMobile ? 'pointer' : 'none' }}
               >
-                Stay In Sync
+                <HoverReveal text="Stay In Sync" />
               </button>
               <div className={styles['social-links']}>
                 <Link href="mailto:mg@takemelive.com" aria-label="Email" className="text-decoration-none" style={{ cursor: isMobile ? 'pointer' : 'none' }}>
@@ -244,9 +237,15 @@ export default function HomePage() {
         <div className="row w-md-100">
           <div className={`col-12 text-center ${styles['city-section']}`}>
             <div className={styles.cities}>
-              <CityWithTooltip coords="25.2048° N, 55.2708° E">DUBAI |</CityWithTooltip>
-              <CityWithTooltip coords="24.7136° N, 46.6753° E">RIYADH |</CityWithTooltip>
-              <CityWithTooltip coords="34.0549° N, 118.2426° W">LOS ANGELES</CityWithTooltip>
+              <CityWithTooltip coords="25.2048° N, 55.2708° E">
+                <HoverReveal text="DUBAI |" dir="left" />
+              </CityWithTooltip>
+              <CityWithTooltip coords="24.7136° N, 46.6753° E">
+                <HoverReveal text="RIYADH |" dir="left" />
+              </CityWithTooltip>
+              <CityWithTooltip coords="34.0549° N, 118.2426° W">
+                <HoverReveal text="LOS ANGELES" dir="left" />
+              </CityWithTooltip>
             </div>
           </div>
         </div>
