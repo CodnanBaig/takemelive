@@ -1,227 +1,119 @@
-'use client'
+'use client';
 
-import styles from './page.module.scss'
-import { useState, useEffect } from 'react';  
-import { motion } from 'framer-motion';
-import useMousePosition from './utils/useMousePosition';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import styles from './page.module.scss';
+
+const HERO_LINES = ['MORE THAN', 'MOVERS', 'SHOW MAKERS!'];
 
 export default function Home() {
+  const heroRef = useRef<HTMLDivElement | null>(null);
+  const brightLayerRef = useRef<HTMLDivElement | null>(null);
 
-  const [isHovered, setIsHovered] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isTextRevealed, setIsTextRevealed] = useState(false);
-  const { x, y } = useMousePosition();
-  const size = isHovered ? 400 : 100;
-
-  // Check if device is mobile
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+    const hero = heroRef.current;
+    const brightLayer = brightLayerRef.current;
+
+    if (!hero || !brightLayer) {
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        [hero, brightLayer],
+        { autoAlpha: 0, y: 20 },
+        { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out', stagger: 0.08 },
+      );
+
+      const mm = gsap.matchMedia();
+
+      mm.add('(pointer:fine)', () => {
+        const spotXTo = gsap.quickTo(brightLayer, '--spot-x', {
+          duration: 0.24,
+          ease: 'power3.out',
+        });
+        const spotYTo = gsap.quickTo(brightLayer, '--spot-y', {
+          duration: 0.24,
+          ease: 'power3.out',
+        });
+        const spotRadiusTo = gsap.quickTo(brightLayer, '--spot-radius', {
+          duration: 0.2,
+          ease: 'power2.out',
+        });
+
+        const handlePointerMove = (event: PointerEvent) => {
+          const bounds = hero.getBoundingClientRect();
+          spotXTo(event.clientX - bounds.left);
+          spotYTo(event.clientY - bounds.top);
+        };
+
+        const handlePointerEnter = (event: PointerEvent) => {
+          const bounds = hero.getBoundingClientRect();
+          spotXTo(event.clientX - bounds.left);
+          spotYTo(event.clientY - bounds.top);
+          spotRadiusTo(180);
+          gsap.to(brightLayer, {
+            opacity: 1,
+            duration: 0.25,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        const handlePointerLeave = () => {
+          spotRadiusTo(0);
+          gsap.to(brightLayer, {
+            opacity: 0,
+            duration: 0.3,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        hero.addEventListener('pointermove', handlePointerMove);
+        hero.addEventListener('pointerenter', handlePointerEnter);
+        hero.addEventListener('pointerleave', handlePointerLeave);
+
+        return () => {
+          hero.removeEventListener('pointermove', handlePointerMove);
+          hero.removeEventListener('pointerenter', handlePointerEnter);
+          hero.removeEventListener('pointerleave', handlePointerLeave);
+        };
+      });
+
+      return () => {
+        mm.revert();
+      };
+    }, heroRef);
+
+    return () => {
+      ctx.revert();
     };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Debug logging
-  useEffect(() => {
-    console.log('Mouse position:', { x, y, size, isHovered, isMobile });
-  }, [x, y, size, isHovered, isMobile]);
-
   return (
-    <main className={styles.main} style={{
-      backgroundColor: isMobile && isTextRevealed ? 'white' : 'black',
-      transition: 'background-color 0.8s ease'
-    }}>
+    <main className={styles.main}>
       <div className={styles.logoContainer}>
-        <img 
-          src="/assets/ImageToStl.com_TML-primary-logo.png" 
-          alt="Take Me Live Logo" 
+        <img
+          src="/assets/ImageToStl.com_TML-primary-logo.png"
+          alt="Take Me Live Logo"
           className={styles.logo}
-          style={{
-            filter: isMobile && isTextRevealed ? 'brightness(1) invert(0)' : 'brightness(0) invert(1)',
-            transition: 'filter 0.8s ease'
-          }}
         />
       </div>
-      
-      {!isMobile ? (
-        // Desktop version with cursor mask
-        <motion.div 
-          className={styles.mask}
-          style={{
-            maskPosition: `${(x || 0) - (size/2)}px ${(y || 0) - (size/2)}px`,
-            maskSize: `${size}px`,
-            WebkitMaskPosition: `${(x || 0) - (size/2)}px ${(y || 0) - (size/2)}px`,
-            WebkitMaskSize: `${size}px`,
-          }}
-          animate={{
-            maskPosition: `${(x || 0) - (size/2)}px ${(y || 0) - (size/2)}px`,
-            maskSize: `${size}px`,
-            WebkitMaskPosition: `${(x || 0) - (size/2)}px ${(y || 0) - (size/2)}px`,
-            WebkitMaskSize: `${size}px`,
-          } as any}
-          transition={{ type: "tween", ease: "backOut", duration: 0.5 }}
-        >
-            <h1 className='text-center' onMouseEnter={() => {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(false)}} style={{fontSize: '8rem', lineHeight: '0.9', color: 'black'}}>
-              STAY <br />TUNED <br /><p className='text-center' style={{fontSize: '60px', color: 'black'}}>THE <br /> TRUTH'S IN <br />THE SHADOWS</p>
-            </h1>
-        </motion.div>
-      ) : (
-        // Mobile version with touch animation
-        <motion.div 
-          className={styles.mobileMask}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <motion.h1 
-            className='text-center' 
-            style={{fontSize: '8rem', lineHeight: '0.9', color: isTextRevealed ? 'black' : 'white'}}
-            initial={{ opacity: 0, y: 30, scale: 0.9 }}
-            animate={{ 
-              opacity: isTextRevealed ? 1 : 0, 
-              y: isTextRevealed ? 0 : 30, 
-              scale: isTextRevealed ? 1 : 0.9 
-            }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            STAY <br />TUNED <br />
-            <p className='text-center' style={{fontSize: '60px', color: isTextRevealed ? 'black' : 'white'}}>
-              THE <br /> TRUTH'S IN <br />THE SHADOWS
-            </p>
-          </motion.h1>
-        </motion.div>
-      )}
 
-      {isMobile && (
-        <motion.div 
-          className={styles.clickMePill}
-        >
-          <motion.button
-            className={styles.clickMePillButton}
-            onClick={() => setIsTextRevealed(!isTextRevealed)}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            style={{
-              color: isTextRevealed ? 'black' : 'white',
-              transition: 'all 0.8s ease'
-            }}
-            animate={{ 
-              scale: [1, 1.05, 1],
-            }}
-            transition={{ 
-              scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-            }}
-          >
-            <span>Tap</span>
-          </motion.button>
-        </motion.div>
-      )}
-
-      <div className={styles.body}>
-        <h1 style={{fontSize: '8rem', lineHeight: '0.9'}} className='text-center'>COMING <br />SOON <br /><p className='text-center' style={{fontSize: '60px', lineHeight: '0.9', color: 'white'}}>THE LIGHT <br /> DREW YOU <br />IN</p></h1>
-      </div>
-
-      <div className={styles.connectSection}>
-        <button 
-          className={styles.connectButton}
-          onClick={() => setIsModalOpen(true)}
-          style={{
-            borderColor: isMobile && isTextRevealed ? 'black' : 'white',
-            color: isMobile && isTextRevealed ? 'black' : 'white',
-            transition: 'all 0.8s ease'
-          }}
-          onMouseEnter={(e) => {
-            const target = e.target as HTMLButtonElement;
-            if (isMobile && isTextRevealed) {
-              target.style.background = 'black';
-              target.style.color = 'white';
-            } else {
-              target.style.background = 'white';
-              target.style.color = 'black';
-            }
-          }}
-          onMouseLeave={(e) => {
-            const target = e.target as HTMLButtonElement;
-            if (isMobile && isTextRevealed) {
-              target.style.background = 'transparent';
-              target.style.color = 'black';
-            } else {
-              target.style.background = 'transparent';
-              target.style.color = 'white';
-            }
-          }}
-        >
-          Let's Connect
-        </button>
-      </div>
-
-      <div className={styles.cities}>
-        <span style={{
-          color: isMobile && isTextRevealed ? 'black' : 'white',
-          transition: 'color 0.8s ease'
-        }}>DUBAI</span>
-        <span className={styles.separator} style={{
-          color: isMobile && isTextRevealed ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.6)',
-          transition: 'color 0.8s ease'
-        }}>|</span>
-        <span style={{
-          color: isMobile && isTextRevealed ? 'black' : 'white',
-          transition: 'color 0.8s ease'
-        }}>RIYADH</span>
-        <span className={styles.separator} style={{
-          color: isMobile && isTextRevealed ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.6)',
-          transition: 'color 0.8s ease'
-        }}>|</span>
-        <span style={{
-          color: isMobile && isTextRevealed ? 'black' : 'white',
-          transition: 'color 0.8s ease'
-        }}>LOS ANGELES</span>
-      </div>
-
-      {isModalOpen && (
-        <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-            <button 
-              className={styles.closeButton}
-              onClick={() => setIsModalOpen(false)}
-            >
-              ×
-            </button>
-            <h2>Let's Connect</h2>
-            <form className={styles.form}>
-              <div className={styles.formGroup}>
-                <label htmlFor="name">Name</label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  name="name" 
-                  placeholder="Enter your name"
-                  required
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="email">Email</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  name="email" 
-                  placeholder="Enter your email"
-                  required
-                />
-              </div>
-              <button type="submit" className={styles.submitButton}>
-                Submit
-              </button>
-            </form>
-          </div>
+      <section ref={heroRef} className={styles.hero} aria-label="Take Me Live hero">
+        <div className={styles.typeLayer} aria-hidden="true">
+          {HERO_LINES.map((line) => (
+            <span key={`base-${line}`}>{line}</span>
+          ))}
         </div>
-      )}
 
+        <div ref={brightLayerRef} className={styles.typeLayerBright} aria-hidden="true">
+          {HERO_LINES.map((line) => (
+            <span key={`bright-${line}`}>{line}</span>
+          ))}
+        </div>
+      </section>
     </main>
-  )
-} 
+  );
+}

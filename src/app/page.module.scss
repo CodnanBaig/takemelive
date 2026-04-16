@@ -1,534 +1,104 @@
-.main{
-  height: 100vh;
+.main {
+  min-height: 100vh;
+  background: #08090a;
   position: relative;
   overflow: hidden;
-  background: black;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin: 0;
-  padding: 0;
-  border: none;
-  outline: none;
+}
 
-  /* Remove any default browser margins/padding */
-  * {
-    box-sizing: border-box;
+.logoContainer {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 20;
+}
+
+.logo {
+  width: clamp(130px, 14vw, 200px);
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.hero {
+  min-height: 100vh;
+  width: min(94vw, 1250px);
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  position: relative;
+  padding: 7.5rem 0 4rem;
+  cursor: default;
+}
+
+.typeLayer,
+.typeLayerBright {
+  display: grid;
+  text-transform: uppercase;
+  font-weight: 900;
+  line-height: 0.86;
+  letter-spacing: 0.015em;
+  font-size: clamp(4.25rem, 13.5vw, 15rem);
+  user-select: none;
+}
+
+.typeLayer span,
+.typeLayerBright span {
+  display: block;
+  text-align: center;
+}
+
+.typeLayer {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.23) 1px, transparent 1.7px);
+  background-size: 4px 4px;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.22;
+}
+
+.typeLayerBright {
+  --spot-x: 50;
+  --spot-y: 50;
+  --spot-radius: 0;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  pointer-events: none;
+  opacity: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.75) 1px, transparent 1.7px);
+  background-size: 4px 4px;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  clip-path: circle(
+    calc(var(--spot-radius) * 1px) at calc(var(--spot-x) * 1px) calc(var(--spot-y) * 1px)
+  );
+  will-change: opacity, clip-path;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    width: 96vw;
+    padding-top: 8.5rem;
   }
 
+  .typeLayer,
+  .typeLayerBright {
+    font-size: clamp(3.7rem, 14.8vw, 7.6rem);
+    line-height: 0.88;
+  }
+}
+
+@media (max-width: 768px) {
   .logoContainer {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    z-index: 10;
+    top: 18px;
+    left: 16px;
   }
 
-  .logo {
-    height: 60px;
-    width: auto;
-    filter: brightness(0) invert(1); /* Makes the black logo white */
-    transition: filter 0.3s ease;
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(1) invert(0); /* Returns to original black color on hover */
-    }
-  }
-
-  /* Mobile responsive styles */
-  @media (max-width: 768px) {
-    .logoContainer {
-      top: 20px;
-      left: 20px;
-    }
-
-    .logo {
-      height: 40px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .logoContainer {
-      top: 15px;
-      left: 15px;
-    }
-
-    .logo {
-      height: 35px;
-    }
-  }
-
-  .mask, .body{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 10vh;
-    color: white;
-    font-size: 64px;
-    line-height: 66px;
-    cursor: default;
-    
-    p{
-      width: 1000px;
-      padding: 10px;
-      text-align: center;
-    }
-    p{
-      color: white;
-    }
-  }
-
-  .mask{
-    mask-image: url('/mask.svg');
-    mask-repeat: no-repeat;
-    mask-size: 100px;
-    mask-position: center;
-    background: #d3d3d3;
-    position: absolute;
-    color: black;
-    top: 0;
-    left: 0;
-    z-index: 2;
-  }
-
-  .mobileMask {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 10vh;
-    color: white;
-    font-size: 64px;
-    line-height: 66px;
-    cursor: default;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    
-    h1 {
-      width: 100%;
-      padding: 10px;
-      text-align: center;
-      color: white;
-    }
-  }
-
-  .clickMeContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-  }
-
-  .clickMeButton {
-    background: transparent;
-    border: 2px solid white;
-    color: white;
-    padding: 20px 40px;
-    font-size: 1.5rem;
-    font-weight: 400;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    font-family: inherit;
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.1);
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
-  }
-
-  .clickMeText {
-    position: relative;
-    z-index: 2;
-    font-weight: 600;
-  }
-
-  .clickMeGlow {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    transition: left 0.5s ease;
-  }
-
-  .clickMeButton:hover .clickMeGlow {
-    left: 100%;
-  }
-
-  .clickMePill {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-  }
-
-  .clickMePillButton {
-    background: transparent;
-    border: none;
-    color: white;
-    padding: 20px 30px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    cursor: pointer;
-    border-radius: 8px;
-    position: relative;
-    overflow: hidden;
-    text-transform: uppercase;
-    font-family: inherit;
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: scale(1.1);
-    }
-
-    &:active {
-      transform: scale(0.9);
-    }
-
-    span {
-      position: relative;
-      z-index: 2;
-      font-size: 1.2rem;
-    }
-  }
-
-  .body{
-    position: relative;
-    z-index: 1;
-  }
-
-  .connectSection {
-    position: absolute;
-    bottom: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-  }
-
-  .connectButton {
-    background: transparent;
-    border: 2px solid white;
-    color: white;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    font-weight: 400;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    font-family: inherit;
-
-    &:hover {
-      background: white;
-      color: black;
-    }
-  }
-
-  .cities {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 300;
-    letter-spacing: 1px;
-    z-index: 3;
-    white-space: nowrap;
-    flex-wrap: nowrap;
-
-    .separator {
-      color: rgba(255, 255, 255, 0.6);
-      font-weight: 200;
-    }
-  }
-
-  .modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    backdrop-filter: blur(5px);
-  }
-
-  .modal {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 40px;
-    max-width: 400px;
-    width: 90%;
-    position: relative;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-  }
-
-  .closeButton {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: #999;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 5px;
-    line-height: 1;
-
-    &:hover {
-      color: white;
-    }
-  }
-
-  .modal h2 {
-    color: white;
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 1.8rem;
-    font-weight: 400;
-  }
-
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .formGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    label {
-      color: #ccc;
-      font-size: 0.9rem;
-      font-weight: 400;
-    }
-
-    input {
-      padding: 12px 16px;
-      border: 1px solid #333;
-      border-radius: 6px;
-      background: #2a2a2a;
-      color: white;
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
-
-      &::placeholder {
-        color: #666;
-      }
-
-      &:focus {
-        outline: none;
-        border-color: #fff;
-      }
-    }
-  }
-
-  .submitButton {
-    background: white;
-    color: black;
-    border: none;
-    padding: 14px 20px;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 10px;
-
-    &:hover {
-      background: #f0f0f0;
-      transform: translateY(-1px);
-    }
-  }
-
-  /* Mobile Responsive Design */
-  @media (max-width: 768px) {
-    .main {
-      margin: 0;
-      padding: 0;
-      border: none;
-      outline: none;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .logoContainer {
-      top: 20px;
-      left: 20px;
-    }
-
-    .logo {
-      height: 40px;
-    }
-
-    .mask, .body, .mobileMask {
-      padding-top: 15vh;
-      font-size: 40px;
-      line-height: 44px;
-
-      h1 {
-        font-size: 5rem !important;
-        line-height: 0.9 !important;
-      }
-
-      p {
-        font-size: 40px !important;
-        line-height: 1.1 !important;
-      }
-    }
-
-    .clickMeButton {
-      padding: 18px 36px;
-      font-size: 1.3rem;
-      letter-spacing: 1.5px;
-    }
-
-    .clickMePillButton {
-      padding: 18px 28px;
-      font-size: 1rem;
-      letter-spacing: 0.8px;
-    }
-
-    .connectSection {
-      bottom: 100px;
-    }
-
-    .connectButton {
-      padding: 12px 24px;
-      font-size: 1rem;
-    }
-
-    .cities {
-      bottom: 30px;
-      font-size: 0.8rem;
-      gap: 15px;
-      white-space: nowrap;
-      flex-wrap: nowrap;
-    }
-
-    .modal {
-      padding: 30px 20px;
-      max-width: 90%;
-      margin: 20px;
-    }
-
-    .modal h2 {
-      font-size: 1.5rem;
-      margin-bottom: 25px;
-    }
-
-    .formGroup input {
-      padding: 10px 14px;
-      font-size: 0.9rem;
-    }
-
-    .submitButton {
-      padding: 12px 18px;
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .main {
-      margin: 0;
-      padding: 0;
-      border: none;
-      outline: none;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .logoContainer {
-      top: 15px;
-      left: 15px;
-    }
-
-    .logo {
-      height: 35px;
-    }
-
-    .mask, .body, .mobileMask {
-      padding-top: 12vh;
-      font-size: 32px;
-      line-height: 36px;
-
-      h1 {
-        font-size: 4rem !important;
-        line-height: 0.9 !important;
-      }
-
-      p {
-        font-size: 32px !important;
-        line-height: 1.1 !important;
-      }
-    }
-
-    .clickMeButton {
-      padding: 16px 32px;
-      font-size: 1.1rem;
-      letter-spacing: 1px;
-    }
-
-    .clickMePillButton {
-      padding: 16px 24px;
-      font-size: 0.9rem;
-      letter-spacing: 0.6px;
-    }
-
-    .connectSection {
-      bottom: 80px;
-    }
-
-    .cities {
-      bottom: 25px;
-      font-size: 0.8rem;
-      gap: 12px;
-      white-space: nowrap;
-      flex-wrap: nowrap;
-    }
-
-    .modal {
-      padding: 25px 15px;
-    }
-
-    .modal h2 {
-      font-size: 1.3rem;
-    }
+  .typeLayerBright {
+    opacity: 0.5;
+    clip-path: none;
   }
 }

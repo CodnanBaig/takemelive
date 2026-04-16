@@ -188,7 +188,7 @@ export default function SyncModal({ isOpen, onClose }: SyncModalProps) {
           color: 'black', 
           fontWeight: 700 
         }}>
-          You'll be the first to know.<br />
+          You&apos;ll be the first to know.<br />
           <span style={{ color: '#ed2939', fontWeight: 700 }}>No noise. Just the signal.</span>
         </div>
       </div>
