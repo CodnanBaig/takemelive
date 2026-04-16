@@ -29,8 +29,7 @@
   cursor: default;
 }
 
-.typeLayer,
-.typeLayerBright {
+.typeLayer {
   display: grid;
   text-transform: uppercase;
   font-weight: 900;
@@ -40,42 +39,34 @@
   user-select: none;
 }
 
-.typeLayer span,
-.typeLayerBright span {
+.typeLayer span {
   display: block;
   text-align: center;
 }
 
 .typeLayer {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.23) 1px, transparent 1.7px);
-  background-size: 4px 4px;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  opacity: 0.22;
-}
-
-.typeLayerBright {
   --spot-x: 50;
   --spot-y: 50;
-  --spot-radius: 0;
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  pointer-events: none;
-  opacity: 0;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.75) 1px, transparent 1.7px);
-  background-size: 4px 4px;
+  --spot-size: 0;
+  --spot-opacity: 0;
+  background-image:
+    radial-gradient(
+      circle calc(var(--spot-size) * 1px) at calc(var(--spot-x) * 1px) calc(var(--spot-y) * 1px),
+      rgb(255 255 255 / calc(0.42 * var(--spot-opacity))) 0%,
+      rgb(255 255 255 / calc(0.26 * var(--spot-opacity))) 34%,
+      rgb(255 255 255 / calc(0.12 * var(--spot-opacity))) 62%,
+      rgb(255 255 255 / 0) 100%
+    ),
+    radial-gradient(circle, rgba(255, 255, 255, 0.36) 1px, transparent 1.7px);
+  background-size: 100% 100%, 4px 4px;
+  background-repeat: no-repeat, repeat;
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  clip-path: circle(
-    calc(var(--spot-radius) * 1px) at calc(var(--spot-x) * 1px) calc(var(--spot-y) * 1px)
-  );
-  will-change: opacity, clip-path;
+  opacity: 0.64;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.42));
+  will-change: background-image;
 }
 
 @media (max-width: 900px) {
@@ -84,8 +75,7 @@
     padding-top: 8.5rem;
   }
 
-  .typeLayer,
-  .typeLayerBright {
+  .typeLayer {
     font-size: clamp(3.7rem, 14.8vw, 7.6rem);
     line-height: 0.88;
   }
@@ -97,8 +87,7 @@
     left: 16px;
   }
 
-  .typeLayerBright {
-    opacity: 0.5;
-    clip-path: none;
+  .typeLayer {
+    --spot-opacity: 0;
   }
 }

@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 type HoverRevealProps = {
   text: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
   href?: string;
   dir?: "up" | "left";
   outlined?: boolean;
@@ -26,8 +26,8 @@ export default function HoverReveal({
   onClick,
   children,
   ...rest
-}: HoverRevealProps & Record<string, any>) {
-  const Tag: any = href ? "a" : as;
+}: HoverRevealProps & Record<string, unknown>) {
+  const Tag = (href ? "a" : as) as keyof React.JSX.IntrinsicElements;
   
   return (
     <Tag

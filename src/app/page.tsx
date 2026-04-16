@@ -8,19 +8,19 @@ const HERO_LINES = ['MORE THAN', 'MOVERS', 'SHOW MAKERS!'];
 
 export default function Home() {
   const heroRef = useRef<HTMLDivElement | null>(null);
-  const brightLayerRef = useRef<HTMLDivElement | null>(null);
+  const typeLayerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const hero = heroRef.current;
-    const brightLayer = brightLayerRef.current;
+    const typeLayer = typeLayerRef.current;
 
-    if (!hero || !brightLayer) {
+    if (!hero || !typeLayer) {
       return;
     }
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        [hero, brightLayer],
+        [hero, typeLayer],
         { autoAlpha: 0, y: 20 },
         { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out', stagger: 0.08 },
       );
@@ -28,16 +28,20 @@ export default function Home() {
       const mm = gsap.matchMedia();
 
       mm.add('(pointer:fine)', () => {
-        const spotXTo = gsap.quickTo(brightLayer, '--spot-x', {
-          duration: 0.24,
-          ease: 'power3.out',
+        const spotXTo = gsap.quickTo(typeLayer, '--spot-x', {
+          duration: 0.5,
+          ease: 'power2.out',
         });
-        const spotYTo = gsap.quickTo(brightLayer, '--spot-y', {
-          duration: 0.24,
-          ease: 'power3.out',
+        const spotYTo = gsap.quickTo(typeLayer, '--spot-y', {
+          duration: 0.5,
+          ease: 'power2.out',
         });
-        const spotRadiusTo = gsap.quickTo(brightLayer, '--spot-radius', {
-          duration: 0.2,
+        const spotSizeTo = gsap.quickTo(typeLayer, '--spot-size', {
+          duration: 0.58,
+          ease: 'power2.out',
+        });
+        const spotOpacityTo = gsap.quickTo(typeLayer, '--spot-opacity', {
+          duration: 0.36,
           ease: 'power2.out',
         });
 
@@ -51,23 +55,13 @@ export default function Home() {
           const bounds = hero.getBoundingClientRect();
           spotXTo(event.clientX - bounds.left);
           spotYTo(event.clientY - bounds.top);
-          spotRadiusTo(180);
-          gsap.to(brightLayer, {
-            opacity: 1,
-            duration: 0.25,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
+          spotSizeTo(340);
+          spotOpacityTo(1);
         };
 
         const handlePointerLeave = () => {
-          spotRadiusTo(0);
-          gsap.to(brightLayer, {
-            opacity: 0,
-            duration: 0.3,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
+          spotSizeTo(0);
+          spotOpacityTo(0);
         };
 
         hero.addEventListener('pointermove', handlePointerMove);
@@ -102,15 +96,9 @@ export default function Home() {
       </div>
 
       <section ref={heroRef} className={styles.hero} aria-label="Take Me Live hero">
-        <div className={styles.typeLayer} aria-hidden="true">
+        <div ref={typeLayerRef} className={styles.typeLayer} aria-hidden="true">
           {HERO_LINES.map((line) => (
             <span key={`base-${line}`}>{line}</span>
-          ))}
-        </div>
-
-        <div ref={brightLayerRef} className={styles.typeLayerBright} aria-hidden="true">
-          {HERO_LINES.map((line) => (
-            <span key={`bright-${line}`}>{line}</span>
           ))}
         </div>
       </section>

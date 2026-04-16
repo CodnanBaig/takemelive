@@ -10,7 +10,9 @@ import styles from './HomePage.module.css';
 
 export default function HomePage() {
   const [isRevealed, setIsRevealed] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false,
+  );
   const [modalOpen, setModalOpen] = useState(false);
   const hiddenContentRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -19,8 +21,6 @@ export default function HomePage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setIsMobile(window.innerWidth < 768);
-      
       const handleResize = () => {
         setIsMobile(window.innerWidth < 768);
       };
