@@ -1,93 +1,70 @@
+:global(:root) {
+  --logo-invert: 1;
+}
+
 .main {
   min-height: 100vh;
   background: #08090a;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  color: #f5f5f0;
+}
+
+.main::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: repeating-linear-gradient(
+    0deg,
+    rgb(255 255 255 / 0.006) 0px,
+    rgb(255 255 255 / 0.006) 1px,
+    transparent 1px,
+    transparent 4px
+  );
 }
 
 .logoContainer {
   position: fixed;
-  top: 24px;
-  left: 24px;
-  z-index: 20;
+  top: clamp(16px, 2.2vw, 28px);
+  left: clamp(14px, 2.2vw, 28px);
+  z-index: 50;
+  pointer-events: none;
 }
 
 .logo {
-  width: clamp(130px, 14vw, 200px);
+  width: clamp(128px, 13vw, 220px);
   height: auto;
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(var(--logo-invert));
+  transition: filter 140ms linear;
 }
 
-.hero {
-  min-height: 100vh;
-  width: min(94vw, 1250px);
-  margin: 0 auto;
-  display: grid;
-  place-items: center;
+.main :global(section[data-chapter]) {
   position: relative;
-  padding: 7.5rem 0 4rem;
-  cursor: default;
 }
 
-.typeLayer {
-  display: grid;
-  text-transform: uppercase;
-  font-weight: 900;
-  line-height: 0.86;
-  letter-spacing: 0.015em;
-  font-size: clamp(4.25rem, 13.5vw, 15rem);
-  user-select: none;
-}
-
-.typeLayer span {
-  display: block;
-  text-align: center;
-}
-
-.typeLayer {
-  --spot-x: 50;
-  --spot-y: 50;
-  --spot-size: 0;
-  --spot-opacity: 0;
-  background-image:
-    radial-gradient(
-      circle calc(var(--spot-size) * 1px) at calc(var(--spot-x) * 1px) calc(var(--spot-y) * 1px),
-      rgb(255 255 255 / calc(0.42 * var(--spot-opacity))) 0%,
-      rgb(255 255 255 / calc(0.26 * var(--spot-opacity))) 34%,
-      rgb(255 255 255 / calc(0.12 * var(--spot-opacity))) 62%,
-      rgb(255 255 255 / 0) 100%
-    ),
-    radial-gradient(circle, rgba(255, 255, 255, 0.36) 1px, transparent 1.7px);
-  background-size: 100% 100%, 4px 4px;
-  background-repeat: no-repeat, repeat;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  opacity: 0.64;
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.42));
-  will-change: background-image;
+.main :global(section[data-chapter]::after) {
+  content: '';
+  position: absolute;
+  inset: clamp(8px, 1vw, 14px);
+  border: 1px solid rgb(245 245 240 / 0.06);
+  pointer-events: none;
 }
 
 @media (max-width: 900px) {
-  .hero {
-    width: 96vw;
-    padding-top: 8.5rem;
-  }
-
-  .typeLayer {
-    font-size: clamp(3.7rem, 14.8vw, 7.6rem);
-    line-height: 0.88;
+  .logo {
+    width: clamp(116px, 26vw, 176px);
   }
 }
 
 @media (max-width: 768px) {
   .logoContainer {
-    top: 18px;
-    left: 16px;
+    top: 14px;
+    left: 14px;
   }
 
-  .typeLayer {
-    --spot-opacity: 0;
+  .main :global(section[data-chapter]::after) {
+    inset: 8px;
   }
 }

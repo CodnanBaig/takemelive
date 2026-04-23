@@ -1,0 +1,66 @@
+.section {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 14% 84%, rgb(17 18 23 / 0.09), transparent 40%),
+    #ecece6;
+  color: #111217;
+  padding: clamp(4rem, 9vh, 8rem) 0;
+}
+
+.inner {
+  width: min(94vw, 1180px);
+  margin: 0 auto;
+}
+
+.inner h2 {
+  margin: 0 0 clamp(2rem, 6vh, 4rem);
+  font-size: clamp(1.9rem, 6vw, 5.4rem);
+  max-width: 14ch;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.list {
+  display: grid;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.9rem clamp(1rem, 2.2vw, 2rem);
+  padding: clamp(1rem, 1.8vw, 1.5rem) 0;
+}
+
+.number {
+  margin: 0;
+  font-size: clamp(0.88rem, 1.1vw, 1.05rem);
+  letter-spacing: 0.16em;
+  opacity: 0.62;
+}
+
+.item h3 {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.2vw, 2rem);
+  text-transform: uppercase;
+}
+
+.item p {
+  margin: 0.45rem 0 0;
+  font-size: clamp(0.96rem, 1.16vw, 1.22rem);
+  line-height: 1.6;
+  max-width: 64ch;
+}
+
+.line {
+  grid-column: 1 / -1;
+  display: block;
+  height: 1px;
+  background: rgb(17 18 23 / 0.24);
+}
+
+@media (max-width: 760px) {
+  .item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}

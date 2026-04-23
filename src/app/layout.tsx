@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
-import Script from 'next/script';
+import { Anton, Poppins } from 'next/font/google';
 import './globals.css';
 
 const poppins = Poppins({
@@ -8,6 +7,13 @@ const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-poppins',
+});
+
+const anton = Anton({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-anton',
 });
 
 export const metadata: Metadata = {
@@ -32,12 +38,8 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
       </head>
-      <body className={poppins.variable}>
+      <body className={`${poppins.variable} ${anton.variable}`}>
         {children}
-        
-        {/* External scripts */}
-        <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" strategy="afterInteractive" />
-        <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" strategy="afterInteractive" />
       </body>
     </html>
   );

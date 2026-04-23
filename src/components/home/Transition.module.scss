@@ -1,0 +1,83 @@
+.transition {
+  min-height: 100vh;
+  background: #fff;
+  color: #111217;
+  position: relative;
+}
+
+.stage {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #fff;
+}
+
+.blackCurtain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #06070a;
+  will-change: transform;
+}
+
+.textViewport {
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  overflow: hidden;
+  display: grid;
+  gap: clamp(1rem, 2vh, 1.6rem);
+}
+
+.textRail {
+  width: min(94vw, 1580px);
+  margin: 0 auto;
+  padding-inline: clamp(0.5rem, 2vw, 2rem);
+  will-change: transform;
+}
+
+.textRail span {
+  font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
+  display: block;
+  text-wrap: balance;
+  font-size: clamp(3rem, 11.5vw, 12rem);
+  font-weight: 400;
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: #111217;
+  text-align: center;
+}
+
+.subheading {
+  width: min(84vw, 980px);
+  margin: 0 auto;
+  display: grid;
+  gap: clamp(0.35rem, 0.9vh, 0.7rem);
+}
+
+.subLine {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.55vw, 1.42rem);
+  line-height: 1.4;
+  color: rgb(17 18 23 / 0.9);
+  text-align: center;
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .textRail span {
+    font-size: clamp(1.4rem, 11vw, 4.4rem);
+  }
+
+  .subheading {
+    width: min(90vw, 560px);
+  }
+
+  .subLine {
+    font-size: clamp(0.82rem, 3.2vw, 1rem);
+    line-height: 1.35;
+  }
+}

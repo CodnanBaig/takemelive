@@ -1,0 +1,99 @@
+.hero {
+  min-height: 100vh;
+  display: grid;
+  align-items: center;
+  padding: clamp(7rem, 10vh, 9rem) clamp(1rem, 3vw, 2.5rem) clamp(5rem, 7vh, 6.5rem);
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 78%, rgb(255 255 255 / 0.07), transparent 42%),
+    linear-gradient(180deg, #020306 0%, #08090a 62%, #07090d 100%);
+}
+
+.inner {
+  width: min(1280px, 96vw);
+  margin: 0 auto;
+  display: grid;
+  gap: clamp(1.2rem, 2vw, 2rem);
+}
+
+.heading {
+  --spot-x: 50;
+  --spot-y: 50;
+  --spot-size: 0;
+  --spot-opacity: 0;
+  margin: 0;
+  font-size: clamp(3rem, 11vw, 12.8rem);
+  line-height: 0.86;
+  text-transform: uppercase;
+  letter-spacing: 0.015em;
+  font-weight: 800;
+  display: grid;
+  justify-items: center;
+  user-select: none;
+}
+
+.wordWrap {
+  display: block;
+  overflow: hidden;
+}
+
+.word {
+  display: block;
+  color: transparent;
+  background-image:
+    radial-gradient(
+      circle calc(var(--spot-size) * 1px) at calc(var(--spot-x) * 1px) calc(var(--spot-y) * 1px),
+      rgb(255 255 255 / calc(0.48 * var(--spot-opacity))) 0%,
+      rgb(255 255 255 / calc(0.24 * var(--spot-opacity))) 34%,
+      rgb(255 255 255 / calc(0.11 * var(--spot-opacity))) 62%,
+      rgb(255 255 255 / 0) 100%
+    ),
+    radial-gradient(circle, rgb(255 255 255 / 0.56) 1px, transparent 1.8px);
+  background-size: 100% 100%, 4px 4px;
+  background-repeat: no-repeat, repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 8px 18px rgb(0 0 0 / 0.45));
+}
+
+.subheading {
+  margin: 0 auto;
+  max-width: 54ch;
+  color: rgb(245 245 240 / 0.73);
+  font-size: clamp(1rem, 1.2vw, 1.24rem);
+  line-height: 1.65;
+  text-align: center;
+}
+
+.scrollIndicator {
+  position: absolute;
+  left: 50%;
+  bottom: 1.1rem;
+  transform: translateX(-50%);
+  color: rgb(245 245 240 / 0.62);
+  display: grid;
+  place-items: center;
+  gap: 0.15rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.arrow {
+  font-size: 1.12rem;
+  line-height: 1;
+}
+
+@media (max-width: 900px) {
+  .heading {
+    font-size: clamp(2.55rem, 15.8vw, 6.6rem);
+    line-height: 0.9;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    --spot-opacity: 0;
+  }
+}
