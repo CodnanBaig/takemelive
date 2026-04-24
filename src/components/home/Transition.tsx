@@ -174,6 +174,7 @@ export default function Transition() {
   return (
     <section
       ref={sectionRef}
+      data-logo-control="manual"
       className={styles.transition}
       aria-label="Horizontal text section"
     >

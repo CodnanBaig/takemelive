@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import styles from './EventGallery.module.scss';
 
 const IMAGE_ITEMS = [
@@ -70,21 +70,6 @@ export default function EventGallery() {
     const cards = section.querySelectorAll<HTMLElement>('[data-parallax-item]');
     const images = section.querySelectorAll<HTMLElement>('[data-parallax-image]');
     const backgroundWords = section.querySelectorAll<HTMLElement>('[data-bg-word]');
-    const syncLogoContrast = () =>
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 72%',
-        end: 'bottom 28%',
-        onEnter: () => document.documentElement.style.setProperty('--logo-invert', '1'),
-        onEnterBack: () => document.documentElement.style.setProperty('--logo-invert', '1'),
-        onLeave: () => document.documentElement.style.setProperty('--logo-invert', '0'),
-        onLeaveBack: () => document.documentElement.style.setProperty('--logo-invert', '1'),
-        onRefresh: (self) => {
-          if (self.isActive) {
-            document.documentElement.style.setProperty('--logo-invert', '1');
-          }
-        },
-      });
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
@@ -93,15 +78,9 @@ export default function EventGallery() {
         gsap.set(cards, { autoAlpha: 1, y: 0, yPercent: 0 });
         gsap.set(images, { yPercent: 0, scale: 1.16 });
         gsap.set(backgroundWords, { yPercent: 0, xPercent: 0 });
-        const logoTrigger = syncLogoContrast();
-        return () => {
-          logoTrigger.kill();
-        };
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const logoTrigger = syncLogoContrast();
-
         gsap.fromTo(
           cards,
           { autoAlpha: 0, y: 44 },
@@ -158,10 +137,6 @@ export default function EventGallery() {
             },
           );
         });
-
-        return () => {
-          logoTrigger.kill();
-        };
       });
 
       return () => {
@@ -178,6 +153,7 @@ export default function EventGallery() {
     <section
       id="chapter-event-gallery"
       data-chapter="event-gallery"
+      data-logo-invert="1"
       ref={sectionRef}
       className={styles.section}
       aria-label="Event gallery"

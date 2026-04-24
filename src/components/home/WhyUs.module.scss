@@ -3,9 +3,9 @@
   min-height: 100vh;
   padding: clamp(4.5rem, 10vh, 8rem) 0;
   background:
-    radial-gradient(circle at 16% 20%, rgb(208 223 89 / 0.08), transparent 24%),
-    radial-gradient(circle at 82% 76%, rgb(255 255 255 / 0.05), transparent 22%),
-    #050609;
+    radial-gradient(circle at 18% 18%, rgb(208 223 89 / 0.08), transparent 22%),
+    radial-gradient(circle at 86% 76%, rgb(255 255 255 / 0.04), transparent 18%),
+    #040506;
   color: #f5f5f0;
   overflow: clip;
 }
@@ -16,33 +16,25 @@
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgb(245 245 240 / 0.06) 1px, transparent 1px),
-    linear-gradient(rgb(245 245 240 / 0.04) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 0.7) 14%, #000 52%, transparent 100%);
-  opacity: 0.22;
+    linear-gradient(90deg, rgb(245 245 240 / 0.05) 1px, transparent 1px),
+    linear-gradient(rgb(245 245 240 / 0.03) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 0.72) 12%, #000 52%, transparent 100%);
+  opacity: 0.2;
 }
 
 .inner {
   position: relative;
   z-index: 1;
-  width: min(92vw, 1240px);
+  width: min(92vw, 1260px);
   margin: 0 auto;
 }
 
-.grid {
+.poster {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(180px, 0.78fr) minmax(0, 2fr);
-  gap: clamp(2rem, 4vw, 5rem);
-  align-items: start;
-}
-
-.meta {
-  position: sticky;
-  top: clamp(88px, 12vh, 132px);
-  display: grid;
-  gap: 0.8rem;
-  align-content: start;
+  gap: 1rem;
+  padding-bottom: clamp(3rem, 7vh, 5rem);
 }
 
 .kicker {
@@ -51,102 +43,27 @@
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgb(245 245 240 / 0.66);
+  color: rgb(245 245 240 / 0.7);
 }
 
-.metaCopy {
-  margin: 0;
-  max-width: 16ch;
-  font-size: clamp(0.98rem, 1.2vw, 1.14rem);
-  line-height: 1.42;
-  color: rgb(245 245 240 / 0.74);
-}
-
-.stage {
-  position: relative;
+.posterGrid {
   display: grid;
-  gap: clamp(2rem, 4vh, 3rem);
-  padding: clamp(1.4rem, 2vw, 2rem);
-  border: 1px solid rgb(245 245 240 / 0.1);
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.03) 0%, rgb(255 255 255 / 0.01) 100%);
-  backdrop-filter: blur(4px);
+  grid-template-columns: minmax(0, 1.65fr) minmax(260px, 0.75fr);
+  gap: clamp(1.4rem, 3vw, 3rem);
+  align-items: end;
 }
 
-.signalField {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.signalLine {
-  position: absolute;
-  display: block;
-  background: linear-gradient(90deg, rgb(208 223 89 / 0.12) 0%, rgb(208 223 89 / 0.85) 50%, rgb(245 245 240 / 0.14) 100%);
-  transform-origin: left center;
-  will-change: transform, opacity;
-}
-
-.signalLineH1,
-.signalLineH2,
-.signalLineH3 {
-  height: 1px;
-  width: 48%;
-}
-
-.signalLineV1,
-.signalLineV2,
-.signalLineV3 {
-  width: 1px;
-  height: 38%;
-  background: linear-gradient(180deg, rgb(208 223 89 / 0.08) 0%, rgb(208 223 89 / 0.78) 52%, rgb(245 245 240 / 0.16) 100%);
-  transform-origin: center top;
-}
-
-.signalLineH1 {
-  top: 10%;
-  left: 4%;
-}
-
-.signalLineH2 {
-  top: 44%;
-  right: 8%;
-}
-
-.signalLineH3 {
-  bottom: 12%;
-  left: 18%;
-}
-
-.signalLineV1 {
-  top: 8%;
-  left: 38%;
-}
-
-.signalLineV2 {
-  top: 32%;
-  right: 18%;
-}
-
-.signalLineV3 {
-  bottom: 10%;
-  left: 82%;
-}
-
-.intro {
+.posterCopy {
   position: relative;
   z-index: 1;
-  display: grid;
-  gap: 1.2rem;
-  max-width: 820px;
 }
 
 .heading {
   margin: 0;
-  max-width: 9ch;
   font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(3rem, 8vw, 8.4rem);
+  font-size: clamp(3.5rem, 10vw, 10rem);
   font-weight: 400;
-  line-height: 0.9;
+  line-height: 0.84;
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
@@ -156,104 +73,165 @@
   overflow: hidden;
 }
 
+.lineWrap:nth-child(2) {
+  padding-left: clamp(1.4rem, 5vw, 5rem);
+}
+
+.lineWrap:nth-child(3) {
+  padding-left: clamp(0.6rem, 2vw, 2rem);
+}
+
 .lineWrap span {
   display: inline-block;
 }
 
 .lead {
-  margin: 0;
-  max-width: 58ch;
-  font-size: clamp(1.02rem, 1.35vw, 1.24rem);
-  line-height: 1.7;
-  color: rgb(245 245 240 / 0.82);
-}
-
-.list {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  margin: 0;
+  max-width: 28ch;
+  padding-bottom: 0.45rem;
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  line-height: 1.68;
+  color: rgb(245 245 240 / 0.78);
 }
 
-.card {
-  display: grid;
-  gap: 0.95rem;
-  min-height: 100%;
-  padding: 1.15rem 1rem 1.2rem;
-  border: 1px solid rgb(245 245 240 / 0.08);
-  background: rgb(255 255 255 / 0.03);
+.watermark {
+  position: absolute;
+  right: clamp(-14px, -1vw, 0px);
+  bottom: clamp(-10px, -1vw, 0px);
+  font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
+  font-size: clamp(6rem, 24vw, 18rem);
+  line-height: 0.82;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: rgb(245 245 240 / 0.06);
+  user-select: none;
+  will-change: transform, opacity;
 }
 
-.cardTop {
+.journey {
+  position: relative;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 0.8rem;
+  gap: clamp(1.1rem, 2.2vh, 1.8rem);
+  padding-top: clamp(1.4rem, 3vh, 2rem);
+  min-height: 760px;
+}
+
+.spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(180deg, rgb(208 223 89 / 0.2) 0%, rgb(208 223 89 / 0.95) 22%, rgb(245 245 240 / 0.16) 100%);
+  transform-origin: top center;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  width: 100%;
+}
+
+.stepLeft {
+  justify-items: start;
+  padding-right: calc(50% + clamp(1rem, 3vw, 2.4rem));
+}
+
+.stepRight {
+  justify-items: end;
+  padding-left: calc(50% + clamp(1rem, 3vw, 2.4rem));
+}
+
+.connector {
+  position: absolute;
+  top: 2.15rem;
+  width: clamp(2rem, 7vw, 6rem);
+  height: 1px;
+  background: linear-gradient(90deg, rgb(208 223 89 / 0.18) 0%, rgb(208 223 89 / 0.96) 100%);
+  will-change: transform;
+}
+
+.connectorLeft {
+  right: calc(50% + 1px);
+}
+
+.connectorRight {
+  left: calc(50% + 1px);
+}
+
+.stepCard {
+  width: min(100%, 420px);
+  padding: 0.25rem 0 1.35rem;
 }
 
 .number {
-  margin: 0;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
+  margin: 0 0 0.7rem;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 0.88;
+  font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
   color: #d0df59;
 }
 
-.cardLine {
-  display: block;
-  height: 1px;
-  background: rgb(245 245 240 / 0.22);
-}
-
-.card h3 {
+.stepCard h3 {
   margin: 0;
-  max-width: 16ch;
-  font-size: clamp(1.18rem, 2vw, 1.85rem);
-  line-height: 1.02;
+  max-width: 15ch;
+  font-size: clamp(1.3rem, 2.2vw, 2.15rem);
+  line-height: 0.98;
   text-transform: uppercase;
 }
 
-.card p {
-  margin: 0;
-  max-width: 42ch;
-  font-size: clamp(0.98rem, 1.1vw, 1.08rem);
-  line-height: 1.62;
+.stepCard p {
+  margin: 0.7rem 0 0;
+  max-width: 38ch;
+  font-size: clamp(0.98rem, 1.08vw, 1.08rem);
+  line-height: 1.66;
   color: rgb(245 245 240 / 0.76);
 }
 
 @media (max-width: 900px) {
-  .grid {
+  .posterGrid {
     grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .lead {
+    max-width: 40ch;
+  }
+
+  .watermark {
+    right: auto;
+    left: 0;
+    bottom: auto;
+    top: 40%;
+    font-size: clamp(4rem, 26vw, 10rem);
+  }
+
+  .journey {
+    min-height: 0;
     gap: 1.5rem;
   }
 
-  .meta {
-    position: static;
-    gap: 0.45rem;
+  .spine {
+    left: 0.2rem;
   }
 
-  .metaCopy {
-    max-width: none;
+  .stepLeft,
+  .stepRight {
+    justify-items: start;
+    padding-left: 2.2rem;
+    padding-right: 0;
   }
 
-  .heading {
-    max-width: 10ch;
-    font-size: clamp(2.7rem, 13vw, 5.8rem);
+  .connector {
+    left: 0.2rem;
+    width: 1.35rem;
   }
 
-  .list {
-    grid-template-columns: 1fr;
-  }
-
-  .signalLineH2 {
-    right: 2%;
-  }
-
-  .signalLineV3 {
-    left: auto;
-    right: 10%;
+  .connectorLeft,
+  .connectorRight {
+    right: auto;
   }
 }
 
@@ -266,9 +244,16 @@
     background-size: 48px 48px;
   }
 
-  .stage {
-    gap: 1.5rem;
-    padding: 1rem;
+  .heading {
+    font-size: clamp(2.8rem, 15vw, 5.8rem);
+  }
+
+  .lineWrap:nth-child(2) {
+    padding-left: 1.2rem;
+  }
+
+  .lineWrap:nth-child(3) {
+    padding-left: 0.4rem;
   }
 
   .lead {
@@ -276,13 +261,11 @@
     line-height: 1.62;
   }
 
-  .card {
-    padding: 1rem 0.95rem 1.05rem;
+  .stepCard {
+    width: 100%;
   }
 
-  .signalLineH1,
-  .signalLineH2,
-  .signalLineH3 {
-    width: 58%;
+  .stepCard h3 {
+    font-size: clamp(1.14rem, 6vw, 1.5rem);
   }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import styles from './WhatWeDo.module.scss';
 
 const LINES = [
@@ -23,20 +23,6 @@ export default function WhatWeDo() {
     }
 
     const lines = section.querySelectorAll('[data-line]');
-    const syncLogoContrast = () =>
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 72%',
-        end: 'bottom 28%',
-        onEnter: () => document.documentElement.style.setProperty('--logo-invert', '1'),
-        onEnterBack: () => document.documentElement.style.setProperty('--logo-invert', '1'),
-        onLeaveBack: () => document.documentElement.style.setProperty('--logo-invert', '0'),
-        onRefresh: (self) => {
-          if (self.isActive) {
-            document.documentElement.style.setProperty('--logo-invert', '1');
-          }
-        },
-      });
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
@@ -46,16 +32,9 @@ export default function WhatWeDo() {
         if (media) {
           gsap.set(media, { autoAlpha: 1, x: 0 });
         }
-
-        const logoTrigger = syncLogoContrast();
-        return () => {
-          logoTrigger.kill();
-        };
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const logoTrigger = syncLogoContrast();
-
         gsap.fromTo(
           lines,
           {
@@ -96,9 +75,6 @@ export default function WhatWeDo() {
           );
         }
 
-        return () => {
-          logoTrigger.kill();
-        };
       });
 
       return () => {
@@ -115,6 +91,7 @@ export default function WhatWeDo() {
     <section
       id="chapter-what-we-do"
       data-chapter="what-we-do"
+      data-logo-invert="1"
       ref={sectionRef}
       className={styles.section}
       aria-label="What we do"

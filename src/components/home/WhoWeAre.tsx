@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import styles from './WhoWeAre.module.scss';
 
 const PORTRAIT_IMAGE = {
@@ -48,20 +48,6 @@ export default function WhoWeAre() {
     const accent = section.querySelector('[data-accent]');
     const mediaCard = section.querySelector('[data-media-card]');
     const mediaImage = section.querySelector<HTMLElement>('[data-parallax-image]');
-    const syncLogoContrast = () =>
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 72%',
-        end: 'bottom 28%',
-        onEnter: () => document.documentElement.style.setProperty('--logo-invert', '0'),
-        onEnterBack: () => document.documentElement.style.setProperty('--logo-invert', '0'),
-        onLeaveBack: () => document.documentElement.style.setProperty('--logo-invert', '1'),
-        onRefresh: (self) => {
-          if (self.isActive) {
-            document.documentElement.style.setProperty('--logo-invert', '0');
-          }
-        },
-      });
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
@@ -80,15 +66,9 @@ export default function WhoWeAre() {
         if (accent) {
           gsap.set(accent, { scaleX: 1, transformOrigin: 'left center' });
         }
-        const logoTrigger = syncLogoContrast();
-        return () => {
-          logoTrigger.kill();
-        };
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const logoTrigger = syncLogoContrast();
-
         if (mediaCard) {
           const mediaTimeline = gsap.timeline({
             scrollTrigger: {
@@ -213,9 +193,6 @@ export default function WhoWeAre() {
             '-=0.26',
           );
 
-        return () => {
-          logoTrigger.kill();
-        };
       });
 
       return () => {
@@ -232,6 +209,7 @@ export default function WhoWeAre() {
     <section
       id="chapter-who-we-are"
       data-chapter="who-we-are"
+      data-logo-invert="0"
       ref={sectionRef}
       className={styles.section}
       aria-label="Who we are"

@@ -1,3 +1,67 @@
+## 2026-04-24-v73
+
+- Retuned `FeaturedProjects` card perspective styling to better match the provided reference: removed heavy global 7-o'clock tilt and replaced it with upright cinematic plane offsets using per-card 3D transforms (`translateZ` + subtle `rotateY` variations).
+- Increased swiper scene depth (`perspective: 1800px`) and preserved layered panel feel while keeping infinite loop behavior unchanged.
+
+## 2026-04-24-v72
+
+- Added a global 3D card tilt in `FeaturedProjects.module.scss` so swiper cards now lean toward a 7 o’clock direction (`rotateZ(-9deg) rotateX(7deg)`) with section-level perspective for depth.
+
+## 2026-04-24-v71
+
+- Reset `FeaturedProjects` card animation system from scratch and replaced the collage/deck interpolation with a basic infinite swiper track (`swiperViewport` + `swiperTrack`) in `src/components/home/FeaturedProjects.tsx`.
+- Implemented continuous leftward card loop using GSAP ticker + wrap math across triplicated project data, with scroll delta used only to modulate loop speed for simple scroll-reactive behavior.
+- Simplified card interactions to CSS hover transitions (image scale to `1.05`, overlay fade) and removed complex per-card runtime transform orchestration.
+
+## 2026-04-24-v70
+
+- Fixed `FeaturedProjects` deck visibility reliability by switching card targeting to DOM query selection (`[data-project-card]`) instead of ref array collection, preventing single-card collapse scenarios.
+- Rebalanced collage slot geometry so multiple planes stay visible in-frame with clearer overlap/depth, closer to the intended reference composition.
+- Adjusted marquee shell vertical padding and heading scale/line-height to avoid top clipping while preserving large section-heading treatment.
+
+## 2026-04-24-v69
+
+- Refined `FeaturedProjects` to better match the provided visual reference by shifting from oversized full-height tiles to a floating collage of portrait planes with varied slot depths, rotations, opacity, and diagonal offsets.
+- Expanded the animated deck to six visible cards (`PROJECTS` + recycled entries) so the composition reads as a richer multi-plane scene instead of a sparse 4-card stack.
+- Reduced tile dimensions and section stack height in `FeaturedProjects.module.scss` so cards appear as independent floating panels rather than full-column blocks.
+
+## 2026-04-24-v68
+
+- Converted `FeaturedProjects` cards to an infinite loop swiper-like deck in `src/components/home/FeaturedProjects.tsx` by cycling cards through interpolated stacked slots on each GSAP ticker frame.
+- Kept scroll velocity influence by adding velocity-based phase acceleration so loop speed reacts to scroll direction/intensity while continuing to auto-advance.
+- Simplified card positioning styles in `FeaturedProjects.module.scss` (removed fixed per-card placement classes) so transforms are fully animation-driven.
+
+## 2026-04-24-v67
+
+- Increased `FeaturedProjects` marquee typography in `src/components/home/FeaturedProjects.module.scss` to section-heading scale (large display clamp, tighter leading, stronger contrast) so the loop reads as a true chapter headline.
+
+## 2026-04-24-v66
+
+- Increased `FeaturedProjects` card scale in `src/components/home/FeaturedProjects.module.scss` (desktop/tablet/mobile widths and stack height) so project tiles read significantly larger.
+- Reworked card placement offsets into a tighter overlapping pile, producing a clearer stacked composition instead of a wide horizontal spread.
+
+## 2026-04-24-v65
+
+- Updated `FeaturedProjects` marquee content to loop `Featured Projects` and styled it with the display/heading font treatment for stronger chapter branding.
+- Added scroll-velocity linked diagonal drift to the stacked project cards in `src/components/home/FeaturedProjects.tsx` by reusing the same ticker/scroll delta signal as the marquee and applying per-card interpolated `x/y` offsets.
+- Preserved existing card hover interactions, links, and overlap composition while making card motion feel closer to the provided diagonal reference.
+
+## 2026-04-24-v64
+
+- Added a new `FeaturedProjects` chapter (`src/components/home/FeaturedProjects.tsx` + `FeaturedProjects.module.scss`) and mounted it after `HowItWorks` in `src/app/page.tsx`.
+- Implemented a GSAP ticker-driven infinite marquee that reacts to window scroll velocity by amplifying horizontal title loop speed.
+- Built a 4-card overlapping project stack inspired by the provided visual reference, with each card linking to `/projects/[slug]` and marked with `data-cursor="link"`.
+- Added GSAP hover interactions per card: image scales to `1.05` over `0.4s` (`power2.out`) and dark overlay opacity reduces on hover.
+
+## 2026-04-24-v63
+
+- Updated `src/components/home/HowItWorks.tsx` to set `data-logo-invert="1"` for the `How It Works` section, so the fixed nav logo stays white while this dark chapter is active.
+
+## 2026-04-24-v62
+
+- Fixed the `HowItWorks` build failure by adding the missing stylesheet file `src/components/home/HowItWorks.module.scss` referenced by the component import.
+- Implemented complete responsive styling for all `HowItWorks` section class hooks (header, featured panel, active step states, timeline line, and mobile breakpoints) so the module now renders with the intended dark chapter visual treatment.
+
 ## 2026-04-24-v61
 
 - Refined hero spotlight hover behavior in `src/components/home/Hero.tsx` by binding pointer tracking to the headline itself (instead of the full section), making the effect activate only when hovering the hero text.

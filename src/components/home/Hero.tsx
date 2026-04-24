@@ -111,6 +111,7 @@ export default function Hero() {
     <section
       id="chapter-hero"
       data-chapter="hero"
+      data-logo-invert="1"
       ref={sectionRef}
       className={styles.hero}
       aria-label="Take Me Live hero"
