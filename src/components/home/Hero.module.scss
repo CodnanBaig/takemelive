@@ -19,7 +19,7 @@
 .heading {
   --spot-x: 50;
   --spot-y: 50;
-  --spot-size: 0;
+  --spot-size: 120;
   --spot-opacity: 0;
   margin: 0;
   font-size: clamp(3rem, 11vw, 12.8rem);
@@ -39,16 +39,16 @@
 
 .word {
   display: block;
-  color: transparent;
+  color: rgb(243 244 247 / 0.44);
   background-image:
     radial-gradient(
       circle calc(var(--spot-size) * 1px) at calc(var(--spot-x) * 1px) calc(var(--spot-y) * 1px),
-      rgb(255 255 255 / calc(0.48 * var(--spot-opacity))) 0%,
-      rgb(255 255 255 / calc(0.24 * var(--spot-opacity))) 34%,
-      rgb(255 255 255 / calc(0.11 * var(--spot-opacity))) 62%,
+      rgb(255 255 255 / calc(0.72 * var(--spot-opacity))) 0%,
+      rgb(255 255 255 / calc(0.42 * var(--spot-opacity))) 34%,
+      rgb(255 255 255 / calc(0.2 * var(--spot-opacity))) 62%,
       rgb(255 255 255 / 0) 100%
     ),
-    radial-gradient(circle, rgb(255 255 255 / 0.56) 1px, transparent 1.8px);
+    radial-gradient(circle, rgb(255 255 255 / 0.7) 1px, transparent 1.8px);
   background-size: 100% 100%, 4px 4px;
   background-repeat: no-repeat, repeat;
   -webkit-background-clip: text;

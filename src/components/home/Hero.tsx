@@ -82,18 +82,18 @@ export default function Hero() {
         const handlePointerMove = (event: PointerEvent) => setPointer(event);
 
         const handlePointerLeave = () => {
-          spotSizeTo(0);
+          spotSizeTo(120);
           spotOpacityTo(0);
         };
 
-        section.addEventListener('pointerenter', handlePointerEnter);
-        section.addEventListener('pointermove', handlePointerMove);
-        section.addEventListener('pointerleave', handlePointerLeave);
+        heading.addEventListener('pointerenter', handlePointerEnter);
+        heading.addEventListener('pointermove', handlePointerMove);
+        heading.addEventListener('pointerleave', handlePointerLeave);
 
         return () => {
-          section.removeEventListener('pointerenter', handlePointerEnter);
-          section.removeEventListener('pointermove', handlePointerMove);
-          section.removeEventListener('pointerleave', handlePointerLeave);
+          heading.removeEventListener('pointerenter', handlePointerEnter);
+          heading.removeEventListener('pointermove', handlePointerMove);
+          heading.removeEventListener('pointerleave', handlePointerLeave);
         };
       });
 

@@ -4,6 +4,7 @@ import Transition from '@/components/home/Transition';
 import WhatWeDo from '@/components/home/WhatWeDo';
 import EventGallery from '@/components/home/EventGallery';
 import WhoWeAre from '@/components/home/WhoWeAre';
+import WhyUs from '@/components/home/WhyUs';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
       <WhatWeDo />
       <EventGallery />
       <WhoWeAre />
+      <WhyUs />
     </main>
   );
 }

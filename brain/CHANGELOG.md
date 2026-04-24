@@ -1,3 +1,9 @@
+## 2026-04-24-v61
+
+- Refined hero spotlight hover behavior in `src/components/home/Hero.tsx` by binding pointer tracking to the headline itself (instead of the full section), making the effect activate only when hovering the hero text.
+- Updated spotlight fallback behavior to keep a subtle resting glow (`--spot-size: 120`) and animate to a stronger highlight on hover, improving perceived polish and reducing abrupt on/off transitions.
+- Improved hero text legibility in `src/components/home/Hero.module.scss` by restoring a visible base textured fill while preserving GSAP-driven spotlight amplification on hover.
+
 ## 2026-04-23-v60
 
 - Rebuilt `WhoWeAre` in `src/components/home/WhoWeAre.tsx` with the new provided content structure: `WHO WE ARE`, `A CREATIVE EXPERIENCE STUDIO`, full headline statement, role titles, and three body narrative lines.

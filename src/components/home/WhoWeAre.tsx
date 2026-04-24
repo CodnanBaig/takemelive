@@ -4,7 +4,20 @@ import { useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 import styles from './WhoWeAre.module.scss';
 
-const HEADLINE_WORDS = ["WE'RE", 'A', 'CREW', 'OF', 'CREATORS,', 'DREAMERS,', 'AND', 'DOERS.'];
+const PORTRAIT_IMAGE = {
+  src: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1200&q=80',
+  alt: 'Creative team in a live production environment',
+  speed: 16,
+};
+
+const FALLBACK_IMAGE_SRC =
+  'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=80';
+
+const HEADLINE_LINES = [
+  "Squad",
+  'of creators,',
+  'dreamers, and doers.',
+];
 
 const ROLE_TITLES = [
   'Visionary designers.',
@@ -28,10 +41,13 @@ export default function WhoWeAre() {
       return;
     }
 
-    const headlineWords = section.querySelectorAll('[data-headline-word]');
+    const eyebrow = section.querySelector('[data-eyebrow]');
+    const headingLines = section.querySelectorAll('[data-heading-line]');
     const roles = section.querySelectorAll('[data-role]');
     const bodyLines = section.querySelectorAll('[data-body-line]');
-    const studioLine = section.querySelector('[data-studio-line]');
+    const accent = section.querySelector('[data-accent]');
+    const mediaCard = section.querySelector('[data-media-card]');
+    const mediaImage = section.querySelector<HTMLElement>('[data-parallax-image]');
     const syncLogoContrast = () =>
       ScrollTrigger.create({
         trigger: section,
@@ -51,9 +67,18 @@ export default function WhoWeAre() {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([headlineWords, roles, bodyLines], { autoAlpha: 1, x: 0, y: 0, scale: 1 });
-        if (studioLine) {
-          gsap.set(studioLine, { autoAlpha: 1, y: 0, letterSpacing: '0.24em' });
+        gsap.set([eyebrow, headingLines, roles, bodyLines, accent, mediaCard], {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          scale: 1,
+          clearProps: 'all',
+        });
+        if (mediaImage) {
+          gsap.set(mediaImage, { yPercent: 0, scale: 1.14 });
+        }
+        if (accent) {
+          gsap.set(accent, { scaleX: 1, transformOrigin: 'left center' });
         }
         const logoTrigger = syncLogoContrast();
         return () => {
@@ -64,15 +89,63 @@ export default function WhoWeAre() {
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         const logoTrigger = syncLogoContrast();
 
-        if (studioLine) {
+        if (mediaCard) {
+          const mediaTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 0.7,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          mediaTimeline
+            .fromTo(
+              mediaCard,
+              {
+                xPercent: 30,
+                autoAlpha: 0.45,
+              },
+              {
+                xPercent: 0,
+                autoAlpha: 1,
+                ease: 'none',
+                duration: 0.34,
+              },
+            )
+            .to(
+              mediaCard,
+              {
+                xPercent: 0,
+                autoAlpha: 1,
+                ease: 'none',
+                duration: 0.32,
+              },
+            )
+            .to(
+              mediaCard,
+              {
+                xPercent: -34,
+                autoAlpha: 0.72,
+                ease: 'none',
+                duration: 0.34,
+              },
+            );
+        }
+
+        if (mediaImage) {
+          gsap.set(mediaImage, { scale: 1.14 });
+        }
+
+        if (eyebrow) {
           gsap.fromTo(
-            studioLine,
-            { autoAlpha: 0, y: 18, letterSpacing: '0.34em' },
+            eyebrow,
+            { autoAlpha: 0, y: 18 },
             {
               autoAlpha: 1,
               y: 0,
-              letterSpacing: '0.24em',
-              duration: 0.7,
+              duration: 0.6,
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: section,
@@ -82,57 +155,63 @@ export default function WhoWeAre() {
           );
         }
 
-        gsap.fromTo(
-          headlineWords,
-          { yPercent: 120, autoAlpha: 0 },
-          {
-            yPercent: 0,
-            autoAlpha: 1,
-            stagger: 0.06,
-            duration: 0.84,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 70%',
+        if (accent) {
+          gsap.fromTo(
+            accent,
+            { scaleX: 0, transformOrigin: 'left center' },
+            {
+              scaleX: 1,
+              duration: 0.8,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: section,
+                start: 'top 72%',
+              },
             },
-          },
-        );
+          );
+        }
 
-        gsap.fromTo(
-          roles,
-          {
-            x: () => gsap.utils.random(-100, 100),
-            autoAlpha: 0,
+        const timeline = gsap.timeline({
+          defaults: { ease: 'power3.out' },
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 68%',
           },
-          {
-            x: 0,
-            autoAlpha: 1,
-            stagger: 0.12,
-            duration: 0.9,
-            ease: 'back.out(1.7)',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 70%',
-            },
-          },
-        );
+        });
 
-        gsap.fromTo(
-          bodyLines,
-          { y: 24, autoAlpha: 0, clipPath: 'inset(0% 0% 100% 0%)' },
-          {
-            y: 0,
-            autoAlpha: 1,
-            clipPath: 'inset(0% 0% 0% 0%)',
-            stagger: 0.12,
-            duration: 0.78,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 58%',
+        timeline
+          .fromTo(
+            headingLines,
+            { yPercent: 110, autoAlpha: 0 },
+            {
+              yPercent: 0,
+              autoAlpha: 1,
+              duration: 0.8,
+              stagger: 0.09,
             },
-          },
-        );
+          )
+          .fromTo(
+            roles,
+            { y: 24, autoAlpha: 0 },
+            {
+              y: 0,
+              autoAlpha: 1,
+              duration: 0.6,
+              stagger: 0.08,
+            },
+            '-=0.34',
+          )
+          .fromTo(
+            bodyLines,
+            { y: 22, autoAlpha: 0 },
+            {
+              y: 0,
+              autoAlpha: 1,
+              duration: 0.68,
+              stagger: 0.1,
+            },
+            '-=0.26',
+          );
 
         return () => {
           logoTrigger.kill();
@@ -158,35 +237,59 @@ export default function WhoWeAre() {
       aria-label="Who we are"
     >
       <div className={styles.inner}>
-        <p className={styles.kicker}>WHO WE ARE</p>
-        <p className={styles.studioLine} data-studio-line>
-          A CREATIVE EXPERIENCE STUDIO
-        </p>
-
-        <div className={styles.heroBlock}>
-          <h2 className={styles.heading}>
-            {HEADLINE_WORDS.map((word) => (
-              <span key={word} className={styles.wordWrap}>
-                <span data-headline-word>{word}</span>
-              </span>
-            ))}
-          </h2>
-
-          <div className={styles.roles}>
-            {ROLE_TITLES.map((role) => (
-              <p key={role} data-role className={styles.role}>
-                {role}
+        <div className={styles.grid}>
+          <div className={styles.leftRail}>
+            <div className={styles.meta}>
+              <p className={styles.kicker} data-eyebrow>
+                WHO WE ARE
               </p>
-            ))}
-          </div>
-        </div>
+              <p className={styles.studioLine}>A creative experience studio</p>
+            </div>
 
-        <div className={styles.bodyCopy}>
-          {BODY_LINES.map((line) => (
-            <p key={line} data-body-line>
-              {line}
-            </p>
-          ))}
+            <figure className={styles.mediaCard} data-media-card>
+              <img
+                src={PORTRAIT_IMAGE.src}
+                alt={PORTRAIT_IMAGE.alt}
+                loading="lazy"
+                className={styles.mediaImage}
+                data-parallax-image
+                data-speed={PORTRAIT_IMAGE.speed}
+                onError={(event) => {
+                  const target = event.currentTarget;
+                  if (target.src !== FALLBACK_IMAGE_SRC) {
+                    target.src = FALLBACK_IMAGE_SRC;
+                  }
+                }}
+              />
+            </figure>
+          </div>
+
+          <div className={styles.content}>
+            <div className={styles.accent} data-accent aria-hidden="true" />
+            <h2 className={styles.heading}>
+              {HEADLINE_LINES.map((line) => (
+                <span key={line} className={styles.lineWrap}>
+                  <span data-heading-line>{line}</span>
+                </span>
+              ))}
+            </h2>
+
+            <div className={styles.roles}>
+              {ROLE_TITLES.map((role) => (
+                <p key={role} data-role className={styles.role}>
+                  {role}
+                </p>
+              ))}
+            </div>
+
+            <div className={styles.bodyCopy}>
+              {BODY_LINES.map((line) => (
+                <p key={line} data-body-line>
+                  {line}
+                </p>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
