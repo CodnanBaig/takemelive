@@ -1,3 +1,8 @@
+## 2026-04-24-v74
+
+- Reworked `FeaturedProjects` section into a minimalist diagonal scroll-swiper composition in `src/components/home/FeaturedProjects.tsx` with phase-driven card cycling and per-card transform choreography.
+- Refactored section styling in `src/components/home/FeaturedProjects.module.scss` to a tighter stack container layout with index labels, deeper image framing, and explicit `SCROLL TO SURF` footer hint.
+
 ## 2026-04-24-v73
 
 - Retuned `FeaturedProjects` card perspective styling to better match the provided reference: removed heavy global 7-o'clock tilt and replaced it with upright cinematic plane offsets using per-card 3D transforms (`translateZ` + subtle `rotateY` variations).

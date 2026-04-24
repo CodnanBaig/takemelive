@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import styles from './FeaturedProjects.module.scss';
 
@@ -38,28 +38,23 @@ const PROJECTS = [
 
 const FALLBACK_IMAGE_SRC =
   'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80';
-const SWIPER_PROJECTS = [...PROJECTS, ...PROJECTS, ...PROJECTS] as const;
 
 export default function FeaturedProjects() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const marqueeTrackRef = useRef<HTMLDivElement | null>(null);
-  const swiperTrackRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const lastScrollY = useRef(0);
   const scrollDelta = useRef(0);
-
-  const marqueeItems = useMemo(
-    () => Array.from({ length: 14 }, () => 'Featured Projects'),
-    [],
-  );
+  const phaseRef = useRef(0);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const marqueeTrack = marqueeTrackRef.current;
-    const swiperTrack = swiperTrackRef.current;
-    if (!section || !marqueeTrack || !swiperTrack) {
+    const container = containerRef.current;
+    if (!section || !container) {
       return;
     }
 
+    const cards = container.querySelectorAll<HTMLElement>(`.${styles.card}`);
+    
     const handleScroll = () => {
       const nextY = window.scrollY;
       scrollDelta.current = nextY - lastScrollY.current;
@@ -70,31 +65,52 @@ export default function FeaturedProjects() {
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     let currentVelocity = 0;
-    let marqueeX = 0;
-    let swiperX = 0;
 
     const ticker = () => {
-      const marqueeLoopWidth = marqueeTrack.scrollWidth / 2;
-      const swiperLoopWidth = swiperTrack.scrollWidth / 3;
-      if (!marqueeLoopWidth || !swiperLoopWidth) {
-        return;
-      }
+      currentVelocity = gsap.utils.interpolate(currentVelocity, scrollDelta.current, 0.1);
+      scrollDelta.current *= 0.9;
 
-      currentVelocity = gsap.utils.interpolate(currentVelocity, scrollDelta.current, 0.12);
-      scrollDelta.current *= 0.88;
+      const baseSpeed = 0.002; // Slower base speed for elegance
+      const velocityInfluence = Math.abs(currentVelocity) * 0.0005;
+      phaseRef.current = (phaseRef.current + baseSpeed + velocityInfluence) % 1;
 
-      const velocityInfluence = gsap.utils.clamp(-8, 8, currentVelocity * 0.06);
+      cards.forEach((card, index) => {
+        // Calculate card-specific phase
+        const cardPhase = (phaseRef.current + index / PROJECTS.length) % 1;
+        
+        // Diagonal Path Logic: Top-Right (0) -> Center (0.5) -> Bottom-Left (1)
+        // We map the 0-1 phase to a cinematic curve
+        
+        // Progress within the swap: 0 (start) to 1 (end)
+        const p = cardPhase;
+        
+        // X and Y travel: 120% to -120%
+        // We use a power curve to make it linger in the center
+        const easedP = gsap.parseEase('power2.inOut')(p);
+        const x = (1 - easedP * 2) * 100; // 100% to -100%
+        const y = (easedP * 2 - 1) * 100; // -100% to 100%
+        
+        // Scale: 0.8 -> 1.0 -> 0.8
+        const scale = 1 - Math.abs(p - 0.5) * 0.4;
+        
+        // Opacity: Fade in and out at edges
+        const opacity = Math.sin(p * Math.PI);
+        
+        // Rotation: Slight tilt during travel
+        const rotation = (0.5 - p) * 30;
 
-      const marqueeDirection = currentVelocity >= 0 ? -1 : 1;
-      const marqueeSpeed = 0.55 + Math.min(Math.abs(currentVelocity) * 0.08, 7.5);
-      marqueeX += marqueeDirection * marqueeSpeed;
-      marqueeX = gsap.utils.wrap(-marqueeLoopWidth, 0, marqueeX);
-      gsap.set(marqueeTrack, { x: marqueeX });
+        // Z-Index: Active card (center) should be on top
+        const zIndex = Math.floor(opacity * 100);
 
-      const swiperSpeed = 1.4 + Math.abs(velocityInfluence) * 0.22;
-      swiperX -= swiperSpeed;
-      swiperX = gsap.utils.wrap(-swiperLoopWidth, 0, swiperX);
-      gsap.set(swiperTrack, { x: swiperX });
+        gsap.set(card, {
+          xPercent: x,
+          yPercent: y,
+          scale: scale,
+          autoAlpha: opacity,
+          rotateZ: rotation,
+          zIndex: zIndex,
+        });
+      });
     };
 
     gsap.ticker.add(ticker);
@@ -115,46 +131,43 @@ export default function FeaturedProjects() {
       aria-label="Featured projects"
     >
       <div className={styles.inner}>
-        <div className={styles.marqueeShell} aria-hidden="true">
-          <div className={styles.marqueeTrack} ref={marqueeTrackRef}>
-            {marqueeItems.map((title, index) => (
-              <span key={`${title}-${index}`} className={styles.marqueeItem}>
-                {title}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.swiperViewport}>
-          <div className={styles.swiperTrack} ref={swiperTrackRef}>
-            {SWIPER_PROJECTS.map((project, index) => (
+        <div className={styles.stackContainer} ref={containerRef}>
+          {PROJECTS.map((project, index) => (
             <Link
-              key={`${project.slug}-${index}`}
+              key={project.slug}
               href={`/projects/${project.slug}`}
               className={styles.card}
               data-project-card
               data-cursor="link"
               aria-label={`Open ${project.title} project`}
             >
-              <img
-                src={project.image}
-                alt={project.alt}
-                className={styles.cardImage}
-                data-card-image
-                loading="lazy"
-                onError={(event) => {
-                  const target = event.currentTarget;
-                  if (target.src !== FALLBACK_IMAGE_SRC) {
-                    target.src = FALLBACK_IMAGE_SRC;
-                  }
-                }}
-              />
-              <div className={styles.overlay}>
-                <h3>{project.title}</h3>
+              <div className={styles.cardIndex}>
+                {index.toString().padStart(2, '0')}
+              </div>
+              <div className={styles.cardImageWrapper}>
+                <img
+                  src={project.image}
+                  alt={project.alt}
+                  className={styles.cardImage}
+                  data-card-image
+                  loading="lazy"
+                  onError={(event) => {
+                    const target = event.currentTarget;
+                    if (target.src !== FALLBACK_IMAGE_SRC) {
+                      target.src = FALLBACK_IMAGE_SRC;
+                    }
+                  }}
+                />
+                <div className={styles.overlay}>
+                  <h3>{project.title}</h3>
+                </div>
               </div>
             </Link>
           ))}
-          </div>
+        </div>
+
+        <div className={styles.scrollHint} aria-hidden="true">
+          <span>SCROLL TO SURF</span>
         </div>
       </div>
     </section>
