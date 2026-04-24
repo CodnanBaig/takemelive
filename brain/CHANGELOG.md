@@ -1,3 +1,9 @@
+## 2026-04-24-v75
+
+- Reworked `FeaturedProjects` animation flow in `src/components/home/FeaturedProjects.tsx` to a pinned scrub-based diagonal card cycle using `ScrollTrigger` timeline choreography over triplicated project entries for long-form looped browsing.
+- Updated card sequencing behavior to progress through layered stack states before diagonal exit, creating a clearer "scroll-swiper" narrative pass-through.
+- Removed an unused `ScrollTrigger` import symbol warning after integrating the new timeline approach.
+
 ## 2026-04-24-v74
 
 - Reworked `FeaturedProjects` section into a minimalist diagonal scroll-swiper composition in `src/components/home/FeaturedProjects.tsx` with phase-driven card cycling and per-card transform choreography.

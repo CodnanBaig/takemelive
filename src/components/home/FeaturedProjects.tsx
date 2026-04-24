@@ -39,12 +39,12 @@ const PROJECTS = [
 const FALLBACK_IMAGE_SRC =
   'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80';
 
+// Triplicate for seamless feel during long scroll
+const INFINITE_PROJECTS = [...PROJECTS, ...PROJECTS, ...PROJECTS];
+
 export default function FeaturedProjects() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const lastScrollY = useRef(0);
-  const scrollDelta = useRef(0);
-  const phaseRef = useRef(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -55,69 +55,86 @@ export default function FeaturedProjects() {
 
     const cards = container.querySelectorAll<HTMLElement>(`.${styles.card}`);
     
-    const handleScroll = () => {
-      const nextY = window.scrollY;
-      scrollDelta.current = nextY - lastScrollY.current;
-      lastScrollY.current = nextY;
-    };
-
-    lastScrollY.current = window.scrollY;
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    let currentVelocity = 0;
-
-    const ticker = () => {
-      currentVelocity = gsap.utils.interpolate(currentVelocity, scrollDelta.current, 0.1);
-      scrollDelta.current *= 0.9;
-
-      const baseSpeed = 0.002; // Slower base speed for elegance
-      const velocityInfluence = Math.abs(currentVelocity) * 0.0005;
-      phaseRef.current = (phaseRef.current + baseSpeed + velocityInfluence) % 1;
-
-      cards.forEach((card, index) => {
-        // Calculate card-specific phase
-        const cardPhase = (phaseRef.current + index / PROJECTS.length) % 1;
-        
-        // Diagonal Path Logic: Top-Right (0) -> Center (0.5) -> Bottom-Left (1)
-        // We map the 0-1 phase to a cinematic curve
-        
-        // Progress within the swap: 0 (start) to 1 (end)
-        const p = cardPhase;
-        
-        // X and Y travel: 120% to -120%
-        // We use a power curve to make it linger in the center
-        const easedP = gsap.parseEase('power2.inOut')(p);
-        const x = (1 - easedP * 2) * 100; // 100% to -100%
-        const y = (easedP * 2 - 1) * 100; // -100% to 100%
-        
-        // Scale: 0.8 -> 1.0 -> 0.8
-        const scale = 1 - Math.abs(p - 0.5) * 0.4;
-        
-        // Opacity: Fade in and out at edges
-        const opacity = Math.sin(p * Math.PI);
-        
-        // Rotation: Slight tilt during travel
-        const rotation = (0.5 - p) * 30;
-
-        // Z-Index: Active card (center) should be on top
-        const zIndex = Math.floor(opacity * 100);
-
-        gsap.set(card, {
-          xPercent: x,
-          yPercent: y,
-          scale: scale,
-          autoAlpha: opacity,
-          rotateZ: rotation,
-          zIndex: zIndex,
-        });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: `+=${INFINITE_PROJECTS.length * 80}%`, // Very long scroll
+          pin: true,
+          scrub: 1.5, // High scrub for "infinite smooth" feel
+          anticipatePin: 1,
+        },
       });
-    };
 
-    gsap.ticker.add(ticker);
+      cards.forEach((card, i) => {
+        // Each card has a "life cycle" in the stack
+        // We start them hidden and then they enter the "waiting" slots
+        
+        // Initial state: hidden top-right
+        gsap.set(card, {
+          xPercent: 60,
+          yPercent: -60,
+          opacity: 0,
+          scale: 0.7,
+          rotateZ: 10,
+          zIndex: 1,
+        });
+
+        // Entrance to the back of the visible stack (Position 2)
+        tl.to(card, {
+          xPercent: 12,
+          yPercent: 12,
+          opacity: 0.3,
+          scale: 0.8,
+          rotateZ: 4,
+          zIndex: 5,
+          duration: 1,
+        }, i * 1);
+
+        // Move to middle of the stack (Position 1)
+        tl.to(card, {
+          xPercent: 6,
+          yPercent: 6,
+          opacity: 0.6,
+          scale: 0.9,
+          rotateZ: 2,
+          zIndex: 10,
+          duration: 1,
+        }, `>`);
+
+        // Move to the front (Active / Position 0)
+        tl.to(card, {
+          xPercent: 0,
+          yPercent: 0,
+          opacity: 1,
+          scale: 1,
+          rotateZ: 0,
+          zIndex: 20,
+          duration: 1,
+        }, `>`);
+
+        // Stay active for a bit
+        tl.to(card, {
+          scale: 1.02,
+          duration: 0.5,
+        }, `>`);
+
+        // Exit diagonally to bottom-left
+        tl.to(card, {
+          xPercent: -140,
+          yPercent: 140,
+          opacity: 0,
+          scale: 0.8,
+          rotateZ: -15,
+          duration: 1.5,
+          ease: 'power2.in',
+        }, `>`);
+      });
+    }, section);
 
     return () => {
-      gsap.ticker.remove(ticker);
-      window.removeEventListener('scroll', handleScroll);
+      ctx.revert();
     };
   }, []);
 
@@ -132,9 +149,9 @@ export default function FeaturedProjects() {
     >
       <div className={styles.inner}>
         <div className={styles.stackContainer} ref={containerRef}>
-          {PROJECTS.map((project, index) => (
+          {INFINITE_PROJECTS.map((project, index) => (
             <Link
-              key={project.slug}
+              key={`${project.slug}-${index}`}
               href={`/projects/${project.slug}`}
               className={styles.card}
               data-project-card
@@ -142,7 +159,7 @@ export default function FeaturedProjects() {
               aria-label={`Open ${project.title} project`}
             >
               <div className={styles.cardIndex}>
-                {index.toString().padStart(2, '0')}
+                {(index % PROJECTS.length).toString().padStart(2, '0')}
               </div>
               <div className={styles.cardImageWrapper}>
                 <img
