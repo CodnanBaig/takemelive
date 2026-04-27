@@ -1,136 +1,126 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
-import { gsap } from '@/lib/gsap';
+import { useEffect, useMemo, useRef } from 'react';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { FEATURED_PROJECTS } from '@/content/featuredProjects';
 import styles from './FeaturedProjects.module.scss';
 
-const PROJECTS = [
-  {
-    title: 'Neon Pulse Festival',
-    slug: 'neon-pulse-festival',
-    image:
-      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1600&q=80',
-    alt: 'Festival crowd with stage lights and smoke',
-  },
-  {
-    title: 'Afterglow Brand Launch',
-    slug: 'afterglow-brand-launch',
-    image:
-      'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1600&q=80',
-    alt: 'Modern brand launch event with audience and stage',
-  },
-  {
-    title: 'Momentum Summit',
-    slug: 'momentum-summit',
-    image:
-      'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1600&q=80',
-    alt: 'Conference stage setup with cinematic lighting',
-  },
-  {
-    title: 'Orbit Fan Convention',
-    slug: 'orbit-fan-convention',
-    image:
-      'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80',
-    alt: 'Packed audience at a live fan convention',
-  },
-] as const;
-
-const FALLBACK_IMAGE_SRC =
-  'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80';
-
-// Triplicate for seamless feel during long scroll
-const INFINITE_PROJECTS = [...PROJECTS, ...PROJECTS, ...PROJECTS];
+const FALLBACK_IMAGE_SRC = FEATURED_PROJECTS[0]?.coverImage ?? '';
 
 export default function FeaturedProjects() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const viewportRef = useRef<HTMLDivElement | null>(null);
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const marqueeTrackRef = useRef<HTMLDivElement | null>(null);
+
+  const marqueeItems = useMemo(() => Array.from({ length: 12 }, () => 'Featured Projects'), []);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const container = containerRef.current;
-    if (!section || !container) {
+    const viewport = viewportRef.current;
+    const rail = railRef.current;
+    const marqueeTrack = marqueeTrackRef.current;
+    if (!section || !viewport || !rail || !marqueeTrack) {
       return;
     }
 
-    const cards = container.querySelectorAll<HTMLElement>(`.${styles.card}`);
-    
     const ctx = gsap.context(() => {
+      const cards = Array.from(rail.querySelectorAll<HTMLElement>('[data-project-card]'));
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-          end: `+=${INFINITE_PROJECTS.length * 80}%`, // Very long scroll
+          end: `+=${FEATURED_PROJECTS.length * 90}%`,
           pin: true,
-          scrub: 1.5, // High scrub for "infinite smooth" feel
+          scrub: 1.05,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
-      cards.forEach((card, i) => {
-        // Each card has a "life cycle" in the stack
-        // We start them hidden and then they enter the "waiting" slots
-        
-        // Initial state: hidden top-right
-        gsap.set(card, {
-          xPercent: 60,
-          yPercent: -60,
-          opacity: 0,
-          scale: 0.7,
-          rotateZ: 10,
-          zIndex: 1,
+      tl.fromTo(
+        rail,
+        { x: 0 },
+        {
+          x: () => -Math.max(0, rail.scrollWidth - viewport.clientWidth),
+          ease: 'none',
+          duration: 1,
+        },
+        0,
+      );
+
+      cards.forEach((card, index) => {
+        const image = card.querySelector<HTMLElement>('[data-card-image]');
+        const overlay = card.querySelector<HTMLElement>('[data-card-overlay]');
+
+        tl.fromTo(
+          card,
+          {
+            y: index % 2 === 0 ? 14 : -14,
+            rotateZ: index % 2 === 0 ? -1 : 1,
+            opacity: 0.62,
+          },
+          {
+            y: index % 2 === 0 ? -14 : 14,
+            rotateZ: index % 2 === 0 ? 1 : -1,
+            opacity: 1,
+            ease: 'none',
+            duration: 1,
+          },
+          0,
+        );
+
+        const enter = () => {
+          if (image) {
+            gsap.to(image, { scale: 1.05, duration: 0.4, ease: 'power2.out' });
+          }
+          if (overlay) {
+            gsap.to(overlay, { opacity: 0.45, duration: 0.4, ease: 'power2.out' });
+          }
+        };
+
+        const leave = () => {
+          if (image) {
+            gsap.to(image, { scale: 1, duration: 0.4, ease: 'power2.out' });
+          }
+          if (overlay) {
+            gsap.to(overlay, { opacity: 0.72, duration: 0.4, ease: 'power2.out' });
+          }
+        };
+
+        card.addEventListener('mouseenter', enter);
+        card.addEventListener('mouseleave', leave);
+
+        ScrollTrigger.create({
+          trigger: card,
+          containerAnimation: tl,
+          start: 'left 72%',
+          end: 'right 28%',
+          onEnter: () => gsap.to(card, { opacity: 1, duration: 0.22 }),
+          onEnterBack: () => gsap.to(card, { opacity: 1, duration: 0.22 }),
+          onLeave: () => gsap.to(card, { opacity: 0.52, duration: 0.22 }),
+          onLeaveBack: () => gsap.to(card, { opacity: 0.52, duration: 0.22 }),
         });
-
-        // Entrance to the back of the visible stack (Position 2)
-        tl.to(card, {
-          xPercent: 12,
-          yPercent: 12,
-          opacity: 0.3,
-          scale: 0.8,
-          rotateZ: 4,
-          zIndex: 5,
-          duration: 1,
-        }, i * 1);
-
-        // Move to middle of the stack (Position 1)
-        tl.to(card, {
-          xPercent: 6,
-          yPercent: 6,
-          opacity: 0.6,
-          scale: 0.9,
-          rotateZ: 2,
-          zIndex: 10,
-          duration: 1,
-        }, `>`);
-
-        // Move to the front (Active / Position 0)
-        tl.to(card, {
-          xPercent: 0,
-          yPercent: 0,
-          opacity: 1,
-          scale: 1,
-          rotateZ: 0,
-          zIndex: 20,
-          duration: 1,
-        }, `>`);
-
-        // Stay active for a bit
-        tl.to(card, {
-          scale: 1.02,
-          duration: 0.5,
-        }, `>`);
-
-        // Exit diagonally to bottom-left
-        tl.to(card, {
-          xPercent: -140,
-          yPercent: 140,
-          opacity: 0,
-          scale: 0.8,
-          rotateZ: -15,
-          duration: 1.5,
-          ease: 'power2.in',
-        }, `>`);
       });
+
+      let marqueeX = 0;
+
+      const ticker = () => {
+        const loopWidth = marqueeTrack.scrollWidth / 2;
+        if (!loopWidth) {
+          return;
+        }
+        marqueeX -= 1.2;
+        marqueeX = gsap.utils.wrap(-loopWidth, 0, marqueeX);
+        gsap.set(marqueeTrack, { x: marqueeX });
+      };
+      gsap.ticker.add(ticker);
+
+      return () => {
+        gsap.ticker.remove(ticker);
+      };
     }, section);
 
     return () => {
@@ -142,50 +132,57 @@ export default function FeaturedProjects() {
     <section
       id="chapter-featured-projects"
       data-chapter="featured-projects"
-      data-logo-invert="1"
+      data-logo-invert="0"
       ref={sectionRef}
       className={styles.section}
       aria-label="Featured projects"
     >
       <div className={styles.inner}>
-        <div className={styles.stackContainer} ref={containerRef}>
-          {INFINITE_PROJECTS.map((project, index) => (
-            <Link
-              key={`${project.slug}-${index}`}
-              href={`/projects/${project.slug}`}
-              className={styles.card}
-              data-project-card
-              data-cursor="link"
-              aria-label={`Open ${project.title} project`}
-            >
-              <div className={styles.cardIndex}>
-                {(index % PROJECTS.length).toString().padStart(2, '0')}
-              </div>
-              <div className={styles.cardImageWrapper}>
-                <img
-                  src={project.image}
-                  alt={project.alt}
-                  className={styles.cardImage}
-                  data-card-image
-                  loading="lazy"
-                  onError={(event) => {
-                    const target = event.currentTarget;
-                    if (target.src !== FALLBACK_IMAGE_SRC) {
-                      target.src = FALLBACK_IMAGE_SRC;
-                    }
-                  }}
-                />
-                <div className={styles.overlay}>
-                  <h3>{project.title}</h3>
-                </div>
-              </div>
-            </Link>
-          ))}
+        <div className={styles.marqueeShell} aria-hidden="true">
+          <div className={styles.marqueeTrack} ref={marqueeTrackRef}>
+            {marqueeItems.map((label, index) => (
+              <span key={`${label}-${index}`} className={styles.marqueeItem}>
+                {label}
+              </span>
+            ))}
+          </div>
         </div>
 
-        <div className={styles.scrollHint} aria-hidden="true">
-          <span>SCROLL TO SURF</span>
+        <div className={styles.viewport} ref={viewportRef}>
+          <div className={styles.rail} ref={railRef}>
+            {FEATURED_PROJECTS.map((project, index) => (
+              <Link
+                key={project.slug}
+                href={`/projects/${project.slug}`}
+                className={styles.card}
+                data-project-card
+                data-cursor="link"
+                aria-label={`Open ${project.title} project`}
+              >
+                <div className={styles.cardIndex}>{String(index + 1).padStart(2, '0')}</div>
+                <div className={styles.cardImageWrapper}>
+                  <img
+                    src={project.coverImage}
+                    alt={project.summary}
+                    className={styles.cardImage}
+                    data-card-image
+                    loading="lazy"
+                    onError={(event) => {
+                      const target = event.currentTarget;
+                      if (target.src !== FALLBACK_IMAGE_SRC) {
+                        target.src = FALLBACK_IMAGE_SRC;
+                      }
+                    }}
+                  />
+                  <div className={styles.overlay} data-card-overlay>
+                    <h3>{project.title}</h3>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
+
       </div>
     </section>
   );

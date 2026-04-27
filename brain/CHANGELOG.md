@@ -1,3 +1,91 @@
+## 2026-04-27-v93
+
+- Updated `Services` panel animation to strong alternating lateral entrances on ScrollTrigger (`x: -180 / +180` -> `0`) so each service clearly comes in from left/right.
+- Adjusted service panel grid layout so every service heading is anchored to the left content column while supporting detail/outcome text sits on the right column for desktop.
+
+## 2026-04-27-v92
+
+- Improved `Services` panel readability in `Services.module.scss` by rebalancing text columns, reducing headline compression, increasing body line-height/contrast, and adding clearer separation for the outcome line.
+
+## 2026-04-27-v91
+
+- Upgraded `Services` card visual impact in `Services.module.scss` with stronger depth/contrast treatment: heavier border + layered shadows, vertical accent rail, larger display-style service titles, bolder list markers, and emphasized closing description block.
+
+## 2026-04-27-v90
+
+- Intensified `Services` chapter motion language in `Services.tsx`/`.module.scss` with layered GSAP effects: parallax background typography, animated media collage rail, image-in-frame scrub parallax, and stronger staggered card entrances.
+- Added cinematic showcase imagery above service cards and tied it to ScrollTrigger reveal + scrub behavior to match the animation richness of surrounding homepage sections.
+
+## 2026-04-27-v89
+
+- Added a new animated `Services` chapter (`src/components/home/Services.tsx` + `Services.module.scss`) directly below `FeaturedProjects` in `src/app/page.tsx`.
+- Implemented GSAP ScrollTrigger choreography for smooth section motion: headline/intro reveal, staggered service card entrances with directional offsets + clip reveal, and a scrubbed ambient stripe parallax.
+- Mapped all provided services content into structured cards while preserving the project’s cinematic dark UI language and responsive behavior.
+
+## 2026-04-27-v88
+
+- Added canonical featured project dataset in `src/content/featuredProjects.ts` with the provided four projects (title, event/client, summaries, descriptions, cover image, and gallery images).
+- Updated `FeaturedProjects.tsx` to source card content/routes from shared data so every card links to its dedicated project slug route.
+- Added dynamic project detail pages at `src/app/projects/[slug]/page.tsx` (+ scoped styles) that render each project’s full copy and image gallery, with static params generation for all featured slugs.
+
+## 2026-04-27-v87
+
+- Increased spacing around the `FeaturedProjects` cards container by adding responsive internal padding to `.viewport` in `FeaturedProjects.module.scss` (desktop/tablet/mobile), creating more breathing room around the card rail.
+
+## 2026-04-27-v86
+
+- Fixed `FeaturedProjects` runtime `ReferenceError` by importing `ScrollTrigger` from `@/lib/gsap` in `src/components/home/FeaturedProjects.tsx` (used by `ScrollTrigger.create` during card visibility state updates).
+
+## 2026-04-27-v85
+
+- Rebuilt `FeaturedProjects` structure and styling from scratch into a single stable architecture: pinned 100vh scene with marquee heading + clipped viewport + horizontal rail of project cards.
+- Replaced conflicting legacy stack/stage CSS with a unified `viewport/rail/card` system to eliminate transform-stack conflicts and make overflow behavior deterministic.
+- Updated scroll animation logic to drive one robust rail translation timeline plus lightweight card oscillation/opacity emphasis, preserving hover interactions without layered animation collisions.
+
+## 2026-04-27-v84
+
+- Applied stricter horizontal overflow containment for `FeaturedProjects` during pinned GSAP transforms by adding `overflow-x: clip`, `contain: layout paint`, and `isolation: isolate` across section/stage/marquee/stack wrappers in `FeaturedProjects.module.scss`.
+- This hardens the section against transform-induced width leakage that can still produce horizontal scrollbars even when `overflow-x: hidden` is present.
+
+## 2026-04-27-v83
+
+- Fixed horizontal overflow risk in `FeaturedProjects.module.scss` by enforcing x-axis clipping/constraints on section, inner wrapper, stage, and marquee shell (`overflow-x: hidden`, `max-width: 100%/100vw`), preventing full-page side scroll caused by transformed elements.
+
+## 2026-04-27-v82
+
+- Fixed `FeaturedProjects` sticky/stuck feel by reducing pin duration in `FeaturedProjects.tsx` (`end: '+=220%'`) and smoothing scrub to `1` for faster release.
+- Normalized the chapter to a true viewport section by changing `FeaturedProjects.module.scss` section/inner sizing to `100vh` and tightening internal spacing and card-stage heights for reliable in-viewport rendering.
+
+## 2026-04-27-v81
+
+- Added a GSAP ScrollTrigger-driven section-stage swipe layer to `FeaturedProjects` so the entire chapter (marquee + card area + hint) now shifts like a scroll slider, not just individual cards.
+- Introduced per-step stage transforms (entry settle + directional exit) plus progress snapping in `FeaturedProjects.tsx` to mimic slide-like transitions while preserving existing card choreography.
+
+## 2026-04-27-v80
+
+- Switched `FeaturedProjects` to a white chapter theme in `FeaturedProjects.module.scss` (light background, dark grid overlay, dark marquee/metadata text) for requested visual treatment.
+- Updated `FeaturedProjects.tsx` section logo contrast handoff to `data-logo-invert="0"` so the fixed header logo stays dark on the new white background.
+
+## 2026-04-27-v79
+
+- Decoupled `FeaturedProjects` heading marquee movement from user scroll input by removing scroll-delta velocity coupling in `FeaturedProjects.tsx`.
+- Set marquee loop to a stable constant ticker speed so header animation no longer accelerates/reverses based on scroll behavior.
+
+## 2026-04-27-v78
+
+- Removed infinite card looping from `FeaturedProjects` by switching the stack render source back to the base 4-item `PROJECTS` array only.
+- Updated the pinned scroll span in `FeaturedProjects.tsx` to a finite project pass (`PROJECTS.length * 110%`) so the card choreography now runs once per section visit.
+
+## 2026-04-27-v77
+
+- Changed `FeaturedProjects` card scroll layout from a compact diagonal stack to a wider lane-based flow (right lane -> middle lane -> hero -> left lane -> exit) in `src/components/home/FeaturedProjects.tsx`.
+- Updated `FeaturedProjects.module.scss` layout dimensions to support the new choreography with a wide viewport container, fixed card sizing, and clipped overflow for cleaner travel across the section.
+
+## 2026-04-27-v76
+
+- Added a top marquee heading to `FeaturedProjects` using repeated `Featured Projects` labels and GSAP ticker movement, restoring marquee-style chapter titling.
+- Matched marquee typography scale to the site’s large heading system in `FeaturedProjects.module.scss` (`Anton`, `clamp(2.9rem, 8vw, 7.5rem)`) for visual consistency with other sections.
+
 ## 2026-04-24-v75
 
 - Reworked `FeaturedProjects` animation flow in `src/components/home/FeaturedProjects.tsx` to a pinned scrub-based diagonal card cycle using `ScrollTrigger` timeline choreography over triplicated project entries for long-form looped browsing.

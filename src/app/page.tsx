@@ -8,6 +8,7 @@ import WhoWeAre from '@/components/home/WhoWeAre';
 import WhyUs from '@/components/home/WhyUs';
 import HowItWorks from '@/components/home/HowItWorks';
 import FeaturedProjects from '@/components/home/FeaturedProjects';
+import Services from '@/components/home/Services';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -33,6 +34,7 @@ export default function Home() {
       <WhyUs />
       <HowItWorks />
       <FeaturedProjects />
+      <Services />
     </main>
   );
 }

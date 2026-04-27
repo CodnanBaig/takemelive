@@ -1,0 +1,113 @@
+.page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 12%, rgb(208 223 89 / 0.1), transparent 24%),
+    radial-gradient(circle at 84% 82%, rgb(255 255 255 / 0.05), transparent 22%),
+    #040506;
+  color: #f5f5f0;
+  padding: clamp(2rem, 4vh, 3.5rem) 0 clamp(3rem, 6vh, 5rem);
+}
+
+.inner {
+  width: min(92vw, 1120px);
+  margin: 0 auto;
+  display: grid;
+  gap: clamp(1.4rem, 2.2vh, 2.2rem);
+}
+
+.backLink {
+  width: fit-content;
+  color: rgb(245 245 240 / 0.76);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+}
+
+.backLink:hover {
+  color: #d0df59;
+}
+
+.header {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.header p {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  color: rgb(245 245 240 / 0.72);
+}
+
+.header h1 {
+  margin: 0;
+  font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
+  font-size: clamp(2.2rem, 8vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: clamp(1rem, 1.5vw, 1.28rem);
+  font-weight: 500;
+  color: rgb(245 245 240 / 0.82);
+}
+
+.lead {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 72ch;
+}
+
+.lead p {
+  margin: 0;
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.68;
+  color: rgb(245 245 240 / 0.85);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgb(245 245 240 / 0.12);
+  background: #0f1013;
+}
+
+.figure:nth-child(1) {
+  grid-column: span 12;
+}
+
+.figure:nth-child(2),
+.figure:nth-child(3) {
+  grid-column: span 6;
+}
+
+.figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 250px;
+}
+
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .figure:nth-child(2),
+  .figure:nth-child(3) {
+    grid-column: auto;
+  }
+}
