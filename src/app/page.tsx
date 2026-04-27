@@ -9,6 +9,8 @@ import WhyUs from '@/components/home/WhyUs';
 import HowItWorks from '@/components/home/HowItWorks';
 import FeaturedProjects from '@/components/home/FeaturedProjects';
 import Services from '@/components/home/Services';
+import Industries from '@/components/home/Industries';
+import Team from '@/components/home/Team';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -35,6 +37,8 @@ export default function Home() {
       <HowItWorks />
       <FeaturedProjects />
       <Services />
+      <Industries />
+      <Team />
     </main>
   );
 }

@@ -1,3 +1,205 @@
+## 2026-04-27-v131
+
+- Intensified `Team` chapter motion language with a cinematic multi-layer reveal sequence:
+  - stronger left/right panel entrances,
+  - punchier headline/chip reveal choreography,
+  - 3D card entry transforms (depth, rotation, scale),
+  - media and card-body stagger layering for higher visual impact.
+- Added interactive card hover tilt/lift + media zoom polish for a more energetic, premium feel after section load.
+- Added explicit event-listener cleanup for card hover interactions to keep runtime behavior clean.
+
+## 2026-04-27-v130
+
+- Added a new `Team` chapter with polished two-column composition and high-fidelity presentation:
+  - Section title/content from provided copy,
+  - prominent headline (`PEOPLE BEHIND THE EXPERIENCES.`),
+  - values chips (`Collaborative`, `Detail-focused`, `Purpose-driven`),
+  - right-side role showcase cards (`Designers`, `Technologists`, `Producers`) with image/media treatment.
+- Implemented GSAP reveal choreography for headline, intro, value chips, cards, and divider on scroll entry.
+- Mounted `Team` directly after `Industries` in `src/app/page.tsx`.
+
+## 2026-04-27-v129
+
+- Changed `Industries` interaction mode to true carousel-style autoplay across all devices: words/tooltips/previews now keep cycling continuously without requiring hover, touch, or manual pagination.
+- Retained desktop hover support as optional enhancement while autoplay remains active by default.
+
+## 2026-04-27-v128
+
+- Updated `Industries` mobile/touch interaction model to fully hands-free autoplay: continuous auto-cycling now runs on touch-like devices (`hover: none` or `pointer: coarse`) without requiring any tap.
+- Removed manual touch tap trigger wiring so mobile behavior is consistently passive/autonomous.
+
+## 2026-04-27-v127
+
+- Added mobile/touch automation for `Industries` interactions: on devices without hover support, active word states now auto-cycle (ripple fill + tooltip + preview image) so the experience works without mouse hover.
+- Kept desktop hover behavior unchanged and added pointer tap support to manually trigger a word state on touch devices.
+- Updated preview/word/tooltip animation durations to respect reduced-motion preferences by switching to immediate state transitions.
+
+## 2026-04-27-v126
+
+- Fixed `Industries` lead heading sizing not applying: `.intro p` was overriding `.lead` styles due higher selector specificity.
+- Updated selector to `.intro .lead` so `CULTURE DOESN'T BELONG TO ONE INDUSTRY.` now correctly renders at heading scale.
+
+## 2026-04-27-v125
+
+- Retuned the `Industries` left-column lead line (`CULTURE DOESN'T BELONG TO ONE INDUSTRY.`) to section-heading scale (`clamp(2.4rem, 7vw, 6.4rem)`) for consistent headline hierarchy with other chapters.
+
+## 2026-04-27-v124
+
+- Switched `Industries` hover preview visuals to use the same Unsplash-style placeholder imagery already used in upper homepage sections for consistent visual language.
+- Kept preview panel behavior scoped to hover/focus only, and updated preview image rendering to standard `<img>` handling for remote placeholder sources.
+
+## 2026-04-27-v123
+
+- Updated `Industries` hover preview behavior so the left-side image panel is hidden by default and only appears while hovering/focusing an industry word.
+- Switched preview sources to use image assets from `public/assets` instead of SVG placeholders.
+- Added GSAP-controlled shell animation for the preview container itself, so the whole panel slides in from the left and exits when hover ends.
+
+## 2026-04-27-v122
+
+- Added a hover-linked preview image panel below the left-column `Industries` content.
+- Wired each right-column industry word hover/focus to show its corresponding image with a left-to-right slide-in animation.
+- Preserved existing ripple word fill and tooltip interactions while layering in the new visual preview behavior.
+
+## 2026-04-27-v121
+
+- Promoted the left-column heading (`CULTURE DOESN'T BELONG TO ONE INDUSTRY.`) to a stronger display scale so it reads clearly as the section title.
+- Added an animated vertical divider between the `Industries` columns with a flowing gradient accent, including reduced-motion fallback and mobile auto-hide behavior.
+
+## 2026-04-27-v120
+
+- Updated `Industries` two-column typography hierarchy: significantly increased the left narrative column headline/body sizes and contrast for better readability.
+- Right-aligned the interactive industries word column on desktop as requested, while preserving centered alignment fallback on smaller breakpoints.
+
+## 2026-04-27-v119
+
+- Reworked `Industries` content layout into a two-column structure: left column holds the narrative intro under the section kicker, right column holds the large interactive hoverable industry words.
+- Added responsive fallback so the layout collapses back to a single centered column on smaller screens.
+
+## 2026-04-27-v118
+
+- Added a new narrative intro block to `Industries` (placed before the interactive industry word cluster) with the provided headline and supporting copy.
+- Styled the intro for centered readability and hierarchy while preserving the existing tooltip + ripple interactions on the industries text below.
+
+## 2026-04-27-v117
+
+- Amplified `Industries` tooltip presence: larger dimensions, bigger and bolder type, stronger contrast, and heavier shadow treatment so tooltips are unmistakably visible.
+- Increased tooltip pop animation intensity (`y` offset, scale delta, stronger `back.out` ease) for a clearer, less subtle hover/focus cue.
+
+## 2026-04-27-v116
+
+- Fixed missing tooltip visibility for the first `Industries` words by removing clipping on the text block container (`.block overflow: visible`).
+- Raised stacking order for active word wrappers and tooltips so popouts reliably render above nearby content.
+
+## 2026-04-27-v115
+
+- Added attractive per-word tooltips to `Industries`: each hovered/focused industry now pops a playful context line tied to that specific word.
+- Wired GSAP tooltip pop animation (`autoAlpha`, `y`, `scale`, `rotateX`) so each tooltip feels like it pops out from the hovered word while preserving the ripple color-fill interaction.
+- Added responsive tooltip styling and pointer tail treatment for clearer visual anchoring to each word.
+
+## 2026-04-27-v114
+
+- Updated `Industries` ripple fill sizing to be dynamic per hovered word by computing the farthest-corner radius from the pointer origin, ensuring the accent color fully fills the entire word every time.
+- Increased reduced-motion fallback ripple radius so full-word coverage is preserved without pointer-tracked animation.
+
+## 2026-04-27-v113
+
+- Replaced the `Industries` word hover fill animation from left-to-right wipe to a ripple reveal.
+- Added per-word ripple origin tracking from pointer position and animated circular clip expansion/contraction (`--ripple-x`, `--ripple-y`, `--ripple-size`) so fill radiates from hover point.
+- Kept the approved centered light-theme layout unchanged while updating only the color-fill motion style.
+
+## 2026-04-27-v112
+
+- Kept the approved `Industries` layout unchanged and replaced hover behavior with a true per-word color fill animation.
+- Updated interaction logic to animate a word-local fill progress variable (`--fill-progress`) from `0%` to `100%` on hover/focus and back on leave/blur.
+- Changed reveal mask from spotlight circle tracking to left-to-right word fill clipping so only the hovered word gets the animated color fill.
+
+## 2026-04-27-v111
+
+- Updated `Industries` to a light chapter treatment with white background and black typography as requested.
+- Switched the industries text layout from justified flow to centered alignment.
+- Updated section logo handoff to dark mode (`data-logo-invert="0"`) for proper contrast on the light background.
+
+## 2026-04-27-v110
+
+- Matched `Industries` container width to the same section grid used above (`min(92vw, 1240px)`) so the chapter aligns on the same horizontal line as surrounding sections.
+- Aligned the industries text block to the section content line by removing the extra centered narrow block offset (`.block` now uses full inner width).
+
+## 2026-04-27-v109
+
+- Centered the `Industries` text block with a bounded max width and auto margins so the entire composition sits visually in the middle of the section.
+- Increased inter-word spacing in the inline industry wrappers for clearer readability while preserving a single justified text flow.
+- Tightened spotlight behavior so only the currently hovered/focused word reveals the accent layer (default reveal opacity is now fully hidden for all non-active words).
+
+## 2026-04-27-v108
+
+- Rebuilt `Industries` from scratch into a stable layered spotlight system: each industry word now renders a base white layer plus a GSAP-driven neon reveal layer clipped by a pointer-tracked circular mask.
+- Restored requested visual direction by returning the chapter to a black background with white oversized justified text flow (single block, no columns/list formatting) and strict section containment.
+- Replaced fragile hint-popover hover behavior with direct word-level spotlight reveal interactions that support mouse + keyboard focus and clean reset on leave/blur.
+
+## 2026-04-27-v107
+
+- Fixed non-visible `Industries` hover behavior by removing hint clipping constraints (`.block overflow: visible`), moving hint popovers above words, and adding strong CSS hover/focus fallback states for word lift/color + hint reveal.
+- Added explicit pointer affordance (`cursor: pointer`) on industry items so interactivity is discoverable.
+
+## 2026-04-27-v106
+
+- Rebuilt `Industries` hover system from scratch for reliability: simplified event lifecycle, direct GSAP `clip-path` spotlight reveal, and stable word highlight/reset transitions.
+- Added wrapper interaction polish (`inline-block` spacing and hint `will-change`) to keep hover/focus animations consistent across rapid pointer movement.
+
+## 2026-04-27-v105
+
+- Fixed non-working `Industries` hover interaction by replacing fragile CSS mask-variable reveal with GSAP-driven `clip-path` spotlight animation on the hint text.
+- Improved hover hit reliability by changing each industry wrapper to `inline-block`, ensuring mouse enter/leave and spotlight tracking fire consistently.
+
+## 2026-04-27-v104
+
+- Reworked `Industries` hover into a cursor-driven spotlight reveal using GSAP-smoothed mouse tracking over hidden teaser text.
+- Added radial mask-based text reveal tied to live cursor position (`--spot-x`, `--spot-y`, `--spot-size`) for a much more evident interactive hover effect.
+
+## 2026-04-27-v103
+
+- Amplified `Industries` hover interactions to be more obvious: stronger color/scale lift on words, glow accent, and a bolder animated hint reveal card (higher contrast, larger type, deeper motion).
+
+## 2026-04-27-v102
+
+- Added GSAP-powered hover reveal interactions for `Industries` words: each industry now exposes a hidden micro-copy line on hover/focus with animated fade/slide and text color shift for engagement.
+- Introduced inline hover hint styling in `Industries.module.scss` with responsive tooltip sizing and keyboard-focus support.
+
+## 2026-04-27-v101
+
+- Inverted `Industries` chapter color theme to a light section (`#f6f3ec`) with dark typography and dark grid overlay accents.
+- Updated section logo contrast handoff to dark logo mode (`data-logo-invert="0"`) for readability on the white background.
+
+## 2026-04-27-v100
+
+- Reduced left/right side spacing for the large `Industries` text block only by expanding `.block` width beyond the inner container while keeping the `Industries We Serve` kicker alignment unchanged.
+
+## 2026-04-27-v99
+
+- Increased `Industries` word scale substantially (`clamp(3rem, 7.8vw, 7.4rem)`) with tighter leading so the typography occupies and dominates section space as requested.
+
+## 2026-04-27-v98
+
+- Fixed `Industries` text containment by adding explicit inter-word spacing in render output and tightening block wrapper behavior (`width` + centered bounds + overflow clipping), preventing the single-line run-off state.
+
+## 2026-04-27-v97
+
+- Fixed `Industries` text overflow by rebalancing typography scale and spacing (`clamp` max reduced), narrowing block width, and centering layout within a `100vh` content frame so all words stay inside section bounds.
+
+## 2026-04-27-v96
+
+- Increased `Industries` oversized word scale in `Industries.module.scss` and changed text block flow to justified alignment with centered last line (`text-align: justify; text-align-last: center`) for a stronger centered-but-block composition.
+
+## 2026-04-27-v95
+
+- Restyled `Industries` to a black-background chapter with white typography and switched logo handoff to white (`data-logo-invert="1"`).
+- Replaced column/grid listing with a single flowing oversized text block (`flex-wrap`) so industries read as one continuous visual statement instead of discrete list columns.
+
+## 2026-04-27-v94
+
+- Added new `Industries We Serve` section (`src/components/home/Industries.tsx` + `Industries.module.scss`) below `Services` in `src/app/page.tsx`.
+- Replicated page-35 style direction with oversized industry typography and masked background fill effect across each word, on a lime-tinted high-contrast chapter background.
+
 ## 2026-04-27-v93
 
 - Updated `Services` panel animation to strong alternating lateral entrances on ScrollTrigger (`x: -180 / +180` -> `0`) so each service clearly comes in from left/right.
