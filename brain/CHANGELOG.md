@@ -10,6 +10,61 @@
   - desktop (`min-width: 768px`) `200px` -> `170px`,
   - extra-small (`max-width: 575.98px`) `140px` -> `120px`.
 
+## 2026-04-28-v154
+
+- Updated footer marquee behavior to explicitly follow user scroll direction:
+  - scrolling down keeps the regular strip directions,
+  - scrolling up reverses marquee movement directions.
+- Preserved autoplay while coupling directional state to live ScrollTrigger velocity/direction.
+
+## 2026-04-28-v153
+
+- Strengthened footer marquee scroll-coupling so strip speed reacts more noticeably to user scroll velocity while preserving lower baseline autoplay.
+- Increased velocity influence multiplier and sensitivity (ScrollTrigger `getVelocity` mapping + clamp range).
+
+## 2026-04-28-v152
+
+- Reduced footer marquee motion speed by lowering both base autoplay velocity and scroll-reactive boost multipliers for calmer strip movement.
+
+## 2026-04-28-v151
+
+- Updated footer body content to match actual site/project structure:
+  - replaced placeholder location blocks with `Featured Projects` links sourced from `FEATURED_PROJECTS`,
+  - added `Site` quick links to key homepage chapters.
+- Updated bottom footer nav content to reflect project-related client labels instead of generic placeholder words.
+
+## 2026-04-28-v150
+
+- Rebalanced footer marquee scale to medium sizing (logo + `TakeMeLive`) while increasing repetition density for a fuller continuous strip.
+- Increased repeated marquee item count and tightened item/track spacing so the ribbons feel more frequent without oversized typography.
+
+## 2026-04-28-v149
+
+- Added explicit borders around both footer marquee strips for stronger ribbon separation/definition.
+- Tuned dark-strip border color for contrast against the black band.
+
+## 2026-04-28-v148
+
+- Fixed black background bleed above the white footer marquee strip by adding a white top mask layer on the marquee stack, preventing dark slivers from appearing due to strip rotation/overlap.
+
+## 2026-04-28-v147
+
+- Changed footer base background to black and ensured the dark footer body visually begins beneath the marquee strips.
+- Upscaled marquee strips aggressively (~3x): substantially larger strip height, spacing, logo scale, and `TakeMeLive` typography for high-impact ribbon presence.
+
+## 2026-04-28-v146
+
+- Increased footer marquee strip scale (height, typography, spacing) for a bolder visual presence.
+- Added layered overlap treatment between the two strips with slight opposing rotation/offset to match the reference-style stacked ribbon look.
+
+## 2026-04-28-v145
+
+- Added a new `Footer` chapter after CTA with two marquee strips above the footer body:
+  - strip 1: white background with dark text,
+  - strip 2: black background with light text.
+- Each marquee repeats logo + `TakeMeLive` and combines continuous autoplay with scroll-reactive velocity modulation via GSAP ScrollTrigger.
+- Added footer body structure (location blocks + bottom nav links) to complete the section beneath the marquees.
+
 ## 2026-04-28-v144
 
 - Increased CTA heading scale to match the section-header system used in other chapters (`clamp(2.4rem, 7vw, 6.4rem)`).

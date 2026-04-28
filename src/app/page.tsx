@@ -12,6 +12,7 @@ import Services from '@/components/home/Services';
 import Industries from '@/components/home/Industries';
 import Team from '@/components/home/Team';
 import CTA from '@/components/home/CTA';
+import Footer from '@/components/home/Footer';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -41,6 +42,7 @@ export default function Home() {
       <Industries />
       <Team />
       <CTA />
+      <Footer />
     </main>
   );
 }
