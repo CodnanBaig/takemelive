@@ -74,7 +74,7 @@
 .valueChip {
   padding: 0.44rem 0.7rem;
   border: 1px solid rgb(242 240 234 / 0.2);
-  border-radius: 999px;
+  border-radius: 0;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.07em;
@@ -108,7 +108,7 @@
   align-items: center;
   padding: clamp(0.8rem, 1.3vw, 1rem);
   border: 1px solid rgb(242 240 234 / 0.14);
-  border-radius: 14px;
+  border-radius: 0;
   background: rgb(255 255 255 / 0.03);
   box-shadow: 0 18px 36px rgb(0 0 0 / 0.26);
   backdrop-filter: blur(4px);
@@ -128,7 +128,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 10px;
+  border-radius: 0;
   overflow: hidden;
 }
 

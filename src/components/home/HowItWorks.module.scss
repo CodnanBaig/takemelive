@@ -73,7 +73,7 @@
 
 .featuredMedia {
   position: relative;
-  border-radius: 18px;
+  border-radius: 0;
   overflow: hidden;
   border: 1px solid rgb(245 245 240 / 0.14);
   box-shadow: 0 28px 52px rgb(0 0 0 / 0.45);
@@ -130,7 +130,7 @@
   gap: 0.75rem;
   padding: clamp(1rem, 1.7vw, 1.25rem);
   border: 1px solid rgb(245 245 240 / 0.12);
-  border-radius: 14px;
+  border-radius: 0;
   background: rgb(245 245 240 / 0.02);
   transition:
     border-color 220ms ease,
@@ -216,7 +216,7 @@
   }
 
   .featuredMedia {
-    border-radius: 14px;
+    border-radius: 0;
     aspect-ratio: 4 / 4.5;
   }
 

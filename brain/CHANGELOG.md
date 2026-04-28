@@ -1,3 +1,78 @@
+## 2026-04-28-v145
+
+- Enforced sharp corners across the project by setting all UI `border-radius` values to `0` in homepage/section styles and global button/tooltip styles.
+- Preserved only the CTA decorative orb shape in `src/components/home/CTA.module.scss` (`.orb`) as the single intentional rounded element.
+
+## 2026-04-28-v132
+
+- Reduced fixed nav logo sizing in `src/components/HomePage.module.css` across breakpoints for a smaller header mark:
+  - default `.logo` max-width `150px` -> `130px`,
+  - desktop (`min-width: 768px`) `200px` -> `170px`,
+  - extra-small (`max-width: 575.98px`) `140px` -> `120px`.
+
+## 2026-04-28-v144
+
+- Increased CTA heading scale to match the section-header system used in other chapters (`clamp(2.4rem, 7vw, 6.4rem)`).
+
+## 2026-04-28-v143
+
+- Updated CTA chat composition to read like a conversational interface: blue bot message stays left-weighted while the user input step field is right-aligned as a reply block.
+- Adjusted mobile bubble width so the left message remains visibly offset from the right-side input field.
+
+## 2026-04-28-v142
+
+- Updated CTA mobile breakpoint layout to right-align the contact form on phones (`max-width: 640px`) instead of centered alignment.
+
+## 2026-04-28-v141
+
+- Simplified CTA step input UI by removing the field label and keeping only placeholder text for each step prompt.
+- Updated field layout styles to match placeholder-only structure.
+
+## 2026-04-28-v140
+
+- Fixed CTA mobile responsiveness by correcting inverted top padding clamp and replacing invalid flex alignment keywords with proper `flex-end`/`flex-start` values.
+- Matched input-row layout closer to the reference by aligning label left and placeholder/value right on desktop, with a clean stacked fallback on small screens.
+
+## 2026-04-28-v139
+
+- Right-aligned the CTA contact form within the right column by switching the column flex alignment to `justify-content: flex-end`.
+
+## 2026-04-28-v138
+
+- Further reduced CTA input footprint with a hard narrower form width (`22rem`) and tighter card width constraints so the field is visibly smaller.
+- Fixed placeholder/label alignment by introducing a dedicated `.fieldMain` wrapper inside the step field and forcing left-aligned input/placeholder rendering.
+
+## 2026-04-28-v137
+
+- Reduced CTA input row horizontal footprint by constraining form widths (`.formCard` and `.formStage`) so the step field no longer spans unnecessarily wide.
+- Added responsive right-column centering for the constrained form at tablet/mobile breakpoints.
+
+## 2026-04-28-v136
+
+- Added larger top spacing to the CTA chapter by increasing section top padding while preserving existing bottom spacing and layout structure.
+
+## 2026-04-28-v135
+
+- Aggressively reduced CTA step-input sizing: substantially smaller field height, tighter padding/gaps, reduced label/input/confirmation typography, and compact action button footprint.
+
+## 2026-04-28-v134
+
+- Refined CTA single-step input sizing to better match the reference: reduced field height/padding, smaller label/input text scale, and a more compact action button.
+
+## 2026-04-28-v133
+
+- Refined CTA form interaction to a single-field stepper flow: only one input question is shown at a time, collecting responses sequentially with next/complete actions.
+- Removed the `.monks` logo/avatar from the CTA chat header.
+- Removed the outer bordered form container styling while preserving the animation-rich reveal and motion behavior.
+
+## 2026-04-28-v132
+
+- Added a new animated `CTA` chapter after `Team` with a high-fidelity two-column composition inspired by the provided reference:
+  - left narrative block using the provided content,
+  - right chat-style contact form card with avatar bubble, staged form rows, and progress dots.
+- Implemented GSAP-heavy reveal choreography for CTA elements (left narrative, chat bubble, form fields, progress) plus continuous ambient motion accents to keep the section visually alive.
+- Wired chapter logo contrast handoff for light background (`data-logo-invert="0"`).
+
 ## 2026-04-27-v131
 
 - Intensified `Team` chapter motion language with a cinematic multi-layer reveal sequence:

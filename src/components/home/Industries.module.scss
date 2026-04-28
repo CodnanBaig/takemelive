@@ -102,7 +102,7 @@
   width: min(100%, 540px);
   aspect-ratio: 16 / 10;
   margin-top: clamp(0.5rem, 1.2vh, 0.9rem);
-  border-radius: 14px;
+  border-radius: 0;
   overflow: hidden;
   border: 1px solid rgb(17 18 23 / 0.14);
   background:
@@ -192,7 +192,7 @@
   min-width: min(52vw, 300px);
   max-width: min(68vw, 420px);
   padding: 0.64rem 0.98rem;
-  border-radius: 999px;
+  border-radius: 0;
   border: 1px solid rgb(246 243 236 / 0.2);
   background: #0d0e12;
   color: rgb(246 243 236 / 0.98);
@@ -288,7 +288,7 @@
     min-width: min(72vw, 280px);
     max-width: min(84vw, 340px);
     white-space: normal;
-    border-radius: 14px;
+    border-radius: 0;
   }
 }
 

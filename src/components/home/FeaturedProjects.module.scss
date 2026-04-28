@@ -75,7 +75,7 @@
   height: min(64vh, 560px);
   padding: clamp(1rem, 2.2vw, 2rem);
   overflow: clip;
-  border-radius: 6px;
+  border-radius: 0;
   contain: layout paint;
 }
 

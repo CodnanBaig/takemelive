@@ -11,6 +11,7 @@ import FeaturedProjects from '@/components/home/FeaturedProjects';
 import Services from '@/components/home/Services';
 import Industries from '@/components/home/Industries';
 import Team from '@/components/home/Team';
+import CTA from '@/components/home/CTA';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -39,6 +40,7 @@ export default function Home() {
       <Services />
       <Industries />
       <Team />
+      <CTA />
     </main>
   );
 }

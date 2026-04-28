@@ -1,11 +1,11 @@
 .logo {
-  max-width: 150px;
+  max-width: 130px;
   cursor: none;
 }
 
 @media (min-width: 768px) {
   .logo {
-    max-width: 200px;
+    max-width: 170px;
     cursor: none;
   }
 }
@@ -113,7 +113,7 @@
   background-color: #ed2939;
   color: white;
   border: none;
-  border-radius: 100px;
+  border-radius: 0;
   padding: 1rem 2.5rem;
   font-size: 1.35rem;
   cursor: pointer;
@@ -206,7 +206,7 @@
 /* Extra small devices (portrait phones) */
 @media (max-width: 575.98px) {
   .logo {
-    max-width: 140px;
+    max-width: 120px;
   }
 
   .content h1 {
