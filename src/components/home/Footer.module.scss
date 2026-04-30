@@ -70,10 +70,11 @@
   width: clamp(96px, 9vw, 146px);
   height: auto;
   max-height: none;
+  filter: brightness(0) invert(1) grayscale(1) contrast(1.08);
 }
 
-.logoDark {
-  filter: invert(1) grayscale(1) contrast(1.1);
+.logoLight {
+  filter: brightness(0) invert(1) grayscale(1) contrast(1.08) drop-shadow(0 0 1px rgb(0 0 0 / 0.38));
 }
 
 .body {

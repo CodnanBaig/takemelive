@@ -1,3 +1,34 @@
+## 2026-04-30-v168
+
+- Fixed DomeGallery drag pointer typing for production type-checks by normalizing mouse/pointer/touch event coordinates before computing deltas.
+- Removed direct `event.clientX/Y` access to avoid TypeScript failures with union gesture events.
+
+## 2026-04-29-v162
+
+- Smoothed `our-projects` dome motion by reducing tile density (`segments`) and lowering autoplay speed for calmer horizontal rotation.
+- Reduced globe size proportionally to the lower tile count by scaling down fit and radius constraints.
+- Softened stretch dynamics (autoplay + drag) to avoid abrupt visual distortion during movement.
+
+## 2026-04-29-v161
+
+- Updated DomeGallery tile styling to add stronger spacing between images and switched project tiles to circular crops.
+- Reworked dome coordinate distribution to use a denser latitude spread so the globe reads more circular overall instead of banded.
+
+## 2026-04-29-v160
+
+- Reduced `our-projects` DomeGallery autoplay rotation speed to make the globe motion calmer and easier to track.
+
+## 2026-04-29-v159
+
+- Updated footer marquee logo treatment so logos render white consistently across both strips.
+- Added a subtle shadow on the white-strip logo to keep contrast readable against the light background.
+
+## 2026-04-29-v158
+
+- Upgraded the `our-projects` DomeGallery to a much larger visual scale by increasing fit/radius constraints and using a max-dimension fit strategy.
+- Added continuous autoplay globe rotation so the experience animates without user interaction.
+- Added elastic stretch/squash motion on project cards during autoplay and drag movement for a more dynamic, tactile gallery feel.
+
 ## 2026-04-28-v145
 
 - Enforced sharp corners across the project by setting all UI `border-radius` values to `0` in homepage/section styles and global button/tooltip styles.
@@ -9,6 +40,24 @@
   - default `.logo` max-width `150px` -> `130px`,
   - desktop (`min-width: 768px`) `200px` -> `170px`,
   - extra-small (`max-width: 575.98px`) `140px` -> `120px`.
+
+## 2026-04-29-v157
+
+- Simplified `our-projects` page to a pure immersive mode: removed all text/header content so the page is only the full-screen DomeGallery experience.
+- Updated page layout styles to make the gallery consume the full viewport (`100vw x 100vh`).
+
+## 2026-04-29-v156
+
+- Added a global fixed top-right navigation (`Home`, `Our Projects`, `Our Culture`) so users can directly access the new pages from anywhere.
+- Implemented site-consistent nav styling (uppercase micro-typography, sharp edges, segmented links, subtle glass layer) and mounted it in `src/app/layout.tsx` for app-wide visibility.
+
+## 2026-04-29-v155
+
+- Added two new App Router pages:
+  - `our-projects` with integrated React Bits-style `DomeGallery` experience,
+  - `our-culture` with a dedicated culture narrative layout and content cards.
+- Integrated new `DomeGallery` component (`JavaScript + CSS variant`) under `src/components/dome-gallery/` and wired Unsplash placeholder imagery per request.
+- Installed required dependency `@use-gesture/react` for DomeGallery drag/gesture interactions.
 
 ## 2026-04-28-v154
 
