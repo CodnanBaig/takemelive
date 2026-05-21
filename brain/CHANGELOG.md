@@ -1,3 +1,23 @@
+## 2026-05-21-v185
+
+- Featured Projects: strengthened selected-card popup by using GSAP keyframes that first lift the card upward with 3D depth, then scale it larger front-facing above the deck with controlled 3D depth before second-click navigation.
+
+## 2026-05-21-v184
+
+- Featured Projects: changed project card click to a two-step interaction: first click lifts the card upward out of the stack and presents it front-facing as a popup; second click on the presented card navigates to the project page.
+
+## 2026-05-21-v183
+
+- Featured Projects: added viewport-based card pull-out click animation before project navigation; increased diagonal card spacing and moved 3D tilt to the inner frame so outer card boxes keep the same apparent size.
+
+## 2026-05-21-v182
+
+- Featured Projects: mobile now uses a finite pinned diagonal conveyor like desktop, with phone-specific card width/spacing and release after all 8 cards scroll off-screen.
+
+## 2026-05-21-v181
+
+- Featured Projects: added mobile scroll-scrub card motion so phone cards drift diagonally with slight rotation and image parallax, without opacity changes or desktop behavior changes; fixed mobile heading width so the title no longer wraps letter-by-letter.
+
 ## 2026-05-21-v180
 
 - Featured Projects changed from endless loop to finite pinned pass: only the 8 real cards render, scroll moves them diagonally off-screen, and the section releases after the final card exits.

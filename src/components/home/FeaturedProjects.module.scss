@@ -117,6 +117,8 @@
   height: 100%;
   overflow: hidden;
   background: #090a0b;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .cardImage {
@@ -164,41 +166,45 @@
 
 @media (max-width: 900px) {
   .header {
-    position: relative;
-    top: auto;
-    left: auto;
-    padding: clamp(5rem, 11vh, 7rem) clamp(1rem, 3vw, 2.5rem) 0;
-    pointer-events: auto;
+    position: absolute;
+    top: clamp(4.75rem, 9vh, 6rem);
+    left: clamp(1rem, 5vw, 1.4rem);
+    max-width: calc(100vw - 2rem);
+    padding: 0;
+    pointer-events: none;
   }
 
   .stage {
-    min-height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
     padding-top: 0;
-    padding-bottom: 2rem;
+    padding-bottom: 0;
   }
 
   .stack {
-    position: relative;
-    inset: auto;
-    display: grid;
-    gap: 1.35rem;
-    padding: 0 clamp(1rem, 3vw, 2.5rem);
-    height: auto;
+    position: absolute;
+    inset: 0;
+    display: block;
+    padding: 0;
+    height: 100%;
+    perspective: 1000px;
+    perspective-origin: 56% 60%;
   }
 
   .card {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    width: min(100%, 360px);
-    margin: 0 auto;
-    transform: none !important;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: var(--stack-card-width, clamp(200px, 62vw, 250px));
+    margin: 0;
   }
 
   .scrollHint {
-    position: static;
-    text-align: center;
-    margin: 1.5rem clamp(1rem, 3vw, 2.5rem) 0;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    text-align: right;
+    margin: 0;
   }
 }
 
