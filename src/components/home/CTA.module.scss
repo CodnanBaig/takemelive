@@ -196,6 +196,12 @@
     justify-content: flex-end;
   }
 
+  .heading {
+    max-width: 10ch;
+    font-size: clamp(2.15rem, 11.8vw, 4.2rem);
+    overflow-wrap: anywhere;
+  }
+
   .bubble {
     max-width: min(88%, 18rem);
   }

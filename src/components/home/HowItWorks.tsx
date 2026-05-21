@@ -71,6 +71,8 @@ export default function HowItWorks() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const isCompact = window.matchMedia('(max-width: 900px)').matches;
+
         gsap
           .timeline({
             scrollTrigger: sectionRevealScroll(section, 0.75),
@@ -79,7 +81,7 @@ export default function HowItWorks() {
             steps,
             {
               y: 48,
-              x: (index) => (index % 2 === 0 ? -32 : 32),
+              x: (index) => (isCompact ? 0 : index % 2 === 0 ? -32 : 32),
               autoAlpha: 0.2,
             },
             {

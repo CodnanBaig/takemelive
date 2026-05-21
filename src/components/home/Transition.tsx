@@ -41,8 +41,11 @@ export default function Transition() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const railTravel = window.innerWidth * 0.46;
-        const sublineTravel = 260;
+        const isCompact = window.matchMedia('(max-width: 900px)').matches;
+        const railTravel = isCompact ? window.innerWidth * 0.32 : window.innerWidth * 0.46;
+        const sublineTravel = isCompact
+          ? Math.min(120, window.innerWidth * 0.28)
+          : 260;
         gsap.set(curtain, { xPercent: 0 });
         gsap.set(rail, { autoAlpha: 0, x: railTravel });
         gsap.set(subLines, { autoAlpha: 0, x: 0, y: 12, filter: 'blur(6px)' });

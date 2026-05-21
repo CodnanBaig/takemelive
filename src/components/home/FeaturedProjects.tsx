@@ -67,9 +67,12 @@ export default function FeaturedProjects() {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const stackRef = useRef<HTMLDivElement | null>(null);
   const metricsRef = useRef<StackMetrics | null>(null);
+  const stackProgressRef = useRef(0);
+  const renderStackRef = useRef<(() => void) | null>(null);
   const pullingCardRef = useRef(false);
   const selectedCardRef = useRef<HTMLAnchorElement | null>(null);
   const selectedHrefRef = useRef<string | null>(null);
+  const selectedIndexRef = useRef<number | null>(null);
   const projectCount = FEATURED_PROJECTS.length;
 
   useEffect(() => {
@@ -109,6 +112,8 @@ export default function FeaturedProjects() {
     };
 
     const applyStackLayout = (progress: number, waveTime = 0) => {
+      stackProgressRef.current = gsap.utils.clamp(0, 1, progress);
+
       if (pullingCardRef.current || selectedHrefRef.current) {
         return;
       }
@@ -149,6 +154,10 @@ export default function FeaturedProjects() {
           yPercent: 0,
         });
       });
+    };
+
+    renderStackRef.current = () => {
+      applyStackLayout(stackProgressRef.current, gsap.ticker.time * 1000);
     };
 
     const ctx = gsap.context(() => {
@@ -295,11 +304,127 @@ export default function FeaturedProjects() {
     }, section);
 
     return () => {
+      renderStackRef.current = null;
       ctx.revert();
     };
   }, [projectCount]);
 
-  const handleProjectClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+  useEffect(() => {
+    const handleOutsidePointerDown = (event: PointerEvent) => {
+      const selectedCard = selectedCardRef.current;
+      const selectedIndex = selectedIndexRef.current;
+      const selectedHref = selectedHrefRef.current;
+
+      if (!selectedCard || selectedIndex === null || !selectedHref || pullingCardRef.current) {
+        return;
+      }
+
+      if (selectedCard.contains(event.target as Node)) {
+        return;
+      }
+
+      const stage = stageRef.current;
+      const stack = stackRef.current;
+      const metrics = metricsRef.current;
+      const frame = selectedCard.querySelector<HTMLElement>('[data-card-frame]');
+      const image = selectedCard.querySelector<HTMLElement>('[data-card-image]');
+
+      if (!stage || !stack || !metrics) {
+        selectedCardRef.current = null;
+        selectedHrefRef.current = null;
+        selectedIndexRef.current = null;
+        renderStackRef.current?.();
+        return;
+      }
+
+      event.preventDefault();
+      pullingCardRef.current = true;
+
+      const travel = stackProgressRef.current * metrics.exitTravel;
+      const slot = selectedIndex - travel;
+      const wave = Math.sin(slot * 0.86 + gsap.ticker.time * 1.6);
+      const stackRect = stack.getBoundingClientRect();
+      const cardRect = selectedCard.getBoundingClientRect();
+      const targetLeft = stackRect.left + metrics.startX + slot * metrics.stepX;
+      const targetTop =
+        stackRect.top +
+        stack.clientHeight -
+        cardRect.height -
+        metrics.startY -
+        slot * metrics.stepY -
+        wave * metrics.stepY * 0.22;
+      const targetX = targetLeft - cardRect.left;
+      const targetY = targetTop - cardRect.top;
+
+      gsap.killTweensOf([selectedCard, frame, image]);
+
+      const resetCard = () => {
+        selectedCardRef.current = null;
+        selectedHrefRef.current = null;
+        selectedIndexRef.current = null;
+        pullingCardRef.current = false;
+
+        gsap.set(selectedCard, {
+          clearProps: 'position,left,top,bottom,width,height,x,y,z,scale,rotationY,rotationZ,zIndex,transformOrigin,transformPerspective',
+        });
+        gsap.set(frame, { clearProps: 'rotationY,transformOrigin,transformPerspective' });
+        gsap.set(image, { clearProps: 'scale,yPercent' });
+        renderStackRef.current?.();
+      };
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        resetCard();
+        return;
+      }
+
+      gsap
+        .timeline({
+          defaults: { overwrite: 'auto' },
+          onComplete: resetCard,
+        })
+        .to(selectedCard, {
+          x: targetX,
+          y: targetY,
+          z: 0,
+          scale: 1,
+          rotationY: 0,
+          rotationZ: -2.4,
+          duration: 0.44,
+          ease: 'power3.inOut',
+        })
+        .to(
+          frame,
+          {
+            rotationY: -18,
+            duration: 0.36,
+            ease: 'power3.inOut',
+          },
+          0,
+        )
+        .to(
+          image,
+          {
+            scale: 1.08,
+            yPercent: 0,
+            duration: 0.36,
+            ease: 'power3.inOut',
+          },
+          0,
+        );
+    };
+
+    document.addEventListener('pointerdown', handleOutsidePointerDown, true);
+
+    return () => {
+      document.removeEventListener('pointerdown', handleOutsidePointerDown, true);
+    };
+  }, []);
+
+  const handleProjectClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+    index: number,
+  ) => {
     if (
       event.button !== 0 ||
       event.metaKey ||
@@ -368,6 +493,7 @@ export default function FeaturedProjects() {
       gsap.set(image, { scale: 1.02, yPercent: 0 });
       selectedCardRef.current = card;
       selectedHrefRef.current = href;
+      selectedIndexRef.current = index;
       pullingCardRef.current = false;
       return;
     }
@@ -378,6 +504,7 @@ export default function FeaturedProjects() {
         onComplete: () => {
           selectedCardRef.current = card;
           selectedHrefRef.current = href;
+          selectedIndexRef.current = index;
           pullingCardRef.current = false;
         },
       })
@@ -469,7 +596,7 @@ export default function FeaturedProjects() {
                 data-project-card
                 data-cursor="link"
                 aria-label={`Open ${project.title} project`}
-                onClick={(event) => handleProjectClick(event, `/projects/${project.slug}`)}
+                onClick={(event) => handleProjectClick(event, `/projects/${project.slug}`, index)}
               >
                 <span className={styles.cardIndex}>{String(index).padStart(2, '0')}</span>
                 <div className={styles.cardFrame} data-card-frame>

@@ -3,6 +3,7 @@
   background: #fff;
   color: #111217;
   position: relative;
+  overflow: clip;
 }
 
 .stage {
@@ -27,6 +28,7 @@
   transform: translateY(-50%);
   z-index: 4;
   overflow: hidden;
+  max-width: 100vw;
   display: grid;
   gap: clamp(1rem, 2vh, 1.6rem);
 }
@@ -68,8 +70,24 @@
 }
 
 @media (max-width: 640px) {
+  .stage {
+    min-height: 100dvh;
+  }
+
+  .textViewport {
+    inset-inline: 0;
+    padding-inline: 0;
+  }
+
+  .textRail {
+    width: min(92vw, 560px);
+    padding-inline: 0;
+  }
+
   .textRail span {
-    font-size: clamp(1.4rem, 11vw, 4.4rem);
+    font-size: clamp(2.1rem, 14vw, 4.4rem);
+    line-height: 0.9;
+    overflow-wrap: anywhere;
   }
 
   .subheading {

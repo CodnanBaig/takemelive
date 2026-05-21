@@ -32,32 +32,60 @@
   font-weight: 800;
   display: grid;
   justify-items: center;
+  max-width: 100%;
   user-select: none;
+  position: relative;
+  isolation: isolate;
+}
+
+.heading::after {
+  content: '';
+  position: absolute;
+  inset: -10% -6%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--spot-opacity);
+  background: radial-gradient(
+    circle calc(var(--spot-size) * 0.82px) at calc(var(--spot-x) * 1px) calc(var(--spot-y) * 1px),
+    rgb(215 229 255 / 0.3) 0%,
+    rgb(255 255 255 / 0.12) 34%,
+    transparent 72%
+  );
+  filter: blur(18px);
+  mix-blend-mode: screen;
 }
 
 .wordWrap {
   display: block;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 .word {
+  --spot-x: 50;
+  --spot-y: 50;
   display: block;
-  color: rgb(243 244 247 / 0.44);
+  color: rgb(243 244 247 / 0.38);
   background-image:
     radial-gradient(
       circle calc(var(--spot-size) * 1px) at calc(var(--spot-x) * 1px) calc(var(--spot-y) * 1px),
-      rgb(255 255 255 / calc(0.72 * var(--spot-opacity))) 0%,
-      rgb(255 255 255 / calc(0.42 * var(--spot-opacity))) 34%,
-      rgb(255 255 255 / calc(0.2 * var(--spot-opacity))) 62%,
+      rgb(255 255 255 / calc(0.98 * var(--spot-opacity))) 0%,
+      rgb(255 255 255 / calc(0.82 * var(--spot-opacity))) 20%,
+      rgb(210 226 255 / calc(0.46 * var(--spot-opacity))) 47%,
+      rgb(255 255 255 / calc(0.2 * var(--spot-opacity))) 72%,
       rgb(255 255 255 / 0) 100%
     ),
-    radial-gradient(circle, rgb(255 255 255 / 0.7) 1px, transparent 1.8px);
-  background-size: 100% 100%, 4px 4px;
-  background-repeat: no-repeat, repeat;
+    radial-gradient(circle, rgb(255 255 255 / 0.48) 1px, transparent 1.75px),
+    linear-gradient(rgb(243 244 247 / 0.34), rgb(243 244 247 / 0.34));
+  background-size: 100% 100%, 3.5px 3.5px, 100% 100%;
+  background-repeat: no-repeat, repeat, no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 8px 18px rgb(0 0 0 / 0.45));
+  filter:
+    drop-shadow(0 0 calc(12px * var(--spot-opacity)) rgb(205 222 255 / 0.38))
+    drop-shadow(0 8px 18px rgb(0 0 0 / 0.48));
 }
 
 .subheading {
@@ -100,6 +128,10 @@
   .heading {
     --spot-opacity: 0;
   }
+
+  .heading::after {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -112,5 +144,23 @@
 
   .subheading {
     font-size: clamp(1rem, 4.2vw, 1.12rem);
+  }
+
+  .heading {
+    font-size: clamp(2.05rem, 10.8vw, 3.75rem);
+    line-height: 0.92;
+    letter-spacing: 0.004em;
+    justify-items: start;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  .wordWrap {
+    display: block;
+    max-width: 100%;
+  }
+
+  .inner {
+    width: min(100%, 92vw);
   }
 }

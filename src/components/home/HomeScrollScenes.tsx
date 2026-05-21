@@ -54,9 +54,10 @@ export default function HomeScrollScenes() {
                   ornament.dataset.ornamentPosition ?? 'tr';
                 const offset = ORNAMENT_OFFSET[position] ?? ORNAMENT_OFFSET.tr;
                 const wave = Math.sin(self.progress * Math.PI);
+                const isCompact = window.innerWidth < 900;
                 gsap.set(ornament, {
                   y: gsap.utils.interpolate(offset.y, -offset.y, self.progress),
-                  x: gsap.utils.interpolate(offset.x * 0.35, offset.x, wave),
+                  x: isCompact ? 0 : gsap.utils.interpolate(offset.x * 0.35, offset.x, wave),
                   rotate: gsap.utils.interpolate(
                     offset.rotate * 0.4,
                     offset.rotate,
@@ -69,9 +70,11 @@ export default function HomeScrollScenes() {
 
               shifts.forEach((el, index) => {
                 const direction = index % 2 === 0 ? 1 : -1;
+                const xShift = window.innerWidth < 900 ? 0 : (self.progress - 0.5) * 18 * -direction;
+
                 gsap.set(el, {
                   y: (self.progress - 0.5) * 36 * direction,
-                  x: (self.progress - 0.5) * 18 * -direction,
+                  x: xShift,
                 });
               });
 

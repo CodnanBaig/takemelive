@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import { sectionRevealScroll } from '@/lib/scrollScene';
@@ -10,12 +11,12 @@ const LINES = [
   'Take Me Live creates bold, immersive environments where brands connect with people in real time.',
   'We combine creative thinking, spatial design, technology, and storytelling to turn ideas into experiences that capture attention and create lasting impact.',
   'From large-scale productions to intimate activations, every detail is designed to perform.',
-  "Because powerful experiences don't just communicate — they stay with people.",
+  "Because powerful experiences don't just communicate, they stay with people.",
 ];
 
 export default function WhatWeDo() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const mediaRef = useRef<HTMLDivElement | null>(null);
+  const mediaRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -37,6 +38,8 @@ export default function WhatWeDo() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const isCompact = window.matchMedia('(max-width: 900px)').matches;
+
         gsap
           .timeline({
             scrollTrigger: sectionRevealScroll(section, 0.8),
@@ -45,7 +48,7 @@ export default function WhatWeDo() {
             lines,
             {
               y: 32,
-              x: (index: number) => (index % 2 === 0 ? -48 : 48),
+              x: (index: number) => (isCompact ? 0 : index % 2 === 0 ? -48 : 48),
               autoAlpha: 0.2,
               clipPath: 'inset(0% 0% 100% 0%)',
             },
@@ -64,7 +67,7 @@ export default function WhatWeDo() {
         if (media) {
           gsap.fromTo(
             media,
-            { x: 140, autoAlpha: 0.25, scale: 0.96 },
+            { x: isCompact ? 0 : 140, autoAlpha: 0.25, scale: 0.96 },
             {
               x: 0,
               autoAlpha: 1,
@@ -113,14 +116,20 @@ export default function WhatWeDo() {
             </div>
           </div>
 
-          <div
+          <figure
             ref={mediaRef}
             className={styles.placeholderImage}
             data-scroll-depth
-            aria-label="Section three image placeholder"
+            aria-label="Live production planning table"
           >
-            <span>Placeholder Image</span>
-          </div>
+            <Image
+              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80"
+              alt="Crowd at a live concert with stage lights and raised hands"
+              fill
+              sizes="(max-width: 960px) 92vw, 38vw"
+            />
+            <figcaption>Show energy, engineered</figcaption>
+          </figure>
         </div>
       </div>
     </section>

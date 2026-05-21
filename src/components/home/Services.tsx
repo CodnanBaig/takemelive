@@ -80,6 +80,8 @@ export default function Services() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const isCompact = window.matchMedia('(max-width: 980px)').matches;
+
         gsap
           .timeline({
             scrollTrigger: sectionRevealScroll(section, 0.7),
@@ -98,12 +100,14 @@ export default function Services() {
           );
 
         panels.forEach((panel, index) => {
+          const panelDirection = index % 2 === 0 ? -1 : 1;
+
           gsap.fromTo(
             panel,
             {
               y: 0,
-              x: index % 2 === 0 ? -180 : 180,
-              rotateZ: index % 2 === 0 ? -2 : 2,
+              x: isCompact ? 0 : panelDirection * 180,
+              rotateZ: isCompact ? 0 : panelDirection * 2,
               scale: 0.98,
               autoAlpha: 0.15,
               clipPath: 'inset(0% 100% 0% 0%)',
@@ -128,18 +132,20 @@ export default function Services() {
         });
 
         mediaCards.forEach((card, index) => {
+          const cardDirection = index % 2 === 0 ? -1 : 1;
+
           gsap.fromTo(
             card,
             {
               y: 64,
-              x: index % 2 === 0 ? -42 : 42,
-              rotateZ: index % 2 === 0 ? -3.5 : 3.5,
+              x: isCompact ? 0 : cardDirection * 42,
+              rotateZ: isCompact ? 0 : cardDirection * 3.5,
               autoAlpha: 0.2,
             },
             {
               y: 0,
               x: 0,
-              rotateZ: index % 2 === 0 ? -1.2 : 1.2,
+              rotateZ: isCompact ? 0 : cardDirection * 1.2,
               autoAlpha: 1,
               ease: 'none',
               scrollTrigger: {
@@ -173,7 +179,7 @@ export default function Services() {
         });
 
         words.forEach((word, index) => {
-          const drift = index % 2 === 0 ? 28 : -28;
+          const drift = isCompact ? 0 : index % 2 === 0 ? 28 : -28;
           gsap.fromTo(
             word,
             { xPercent: -drift, yPercent: index === 0 ? -8 : 8 },

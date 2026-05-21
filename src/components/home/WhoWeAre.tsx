@@ -71,6 +71,8 @@ export default function WhoWeAre() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const isCompact = window.matchMedia('(max-width: 900px)').matches;
+
         if (mediaCard) {
           const mediaTimeline = gsap.timeline({
             scrollTrigger: {
@@ -86,7 +88,7 @@ export default function WhoWeAre() {
             .fromTo(
               mediaCard,
               {
-                xPercent: 30,
+                xPercent: isCompact ? 0 : 30,
                 autoAlpha: 0.45,
               },
               {
@@ -108,7 +110,7 @@ export default function WhoWeAre() {
             .to(
               mediaCard,
               {
-                xPercent: -34,
+                xPercent: isCompact ? 0 : -34,
                 autoAlpha: 0.72,
                 ease: 'none',
                 duration: 0.34,

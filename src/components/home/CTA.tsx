@@ -49,6 +49,8 @@ export default function CTA() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const isCompact = window.matchMedia('(max-width: 900px)').matches;
+
         gsap.set(card, { transformPerspective: 1200, transformOrigin: '50% 50%' });
 
         gsap
@@ -57,7 +59,7 @@ export default function CTA() {
           })
           .fromTo(
             left,
-            { autoAlpha: 0, x: -70, y: 22 },
+            { autoAlpha: 0, x: isCompact ? 0 : -70, y: 22 },
             { autoAlpha: 1, x: 0, y: 0, ease: 'none', duration: 0.48 },
             0,
           )
@@ -75,7 +77,7 @@ export default function CTA() {
           )
           .fromTo(
             card,
-            { autoAlpha: 0, x: 100, y: 36, rotateY: -10, rotateX: 7, scale: 0.92 },
+            { autoAlpha: 0, x: isCompact ? 0 : 100, y: 36, rotateY: isCompact ? 0 : -10, rotateX: isCompact ? 0 : 7, scale: 0.92 },
             {
               autoAlpha: 1,
               x: 0,

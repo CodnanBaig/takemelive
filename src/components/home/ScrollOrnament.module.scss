@@ -41,4 +41,14 @@
     height: clamp(5rem, 22vw, 8rem);
     opacity: 0.14;
   }
+
+  .tl,
+  .bl {
+    left: 0;
+  }
+
+  .tr,
+  .br {
+    right: 0;
+  }
 }

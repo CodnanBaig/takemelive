@@ -1,3 +1,27 @@
+## 2026-05-21-v192
+
+- Why Us (Hallmark redesign v2 — pinned theatre): pinned stage with index ticker (01/04 morph), clip-path title reveals per panel, parallax ghost numerals, marquee backdrop scrub, and a section progress bar; mobile fallback uses per-panel scroll-scrubbed reveals (no pin), tokens scoped in OKLCH.
+
+## 2026-05-21-v191
+
+- Why Us (Hallmark redesign): replaced zigzag spine timeline with hanging statement + ruled production manifest rows (F3 spec sheet); simplified GSAP to vertical reveals; scoped OKLCH tokens in section.
+
+## 2026-05-21-v189
+
+- Tooling: installed [Impeccable](https://github.com/pbakaus/impeccable) design skill at `.cursor/skills/impeccable/` (23 sub-commands via `/impeccable`, reference docs, anti-pattern scripts). Also available via `npx skills add pbakaus/impeccable` at `.agents/skills/impeccable/`.
+
+## 2026-05-21-v188
+
+- Featured Projects: added outside-click dismissal for the presented project card, animating it back into its current stack position and restoring scroll-driven stack control.
+
+## 2026-05-21-v187
+
+- Team: redesigned the section into a cinematic live-crew board with role lanes, image strip, capability chips, hover lift, and scroll-scrubbed parallax motion.
+
+## 2026-05-21-v186
+
+- Hero: made the heading spotlight hover more prominent by tracking the pointer per word and strengthening the light core, halo, and hover radius while keeping the base text calm; added a subtle pointer-following aura behind the headline for a more visible hover state.
+
 ## 2026-05-21-v185
 
 - Featured Projects: strengthened selected-card popup by using GSAP keyframes that first lift the card upward with 3D depth, then scale it larger front-facing above the deck with controlled 3D depth before second-click navigation.

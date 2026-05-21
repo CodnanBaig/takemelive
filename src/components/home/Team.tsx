@@ -8,26 +8,35 @@ import styles from './Team.module.scss';
 
 const TEAM_ROLES = [
   {
+    code: '01',
     title: 'Designers',
+    field: 'Concept and space',
     note: 'Translate brand intent into visual and spatial systems that feel immediate.',
+    tags: ['Concept', 'Visual language', 'Environment'],
     image:
       'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80',
   },
   {
+    code: '02',
     title: 'Technologists',
+    field: 'Interaction layer',
     note: 'Build interactions and intelligence that make ambitious ideas truly perform.',
+    tags: ['Interactive', 'AI moments', 'Show control'],
     image:
       'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80',
   },
   {
+    code: '03',
     title: 'Producers',
+    field: 'Delivery control',
     note: 'Orchestrate execution with precision from first concept through showtime.',
+    tags: ['Crew', 'Vendors', 'Run of show'],
     image:
       'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1400&q=80',
   },
 ] as const;
 
-const VALUES = ['Collaborative', 'Detail-focused', 'Purpose-driven'] as const;
+const VALUES = ['Design intent', 'Technical direction', 'Live delivery'] as const;
 
 export default function Team() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -38,144 +47,130 @@ export default function Team() {
       return;
     }
 
-    const headline = section.querySelector<HTMLElement>('[data-team-headline]');
+    const headlineLines = Array.from(section.querySelectorAll<HTMLElement>('[data-team-line]'));
     const intro = section.querySelector<HTMLElement>('[data-team-intro]');
     const kicker = section.querySelector<HTMLElement>('[data-team-kicker]');
-    const left = section.querySelector<HTMLElement>('[data-team-left]');
-    const right = section.querySelector<HTMLElement>('[data-team-right]');
+    const board = section.querySelector<HTMLElement>('[data-team-board]');
+    const heroMedia = section.querySelector<HTMLElement>('[data-team-hero-media]');
+    const heroImage = section.querySelector<HTMLElement>('[data-team-hero-image]');
     const chips = Array.from(section.querySelectorAll<HTMLElement>('[data-team-chip]'));
-    const cards = Array.from(section.querySelectorAll<HTMLElement>('[data-team-card]'));
-    const media = Array.from(section.querySelectorAll<HTMLElement>('[data-team-media]'));
-    const cardBodies = Array.from(section.querySelectorAll<HTMLElement>('[data-team-card-body]'));
-    const divider = section.querySelector<HTMLElement>('[data-team-divider]');
+    const roles = Array.from(section.querySelectorAll<HTMLElement>('[data-team-role]'));
+    const roleImages = Array.from(section.querySelectorAll<HTMLElement>('[data-team-role-image]'));
     const hoverCleanups: Array<() => void> = [];
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([kicker, headline, intro, ...chips, ...cards, divider, ...media, ...cardBodies], {
-          autoAlpha: 1,
-          x: 0,
-          y: 0,
-          scale: 1,
-          rotateX: 0,
-          rotateY: 0,
-        });
+        gsap.set(
+          [kicker, ...headlineLines, intro, board, heroMedia, heroImage, ...chips, ...roles, ...roleImages],
+          {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            yPercent: 0,
+            scale: 1,
+            rotateY: 0,
+            skewY: 0,
+          },
+        );
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.set(cards, {
+        const isCompact = window.matchMedia('(max-width: 900px)').matches;
+
+        gsap.set(roles, {
           transformPerspective: 1200,
           transformOrigin: '50% 50%',
         });
 
-        const introTl = gsap.timeline({
-          scrollTrigger: sectionRevealScroll(section, 0.78),
-        });
-
-        if (divider) {
-          introTl.fromTo(
-            divider,
-            { scaleY: 0, transformOrigin: 'top center', autoAlpha: 0 },
-            { scaleY: 1, autoAlpha: 1, ease: 'none', duration: 0.35 },
-            0,
-          );
-        }
-
-        introTl
+        gsap
+          .timeline({
+            scrollTrigger: sectionRevealScroll(section, 0.76),
+          })
+          .fromTo(kicker, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, ease: 'none', duration: 0.24 }, 0)
           .fromTo(
-            left,
-            { autoAlpha: 0, x: -70, y: 24, rotateY: -10 },
-            { autoAlpha: 1, x: 0, y: 0, rotateY: 0, ease: 'none', duration: 0.5 },
-            0.05,
+            headlineLines,
+            isCompact
+              ? { autoAlpha: 0, y: 28, skewY: 0 }
+              : { autoAlpha: 0, yPercent: 112, skewY: 5 },
+            isCompact
+              ? {
+                  autoAlpha: 1,
+                  y: 0,
+                  skewY: 0,
+                  stagger: 0.07,
+                  ease: 'none',
+                  duration: 0.52,
+                }
+              : {
+                  autoAlpha: 1,
+                  yPercent: 0,
+                  skewY: 0,
+                  stagger: 0.07,
+                  ease: 'none',
+                  duration: 0.52,
+                },
+            0.08,
           )
-          .fromTo(
-            [kicker, headline],
-            { autoAlpha: 0, yPercent: 120, skewY: 8 },
-            {
-              autoAlpha: 1,
-              yPercent: 0,
-              skewY: 0,
-              stagger: 0.07,
-              ease: 'none',
-              duration: 0.55,
-            },
-            0.12,
-          )
-          .fromTo(
-            intro,
-            { autoAlpha: 0, y: 36 },
-            { autoAlpha: 1, y: 0, ease: 'none', duration: 0.45 },
-            0.28,
-          )
+          .fromTo(intro, { autoAlpha: 0, y: 32 }, { autoAlpha: 1, y: 0, ease: 'none', duration: 0.42 }, 0.28)
           .fromTo(
             chips,
-            { autoAlpha: 0, y: 30, scale: 0.88, rotateX: -24 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              scale: 1,
-              rotateX: 0,
-              stagger: 0.08,
-              ease: 'none',
-              duration: 0.48,
-            },
+            { autoAlpha: 0, y: 18, scale: 0.95 },
+            { autoAlpha: 1, y: 0, scale: 1, stagger: 0.08, ease: 'none', duration: 0.34 },
             0.38,
           )
           .fromTo(
-            right,
-            { autoAlpha: 0, x: 90, y: 24 },
-            { autoAlpha: 1, x: 0, y: 0, ease: 'none', duration: 0.52 },
-            0.22,
+            board,
+            { autoAlpha: 0, y: 62 },
+            { autoAlpha: 1, y: 0, ease: 'none', duration: 0.54 },
+            0.28,
           )
           .fromTo(
-            cards,
-            { autoAlpha: 0, y: 86, rotateX: 18, rotateY: -12, scale: 0.88 },
+            heroMedia,
+            { autoAlpha: 0, scale: 0.96 },
+            { autoAlpha: 1, scale: 1, ease: 'none', duration: 0.54 },
+            0.34,
+          )
+          .fromTo(
+            roles,
+            { autoAlpha: 0, y: 54, rotateY: -5 },
             {
               autoAlpha: 1,
               y: 0,
-              rotateX: 0,
               rotateY: 0,
-              scale: 1,
-              stagger: 0.1,
-              ease: 'none',
-              duration: 0.58,
-            },
-            0.42,
-          )
-          .fromTo(
-            media,
-            { scale: 1.2, autoAlpha: 0.3 },
-            {
-              scale: 1,
-              autoAlpha: 1,
-              stagger: 0.1,
-              ease: 'none',
-              duration: 0.58,
-            },
-            0.44,
-          )
-          .fromTo(
-            cardBodies,
-            { autoAlpha: 0, x: 26 },
-            {
-              autoAlpha: 1,
-              x: 0,
               stagger: 0.08,
               ease: 'none',
               duration: 0.5,
             },
-            0.5,
+            0.42,
+          )
+          .fromTo(
+            roleImages,
+            { autoAlpha: 0.5, scale: 1.12 },
+            { autoAlpha: 1, scale: 1, stagger: 0.08, ease: 'none', duration: 0.42 },
+            0.48,
           );
 
-        cards.forEach((card, index) => {
-          const cardMedia = media[index];
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 0.8,
+            },
+          })
+          .to(heroImage, { yPercent: -9, ease: 'none', duration: 1 }, 0)
+          .to(roles, { y: (index) => (index - 1) * -10, ease: 'none', stagger: 0.02, duration: 1 }, 0);
+
+        roles.forEach((role, index) => {
+          const cardMedia = roleImages[index];
           const enter = () => {
-            gsap.to(card, {
-              y: -8,
-              rotateX: -2,
-              rotateY: index % 2 === 0 ? 2 : -2,
+            gsap.to(role, {
+              x: 10,
+              y: -6,
+              rotateY: index % 2 === 0 ? 1.5 : -1.5,
               duration: 0.28,
               ease: 'power2.out',
               overwrite: true,
@@ -190,9 +185,9 @@ export default function Team() {
             }
           };
           const leave = () => {
-            gsap.to(card, {
+            gsap.to(role, {
+              x: 0,
               y: 0,
-              rotateX: 0,
               rotateY: 0,
               duration: 0.28,
               ease: 'power2.out',
@@ -207,11 +202,11 @@ export default function Team() {
               });
             }
           };
-          card.addEventListener('mouseenter', enter);
-          card.addEventListener('mouseleave', leave);
+          role.addEventListener('mouseenter', enter);
+          role.addEventListener('mouseleave', leave);
           hoverCleanups.push(() => {
-            card.removeEventListener('mouseenter', enter);
-            card.removeEventListener('mouseleave', leave);
+            role.removeEventListener('mouseenter', enter);
+            role.removeEventListener('mouseleave', leave);
           });
         });
       });
@@ -234,40 +229,59 @@ export default function Team() {
     >
       <ScrollOrnament variant="glyph-light" position="tl" />
       <div className={styles.inner}>
-        <div className={styles.left} data-team-left>
+        <div className={styles.masthead}>
           <p className={styles.kicker} data-team-kicker>
             Team
           </p>
           <h2 data-team-headline className={styles.headline}>
-            PEOPLE BEHIND THE EXPERIENCES.
+            <span data-team-line>People behind</span>
+            <span data-team-line>the live moment.</span>
           </h2>
           <p data-team-intro className={styles.intro}>
-            Designers, technologists, and producers working together to turn ambitious ideas into
-            real-world moments.
+            Designers, technologists, and producers working as one crew from first idea to final
+            show call.
           </p>
-          <div className={styles.values}>
-            {VALUES.map((value) => (
-              <span key={value} className={styles.valueChip} data-team-chip>
-                {value}
-              </span>
-            ))}
-          </div>
         </div>
 
-        <span className={styles.divider} data-team-divider aria-hidden="true" />
-
-        <div className={styles.right} data-team-right>
-          {TEAM_ROLES.map((role) => (
-            <article key={role.title} className={styles.card} data-team-card>
-              <div className={styles.media} data-team-media>
-                <img src={role.image} alt="" loading="lazy" />
-              </div>
-              <div className={styles.cardBody} data-team-card-body>
-                <h3>{role.title}</h3>
-                <p>{role.note}</p>
-              </div>
-            </article>
+        <div className={styles.values} aria-label="Team strengths">
+          {VALUES.map((value) => (
+            <span key={value} className={styles.valueChip} data-team-chip>
+              {value}
+            </span>
           ))}
+        </div>
+
+        <div className={styles.board} data-team-board>
+          <figure className={styles.heroMedia} data-team-hero-media>
+            <img src={TEAM_ROLES[1].image} alt="" loading="lazy" data-team-hero-image />
+            <figcaption>
+              <span>One crew</span>
+              <span>From concept to showtime</span>
+            </figcaption>
+          </figure>
+
+          <div className={styles.roleStack}>
+            {TEAM_ROLES.map((role) => (
+              <article key={role.title} className={styles.roleCard} data-team-role>
+                <figure className={styles.roleImage}>
+                  <img src={role.image} alt="" loading="lazy" data-team-role-image />
+                </figure>
+                <div className={styles.roleMeta}>
+                  <span>{role.code}</span>
+                  <span>{role.field}</span>
+                </div>
+                <div className={styles.roleCopy}>
+                  <h3>{role.title}</h3>
+                  <p>{role.note}</p>
+                  <ul className={styles.tagList} aria-label={`${role.title} capabilities`}>
+                    {role.tags.map((tag) => (
+                      <li key={tag}>{tag}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

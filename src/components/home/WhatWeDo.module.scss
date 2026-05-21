@@ -73,29 +73,41 @@
 }
 
 .placeholderImage {
+  position: relative;
   justify-self: end;
   width: min(100%, 460px);
   aspect-ratio: 4 / 5;
   border-radius: 0;
   border: 1px solid rgb(245 245 240 / 0.26);
-  background:
-    linear-gradient(135deg, rgb(245 245 240 / 0.08), rgb(245 245 240 / 0.02)),
-    repeating-linear-gradient(
-      45deg,
-      rgb(245 245 240 / 0.18) 0 16px,
-      rgb(245 245 240 / 0.06) 16px 32px
-    );
-  display: grid;
-  place-items: center;
+  background: #111217;
   overflow: hidden;
 }
 
-.placeholderImage span {
+.placeholderImage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 45%, rgb(0 0 0 / 0.58) 100%),
+    linear-gradient(90deg, rgb(208 223 89 / 0.16), transparent 42%);
+  pointer-events: none;
+}
+
+.placeholderImage :global(img) {
+  object-fit: cover;
+  filter: saturate(0.95) contrast(1.08);
+}
+
+.placeholderImage figcaption {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: clamp(0.74rem, 1.05vw, 1rem);
+  letter-spacing: 0.14em;
+  font-size: clamp(0.7rem, 0.95vw, 0.82rem);
   color: rgb(245 245 240 / 0.88);
-  font-weight: 600;
+  font-weight: 800;
 }
 
 @media (max-width: 960px) {
@@ -115,5 +127,28 @@
   .lineCard {
     grid-template-columns: 1fr;
     gap: 0.36rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    min-height: 0;
+    overflow: clip;
+  }
+
+  .inner h2 {
+    font-size: clamp(2rem, 11.2vw, 4.2rem);
+    max-width: 12ch;
+    overflow-wrap: anywhere;
+  }
+
+  .content,
+  .copy,
+  .lineCard {
+    min-width: 0;
+  }
+
+  .lineCard {
+    padding-inline: 0.78rem;
   }
 }

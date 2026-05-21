@@ -23,6 +23,7 @@ export default function Hero() {
     }
 
     const words = heading.querySelectorAll('[data-word]');
+    const wordElements = Array.from(words) as HTMLElement[];
     const subheading = section.querySelector('[data-subheading]');
 
     const ctx = gsap.context(() => {
@@ -35,6 +36,8 @@ export default function Hero() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const isCompact = window.matchMedia('(max-width: 900px)').matches;
+
         gsap.fromTo(
           words,
           { yPercent: 120, autoAlpha: 0 },
@@ -69,7 +72,7 @@ export default function Hero() {
             words,
             {
               yPercent: (index) => -8 - index * 4,
-              x: (index) => (index % 2 === 0 ? -12 : 12),
+              x: (index) => (isCompact ? 0 : index % 2 === 0 ? -12 : 12),
               ease: 'none',
               stagger: 0.04,
               duration: 1,
@@ -110,23 +113,34 @@ export default function Hero() {
       });
 
       mm.add('(pointer:fine) and (prefers-reduced-motion: no-preference)', () => {
-        const spotXTo = gsap.quickTo(heading, '--spot-x', { duration: 0.45, ease: 'power2.out' });
-        const spotYTo = gsap.quickTo(heading, '--spot-y', { duration: 0.45, ease: 'power2.out' });
-        const spotSizeTo = gsap.quickTo(heading, '--spot-size', { duration: 0.55, ease: 'power2.out' });
+        const spotXTo = gsap.quickTo(heading, '--spot-x', { duration: 0.34, ease: 'power2.out' });
+        const spotYTo = gsap.quickTo(heading, '--spot-y', { duration: 0.34, ease: 'power2.out' });
+        const spotSizeTo = gsap.quickTo(heading, '--spot-size', { duration: 0.5, ease: 'power2.out' });
         const spotOpacityTo = gsap.quickTo(heading, '--spot-opacity', {
           duration: 0.32,
           ease: 'power2.out',
         });
 
         const setPointer = (event: PointerEvent) => {
-          const bounds = heading.getBoundingClientRect();
-          spotXTo(event.clientX - bounds.left);
-          spotYTo(event.clientY - bounds.top);
+          const headingBounds = heading.getBoundingClientRect();
+          spotXTo(event.clientX - headingBounds.left);
+          spotYTo(event.clientY - headingBounds.top);
+
+          wordElements.forEach((word) => {
+            const bounds = word.getBoundingClientRect();
+            gsap.to(word, {
+              '--spot-x': event.clientX - bounds.left,
+              '--spot-y': event.clientY - bounds.top,
+              duration: 0.28,
+              ease: 'power2.out',
+              overwrite: 'auto',
+            });
+          });
         };
 
         const handlePointerEnter = (event: PointerEvent) => {
           setPointer(event);
-          spotSizeTo(280);
+          spotSizeTo(380);
           spotOpacityTo(1);
         };
 
