@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { sectionRevealScroll } from '@/lib/scrollScene';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './WhoWeAre.module.scss';
 
 const PORTRAIT_IMAGE = {
@@ -118,79 +120,57 @@ export default function WhoWeAre() {
           gsap.set(mediaImage, { scale: 1.14 });
         }
 
-        if (eyebrow) {
-          gsap.fromTo(
+        gsap
+          .timeline({
+            scrollTrigger: sectionRevealScroll(section, 0.78),
+          })
+          .fromTo(
             eyebrow,
-            { autoAlpha: 0, y: 18 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: 0.6,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: section,
-                start: 'top 74%',
-              },
-            },
-          );
-        }
-
-        if (accent) {
-          gsap.fromTo(
+            { autoAlpha: 0, y: 22 },
+            { autoAlpha: 1, y: 0, ease: 'none', duration: 0.3 },
+            0,
+          )
+          .fromTo(
             accent,
             { scaleX: 0, transformOrigin: 'left center' },
-            {
-              scaleX: 1,
-              duration: 0.8,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: section,
-                start: 'top 72%',
-              },
-            },
-          );
-        }
-
-        const timeline = gsap.timeline({
-          defaults: { ease: 'power3.out' },
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 68%',
-          },
-        });
-
-        timeline
+            { scaleX: 1, ease: 'none', duration: 0.45 },
+            0.05,
+          )
           .fromTo(
             headingLines,
-            { yPercent: 110, autoAlpha: 0 },
+            { yPercent: 110, autoAlpha: 0.15 },
             {
               yPercent: 0,
               autoAlpha: 1,
-              duration: 0.8,
-              stagger: 0.09,
+              stagger: 0.07,
+              ease: 'none',
+              duration: 0.55,
             },
+            0.12,
           )
           .fromTo(
             roles,
-            { y: 24, autoAlpha: 0 },
+            { y: 28, autoAlpha: 0.2 },
             {
               y: 0,
               autoAlpha: 1,
-              duration: 0.6,
-              stagger: 0.08,
+              stagger: 0.06,
+              ease: 'none',
+              duration: 0.5,
             },
-            '-=0.34',
+            0.28,
           )
           .fromTo(
             bodyLines,
-            { y: 22, autoAlpha: 0 },
+            { y: 24, autoAlpha: 0.2 },
             {
               y: 0,
               autoAlpha: 1,
-              duration: 0.68,
-              stagger: 0.1,
+              stagger: 0.07,
+              ease: 'none',
+              duration: 0.52,
             },
-            '-=0.26',
+            0.4,
           );
 
       });
@@ -214,6 +194,7 @@ export default function WhoWeAre() {
       className={styles.section}
       aria-label="Who we are"
     >
+      <ScrollOrnament variant="glyph-dark" position="tl" />
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.leftRail}>
@@ -224,7 +205,7 @@ export default function WhoWeAre() {
               <p className={styles.studioLine}>A creative experience studio</p>
             </div>
 
-            <figure className={styles.mediaCard} data-media-card>
+            <figure className={styles.mediaCard} data-media-card data-scroll-depth>
               <img
                 src={PORTRAIT_IMAGE.src}
                 alt={PORTRAIT_IMAGE.alt}

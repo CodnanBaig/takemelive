@@ -11,7 +11,7 @@
   width: min(92vw, 1240px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(280px, 1fr) minmax(0, 1.05fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: clamp(1.6rem, 4vw, 4.4rem);
   align-items: center;
 }

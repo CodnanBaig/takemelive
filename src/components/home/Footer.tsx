@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { FEATURED_PROJECTS } from '@/content/featuredProjects';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './Footer.module.scss';
 
 const MARQUEE_ITEMS = Array.from({ length: 18 }, (_, index) => `item-${index}`);
@@ -94,6 +95,7 @@ export default function Footer() {
       className={styles.footer}
       aria-label="Footer"
     >
+      <ScrollOrnament variant="glyph-light" position="tr" />
       <div className={styles.marqueeStack}>
         <div className={`${styles.strip} ${styles.stripLight}`} aria-hidden="true">
           <div className={styles.track} ref={lightTrackRef}>

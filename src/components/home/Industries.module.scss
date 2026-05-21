@@ -127,10 +127,14 @@
 
 .block {
   width: 100%;
+  max-width: 100%;
   margin: 0;
   text-align: right;
   line-height: 1;
-  overflow: visible;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 .item {

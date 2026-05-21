@@ -13,11 +13,13 @@ import Industries from '@/components/home/Industries';
 import Team from '@/components/home/Team';
 import CTA from '@/components/home/CTA';
 import Footer from '@/components/home/Footer';
+import HomeScrollScenes from '@/components/home/HomeScrollScenes';
 import styles from './page.module.scss';
 
 export default function Home() {
   return (
     <main className={styles.main}>
+      <HomeScrollScenes />
       <LogoThemeSync />
       <div className={styles.logoContainer}>
         <Image

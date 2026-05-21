@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { sectionRevealScroll } from '@/lib/scrollScene';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './WhyUs.module.scss';
 
 const POSTER_LINES = ['MORE THAN', 'A VENDOR.', 'A LIVE SYSTEM.'];
@@ -63,66 +65,49 @@ export default function WhyUs() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        if (eyebrow) {
-          gsap.fromTo(
+        gsap
+          .timeline({
+            scrollTrigger: sectionRevealScroll(section, 0.72),
+          })
+          .fromTo(
             eyebrow,
-            { autoAlpha: 0, y: 16 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: 0.55,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: section,
-                start: 'top 80%',
-              },
-            },
-          );
-        }
-
-        const introTimeline = gsap.timeline({
-          defaults: { ease: 'power4.out' },
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 70%',
-          },
-        });
-
-        introTimeline
+            { autoAlpha: 0, y: 20 },
+            { autoAlpha: 1, y: 0, ease: 'none', duration: 0.35 },
+            0,
+          )
           .fromTo(
             posterLines,
-            { yPercent: 110, autoAlpha: 0 },
+            { yPercent: 110, autoAlpha: 0.15 },
             {
               yPercent: 0,
               autoAlpha: 1,
-              duration: 0.92,
-              stagger: 0.08,
+              stagger: 0.06,
+              ease: 'none',
+              duration: 0.65,
             },
+            0.08,
           )
           .fromTo(
             lead,
-            { y: 24, autoAlpha: 0 },
-            {
-              y: 0,
-              autoAlpha: 1,
-              duration: 0.72,
-            },
-            '-=0.34',
+            { y: 28, autoAlpha: 0.2 },
+            { y: 0, autoAlpha: 1, ease: 'none', duration: 0.55 },
+            0.2,
           );
 
         if (watermark) {
           gsap.fromTo(
             watermark,
-            { yPercent: 18, autoAlpha: 0.06 },
+            { yPercent: 22, autoAlpha: 0.04 },
             {
-              yPercent: -12,
-              autoAlpha: 0.18,
+              yPercent: -18,
+              autoAlpha: 0.22,
               ease: 'none',
               scrollTrigger: {
                 trigger: section,
                 start: 'top bottom',
                 end: 'bottom top',
-                scrub: 0.8,
+                scrub: 0.85,
+                invalidateOnRefresh: true,
               },
             },
           );
@@ -137,51 +122,54 @@ export default function WhyUs() {
               ease: 'none',
               scrollTrigger: {
                 trigger: section,
-                start: 'top 62%',
-                end: 'bottom 38%',
-                scrub: 0.8,
+                start: 'top 68%',
+                end: 'bottom 28%',
+                scrub: 0.75,
+                invalidateOnRefresh: true,
               },
             },
           );
         }
 
-        gsap.fromTo(
-          steps,
-          {
-            xPercent: (index) => (index % 2 === 0 ? -14 : 14),
-            autoAlpha: 0,
-          },
-          {
-            xPercent: 0,
-            autoAlpha: 1,
-            duration: 0.76,
-            stagger: 0.12,
-            ease: 'power3.out',
+        gsap
+          .timeline({
             scrollTrigger: {
               trigger: section,
-              start: 'top 56%',
+              start: 'top 58%',
+              end: 'bottom 22%',
+              scrub: 0.7,
+              invalidateOnRefresh: true,
             },
-          },
-        );
-
-        gsap.fromTo(
-          connectors,
-          {
-            scaleX: 0,
-            transformOrigin: (index) => (index % 2 === 0 ? 'right center' : 'left center'),
-          },
-          {
-            scaleX: 1,
-            duration: 0.72,
-            stagger: 0.1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 54%',
+          })
+          .fromTo(
+            steps,
+            {
+              xPercent: (index) => (index % 2 === 0 ? -18 : 18),
+              autoAlpha: 0.25,
             },
-          },
-        );
-
+            {
+              xPercent: 0,
+              autoAlpha: 1,
+              stagger: 0.07,
+              ease: 'none',
+              duration: 1,
+            },
+            0,
+          )
+          .fromTo(
+            connectors,
+            {
+              scaleX: 0,
+              transformOrigin: (index) => (index % 2 === 0 ? 'right center' : 'left center'),
+            },
+            {
+              scaleX: 1,
+              stagger: 0.06,
+              ease: 'none',
+              duration: 1,
+            },
+            0.12,
+          );
       });
 
       return () => {
@@ -203,9 +191,10 @@ export default function WhyUs() {
       className={styles.section}
       aria-label="Why Take Me Live"
     >
+      <ScrollOrnament variant="glyph-light" position="br" />
       <div className={styles.inner}>
         <header className={styles.poster}>
-          <p className={styles.kicker} data-eyebrow>
+          <p className={styles.kicker} data-eyebrow data-scroll-shift>
             WHY US
           </p>
           <div className={styles.posterGrid}>
@@ -218,7 +207,7 @@ export default function WhyUs() {
                 ))}
               </h2>
             </div>
-            <p className={styles.lead} data-lead>
+            <p className={styles.lead} data-lead data-scroll-shift>
               We combine strategy, production, and live execution into one cohesive system, so the experience lands
               hard and feels intentional from first contact to final recall.
             </p>

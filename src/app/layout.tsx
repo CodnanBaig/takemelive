@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Anton, Poppins } from 'next/font/google';
 import './globals.css';
 import SiteNav from '@/components/SiteNav';
@@ -23,6 +23,12 @@ export const metadata: Metadata = {
   icons: {
     icon: '/assets/website-fevicon.png',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({

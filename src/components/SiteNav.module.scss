@@ -1,7 +1,7 @@
 .nav {
   position: fixed;
-  top: clamp(14px, 2.1vw, 26px);
-  right: clamp(14px, 2.1vw, 26px);
+  top: max(clamp(14px, 2.1vw, 26px), env(safe-area-inset-top, 0px));
+  right: max(clamp(14px, 2.1vw, 26px), env(safe-area-inset-right, 0px));
   z-index: 60;
   display: inline-flex;
   align-items: center;
@@ -38,8 +38,8 @@
 
 @media (max-width: 720px) {
   .nav {
-    top: 10px;
-    right: 10px;
+    top: max(10px, env(safe-area-inset-top, 0px));
+    right: max(10px, env(safe-area-inset-right, 0px));
   }
 
   .link {
@@ -47,5 +47,14 @@
     padding: 0.38rem 0.54rem;
     font-size: 0.62rem;
     letter-spacing: 0.12em;
+  }
+}
+
+@media (max-width: 380px) {
+  .link {
+    min-height: 28px;
+    padding: 0.32rem 0.42rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.09em;
   }
 }

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { sectionRevealScroll } from '@/lib/scrollScene';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './Services.module.scss';
 
 const SERVICES = [
@@ -78,39 +80,22 @@ export default function Services() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        if (headline) {
-          gsap.fromTo(
+        gsap
+          .timeline({
+            scrollTrigger: sectionRevealScroll(section, 0.7),
+          })
+          .fromTo(
             headline,
-            { y: 30, autoAlpha: 0 },
-            {
-              y: 0,
-              autoAlpha: 1,
-              duration: 0.8,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: section,
-                start: 'top 72%',
-              },
-            },
-          );
-        }
-
-        if (intro) {
-          gsap.fromTo(
+            { y: 36, autoAlpha: 0.2 },
+            { y: 0, autoAlpha: 1, ease: 'none', duration: 0.45 },
+            0,
+          )
+          .fromTo(
             intro,
-            { y: 28, autoAlpha: 0 },
-            {
-              y: 0,
-              autoAlpha: 1,
-              duration: 0.8,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: section,
-                start: 'top 66%',
-              },
-            },
+            { y: 32, autoAlpha: 0.2 },
+            { y: 0, autoAlpha: 1, ease: 'none', duration: 0.5 },
+            0.15,
           );
-        }
 
         panels.forEach((panel, index) => {
           gsap.fromTo(
@@ -120,7 +105,7 @@ export default function Services() {
               x: index % 2 === 0 ? -180 : 180,
               rotateZ: index % 2 === 0 ? -2 : 2,
               scale: 0.98,
-              autoAlpha: 0,
+              autoAlpha: 0.15,
               clipPath: 'inset(0% 100% 0% 0%)',
             },
             {
@@ -130,11 +115,13 @@ export default function Services() {
               scale: 1,
               autoAlpha: 1,
               clipPath: 'inset(0% 0% 0% 0%)',
-              duration: 1.05,
-              ease: 'power4.out',
+              ease: 'none',
               scrollTrigger: {
                 trigger: panel,
-                start: 'top 84%',
+                start: 'top 88%',
+                end: 'top 42%',
+                scrub: 0.65,
+                invalidateOnRefresh: true,
               },
             },
           );
@@ -147,18 +134,20 @@ export default function Services() {
               y: 64,
               x: index % 2 === 0 ? -42 : 42,
               rotateZ: index % 2 === 0 ? -3.5 : 3.5,
-              autoAlpha: 0,
+              autoAlpha: 0.2,
             },
             {
               y: 0,
               x: 0,
               rotateZ: index % 2 === 0 ? -1.2 : 1.2,
               autoAlpha: 1,
-              duration: 1,
-              ease: 'power3.out',
+              ease: 'none',
               scrollTrigger: {
-                trigger: section,
-                start: 'top 68%',
+                trigger: card,
+                start: 'top 86%',
+                end: 'top 48%',
+                scrub: 0.7,
+                invalidateOnRefresh: true,
               },
             },
           );
@@ -239,6 +228,7 @@ export default function Services() {
       className={styles.section}
       aria-label="Services"
     >
+      <ScrollOrnament variant="glyph-light" position="tr" />
       <div className={styles.stripe} data-services-stripe aria-hidden="true" />
       <div className={styles.backgroundWords} aria-hidden="true">
         <span data-service-word>SERVICES</span>

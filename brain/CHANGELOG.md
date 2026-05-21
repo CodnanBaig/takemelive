@@ -1,3 +1,55 @@
+## 2026-05-21-v180
+
+- Featured Projects changed from endless loop to finite pinned pass: only the 8 real cards render, scroll moves them diagonally off-screen, and the section releases after the final card exits.
+
+## 2026-05-21-v179
+
+- Featured Projects: equal 78% horizontal / 72px vertical card steps, uniform dimensions and rotateY on inner frame only, images at scale 1 (no progressive stretch).
+
+## 2026-05-21-v178
+
+- Featured Projects expanded to 8 cards; uniform card scale (no focus/distance sizing); stack steps auto-fit available width/height.
+
+## 2026-05-21-v177
+
+- Featured Projects: wider card spacing (58% horizontal step, 14vh vertical step); removed scroll-driven opacity on stack cards.
+
+## 2026-05-21-v176
+
+- Featured Projects stack cards slightly narrower (18vw cap 320px).
+
+## 2026-05-21-v175
+
+- Featured Projects stack starts to the right of the heading (measured header width + gap), with perspective origin shifted to match.
+
+## 2026-05-21-v174
+
+- Featured Projects rebuilt with Motion scroll-velocity pattern (useScroll + useVelocity + useSpring): sticky scroll track, 1:1 scrollYProgress layout, velocity-linked wave offset on cards; added motion dependency; removed GSAP pin/scrub for this section.
+
+## 2026-05-21-v173
+
+- Featured Projects stack now spans full viewport width with viewport-derived diagonal fan positions,  for 1:1 scroll coupling, and corrected bottom-left → up-right card orientation on resize.
+
+## 2026-05-21-v172
+
+- Rebuilt Featured Projects as a Hallmark-studied diagonal card stack (heritage-style reference): dark editorial stage, indexed portrait tiles, pinned scroll-to-surf scrub with focus handoff, and static grid fallback on mobile.
+
+## 2026-05-21-v171
+
+- Hallmark-driven scroll polish: scrub-linked section motion (not one-shot enter/exit), global `HomeScrollScenes` orchestrator, `ScrollOrnament` SVG layers from `public/SVG/`, and per-section GSAP ScrollTrigger updates across the homepage.
+
+## 2026-05-21-v170
+
+- Installed [Hallmark](https://github.com/Nutlope/hallmark) anti-AI-slop design skill via `npx skills add nutlope/hallmark` at `.agents/skills/hallmark`, with a Cursor symlink at `.cursor/skills/hallmark`.
+
+## 2026-05-04-v169
+
+- Capped DomeGallery radius against the live viewport so `minRadius` cannot force an oversized sphere on phones (fixes the Our Projects immersive page).
+- Declared Next.js `viewport` metadata (`device-width`, `viewport-fit: cover`) and added `text-size-adjust` on `html` for predictable mobile typography.
+- Replaced `100vw` gallery shell sizing with `100%` + `100dvh` fallbacks and `overflow-x: hidden` on the projects page to avoid horizontal scroll from the scrollbar width.
+- Relaxed rigid CSS grid `minmax(280px|320px, …)` tracks in How It Works, Team, and CTA so sub-320px viewports do not overflow.
+- Tuned FeaturedProjects inner `max-width`, Why Us poster grid flexibility, Hero small-screen padding (including safe-area), fixed nav/logo positioning with safe-area insets, and made the Industries word rail horizontally scrollable when labels exceed the viewport.
+
 ## 2026-04-30-v168
 
 - Fixed DomeGallery drag pointer typing for production type-checks by normalizing mouse/pointer/touch event coordinates before computing deltas.

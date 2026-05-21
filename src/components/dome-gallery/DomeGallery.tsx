@@ -1,10 +1,40 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import Link from 'next/link';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, type CSSProperties } from 'react';
 import { useGesture } from '@use-gesture/react';
 import './DomeGallery.css';
 
-type DomeImage = string | { src: string; alt?: string };
+type DomeImage = string | { src: string; alt?: string; href?: string };
+
+export type DomeGalleryApi = {
+  setRotation: (rotation: { x: number; y: number }) => void;
+  getRotation: () => { x: number; y: number };
+  setTileStretch: (stretch: { x: number; y: number }) => void;
+  getRootElement: () => HTMLDivElement | null;
+};
+
+type GridItem = {
+  x: number;
+  y: number;
+  sizeX: number;
+  sizeY: number;
+  src: string;
+  alt: string;
+  href?: string;
+};
+
+type PointItem = {
+  rx: number;
+  ry: number;
+  sizeX: number;
+  sizeY: number;
+  src: string;
+  alt: string;
+  href?: string;
+};
+
+type DomeItem = GridItem | PointItem;
 
 const DEFAULT_IMAGES: Array<{ src: string; alt: string }> = [
   {
@@ -55,6 +85,10 @@ type DomeGalleryProps = {
   openedImageBorderRadius?: string;
   grayscale?: boolean;
   autoRotateSpeed?: number;
+  enableDrag?: boolean;
+  enableAutoRotate?: boolean;
+  layout?: 'grid' | 'points';
+  onDragVelocity?: (velocity: { x: number; y: number; magnitude: number; active: boolean }) => void;
 };
 
 const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
@@ -73,7 +107,7 @@ const getPointerPosition = (event: MouseEvent | PointerEvent | TouchEvent | Keyb
   return null;
 };
 
-function buildItems(pool: DomeImage[], segments: number) {
+function buildItems(pool: DomeImage[], segments: number): GridItem[] {
   const xCols = Array.from({ length: segments }, (_, i) => i * 2 - (segments - 1));
   const yBandCountBase = Math.max(9, Math.floor(segments * 0.52));
   const yBandCount = yBandCountBase % 2 === 0 ? yBandCountBase + 1 : yBandCountBase;
@@ -85,16 +119,61 @@ function buildItems(pool: DomeImage[], segments: number) {
   });
 
   const normalized = (pool.length ? pool : DEFAULT_IMAGES).map((image) =>
-    typeof image === 'string' ? { src: image, alt: '' } : { src: image.src || '', alt: image.alt || '' },
+    typeof image === 'string'
+      ? { src: image, alt: '', href: undefined }
+      : {
+          src: image.src || '',
+          alt: image.alt || '',
+          href: 'href' in image ? image.href : undefined,
+        },
   );
 
   return coords.map((coord, index) => {
     const item = normalized[index % normalized.length];
-    return { ...coord, src: item.src, alt: item.alt };
+    return { ...coord, src: item.src, alt: item.alt, href: item.href };
   });
 }
 
-export default function DomeGallery({
+function buildPointItems(pool: DomeImage[]): PointItem[] {
+  const normalized = (pool.length ? pool : DEFAULT_IMAGES).map((image) =>
+    typeof image === 'string'
+      ? { src: image, alt: '', href: undefined }
+      : {
+          src: image.src || '',
+          alt: image.alt || '',
+          href: 'href' in image ? image.href : undefined,
+        },
+  );
+
+  // Fibonacci sphere: even distribution, no overlap (given reasonable tile size).
+  const n = normalized.length;
+  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+
+  return normalized.map((item, i) => {
+    const t = n === 1 ? 0.5 : i / (n - 1);
+    const y = 1 - 2 * t;
+    const radius = Math.sqrt(Math.max(0, 1 - y * y));
+    const theta = goldenAngle * i;
+    const x = Math.cos(theta) * radius;
+    const z = Math.sin(theta) * radius;
+
+    const ry = Math.atan2(x, z) * (180 / Math.PI);
+    const rx = -Math.asin(y) * (180 / Math.PI);
+
+    return {
+      src: item.src,
+      alt: item.alt,
+      href: item.href,
+      rx,
+      ry,
+      sizeX: 2,
+      sizeY: 2,
+    };
+  });
+}
+
+const DomeGallery = forwardRef<DomeGalleryApi, DomeGalleryProps>(function DomeGallery(
+  {
   images = DEFAULT_IMAGES,
   fit = 0.5,
   fitBasis = 'min',
@@ -112,7 +191,13 @@ export default function DomeGallery({
   openedImageBorderRadius = '0px',
   grayscale = true,
   autoRotateSpeed = 0.22,
-}: DomeGalleryProps) {
+  enableDrag = true,
+  enableAutoRotate = true,
+  layout = 'grid',
+  onDragVelocity,
+}: DomeGalleryProps,
+  ref,
+) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const mainRef = useRef<HTMLElement | null>(null);
   const sphereRef = useRef<HTMLDivElement | null>(null);
@@ -122,7 +207,12 @@ export default function DomeGallery({
   const dragActiveRef = useRef(false);
   const autoRotateRef = useRef<number | null>(null);
 
-  const items = useMemo(() => buildItems(images, segments), [images, segments]);
+  const items: DomeItem[] = useMemo(() => {
+    if (layout === 'points') {
+      return buildPointItems(images);
+    }
+    return buildItems(images, segments);
+  }, [images, layout, segments]);
 
   const applyTransform = useCallback((xDeg: number, yDeg: number) => {
     const el = sphereRef.current;
@@ -131,6 +221,30 @@ export default function DomeGallery({
     }
     el.style.transform = `translateZ(calc(var(--radius) * -1)) rotateX(${xDeg}deg) rotateY(${yDeg}deg)`;
   }, []);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      setRotation: (rotation) => {
+        rotationRef.current = {
+          x: rotation.x,
+          y: wrapAngleSigned(rotation.y),
+        };
+        applyTransform(rotationRef.current.x, rotationRef.current.y);
+      },
+      getRotation: () => ({ ...rotationRef.current }),
+      setTileStretch: (stretch) => {
+        const root = rootRef.current;
+        if (!root) {
+          return;
+        }
+        root.style.setProperty('--tile-stretch-x', `${stretch.x}`);
+        root.style.setProperty('--tile-stretch-y', `${stretch.y}`);
+      },
+      getRootElement: () => rootRef.current,
+    }),
+    [applyTransform],
+  );
 
   useEffect(() => {
     const root = rootRef.current;
@@ -151,7 +265,10 @@ export default function DomeGallery({
       if (fitBasis === 'height') basis = h;
       if (fitBasis === 'auto') basis = w / h >= 1.2 ? w : minDim;
 
-      const radius = clamp(basis * fit, minRadius, maxRadius);
+      const desired = basis * fit;
+      // Never let minRadius exceed what fits the viewport; otherwise phones get a huge off-canvas dome.
+      const minRadiusFeasible = Math.min(minRadius, minDim * 0.52);
+      const radius = clamp(desired, minRadiusFeasible, maxRadius);
       const viewerPad = Math.max(8, Math.round(minDim * padFactor));
 
       root.style.setProperty('--radius', `${Math.round(radius)}px`);
@@ -185,6 +302,9 @@ export default function DomeGallery({
   ]);
 
   useEffect(() => {
+    if (!enableAutoRotate) {
+      return;
+    }
     const root = rootRef.current;
     if (!root) {
       return;
@@ -222,57 +342,66 @@ export default function DomeGallery({
         window.cancelAnimationFrame(autoRotateRef.current);
       }
     };
-  }, [applyTransform, autoRotateSpeed]);
+  }, [applyTransform, autoRotateSpeed, enableAutoRotate]);
 
   useGesture(
-    {
-      onDragStart: ({ event }) => {
-        const pointer = getPointerPosition(event);
-        if (!pointer) {
-          return;
-        }
-        dragActiveRef.current = true;
-        startRotRef.current = { ...rotationRef.current };
-        startPosRef.current = pointer;
-      },
-      onDrag: ({ event, last, velocity = [0, 0], direction = [0, 0] }) => {
-        if (!startPosRef.current) {
-          return;
-        }
-        const pointer = getPointerPosition(event);
-        if (!pointer) {
-          return;
-        }
-        const dx = pointer.x - startPosRef.current.x;
-        const dy = pointer.y - startPosRef.current.y;
+    enableDrag
+      ? {
+          onDragStart: ({ event }) => {
+            const pointer = getPointerPosition(event);
+            if (!pointer) {
+              return;
+            }
+            dragActiveRef.current = true;
+            onDragVelocity?.({ x: 0, y: 0, magnitude: 0, active: true });
+            startRotRef.current = { ...rotationRef.current };
+            startPosRef.current = pointer;
+          },
+          onDrag: ({ event, last, velocity = [0, 0], direction = [0, 0] }) => {
+            if (!startPosRef.current) {
+              return;
+            }
+            const pointer = getPointerPosition(event);
+            if (!pointer) {
+              return;
+            }
+            const dx = pointer.x - startPosRef.current.x;
+            const dy = pointer.y - startPosRef.current.y;
 
-        const nextX = clamp(
-          startRotRef.current.x - dy / dragSensitivity,
-          -maxVerticalRotationDeg,
-          maxVerticalRotationDeg,
-        );
-        const nextY = wrapAngleSigned(startRotRef.current.y + dx / dragSensitivity);
-        const stretchAmp = clamp(Math.abs(dx) / 220, 0, 0.12);
-        const root = rootRef.current;
-        if (root) {
-          root.style.setProperty('--tile-stretch-x', `${1 + stretchAmp}`);
-          root.style.setProperty('--tile-stretch-y', `${1 - stretchAmp * 0.55}`);
-        }
-        rotationRef.current = { x: nextX, y: nextY };
-        applyTransform(nextX, nextY);
+            const nextX = clamp(
+              startRotRef.current.x - dy / dragSensitivity,
+              -maxVerticalRotationDeg,
+              maxVerticalRotationDeg,
+            );
+            const nextY = wrapAngleSigned(startRotRef.current.y + dx / dragSensitivity);
+            const stretchAmp = clamp(Math.abs(dx) / 220, 0, 0.12);
+            const root = rootRef.current;
+            if (root) {
+              root.style.setProperty('--tile-stretch-x', `${1 + stretchAmp}`);
+              root.style.setProperty('--tile-stretch-y', `${1 - stretchAmp * 0.55}`);
+            }
+            rotationRef.current = { x: nextX, y: nextY };
+            applyTransform(nextX, nextY);
 
-        if (last) {
-          dragActiveRef.current = false;
-          const vx = velocity[0] * direction[0];
-          const vy = velocity[1] * direction[1];
-          rotationRef.current = {
-            x: clamp(nextX - vy * dragDampening, -maxVerticalRotationDeg, maxVerticalRotationDeg),
-            y: wrapAngleSigned(nextY + vx * dragDampening),
-          };
-          applyTransform(rotationRef.current.x, rotationRef.current.y);
+            if (last) {
+              dragActiveRef.current = false;
+              onDragVelocity?.({ x: 0, y: 0, magnitude: 0, active: false });
+              const vx = velocity[0] * direction[0];
+              const vy = velocity[1] * direction[1];
+              rotationRef.current = {
+                x: clamp(nextX - vy * dragDampening, -maxVerticalRotationDeg, maxVerticalRotationDeg),
+                y: wrapAngleSigned(nextY + vx * dragDampening),
+              };
+              applyTransform(rotationRef.current.x, rotationRef.current.y);
+            } else {
+              const vx = velocity[0] * direction[0];
+              const vy = velocity[1] * direction[1];
+              const magnitude = Math.hypot(vx, vy);
+              onDragVelocity?.({ x: vx, y: vy, magnitude, active: true });
+            }
+          },
         }
-      },
-    },
+      : {},
     { target: mainRef, eventOptions: { passive: true } },
   );
 
@@ -287,19 +416,27 @@ export default function DomeGallery({
           <div ref={sphereRef} className="sphere">
             {items.map((item, i) => (
               <div
-                key={`${item.x}-${item.y}-${i}`}
+                key={`${item.src}-${i}`}
                 className="item"
                 style={
                   {
-                    ['--offset-x' as string]: item.x,
-                    ['--offset-y' as string]: item.y,
+                    ['--offset-x' as string]: 'x' in item ? item.x : 0,
+                    ['--offset-y' as string]: 'y' in item ? item.y : 0,
                     ['--item-size-x' as string]: item.sizeX,
                     ['--item-size-y' as string]: item.sizeY,
-                  } as React.CSSProperties
+                    ['--item-rx' as string]: 'rx' in item ? `${item.rx}deg` : undefined,
+                    ['--item-ry' as string]: 'ry' in item ? `${item.ry}deg` : undefined,
+                  } as CSSProperties
                 }
               >
                 <div className="item__image">
-                  <img src={item.src} draggable={false} alt={item.alt || 'Project image'} />
+                  {item.href ? (
+                    <Link href={item.href} className="item__link" aria-label={item.alt || 'View project'}>
+                      <img src={item.src} draggable={false} alt={item.alt || 'Project image'} />
+                    </Link>
+                  ) : (
+                    <img src={item.src} draggable={false} alt={item.alt || 'Project image'} />
+                  )}
                 </div>
               </div>
             ))}
@@ -312,4 +449,6 @@ export default function DomeGallery({
       </main>
     </div>
   );
-}
+});
+
+export default DomeGallery;

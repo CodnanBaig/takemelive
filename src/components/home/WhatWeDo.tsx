@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { sectionRevealScroll } from '@/lib/scrollScene';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './WhatWeDo.module.scss';
 
 const LINES = [
@@ -35,46 +37,43 @@ export default function WhatWeDo() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.fromTo(
-          lines,
-          {
-            y: 24,
-            x: (index: number) => (index % 2 === 0 ? -34 : 34),
-            autoAlpha: 0,
-            clipPath: 'inset(0% 0% 100% 0%)',
-          },
-          {
-            y: 0,
-            x: 0,
-            autoAlpha: 1,
-            clipPath: 'inset(0% 0% 0% 0%)',
-            stagger: 0.12,
-            duration: 0.72,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 62%',
+        gsap
+          .timeline({
+            scrollTrigger: sectionRevealScroll(section, 0.8),
+          })
+          .fromTo(
+            lines,
+            {
+              y: 32,
+              x: (index: number) => (index % 2 === 0 ? -48 : 48),
+              autoAlpha: 0.2,
+              clipPath: 'inset(0% 0% 100% 0%)',
             },
-          },
-        );
+            {
+              y: 0,
+              x: 0,
+              autoAlpha: 1,
+              clipPath: 'inset(0% 0% 0% 0%)',
+              stagger: 0.08,
+              ease: 'none',
+              duration: 1,
+            },
+            0,
+          );
 
         if (media) {
           gsap.fromTo(
             media,
-            { autoAlpha: 0, x: 220 },
+            { x: 140, autoAlpha: 0.25, scale: 0.96 },
             {
-              autoAlpha: 1,
               x: 0,
-              duration: 0.9,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: section,
-                start: 'top 62%',
-              },
+              autoAlpha: 1,
+              scale: 1,
+              ease: 'none',
+              scrollTrigger: sectionRevealScroll(section, 0.85),
             },
           );
         }
-
       });
 
       return () => {
@@ -96,11 +95,14 @@ export default function WhatWeDo() {
       className={styles.section}
       aria-label="What we do"
     >
+      <ScrollOrnament variant="glyph-dark" position="tl" />
       <div className={styles.inner}>
         <div className={styles.content}>
           <div className={styles.copy}>
-            <p className={styles.kicker}>What We Do</p>
-            <h2>IMMERSIVE EXPERIENCES BUILT TO STAY WITH PEOPLE.</h2>
+            <p className={styles.kicker} data-scroll-shift>
+              What We Do
+            </p>
+            <h2 data-scroll-shift>IMMERSIVE EXPERIENCES BUILT TO STAY WITH PEOPLE.</h2>
             <div className={styles.lines}>
               {LINES.map((line, index) => (
                 <p key={line} data-line className={styles.lineCard}>
@@ -111,7 +113,12 @@ export default function WhatWeDo() {
             </div>
           </div>
 
-          <div ref={mediaRef} className={styles.placeholderImage} aria-label="Section three image placeholder">
+          <div
+            ref={mediaRef}
+            className={styles.placeholderImage}
+            data-scroll-depth
+            aria-label="Section three image placeholder"
+          >
             <span>Placeholder Image</span>
           </div>
         </div>

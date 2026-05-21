@@ -28,7 +28,7 @@
   width: min(92vw, 1240px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(280px, 1fr) 1px minmax(0, 1.2fr);
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1.2fr);
   gap: clamp(1.4rem, 3vw, 3rem);
   align-items: start;
 }

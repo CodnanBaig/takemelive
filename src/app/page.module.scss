@@ -27,8 +27,8 @@
 
 .logoContainer {
   position: fixed;
-  top: clamp(16px, 2.2vw, 28px);
-  left: clamp(14px, 2.2vw, 28px);
+  top: max(clamp(16px, 2.2vw, 28px), env(safe-area-inset-top, 0px));
+  left: max(clamp(14px, 2.2vw, 28px), env(safe-area-inset-left, 0px));
   z-index: 50;
   pointer-events: none;
 }
@@ -42,6 +42,16 @@
 
 .main :global(section[data-chapter]) {
   position: relative;
+  --section-progress: 0;
+  overflow: hidden;
+}
+
+.main :global([data-scroll-shift]) {
+  will-change: transform;
+}
+
+.main :global([data-scroll-depth]) {
+  will-change: transform;
 }
 
 .main :global(section[data-chapter]::after) {
@@ -60,8 +70,8 @@
 
 @media (max-width: 768px) {
   .logoContainer {
-    top: 14px;
-    left: 14px;
+    top: max(14px, env(safe-area-inset-top, 0px));
+    left: max(14px, env(safe-area-inset-left, 0px));
   }
 
   .main :global(section[data-chapter]::after) {

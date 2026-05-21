@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { sectionRevealScroll } from '@/lib/scrollScene';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './Team.module.scss';
 
 const TEAM_ROLES = [
@@ -68,37 +70,25 @@ export default function Team() {
           transformOrigin: '50% 50%',
         });
 
+        const introTl = gsap.timeline({
+          scrollTrigger: sectionRevealScroll(section, 0.78),
+        });
+
         if (divider) {
-          gsap.fromTo(
+          introTl.fromTo(
             divider,
             { scaleY: 0, transformOrigin: 'top center', autoAlpha: 0 },
-            {
-              scaleY: 1,
-              autoAlpha: 1,
-              duration: 0.9,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: section,
-                start: 'top 80%',
-                once: true,
-              },
-            },
+            { scaleY: 1, autoAlpha: 1, ease: 'none', duration: 0.35 },
+            0,
           );
         }
-
-        const introTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 82%',
-            once: true,
-          },
-        });
 
         introTl
           .fromTo(
             left,
             { autoAlpha: 0, x: -70, y: 24, rotateY: -10 },
-            { autoAlpha: 1, x: 0, y: 0, rotateY: 0, duration: 0.78, ease: 'power3.out' },
+            { autoAlpha: 1, x: 0, y: 0, rotateY: 0, ease: 'none', duration: 0.5 },
+            0.05,
           )
           .fromTo(
             [kicker, headline],
@@ -107,17 +97,17 @@ export default function Team() {
               autoAlpha: 1,
               yPercent: 0,
               skewY: 0,
-              duration: 0.72,
-              stagger: 0.08,
-              ease: 'power4.out',
+              stagger: 0.07,
+              ease: 'none',
+              duration: 0.55,
             },
-            '-=0.58',
+            0.12,
           )
           .fromTo(
             intro,
             { autoAlpha: 0, y: 36 },
-            { autoAlpha: 1, y: 0, duration: 0.56, ease: 'power3.out' },
-            '-=0.42',
+            { autoAlpha: 1, y: 0, ease: 'none', duration: 0.45 },
+            0.28,
           )
           .fromTo(
             chips,
@@ -127,83 +117,57 @@ export default function Team() {
               y: 0,
               scale: 1,
               rotateX: 0,
-              duration: 0.55,
-              stagger: 0.09,
-              ease: 'back.out(1.6)',
+              stagger: 0.08,
+              ease: 'none',
+              duration: 0.48,
             },
-            '-=0.28',
+            0.38,
+          )
+          .fromTo(
+            right,
+            { autoAlpha: 0, x: 90, y: 24 },
+            { autoAlpha: 1, x: 0, y: 0, ease: 'none', duration: 0.52 },
+            0.22,
+          )
+          .fromTo(
+            cards,
+            { autoAlpha: 0, y: 86, rotateX: 18, rotateY: -12, scale: 0.88 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              rotateX: 0,
+              rotateY: 0,
+              scale: 1,
+              stagger: 0.1,
+              ease: 'none',
+              duration: 0.58,
+            },
+            0.42,
+          )
+          .fromTo(
+            media,
+            { scale: 1.2, autoAlpha: 0.3 },
+            {
+              scale: 1,
+              autoAlpha: 1,
+              stagger: 0.1,
+              ease: 'none',
+              duration: 0.58,
+            },
+            0.44,
+          )
+          .fromTo(
+            cardBodies,
+            { autoAlpha: 0, x: 26 },
+            {
+              autoAlpha: 1,
+              x: 0,
+              stagger: 0.08,
+              ease: 'none',
+              duration: 0.5,
+            },
+            0.5,
           );
-
-        gsap.fromTo(
-          right,
-          { autoAlpha: 0, x: 90, y: 24 },
-          {
-            autoAlpha: 1,
-            x: 0,
-            y: 0,
-            duration: 0.84,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 78%',
-              once: true,
-            },
-          },
-        );
-
-        gsap.fromTo(
-          cards,
-          { autoAlpha: 0, y: 86, rotateX: 18, rotateY: -12, scale: 0.88 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            rotateX: 0,
-            rotateY: 0,
-            scale: 1,
-            duration: 0.86,
-            stagger: 0.14,
-            ease: 'power4.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 74%',
-              once: true,
-            },
-          },
-        );
-
-        gsap.fromTo(
-          media,
-          { scale: 1.2, autoAlpha: 0.3 },
-          {
-            scale: 1,
-            autoAlpha: 1,
-            duration: 0.9,
-            stagger: 0.14,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 74%',
-              once: true,
-            },
-          },
-        );
-
-        gsap.fromTo(
-          cardBodies,
-          { autoAlpha: 0, x: 26 },
-          {
-            autoAlpha: 1,
-            x: 0,
-            duration: 0.62,
-            stagger: 0.12,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 72%',
-              once: true,
-            },
-          },
-        );
 
         cards.forEach((card, index) => {
           const cardMedia = media[index];
@@ -268,6 +232,7 @@ export default function Team() {
       className={styles.section}
       aria-label="Team"
     >
+      <ScrollOrnament variant="glyph-light" position="tl" />
       <div className={styles.inner}>
         <div className={styles.left} data-team-left>
           <p className={styles.kicker} data-team-kicker>

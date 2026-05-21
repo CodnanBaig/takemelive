@@ -81,19 +81,28 @@ main.sphere-main {
   transform-origin: 50% 50%;
   backface-visibility: hidden;
   transition: transform 240ms ease;
-  transform: rotateY(calc(var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2))))
-    rotateX(calc(var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2))))
+  transform: rotateY(var(--item-ry, calc(var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2)))))
+    rotateX(var(--item-rx, calc(var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2)))))
     translateZ(var(--radius));
 }
 
 .item__image {
   position: absolute;
-  inset: 16px;
+  inset: 20px;
   border-radius: var(--tile-radius, 50%);
   overflow: hidden;
   backface-visibility: hidden;
   transform: scale(var(--tile-stretch-x), var(--tile-stretch-y));
   transition: transform 180ms ease;
+  will-change: transform;
+}
+
+.item__link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
 }
 
 .item__image img {

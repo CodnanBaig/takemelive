@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { sectionRevealScroll, sectionSpanScroll } from '@/lib/scrollScene';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './Hero.module.scss';
 
 const HERO_WORDS = ['EXPERIENCES', 'THAT', 'MOVE', 'PEOPLE.'];
@@ -21,12 +23,14 @@ export default function Hero() {
     }
 
     const words = heading.querySelectorAll('[data-word]');
+    const subheading = section.querySelector('[data-subheading]');
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(words, { y: 0, autoAlpha: 1 });
+        gsap.set(words, { y: 0, autoAlpha: 1, yPercent: 0 });
+        gsap.set(subheading, { autoAlpha: 1, y: 0 });
         gsap.set(indicator, { autoAlpha: 1 });
       });
 
@@ -44,7 +48,7 @@ export default function Hero() {
         );
 
         gsap.fromTo(
-          '[data-subheading]',
+          subheading,
           { autoAlpha: 0, y: 24 },
           { autoAlpha: 1, y: 0, delay: 0.6, duration: 0.8, ease: 'power2.out' },
         );
@@ -56,6 +60,53 @@ export default function Hero() {
           duration: 0.85,
           ease: 'sine.inOut',
         });
+
+        gsap
+          .timeline({
+            scrollTrigger: sectionSpanScroll(section, 0.45),
+          })
+          .to(
+            words,
+            {
+              yPercent: (index) => -8 - index * 4,
+              x: (index) => (index % 2 === 0 ? -12 : 12),
+              ease: 'none',
+              stagger: 0.04,
+              duration: 1,
+            },
+            0,
+          )
+          .to(
+            subheading,
+            {
+              y: -48,
+              autoAlpha: 0.15,
+              ease: 'none',
+              duration: 1,
+            },
+            0,
+          )
+          .to(
+            indicator,
+            {
+              autoAlpha: 0,
+              y: 28,
+              ease: 'none',
+              duration: 1,
+            },
+            0,
+          );
+
+        gsap
+          .timeline({
+            scrollTrigger: sectionRevealScroll(section, 0.65),
+          })
+          .fromTo(
+            words,
+            { filter: 'blur(6px)' },
+            { filter: 'blur(0px)', ease: 'none', stagger: 0.06, duration: 1 },
+            0,
+          );
       });
 
       mm.add('(pointer:fine) and (prefers-reduced-motion: no-preference)', () => {
@@ -116,8 +167,10 @@ export default function Hero() {
       className={styles.hero}
       aria-label="Take Me Live hero"
     >
+      <ScrollOrnament variant="glyph-light" position="tr" />
+      <ScrollOrnament variant="glyph-dark" position="bl" />
       <div className={styles.inner}>
-        <h1 ref={headingRef} className={styles.heading}>
+        <h1 ref={headingRef} className={styles.heading} data-scroll-shift>
           {HERO_WORDS.map((word) => (
             <span key={word} className={styles.wordWrap}>
               <span data-word className={styles.word}>
@@ -126,7 +179,7 @@ export default function Hero() {
             </span>
           ))}
         </h1>
-        <p data-subheading className={styles.subheading}>
+        <p data-subheading className={styles.subheading} data-scroll-shift>
           Creative experience studio designing live moments, immersive environments, and cultural
           impact.
         </p>

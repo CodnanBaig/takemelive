@@ -1,5 +1,6 @@
 .hero {
   min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   align-items: center;
   padding: clamp(7rem, 10vh, 9rem) clamp(1rem, 3vw, 2.5rem) clamp(5rem, 7vh, 6.5rem);
@@ -14,6 +15,8 @@
   margin: 0 auto;
   display: grid;
   gap: clamp(1.2rem, 2vw, 2rem);
+  position: relative;
+  z-index: 1;
 }
 
 .heading {
@@ -60,6 +63,7 @@
 .subheading {
   margin: 0 auto;
   max-width: 54ch;
+  padding-inline: clamp(0.25rem, 2vw, 1rem);
   color: rgb(245 245 240 / 0.73);
   font-size: clamp(1rem, 1.2vw, 1.24rem);
   line-height: 1.65;
@@ -95,5 +99,18 @@
 @media (max-width: 768px) {
   .heading {
     --spot-opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-top: max(clamp(5.25rem, 18vw, 6.75rem), env(safe-area-inset-top, 0px));
+    padding-inline: max(clamp(0.85rem, 4vw, 1.25rem), env(safe-area-inset-left, 0px))
+      max(clamp(0.85rem, 4vw, 1.25rem), env(safe-area-inset-right, 0px));
+    padding-bottom: max(clamp(4rem, 10vw, 5.5rem), env(safe-area-inset-bottom, 0px));
+  }
+
+  .subheading {
+    font-size: clamp(1rem, 4.2vw, 1.12rem);
   }
 }

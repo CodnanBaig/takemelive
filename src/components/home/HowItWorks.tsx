@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { sectionRevealScroll } from '@/lib/scrollScene';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './HowItWorks.module.scss';
 
 const PHASES = [
@@ -69,41 +71,38 @@ export default function HowItWorks() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.fromTo(
-          steps,
-          {
-            y: 42,
-            x: (index) => (index % 2 === 0 ? -24 : 24),
-            autoAlpha: 0,
-          },
-          {
-            y: 0,
-            x: 0,
-            autoAlpha: 1,
-            stagger: 0.12,
-            duration: 0.72,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 72%',
+        gsap
+          .timeline({
+            scrollTrigger: sectionRevealScroll(section, 0.75),
+          })
+          .fromTo(
+            steps,
+            {
+              y: 48,
+              x: (index) => (index % 2 === 0 ? -32 : 32),
+              autoAlpha: 0.2,
             },
-          },
-        );
-
-        gsap.fromTo(
-          lines,
-          { scaleX: 0, transformOrigin: 'left center' },
-          {
-            scaleX: 1,
-            stagger: 0.1,
-            duration: 0.7,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 68%',
+            {
+              y: 0,
+              x: 0,
+              autoAlpha: 1,
+              stagger: 0.09,
+              ease: 'none',
+              duration: 1,
             },
-          },
-        );
+            0,
+          )
+          .fromTo(
+            lines,
+            { scaleX: 0, transformOrigin: 'left center' },
+            {
+              scaleX: 1,
+              stagger: 0.08,
+              ease: 'none',
+              duration: 1,
+            },
+            0.1,
+          );
 
         const triggers = steps.map((step, index) =>
           ScrollTrigger.create({
@@ -139,30 +138,48 @@ export default function HowItWorks() {
     const image = featured.querySelector('[data-featured-image]');
     const copy = featured.querySelectorAll('[data-featured-copy]');
 
+    const section = sectionRef.current;
+    if (!section) {
+      return;
+    }
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         image,
-        { scale: 1.08, autoAlpha: 0.75 },
+        { scale: 1.12, yPercent: -4, autoAlpha: 0.5 },
         {
           scale: 1,
+          yPercent: 4,
           autoAlpha: 1,
-          duration: 0.72,
-          ease: 'power3.out',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: featured,
+            start: 'top 78%',
+            end: 'bottom 32%',
+            scrub: 0.55,
+            invalidateOnRefresh: true,
+          },
         },
       );
 
       gsap.fromTo(
         copy,
-        { y: 24, autoAlpha: 0 },
+        { y: 32, autoAlpha: 0.25 },
         {
           y: 0,
           autoAlpha: 1,
-          duration: 0.62,
-          stagger: 0.06,
-          ease: 'power3.out',
+          stagger: 0.05,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: featured,
+            start: 'top 76%',
+            end: 'top 40%',
+            scrub: 0.5,
+            invalidateOnRefresh: true,
+          },
         },
       );
-    }, featured);
+    }, section);
 
     return () => {
       ctx.revert();
@@ -180,6 +197,7 @@ export default function HowItWorks() {
       className={styles.section}
       aria-label="How it works"
     >
+      <ScrollOrnament variant="glyph-dark" position="br" />
       <div className={styles.inner}>
         <div className={styles.header}>
           <p className={styles.kicker}>How It Works</p>

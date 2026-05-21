@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './Transition.module.scss';
 
 const MESSAGE = 'NOT EVERYTHING NEEDS ATTENTION. YOUR BRAND DOES.';
@@ -173,11 +174,14 @@ export default function Transition() {
 
   return (
     <section
+      id="chapter-transition"
+      data-chapter="transition"
       ref={sectionRef}
       data-logo-control="manual"
       className={styles.transition}
       aria-label="Horizontal text section"
     >
+      <ScrollOrnament variant="glyph-light" position="tl" />
       <div className={styles.stage}>
         <div ref={curtainRef} className={styles.blackCurtain} aria-hidden />
         <div className={styles.textViewport}>

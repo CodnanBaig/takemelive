@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './Industries.module.scss';
 
 const INDUSTRIES = [
@@ -306,6 +307,7 @@ export default function Industries() {
       className={styles.section}
       aria-label="Industries we serve"
     >
+      <ScrollOrnament variant="glyph-dark" position="bl" />
       <div className={styles.inner}>
         <p className={styles.kicker}>Industries We Serve</p>
         <div className={styles.columns}>

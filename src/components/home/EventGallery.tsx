@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { sectionRevealScroll } from '@/lib/scrollScene';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './EventGallery.module.scss';
 
 const IMAGE_ITEMS = [
@@ -83,17 +85,14 @@ export default function EventGallery() {
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         gsap.fromTo(
           cards,
-          { autoAlpha: 0, y: 44 },
+          { autoAlpha: 0.2, y: 56, scale: 0.94 },
           {
             autoAlpha: 1,
             y: 0,
-            stagger: 0.1,
-            duration: 0.84,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 80%',
-            },
+            scale: 1,
+            stagger: 0.08,
+            ease: 'none',
+            scrollTrigger: sectionRevealScroll(section, 0.82),
           },
         );
 
@@ -158,6 +157,7 @@ export default function EventGallery() {
       className={styles.section}
       aria-label="Event gallery"
     >
+      <ScrollOrnament variant="glyph-light" position="bl" />
       <div className={styles.inner}>
         <div className={styles.backgroundWords} aria-hidden="true">
           <span data-bg-word>TAKE</span>

@@ -59,7 +59,7 @@
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.1fr);
   gap: clamp(1.5rem, 3vw, 3rem);
   align-items: start;
 }

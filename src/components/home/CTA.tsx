@@ -2,6 +2,8 @@
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from '@/lib/gsap';
+import { sectionRevealScroll } from '@/lib/scrollScene';
+import ScrollOrnament from './ScrollOrnament';
 import styles from './CTA.module.scss';
 
 const FORM_FIELDS = ['First Name*', 'Email*', 'Company', 'Project Type', 'Tell us about your idea'] as const;
@@ -49,120 +51,95 @@ export default function CTA() {
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         gsap.set(card, { transformPerspective: 1200, transformOrigin: '50% 50%' });
 
-        const introTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 80%',
-            once: true,
-          },
-        });
-
-        introTl
+        gsap
+          .timeline({
+            scrollTrigger: sectionRevealScroll(section, 0.76),
+          })
           .fromTo(
             left,
             { autoAlpha: 0, x: -70, y: 22 },
-            { autoAlpha: 1, x: 0, y: 0, duration: 0.8, ease: 'power3.out' },
+            { autoAlpha: 1, x: 0, y: 0, ease: 'none', duration: 0.48 },
+            0,
           )
           .fromTo(
             heading,
             { autoAlpha: 0, yPercent: 120, skewY: 7 },
-            { autoAlpha: 1, yPercent: 0, skewY: 0, duration: 0.78, ease: 'power4.out' },
-            '-=0.62',
+            { autoAlpha: 1, yPercent: 0, skewY: 0, ease: 'none', duration: 0.5 },
+            0.1,
           )
           .fromTo(
             paragraphs,
             { autoAlpha: 0, y: 28 },
-            { autoAlpha: 1, y: 0, duration: 0.56, stagger: 0.1, ease: 'power3.out' },
-            '-=0.52',
+            { autoAlpha: 1, y: 0, stagger: 0.08, ease: 'none', duration: 0.48 },
+            0.22,
+          )
+          .fromTo(
+            card,
+            { autoAlpha: 0, x: 100, y: 36, rotateY: -10, rotateX: 7, scale: 0.92 },
+            {
+              autoAlpha: 1,
+              x: 0,
+              y: 0,
+              rotateY: 0,
+              rotateX: 0,
+              scale: 1,
+              ease: 'none',
+              duration: 0.55,
+            },
+            0.18,
+          )
+          .fromTo(
+            bubble,
+            { autoAlpha: 0, y: 20, scale: 0.9 },
+            { autoAlpha: 1, y: 0, scale: 1, ease: 'none', duration: 0.42 },
+            0.32,
+          )
+          .fromTo(
+            stepField,
+            { autoAlpha: 0, y: 30, x: 24 },
+            { autoAlpha: 1, y: 0, x: 0, ease: 'none', duration: 0.4 },
+            0.38,
+          )
+          .fromTo(
+            progress,
+            { autoAlpha: 0, y: 14 },
+            { autoAlpha: 1, y: 0, ease: 'none', duration: 0.35 },
+            0.44,
           );
 
         gsap.fromTo(
-          card,
-          { autoAlpha: 0, x: 100, y: 36, rotateY: -10, rotateX: 7, scale: 0.92 },
+          orb,
+          { xPercent: -40, yPercent: -20 },
           {
-            autoAlpha: 1,
-            x: 0,
-            y: 0,
-            rotateY: 0,
-            rotateX: 0,
-            scale: 1,
-            duration: 0.9,
-            ease: 'power4.out',
+            xPercent: 40,
+            yPercent: 20,
+            ease: 'none',
             scrollTrigger: {
               trigger: section,
-              start: 'top 78%',
-              once: true,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 0.9,
+              invalidateOnRefresh: true,
             },
           },
         );
-
-        gsap.fromTo(
-          bubble,
-          { autoAlpha: 0, y: 20, scale: 0.9 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.55,
-            ease: 'back.out(1.6)',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 74%',
-              once: true,
-            },
-          },
-        );
-
-        gsap.fromTo(
-          stepField,
-          { autoAlpha: 0, y: 30, x: 24 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            x: 0,
-            duration: 0.56,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 72%',
-              once: true,
-            },
-          },
-        );
-
-        gsap.fromTo(
-          progress,
-          { autoAlpha: 0, y: 14 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.44,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 70%',
-              once: true,
-            },
-          },
-        );
-
-        gsap.to(orb, {
-          xPercent: 260,
-          yPercent: 60,
-          duration: 4.8,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-        });
 
         if (!reduceMotion) {
-          gsap.to(card, {
-            yPercent: -2,
-            duration: 2.6,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut',
-          });
+          gsap.fromTo(
+            card,
+            { yPercent: 2 },
+            {
+              yPercent: -2,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: section,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.1,
+                invalidateOnRefresh: true,
+              },
+            },
+          );
         }
       });
     }, section);
@@ -213,6 +190,7 @@ export default function CTA() {
       className={styles.section}
       aria-label="Contact us call to action"
     >
+      <ScrollOrnament variant="glyph-dark" position="br" />
       <div className={styles.inner}>
         <div className={styles.left} data-cta-left>
           <h2 className={styles.heading} data-cta-heading>
