@@ -13,6 +13,7 @@ import Industries from '@/components/home/Industries';
 import Team from '@/components/home/Team';
 import CTA from '@/components/home/CTA';
 import Footer from '@/components/home/Footer';
+import HomeSplineSection from '@/components/home/HomeSplineSection';
 import HomeScrollScenes from '@/components/home/HomeScrollScenes';
 import styles from './page.module.scss';
 
@@ -45,6 +46,7 @@ export default function Home() {
       <Team />
       <CTA />
       <Footer />
+      <HomeSplineSection />
     </main>
   );
 }
