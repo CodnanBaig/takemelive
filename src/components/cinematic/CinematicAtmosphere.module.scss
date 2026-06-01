@@ -1,0 +1,52 @@
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--tml-z-atmosphere);
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: var(--tml-z-grain);
+  opacity: 0.14;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: soft-light;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgb(45 125 255 / 0.08), transparent 52%),
+    radial-gradient(ellipse 90% 70% at 50% 110%, rgb(0 0 0 / 0.72), transparent 58%),
+    linear-gradient(180deg, rgb(0 0 0 / 0.35) 0%, transparent 18%, transparent 82%, rgb(0 0 0 / 0.5) 100%);
+}
+
+.beam {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  width: min(140vw, 1200px);
+  height: 70vh;
+  transform: translateX(-50%) rotate(-8deg);
+  background: linear-gradient(
+    180deg,
+    rgb(45 125 255 / 0.14) 0%,
+    rgb(45 125 255 / 0.04) 42%,
+    transparent 72%
+  );
+  filter: blur(40px);
+  opacity: 0.65;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    opacity: 0.08;
+  }
+
+  .beam {
+    opacity: 0.35;
+  }
+}

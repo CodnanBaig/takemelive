@@ -1,6 +1,7 @@
 .transition {
   min-height: 100vh;
-  background: #fff;
+  min-height: 100dvh;
+  background: var(--tml-white);
   color: #111217;
   position: relative;
   overflow: clip;
@@ -9,16 +10,38 @@
 .stage {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
-  background: #fff;
+  background: var(--tml-white);
 }
 
 .blackCurtain {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: #06070a;
+  background: var(--tml-black);
   will-change: transform;
+  overflow: hidden;
+}
+
+.lightSweep {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 45%;
+  height: 140%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgb(45 125 255 / 0.08) 35%,
+    rgb(92 155 255 / 0.55) 50%,
+    rgb(45 125 255 / 0.08) 65%,
+    transparent 100%
+  );
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  pointer-events: none;
 }
 
 .textViewport {
@@ -30,27 +53,36 @@
   overflow: hidden;
   max-width: 100vw;
   display: grid;
-  gap: clamp(1rem, 2vh, 1.6rem);
+  gap: clamp(1.2rem, 2.4vh, 2rem);
+  padding-inline: clamp(0.75rem, 2vw, 2rem);
 }
 
 .textRail {
   width: min(94vw, 1580px);
   margin: 0 auto;
-  padding-inline: clamp(0.5rem, 2vw, 2rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  gap: clamp(0.2rem, 0.8vw, 0.55rem) clamp(0.35rem, 1.2vw, 0.85rem);
   will-change: transform;
 }
 
-.textRail span {
+.railWord {
+  display: block;
+  overflow: hidden;
+  line-height: 0.9;
+}
+
+.railWordInner {
   font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
   display: block;
-  text-wrap: balance;
-  font-size: clamp(3rem, 11.5vw, 12rem);
+  font-size: clamp(2.8rem, 10.5vw, 11rem);
   font-weight: 400;
-  line-height: 0.92;
   text-transform: uppercase;
   letter-spacing: 0.01em;
   color: #111217;
-  text-align: center;
+  padding-block: 0.04em;
 }
 
 .subheading {
@@ -62,40 +94,22 @@
 
 .subLine {
   margin: 0;
-  font-size: clamp(0.95rem, 1.55vw, 1.42rem);
-  line-height: 1.4;
-  color: rgb(17 18 23 / 0.9);
+  overflow: hidden;
+  font-size: clamp(1rem, 1.55vw, 1.42rem);
+  line-height: 1.45;
+  color: rgb(17 18 23 / 0.88);
   text-align: center;
   font-weight: 500;
 }
 
 @media (max-width: 640px) {
-  .stage {
-    min-height: 100dvh;
-  }
-
-  .textViewport {
-    inset-inline: 0;
-    padding-inline: 0;
-  }
-
-  .textRail {
-    width: min(92vw, 560px);
-    padding-inline: 0;
-  }
-
-  .textRail span {
-    font-size: clamp(2.1rem, 14vw, 4.4rem);
-    line-height: 0.9;
+  .railWordInner {
+    font-size: clamp(2rem, 12vw, 3.6rem);
     overflow-wrap: anywhere;
   }
 
-  .subheading {
-    width: min(90vw, 560px);
-  }
-
   .subLine {
-    font-size: clamp(0.82rem, 3.2vw, 1rem);
-    line-height: 1.35;
+    font-size: clamp(0.95rem, 3.4vw, 1.05rem);
+    line-height: 1.4;
   }
 }

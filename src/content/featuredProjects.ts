@@ -1,6 +1,10 @@
 export type FeaturedProject = {
   slug: string;
   title: string;
+  /** Giant poster typography — defaults to uppercase title */
+  posterTitle?: string;
+  /** One-line emotional hook on the poster */
+  tagline: string;
   event: string;
   client: string;
   summary: string;
@@ -9,27 +13,36 @@ export type FeaturedProject = {
   gallery: string[];
 };
 
+export function getPosterTitle(project: FeaturedProject): string {
+  return (project.posterTitle ?? project.title).toUpperCase();
+}
+
+/** Marquee-first order for cinematic scroll runway */
 export const FEATURED_PROJECTS: FeaturedProject[] = [
   {
-    slug: 'red-bull-energy-lounge',
-    title: 'Red Bull Energy Lounge',
-    event: '1 Billion Summit',
-    client: 'Red Bull',
+    slug: 'blackpink-world-tour',
+    title: 'BLACKPINK World Tour',
+    posterTitle: 'BLACKPINK',
+    tagline: 'Stadium-scale pop spectacle',
+    event: 'World Tour',
+    client: 'BLACKPINK',
     summary:
-      'An immersive networking and content environment designed to reflect Red Bull’s high-performance energy.',
+      'A global stadium tour production pairing massive LED architecture with precision showcalling for arena-scale impact.',
     description:
-      'Blending spatial storytelling with interactive elements, the experience created a dynamic destination where conversations, content, and brand engagement came together in one cohesive space.',
+      'From reveal to encore, the visual system amplified every beat — turning each venue into a shared, high-voltage moment for millions of fans.',
     coverImage:
-      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80',
+      'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80',
     gallery: [
-      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80',
-      'https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80',
+      'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1600&q=80',
     ],
   },
   {
     slug: 'token-2049-io-net',
     title: 'Token 2049',
+    posterTitle: 'TOKEN 2049',
+    tagline: 'Cyberpunk LED environment',
     event: 'io.net',
     client: 'io.net',
     summary:
@@ -45,8 +58,29 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     ],
   },
   {
+    slug: 'lusail-super-cup',
+    title: 'Lusail Super Cup',
+    posterTitle: 'FIFA',
+    tagline: 'Stadium-scale live spectacle',
+    event: 'Lusail Super Cup',
+    client: 'FIFA',
+    summary:
+      'A stadium-scale production combining culture, sport, and technology into one unified live spectacle.',
+    description:
+      'Through large-format staging, synchronized lighting, and immersive visual storytelling, the experience set a new benchmark for live event production in the region.',
+    coverImage:
+      'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80',
+      'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1600&q=80',
+    ],
+  },
+  {
     slug: 'maraya-concert-series',
     title: 'Maraya Concert Series',
+    posterTitle: 'MARAYA',
+    tagline: 'Iconic venue, amplified',
     event: 'Live Nation Middle East',
     client: 'Live Nation Middle East',
     summary:
@@ -62,25 +96,48 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     ],
   },
   {
-    slug: 'lusail-super-cup',
-    title: 'Lusail Super Cup',
-    event: 'FIFA',
-    client: 'FIFA',
+    slug: 'red-bull-energy-lounge',
+    title: 'Red Bull Energy Lounge',
+    posterTitle: 'RED BULL',
+    tagline: 'Immersive brand world',
+    event: '1 Billion Summit',
+    client: 'Red Bull',
     summary:
-      'A stadium-scale production combining culture, sport, and technology into one unified live spectacle.',
+      'An immersive networking and content environment designed to reflect Red Bull’s high-performance energy.',
     description:
-      'Through large-format staging, synchronized lighting, and immersive visual storytelling, the experience set a new benchmark for live event production in the region.',
+      'Blending spatial storytelling with interactive elements, the experience created a dynamic destination where conversations, content, and brand engagement came together in one cohesive space.',
     coverImage:
-      'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80',
+      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80',
     gallery: [
-      'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80',
-      'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80',
+      'https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80',
+    ],
+  },
+  {
+    slug: 'soundstorm-main-stage',
+    title: 'Soundstorm Main Stage',
+    posterTitle: 'SOUNDSTORM',
+    tagline: 'Festival main stage',
+    event: 'Soundstorm',
+    client: 'MDLBEAST',
+    summary:
+      'Festival-scale stage design pairing cinematic visuals with synchronized lighting for peak crowd energy.',
+    description:
+      'From artist reveal to headline moments, the production system delivered consistent impact across multi-day programming.',
+    coverImage:
+      'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80',
+      'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1600&q=80',
     ],
   },
   {
     slug: 'formula-1-paddock-club',
     title: 'Formula 1 Paddock Club',
+    posterTitle: 'F1',
+    tagline: 'Paddock hospitality',
     event: 'Qatar Grand Prix',
     client: 'F1',
     summary:
@@ -98,6 +155,8 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
   {
     slug: 'leap-agenda-expo',
     title: 'LEAP Agenda Expo',
+    posterTitle: 'LEAP',
+    tagline: 'Tech-forward expo build',
     event: 'LEAP',
     client: 'LEAP',
     summary:
@@ -113,25 +172,10 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     ],
   },
   {
-    slug: 'soundstorm-main-stage',
-    title: 'Soundstorm Main Stage',
-    event: 'Soundstorm',
-    client: 'MDLBEAST',
-    summary:
-      'Festival-scale stage design pairing cinematic visuals with synchronized lighting for peak crowd energy.',
-    description:
-      'From artist reveal to headline moments, the production system delivered consistent impact across multi-day programming.',
-    coverImage:
-      'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80',
-    gallery: [
-      'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80',
-      'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1600&q=80',
-    ],
-  },
-  {
     slug: 'national-day-gala',
     title: 'National Day Gala',
+    posterTitle: 'NATIONAL DAY',
+    tagline: 'Ceremonial gala production',
     event: 'National Day',
     client: 'Government Protocol',
     summary:

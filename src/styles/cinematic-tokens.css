@@ -1,0 +1,30 @@
+/* Take Me Live — cinematic design tokens */
+:root {
+  --tml-black: #000000;
+  --tml-void: #050608;
+  --tml-surface: #08090a;
+  --tml-surface-raised: #0e1014;
+  --tml-white: #f5f5f0;
+  --tml-muted: rgb(245 245 240 / 0.62);
+  --tml-faint: rgb(245 245 240 / 0.38);
+  --tml-accent: #2d7dff;
+  --tml-accent-bright: #5c9bff;
+  --tml-accent-glow: rgb(45 125 255 / 0.42);
+  --tml-accent-soft: rgb(45 125 255 / 0.14);
+  --tml-accent-line: rgb(45 125 255 / 0.55);
+
+  --tml-duration-fast: 150ms;
+  --tml-duration-base: 280ms;
+  --tml-duration-scene: 640ms;
+  --tml-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --tml-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --tml-z-grain: 4;
+  --tml-z-atmosphere: 5;
+  --tml-z-content: 10;
+  --tml-z-logo: 50;
+  --tml-z-rail: 55;
+  --tml-z-nav: 60;
+
+  --tml-scene-min-height: 100dvh;
+}

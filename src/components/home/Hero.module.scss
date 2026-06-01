@@ -5,9 +5,11 @@
   align-items: center;
   padding: clamp(7rem, 10vh, 9rem) clamp(1rem, 3vw, 2.5rem) clamp(5rem, 7vh, 6.5rem);
   position: relative;
+  isolation: isolate;
   background:
-    radial-gradient(circle at 50% 78%, rgb(255 255 255 / 0.07), transparent 42%),
-    linear-gradient(180deg, #020306 0%, #08090a 62%, #07090d 100%);
+    radial-gradient(circle at 18% 12%, var(--tml-accent-soft), transparent 38%),
+    radial-gradient(circle at 50% 78%, rgb(255 255 255 / 0.06), transparent 42%),
+    linear-gradient(180deg, var(--tml-black) 0%, var(--tml-surface) 62%, var(--tml-void) 100%);
 }
 
 .inner {
@@ -25,11 +27,12 @@
   --spot-size: 120;
   --spot-opacity: 0;
   margin: 0;
+  font-family: var(--font-anton), var(--font-poppins), sans-serif;
   font-size: clamp(3rem, 11vw, 12.8rem);
   line-height: 0.86;
   text-transform: uppercase;
   letter-spacing: 0.015em;
-  font-weight: 800;
+  font-weight: 400;
   display: grid;
   justify-items: center;
   max-width: 100%;
@@ -47,8 +50,8 @@
   opacity: var(--spot-opacity);
   background: radial-gradient(
     circle calc(var(--spot-size) * 0.82px) at calc(var(--spot-x) * 1px) calc(var(--spot-y) * 1px),
-    rgb(215 229 255 / 0.3) 0%,
-    rgb(255 255 255 / 0.12) 34%,
+    var(--tml-accent-glow) 0%,
+    rgb(92 155 255 / 0.16) 34%,
     transparent 72%
   );
   filter: blur(18px);
@@ -88,17 +91,40 @@
     drop-shadow(0 8px 18px rgb(0 0 0 / 0.48));
 }
 
-.subheading {
+.beam {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    var(--tml-accent-soft) 42%,
+    transparent 68%
+  );
+  opacity: 0.55;
+  mix-blend-mode: screen;
+}
+
+.subheadingWrap {
+  display: grid;
+  gap: 0.2rem;
+  justify-items: center;
   margin: 0 auto;
   max-width: 54ch;
   padding-inline: clamp(0.25rem, 2vw, 1rem);
-  color: rgb(245 245 240 / 0.73);
+}
+
+.subheading {
+  margin: 0;
+  overflow: hidden;
+  color: var(--tml-muted);
   font-size: clamp(1rem, 1.2vw, 1.24rem);
   line-height: 1.65;
   text-align: center;
 }
 
 .scrollIndicator {
+  overflow: hidden;
   position: absolute;
   left: 50%;
   bottom: 1.1rem;

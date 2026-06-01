@@ -1,0 +1,38 @@
+.bridge {
+  position: relative;
+  height: clamp(72px, 12vh, 140px);
+  margin: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--tml-black) 0%, transparent 100%);
+}
+
+.line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(72vw, 920px);
+  height: 1px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--tml-accent-line) 18%,
+    var(--tml-accent-bright) 50%,
+    var(--tml-accent-line) 82%,
+    transparent 100%
+  );
+  opacity: 0.85;
+}
+
+.glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(40vw, 480px);
+  height: 120px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, var(--tml-accent-glow), transparent 70%);
+  filter: blur(28px);
+  opacity: 0.5;
+}

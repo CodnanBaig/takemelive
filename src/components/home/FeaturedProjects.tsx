@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, type MouseEvent } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
-import { FEATURED_PROJECTS } from '@/content/featuredProjects';
+import { animateMaskReveal, setMaskHidden } from '@/lib/maskReveal';
+import { FEATURED_PROJECTS, getPosterTitle } from '@/content/featuredProjects';
 import styles from './FeaturedProjects.module.scss';
 
 const FALLBACK_IMAGE_SRC = FEATURED_PROJECTS[0]?.coverImage ?? '';
@@ -25,10 +26,10 @@ function computeStackMetrics(
   count: number,
   stackStartX: number,
 ): StackMetrics {
-  const cardWidth = Math.min(300, Math.max(170, stageWidth * 0.165));
+  const cardWidth = Math.min(420, Math.max(240, stageWidth * 0.22));
   const visibleSteps = Math.max(1, count - 1);
-  const stepX = cardWidth * 0.96;
-  const stepY = Math.min(stageHeight * 0.15, 110);
+  const stepX = cardWidth * 0.94;
+  const stepY = Math.min(stageHeight * 0.16, 128);
   const startY = stageHeight * 0.08;
   const exitTravel = visibleSteps + (stackStartX + cardWidth * 1.35) / Math.max(1, stepX);
 
@@ -43,9 +44,9 @@ function computeStackMetrics(
 }
 
 function computeMobileStackMetrics(stageWidth: number, stageHeight: number, count: number): StackMetrics {
-  const cardWidth = Math.min(250, Math.max(200, stageWidth * 0.62));
-  const stepX = cardWidth * 0.56;
-  const stepY = Math.min(86, stageHeight * 0.105);
+  const cardWidth = Math.min(320, Math.max(220, stageWidth * 0.68));
+  const stepX = cardWidth * 0.54;
+  const stepY = Math.min(92, stageHeight * 0.11);
   const startX = stageWidth * 0.1;
   const visibleSteps = Math.max(1, count - 1);
   const exitTravel = visibleSteps + (startX + cardWidth * 1.4) / Math.max(1, stepX);
@@ -128,14 +129,19 @@ export default function FeaturedProjects() {
       cards.forEach((card, index) => {
         const slot = index - travel;
         const wave = Math.sin(slot * 0.86 + waveTime * 0.0016);
+        const focusWeight = Math.max(0, 1 - Math.min(1, Math.abs(slot) * 0.92));
+        const scale = 0.88 + focusWeight * 0.2;
+        const isFocus = focusWeight > 0.68;
+
+        card.dataset.focus = isFocus ? '1' : '0';
 
         gsap.set(card, {
           x: metrics.startX + slot * metrics.stepX,
           y: -(metrics.startY + slot * metrics.stepY + wave * metrics.stepY * 0.22),
           rotationY: 0,
-          rotationZ: -2.4,
-          scale: 1,
-          zIndex: projectCount - index,
+          rotationZ: isFocus ? -1.2 : -2.8,
+          scale,
+          zIndex: projectCount - index + Math.round(focusWeight * 12),
           transformOrigin: '0% 100%',
         });
       });
@@ -160,7 +166,36 @@ export default function FeaturedProjects() {
       applyStackLayout(stackProgressRef.current, gsap.ticker.time * 1000);
     };
 
+    const titleLines = Array.from(
+      section.querySelectorAll<HTMLElement>('[data-title-line]'),
+    );
+    const sectionKicker = section.querySelector<HTMLElement>('[data-section-kicker]');
+
     const ctx = gsap.context(() => {
+      if (titleLines.length) {
+        setMaskHidden(titleLines);
+      }
+      if (sectionKicker) {
+        setMaskHidden(sectionKicker);
+      }
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 78%',
+        once: true,
+        onEnter: () => {
+          if (sectionKicker) {
+            animateMaskReveal(sectionKicker, 'bottom', { duration: 0.55 });
+          }
+          if (titleLines.length) {
+            animateMaskReveal(titleLines, 'bottom', {
+              duration: 0.82,
+              stagger: 0.09,
+            });
+          }
+        },
+      });
+
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
@@ -462,7 +497,7 @@ export default function FeaturedProjects() {
     const cardRect = card.getBoundingClientRect();
     const targetX = (window.innerWidth - cardRect.width) * 0.5 - cardRect.left;
     const targetY = (window.innerHeight - cardRect.height) * 0.5 - cardRect.top;
-    const maxPopupScale = window.innerWidth < 900 ? 1.2 : 1.34;
+    const maxPopupScale = window.innerWidth < 900 ? 1.24 : 1.46;
     const popupScale = Math.min(
       maxPopupScale,
       (window.innerWidth * 0.72) / cardRect.width,
@@ -569,6 +604,7 @@ export default function FeaturedProjects() {
     <section
       id="chapter-featured-projects"
       data-chapter="featured-projects"
+      data-scene="projects"
       data-logo-invert="1"
       ref={sectionRef}
       className={styles.section}
@@ -576,10 +612,14 @@ export default function FeaturedProjects() {
     >
       <div className={styles.inner}>
         <header className={styles.header} ref={headerRef}>
-          <p className={styles.kicker}>Selected work</p>
+          <p className={styles.kicker} data-section-kicker>
+            Scene 03 · Worlds
+          </p>
           <h2 className={styles.title}>
-            <span className={styles.titleLine}>Featured</span>
-            <span className={styles.titleLine}>
+            <span className={styles.titleLine} data-title-line>
+              Featured
+            </span>
+            <span className={styles.titleLine} data-title-line>
               Projects
               <sup className={styles.count}>({String(projectCount).padStart(2, '0')})</sup>
             </span>
@@ -614,7 +654,9 @@ export default function FeaturedProjects() {
                     }}
                   />
                   <div className={styles.overlay}>
-                    <h3>{project.title}</h3>
+                    <p className={styles.posterTitle}>{getPosterTitle(project)}</p>
+                    <p className={styles.posterTagline}>{project.tagline}</p>
+                    <span className={styles.posterMeta}>{project.event}</span>
                   </div>
                 </div>
               </Link>

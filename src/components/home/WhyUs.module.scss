@@ -9,8 +9,8 @@
   --why-ink: oklch(0.97 0.01 106);
   --why-ink-muted: oklch(0.97 0.01 106 / 0.74);
   --why-ink-faint: oklch(0.97 0.01 106 / 0.5);
-  --why-accent: oklch(0.88 0.16 110);
-  --why-accent-soft: oklch(0.88 0.16 110 / 0.18);
+  --why-accent: var(--tml-accent-bright);
+  --why-accent-soft: var(--tml-accent-soft);
   --why-rule: oklch(0.97 0.01 106 / 0.16);
   --why-rule-strong: oklch(0.97 0.01 106 / 0.32);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -304,7 +304,7 @@
 .progressBar {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--why-accent) 0%, oklch(0.95 0.18 130) 100%);
+  background: linear-gradient(90deg, var(--why-accent) 0%, var(--tml-accent-line) 100%);
   transform-origin: left center;
   transform: scaleX(0);
   will-change: transform;

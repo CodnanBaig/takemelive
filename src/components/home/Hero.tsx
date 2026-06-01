@@ -2,11 +2,17 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { animateMaskReveal, setMaskHidden, setMaskVisible } from '@/lib/maskReveal';
 import { sectionRevealScroll, sectionSpanScroll } from '@/lib/scrollScene';
 import ScrollOrnament from './ScrollOrnament';
 import styles from './Hero.module.scss';
 
 const HERO_WORDS = ['EXPERIENCES', 'THAT', 'MOVE', 'PEOPLE.'];
+
+const SUBHEADING_LINES = [
+  'Creative experience studio designing live moments,',
+  'immersive environments, and cultural impact.',
+];
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -24,37 +30,50 @@ export default function Hero() {
 
     const words = heading.querySelectorAll('[data-word]');
     const wordElements = Array.from(words) as HTMLElement[];
-    const subheading = section.querySelector('[data-subheading]');
+    const subLines = section.querySelectorAll('[data-subline]');
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(words, { y: 0, autoAlpha: 1, yPercent: 0 });
-        gsap.set(subheading, { autoAlpha: 1, y: 0 });
+        setMaskVisible([...words, ...subLines]);
+        gsap.set(words, { yPercent: 0, clearProps: 'transform' });
+        gsap.set(subLines, { clearProps: 'transform' });
         gsap.set(indicator, { autoAlpha: 1 });
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         const isCompact = window.matchMedia('(max-width: 900px)').matches;
 
-        gsap.fromTo(
-          words,
-          { yPercent: 120, autoAlpha: 0 },
-          {
-            yPercent: 0,
-            autoAlpha: 1,
-            ease: 'power4.out',
-            duration: 0.9,
-            stagger: 0.08,
-          },
-        );
+        setMaskHidden(words, 'bottom');
+        setMaskHidden(subLines, 'bottom');
+        gsap.set(indicator, { clipPath: 'inset(0% 0% 100% 0%)' });
 
-        gsap.fromTo(
-          subheading,
-          { autoAlpha: 0, y: 24 },
-          { autoAlpha: 1, y: 0, delay: 0.6, duration: 0.8, ease: 'power2.out' },
-        );
+        const loadTimeline = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+        loadTimeline
+          .add(
+            animateMaskReveal(words, 'bottom', {
+              duration: 1.05,
+              stagger: 0.09,
+            }),
+            0,
+          )
+          .add(
+            animateMaskReveal(subLines, 'bottom', {
+              duration: 0.82,
+              stagger: 0.12,
+            }),
+            0.42,
+          )
+          .to(
+            indicator,
+            {
+              clipPath: 'inset(0% 0% 0% 0%)',
+              duration: 0.7,
+            },
+            0.72,
+          );
 
         gsap.to(indicator, {
           y: 12,
@@ -62,17 +81,19 @@ export default function Hero() {
           yoyo: true,
           duration: 0.85,
           ease: 'sine.inOut',
+          delay: 1.1,
         });
 
         gsap
           .timeline({
-            scrollTrigger: sectionSpanScroll(section, 0.45),
+            scrollTrigger: sectionSpanScroll(section, 0.5),
           })
           .to(
             words,
             {
-              yPercent: (index) => -8 - index * 4,
-              x: (index) => (isCompact ? 0 : index % 2 === 0 ? -12 : 12),
+              yPercent: (index) => -10 - index * 4,
+              x: (index) => (isCompact ? 0 : index % 2 === 0 ? -14 : 14),
+              scale: (index) => 1 - index * 0.012,
               ease: 'none',
               stagger: 0.04,
               duration: 1,
@@ -80,11 +101,11 @@ export default function Hero() {
             0,
           )
           .to(
-            subheading,
+            subLines,
             {
-              y: -48,
-              autoAlpha: 0.15,
+              yPercent: -120,
               ease: 'none',
+              stagger: 0.05,
               duration: 1,
             },
             0,
@@ -92,22 +113,22 @@ export default function Hero() {
           .to(
             indicator,
             {
-              autoAlpha: 0,
+              clipPath: 'inset(0% 0% 100% 0%)',
               y: 28,
               ease: 'none',
-              duration: 1,
+              duration: 0.65,
             },
             0,
           );
 
         gsap
           .timeline({
-            scrollTrigger: sectionRevealScroll(section, 0.65),
+            scrollTrigger: sectionRevealScroll(section, 0.7),
           })
           .fromTo(
             words,
-            { filter: 'blur(6px)' },
-            { filter: 'blur(0px)', ease: 'none', stagger: 0.06, duration: 1 },
+            { filter: 'blur(10px)' },
+            { filter: 'blur(0px)', ease: 'none', stagger: 0.05, duration: 1 },
             0,
           );
       });
@@ -176,11 +197,13 @@ export default function Hero() {
     <section
       id="chapter-hero"
       data-chapter="hero"
+      data-scene="arrival"
       data-logo-invert="1"
       ref={sectionRef}
       className={styles.hero}
       aria-label="Take Me Live hero"
     >
+      <div className={styles.beam} aria-hidden="true" />
       <ScrollOrnament variant="glyph-light" position="tr" />
       <ScrollOrnament variant="glyph-dark" position="bl" />
       <div className={styles.inner}>
@@ -193,10 +216,13 @@ export default function Hero() {
             </span>
           ))}
         </h1>
-        <p data-subheading className={styles.subheading} data-scroll-shift>
-          Creative experience studio designing live moments, immersive environments, and cultural
-          impact.
-        </p>
+        <div className={styles.subheadingWrap}>
+          {SUBHEADING_LINES.map((line) => (
+            <p key={line} data-subline className={styles.subheading} data-scroll-shift>
+              {line}
+            </p>
+          ))}
+        </div>
       </div>
       <div ref={indicatorRef} className={styles.scrollIndicator} aria-hidden="true">
         <span>Scroll</span>

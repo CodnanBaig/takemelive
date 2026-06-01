@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Anton, Poppins } from 'next/font/google';
 import './globals.css';
+import LenisProvider from '@/components/cinematic/LenisProvider';
 import SiteNav from '@/components/SiteNav';
 
 const poppins = Poppins({
@@ -19,7 +20,8 @@ const anton = Anton({
 
 export const metadata: Metadata = {
   title: 'Take Me Live',
-  description: 'Coming Soon - Take Me Live',
+  description:
+    'Live experience studio designing immersive productions, cultural moments, and stadium-scale spectacle.',
   icons: {
     icon: '/assets/website-fevicon.png',
   },
@@ -46,8 +48,10 @@ export default function RootLayout({
         />
       </head>
       <body className={`${poppins.variable} ${anton.variable}`}>
-        <SiteNav />
-        {children}
+        <LenisProvider>
+          <SiteNav />
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );

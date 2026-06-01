@@ -1,3 +1,18 @@
+## 2026-06-01-v195
+
+- Phase 3 (Scene 03 · Projects): poster-scale stack cards with focus scaling, trailer typography (Anton poster titles + accent taglines), mask-reveal section header, marquee project order (BLACKPINK lead + posterTitle/tagline fields), data-scene="projects", electric-blue stage atmosphere.
+
+
+## 2026-06-01-v194
+
+- Phase 2 (Scenes 01–02): mask-reveal motion system (`maskReveal.ts`), Hero clip-path word + line reveals (Anton, beam), Transition pinned scrub with light sweep + per-word manifesto masks, WhatWeDo editorial manifesto continuation + ruled copy, SceneBridge between transition and body copy.
+
+
+## 2026-06-01-v193
+
+- Cinematic re-engineering Phase 0–1: design tokens, Lenis smooth scroll, global atmosphere, seven-scene homepage grouping, SceneRail navigation, electric-blue accent, removed section box borders, homepage flow reorder (projects earlier; Industries off home).
+
+
 ## 2026-05-21-v192
 
 - Why Us (Hallmark redesign v2 — pinned theatre): pinned stage with index ticker (01/04 morph), clip-path title reveals per panel, parallax ghost numerals, marquee backdrop scrub, and a section progress bar; mobile fallback uses per-panel scroll-scrubbed reveals (no pin), tokens scoped in OKLCH.

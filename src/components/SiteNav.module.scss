@@ -33,7 +33,12 @@
 
 .link:hover {
   color: #ffffff;
-  background: rgb(255 255 255 / 0.1);
+  background: var(--tml-accent-soft);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--tml-accent);
+  outline-offset: 2px;
 }
 
 @media (max-width: 720px) {
@@ -43,7 +48,7 @@
   }
 
   .link {
-    min-height: 30px;
+    min-height: 44px;
     padding: 0.38rem 0.54rem;
     font-size: 0.62rem;
     letter-spacing: 0.12em;

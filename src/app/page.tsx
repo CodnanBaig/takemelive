@@ -9,19 +9,24 @@ import WhyUs from '@/components/home/WhyUs';
 import HowItWorks from '@/components/home/HowItWorks';
 import FeaturedProjects from '@/components/home/FeaturedProjects';
 import Services from '@/components/home/Services';
-import Industries from '@/components/home/Industries';
 import Team from '@/components/home/Team';
 import CTA from '@/components/home/CTA';
 import Footer from '@/components/home/Footer';
 import HomeSplineSection from '@/components/home/HomeSplineSection';
 import HomeScrollScenes from '@/components/home/HomeScrollScenes';
+import CinematicAtmosphere from '@/components/cinematic/CinematicAtmosphere';
+import SceneBridge from '@/components/cinematic/SceneBridge';
+import SceneRail from '@/components/cinematic/SceneRail';
 import styles from './page.module.scss';
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <HomeScrollScenes />
+      <CinematicAtmosphere />
       <LogoThemeSync />
+      <SceneRail />
+
       <div className={styles.logoContainer}>
         <Image
           src="/assets/ImageToStl.com_TML-primary-logo.png"
@@ -33,20 +38,41 @@ export default function Home() {
           priority
         />
       </div>
-      <Hero />
-      <Transition />
-      <WhatWeDo />
-      <EventGallery />
-      <WhoWeAre />
-      <WhyUs />
-      <HowItWorks />
-      <FeaturedProjects />
-      <Services />
-      <Industries />
-      <Team />
-      <CTA />
-      <Footer />
-      <HomeSplineSection />
+
+      <div className={styles.sceneGroup} data-scene="arrival" id="scene-arrival">
+        <Hero />
+      </div>
+
+      <div className={styles.sceneGroup} data-scene="manifesto" id="scene-manifesto">
+        <Transition />
+        <SceneBridge id="manifesto-bridge" />
+        <WhatWeDo />
+      </div>
+
+      <div className={styles.sceneGroup} data-scene="projects" id="scene-projects">
+        <FeaturedProjects />
+      </div>
+
+      <div className={styles.sceneGroup} data-scene="scale" id="scene-scale">
+        <EventGallery />
+        <WhoWeAre />
+      </div>
+
+      <div className={styles.sceneGroup} data-scene="innovation" id="scene-innovation">
+        <WhyUs />
+        <HowItWorks />
+        <Services />
+      </div>
+
+      <div className={styles.sceneGroup} data-scene="showreel" id="scene-showreel">
+        <Team />
+      </div>
+
+      <div className={styles.sceneGroup} data-scene="contact" id="scene-contact">
+        <CTA />
+        <Footer />
+        <HomeSplineSection />
+      </div>
     </main>
   );
 }

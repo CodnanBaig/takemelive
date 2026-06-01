@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { MASK_HIDDEN_BOTTOM, MASK_HIDDEN_RIGHT, MASK_VISIBLE } from '@/lib/maskReveal';
 import { sectionRevealScroll } from '@/lib/scrollScene';
 import ScrollOrnament from './ScrollOrnament';
 import styles from './WhatWeDo.module.scss';
@@ -17,11 +18,13 @@ const LINES = [
 export default function WhatWeDo() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const mediaRef = useRef<HTMLElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const media = mediaRef.current;
-    if (!section) {
+    const title = titleRef.current;
+    if (!section || !title) {
       return;
     }
 
@@ -31,51 +34,50 @@ export default function WhatWeDo() {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(lines, { autoAlpha: 1, y: 0, x: 0, clipPath: 'inset(0% 0% 0% 0%)' });
+        gsap.set([title, ...lines], { clipPath: MASK_VISIBLE });
         if (media) {
-          gsap.set(media, { autoAlpha: 1, x: 0 });
+          gsap.set(media, { clipPath: MASK_VISIBLE, x: 0 });
         }
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const isCompact = window.matchMedia('(max-width: 900px)').matches;
+        gsap.set(title, { clipPath: MASK_HIDDEN_BOTTOM });
+        gsap.set(lines, { clipPath: MASK_HIDDEN_BOTTOM });
+        if (media) {
+          gsap.set(media, { clipPath: MASK_HIDDEN_RIGHT, x: 0 });
+        }
 
         gsap
           .timeline({
-            scrollTrigger: sectionRevealScroll(section, 0.8),
+            scrollTrigger: sectionRevealScroll(section, 0.82),
           })
-          .fromTo(
-            lines,
+          .to(
+            title,
             {
-              y: 32,
-              x: (index: number) => (isCompact ? 0 : index % 2 === 0 ? -48 : 48),
-              autoAlpha: 0.2,
-              clipPath: 'inset(0% 0% 100% 0%)',
-            },
-            {
-              y: 0,
-              x: 0,
-              autoAlpha: 1,
-              clipPath: 'inset(0% 0% 0% 0%)',
-              stagger: 0.08,
-              ease: 'none',
-              duration: 1,
+              clipPath: MASK_VISIBLE,
+              duration: 0.55,
+              ease: 'power3.out',
             },
             0,
+          )
+          .to(
+            lines,
+            {
+              clipPath: MASK_VISIBLE,
+              stagger: 0.08,
+              duration: 0.48,
+              ease: 'power3.out',
+            },
+            0.12,
           );
 
         if (media) {
-          gsap.fromTo(
-            media,
-            { x: isCompact ? 0 : 140, autoAlpha: 0.25, scale: 0.96 },
-            {
-              x: 0,
-              autoAlpha: 1,
-              scale: 1,
-              ease: 'none',
-              scrollTrigger: sectionRevealScroll(section, 0.85),
-            },
-          );
+          gsap.to(media, {
+            clipPath: MASK_VISIBLE,
+            ease: 'power3.out',
+            duration: 0.7,
+            scrollTrigger: sectionRevealScroll(section, 0.88),
+          });
         }
       });
 
@@ -93,6 +95,7 @@ export default function WhatWeDo() {
     <section
       id="chapter-what-we-do"
       data-chapter="what-we-do"
+      data-scene="manifesto"
       data-logo-invert="1"
       ref={sectionRef}
       className={styles.section}
@@ -103,14 +106,16 @@ export default function WhatWeDo() {
         <div className={styles.content}>
           <div className={styles.copy}>
             <p className={styles.kicker} data-scroll-shift>
-              What We Do
+              Manifesto
             </p>
-            <h2 data-scroll-shift>IMMERSIVE EXPERIENCES BUILT TO STAY WITH PEOPLE.</h2>
+            <h2 ref={titleRef} data-scroll-shift>
+              IMMERSIVE EXPERIENCES BUILT TO STAY WITH PEOPLE.
+            </h2>
             <div className={styles.lines}>
               {LINES.map((line, index) => (
-                <p key={line} data-line className={styles.lineCard}>
+                <p key={line} data-line className={styles.lineRow}>
                   <span className={styles.lineIndex}>{`0${index + 1}`}</span>
-                  <span>{line}</span>
+                  <span className={styles.lineText}>{line}</span>
                 </p>
               ))}
             </div>
@@ -118,7 +123,7 @@ export default function WhatWeDo() {
 
           <figure
             ref={mediaRef}
-            className={styles.placeholderImage}
+            className={styles.media}
             data-scroll-depth
             aria-label="Live production planning table"
           >
