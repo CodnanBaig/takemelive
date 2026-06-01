@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import DomeGallery, { type DomeGalleryApi } from '@/components/dome-gallery/DomeGallery';
 import { FEATURED_PROJECTS } from '@/content/featuredProjects';
+import { resolveProjectCover } from '@/lib/projectMedia';
 import styles from './ProjectsGlobe.module.scss';
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
@@ -21,7 +22,7 @@ export default function ProjectsGlobe() {
   const globeItems = useMemo(() => {
     const ten = Array.from({ length: 10 }, (_, i) => FEATURED_PROJECTS[i % FEATURED_PROJECTS.length]);
     return ten.map((project) => ({
-      src: project.coverImage,
+      src: resolveProjectCover(project),
       alt: project.title,
       href: `/projects/${project.slug}`,
     }));

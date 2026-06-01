@@ -69,9 +69,16 @@
   background: linear-gradient(
     180deg,
     var(--tml-black) 0%,
-    #06070a 14%,
-    #0a0b0f 42%,
-    #ece8df 78%,
+    #06070a 10%,
+    #0a0b0f 34%,
+    #0a0b0f 58%,
+    #0c0d11 62%,
+    #14151a 68%,
+    #2a2b30 74%,
+    #4a4844 80%,
+    #8f8a7f 86%,
+    #cfc9be 92%,
+    #f6f3ec 96%,
     #f6f3ec 100%
   );
 }
@@ -82,6 +89,13 @@
 
 .sceneGroup[data-scene='showreel'] {
   z-index: 6;
+  background: linear-gradient(
+    180deg,
+    #f6f3ec 0%,
+    var(--tml-black) 8%,
+    #030405 55%,
+    #07080a 100%
+  );
 }
 
 .sceneGroup[data-scene='contact'] {

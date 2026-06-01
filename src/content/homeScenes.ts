@@ -31,7 +31,13 @@ export const HOME_SCENES: HomeScene[] = [
     chapterId: 'chapter-why-us',
     label: 'Innovation',
   },
-  { index: 6, id: 'scene-showreel', scene: 'showreel', chapterId: 'chapter-team', label: 'Showreel' },
+  {
+    index: 6,
+    id: 'scene-showreel',
+    scene: 'showreel',
+    chapterId: 'chapter-showreel',
+    label: 'Showreel',
+  },
   { index: 7, id: 'scene-contact', scene: 'contact', chapterId: 'chapter-cta', label: 'Contact' },
 ];
 

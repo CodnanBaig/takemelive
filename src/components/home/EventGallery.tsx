@@ -78,25 +78,25 @@ export default function EventGallery() {
     const images = section.querySelectorAll<HTMLElement>('[data-parallax-image]');
     const backgroundWords = section.querySelectorAll<HTMLElement>('[data-bg-word]');
     const titleLines = section.querySelectorAll<HTMLElement>('[data-title-line]');
-    const sectionKicker = section.querySelector<HTMLElement>('[data-section-kicker]');
+    const stage = section.querySelector<HTMLElement>('[data-gallery-stage]');
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([...cards, ...titleLines, sectionKicker].filter(Boolean), {
+        gsap.set([...cards, ...titleLines].filter(Boolean), {
           clipPath: MASK_VISIBLE,
         });
         gsap.set(images, { yPercent: 0, scale: 1.16 });
         gsap.set(backgroundWords, { yPercent: 0, xPercent: 0 });
+        if (stage) {
+          gsap.set(stage, { opacity: 1, y: 0 });
+        }
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         if (titleLines.length) {
           setMaskHidden(titleLines);
-        }
-        if (sectionKicker) {
-          setMaskHidden(sectionKicker);
         }
         gsap.set(cards, { clipPath: MASK_HIDDEN_BOTTOM });
 
@@ -105,9 +105,6 @@ export default function EventGallery() {
           start: 'top 82%',
           once: true,
           onEnter: () => {
-            if (sectionKicker) {
-              animateMaskReveal(sectionKicker, 'bottom', { duration: 0.5 });
-            }
             if (titleLines.length) {
               animateMaskReveal(titleLines, 'bottom', {
                 duration: 0.78,
@@ -165,6 +162,25 @@ export default function EventGallery() {
             },
           );
         });
+
+        if (stage) {
+          gsap.fromTo(
+            stage,
+            { y: 0, filter: 'brightness(1)' },
+            {
+              y: 16,
+              filter: 'brightness(0.72)',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: section,
+                start: 'bottom 92%',
+                end: 'bottom 20%',
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
+            },
+          );
+        }
       });
 
       return () => {
@@ -187,11 +203,8 @@ export default function EventGallery() {
       className={styles.section}
       aria-label="Event gallery"
     >
-      <div className={styles.inner}>
+      <div className={styles.inner} data-gallery-stage>
         <header className={styles.header}>
-          <p className={styles.kicker} data-section-kicker>
-            Scene 04 · Scale
-          </p>
           <h2 className={styles.title}>
             <span className={styles.titleLine} data-title-line>
               Live at

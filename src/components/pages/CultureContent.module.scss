@@ -1,0 +1,85 @@
+.page {
+  min-height: 100vh;
+  background: var(--tml-black);
+  color: var(--tml-white);
+  padding: clamp(5rem, 10vh, 7rem) 0 clamp(4rem, 8vh, 6rem);
+}
+
+.inner {
+  width: min(94vw, 1240px);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2.5rem);
+  display: grid;
+  gap: clamp(2.5rem, 5vh, 4rem);
+}
+
+.hero {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 58ch;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--tml-accent-bright);
+  will-change: clip-path;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-anton), var(--font-poppins), sans-serif;
+  font-size: clamp(3rem, 8.5vw, 7.5rem);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  will-change: clip-path;
+}
+
+.lead {
+  margin: 0;
+  font-size: clamp(1.02rem, 1.35vw, 1.18rem);
+  line-height: 1.65;
+  color: rgb(245 245 240 / 0.82);
+  will-change: clip-path;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.85rem, 1.8vw, 1.25rem);
+}
+
+.card {
+  display: grid;
+  gap: 0.65rem;
+  padding: clamp(1.1rem, 2vw, 1.5rem);
+  border: 1px solid rgb(45 125 255 / 0.16);
+  background: rgb(255 255 255 / 0.03);
+  will-change: clip-path;
+}
+
+.card h2 {
+  margin: 0;
+  font-family: var(--font-anton), var(--font-poppins), sans-serif;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-weight: 400;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.card p {
+  margin: 0;
+  font-size: clamp(0.94rem, 1.05vw, 1.02rem);
+  line-height: 1.58;
+  color: rgb(245 245 240 / 0.78);
+}
+
+@media (max-width: 920px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

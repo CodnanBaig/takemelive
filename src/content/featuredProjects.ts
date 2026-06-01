@@ -7,10 +7,24 @@ export type FeaturedProject = {
   tagline: string;
   event: string;
   client: string;
+  year: string;
+  location: string;
   summary: string;
   description: string;
+  /** Remote or CDN image URL */
   coverImage: string;
+  /** Optional override when public/assets/projects/{slug}/cover.* exists */
+  localCover?: string;
   gallery: string[];
+  /** Optional local gallery files under public/assets/projects/{slug}/ */
+  localGallery?: string[];
+};
+
+export type AdjacentProjects = {
+  prev: FeaturedProject;
+  next: FeaturedProject;
+  index: number;
+  total: number;
 };
 
 export function getPosterTitle(project: FeaturedProject): string {
@@ -26,6 +40,8 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     tagline: 'Stadium-scale pop spectacle',
     event: 'World Tour',
     client: 'BLACKPINK',
+    year: '2024',
+    location: 'Global stadium tour',
     summary:
       'A global stadium tour production pairing massive LED architecture with precision showcalling for arena-scale impact.',
     description:
@@ -45,6 +61,8 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     tagline: 'Cyberpunk LED environment',
     event: 'io.net',
     client: 'io.net',
+    year: '2024',
+    location: 'Singapore',
     summary:
       'A cyberpunk-inspired environment powered by dynamic LED visuals, transforming the space into a futuristic brand experience.',
     description:
@@ -64,6 +82,8 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     tagline: 'Stadium-scale live spectacle',
     event: 'Lusail Super Cup',
     client: 'FIFA',
+    year: '2024',
+    location: 'Lusail, Qatar',
     summary:
       'A stadium-scale production combining culture, sport, and technology into one unified live spectacle.',
     description:
@@ -83,6 +103,8 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     tagline: 'Iconic venue, amplified',
     event: 'Live Nation Middle East',
     client: 'Live Nation Middle East',
+    year: '2023',
+    location: 'AlUla, Saudi Arabia',
     summary:
       'A series of large-scale concert experiences designed to complement one of the world’s most iconic architectural venues.',
     description:
@@ -102,6 +124,8 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     tagline: 'Immersive brand world',
     event: '1 Billion Summit',
     client: 'Red Bull',
+    year: '2024',
+    location: 'Riyadh',
     summary:
       'An immersive networking and content environment designed to reflect Red Bull’s high-performance energy.',
     description:
@@ -121,6 +145,8 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     tagline: 'Festival main stage',
     event: 'Soundstorm',
     client: 'MDLBEAST',
+    year: '2023',
+    location: 'Riyadh',
     summary:
       'Festival-scale stage design pairing cinematic visuals with synchronized lighting for peak crowd energy.',
     description:
@@ -140,6 +166,8 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     tagline: 'Paddock hospitality',
     event: 'Qatar Grand Prix',
     client: 'F1',
+    year: '2024',
+    location: 'Lusail Circuit',
     summary:
       'A premium hospitality environment engineered for broadcast-quality moments and high-touch guest flow.',
     description:
@@ -159,6 +187,8 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     tagline: 'Tech-forward expo build',
     event: 'LEAP',
     client: 'LEAP',
+    year: '2024',
+    location: 'Riyadh',
     summary:
       'A technology-forward expo build balancing bold brand presence with flexible visitor circulation.',
     description:
@@ -178,6 +208,8 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     tagline: 'Ceremonial gala production',
     event: 'National Day',
     client: 'Government Protocol',
+    year: '2023',
+    location: 'Doha',
     summary:
       'A ceremonial gala production weaving national narrative, live performance, and precision cueing.',
     description:
@@ -194,4 +226,17 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
 
 export function getFeaturedProjectBySlug(slug: string): FeaturedProject | undefined {
   return FEATURED_PROJECTS.find((project) => project.slug === slug);
+}
+
+export function getAdjacentProjects(slug: string): AdjacentProjects | undefined {
+  const index = FEATURED_PROJECTS.findIndex((project) => project.slug === slug);
+  if (index < 0) {
+    return undefined;
+  }
+
+  const total = FEATURED_PROJECTS.length;
+  const prev = FEATURED_PROJECTS[(index - 1 + total) % total];
+  const next = FEATURED_PROJECTS[(index + 1) % total];
+
+  return { prev, next, index, total };
 }

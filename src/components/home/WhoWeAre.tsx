@@ -47,7 +47,6 @@ export default function WhoWeAre() {
       return;
     }
 
-    const eyebrow = section.querySelector('[data-eyebrow]');
     const headingLines = section.querySelectorAll('[data-heading-line]');
     const roles = section.querySelectorAll('[data-role]');
     const bodyLines = section.querySelectorAll('[data-body-line]');
@@ -59,10 +58,13 @@ export default function WhoWeAre() {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([eyebrow, ...headingLines, ...roles, ...bodyLines, mediaCard].filter(Boolean), {
+        gsap.set([...headingLines, ...roles, ...bodyLines].filter(Boolean), {
           clipPath: MASK_VISIBLE,
           clearProps: 'transform,opacity',
         });
+        if (mediaCard) {
+          gsap.set(mediaCard, { clipPath: MASK_VISIBLE, opacity: 1, clearProps: 'transform' });
+        }
         if (mediaImage) {
           gsap.set(mediaImage, { yPercent: 0, scale: 1.14 });
         }
@@ -77,41 +79,14 @@ export default function WhoWeAre() {
         gsap.set(headingLines, { clipPath: MASK_HIDDEN_BOTTOM });
         gsap.set(roles, { clipPath: MASK_HIDDEN_BOTTOM });
         gsap.set(bodyLines, { clipPath: MASK_HIDDEN_BOTTOM });
-        if (eyebrow) {
-          gsap.set(eyebrow, { clipPath: MASK_HIDDEN_BOTTOM });
-        }
         if (accent) {
           gsap.set(accent, { scaleX: 0, transformOrigin: 'left center' });
         }
         if (mediaCard) {
           gsap.set(mediaCard, {
             clipPath: isCompact ? MASK_HIDDEN_BOTTOM : MASK_HIDDEN_RIGHT,
+            opacity: 0,
           });
-        }
-
-        if (mediaCard) {
-          const mediaTimeline = gsap.timeline({
-            scrollTrigger: {
-              trigger: section,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 0.7,
-              invalidateOnRefresh: true,
-            },
-          });
-
-          mediaTimeline
-            .fromTo(
-              mediaCard,
-              { xPercent: isCompact ? 0 : 24 },
-              { xPercent: 0, ease: 'none', duration: 0.34 },
-            )
-            .to(mediaCard, { xPercent: 0, ease: 'none', duration: 0.32 })
-            .to(mediaCard, {
-              xPercent: isCompact ? 0 : -28,
-              ease: 'none',
-              duration: 0.34,
-            });
         }
 
         if (mediaImage) {
@@ -137,14 +112,9 @@ export default function WhoWeAre() {
             scrollTrigger: sectionRevealScroll(section, 0.8),
           })
           .to(
-            eyebrow,
-            { clipPath: MASK_VISIBLE, duration: 0.45, ease: 'power3.out' },
-            0,
-          )
-          .to(
             accent,
             { scaleX: 1, duration: 0.5, ease: 'power3.out' },
-            0.04,
+            0,
           )
           .to(
             headingLines,
@@ -160,6 +130,7 @@ export default function WhoWeAre() {
             mediaCard,
             {
               clipPath: MASK_VISIBLE,
+              opacity: 1,
               duration: 0.7,
               ease: 'power3.out',
             },
@@ -210,13 +181,6 @@ export default function WhoWeAre() {
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.leftRail}>
-            <div className={styles.meta}>
-              <p className={styles.kicker} data-eyebrow>
-                Scene 04 · The crew
-              </p>
-              <p className={styles.studioLine}>A creative experience studio</p>
-            </div>
-
             <figure className={styles.mediaCard} data-media-card data-scroll-depth>
               <img
                 src={PORTRAIT_IMAGE.src}
@@ -236,6 +200,7 @@ export default function WhoWeAre() {
           </div>
 
           <div className={styles.content}>
+            <p className={styles.studioLine}>A creative experience studio</p>
             <div className={styles.accent} data-accent aria-hidden="true" />
             <h2 className={styles.heading}>
               {HEADLINE_LINES.map((line) => (

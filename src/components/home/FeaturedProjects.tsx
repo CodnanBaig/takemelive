@@ -169,14 +169,9 @@ export default function FeaturedProjects() {
     const titleLines = Array.from(
       section.querySelectorAll<HTMLElement>('[data-title-line]'),
     );
-    const sectionKicker = section.querySelector<HTMLElement>('[data-section-kicker]');
-
     const ctx = gsap.context(() => {
       if (titleLines.length) {
         setMaskHidden(titleLines);
-      }
-      if (sectionKicker) {
-        setMaskHidden(sectionKicker);
       }
 
       ScrollTrigger.create({
@@ -184,9 +179,6 @@ export default function FeaturedProjects() {
         start: 'top 78%',
         once: true,
         onEnter: () => {
-          if (sectionKicker) {
-            animateMaskReveal(sectionKicker, 'bottom', { duration: 0.55 });
-          }
           if (titleLines.length) {
             animateMaskReveal(titleLines, 'bottom', {
               duration: 0.82,
@@ -612,17 +604,18 @@ export default function FeaturedProjects() {
     >
       <div className={styles.inner}>
         <header className={styles.header} ref={headerRef}>
-          <p className={styles.kicker} data-section-kicker>
-            Scene 03 · Worlds
-          </p>
           <h2 className={styles.title}>
-            <span className={styles.titleLine} data-title-line>
-              Featured
+            <span className={styles.titleLineWrap}>
+              <span className={styles.titleLine} data-title-line>
+                Featured
+              </span>
             </span>
-            <span className={styles.titleLine} data-title-line>
-              Projects
-              <sup className={styles.count}>({String(projectCount).padStart(2, '0')})</sup>
+            <span className={styles.titleLineWrap}>
+              <span className={styles.titleLine} data-title-line>
+                Projects
+              </span>
             </span>
+            <span className={styles.count}>({String(projectCount).padStart(2, '0')})</span>
           </h2>
         </header>
 
@@ -662,7 +655,10 @@ export default function FeaturedProjects() {
               </Link>
             ))}
           </div>
-          <p className={styles.scrollHint}>Scroll to surf</p>
+          <p className={styles.scrollHint}>
+            Scroll to surf
+            <span className="srOnly">. Select a project once to preview, twice to open.</span>
+          </p>
         </div>
       </div>
     </section>

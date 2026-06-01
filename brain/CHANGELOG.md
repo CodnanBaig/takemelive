@@ -1,3 +1,46 @@
+## 2026-06-01-v206
+
+- Who We Are: move "A creative experience studio" into content column above headline; remove sticky left meta and horizontal card scrub so copy no longer sits behind portrait.
+
+## 2026-06-01-v205
+
+- Removed blue "Scene XX · …" kickers above section headings (Featured Projects, Event Gallery, Who We Are, Showreel, Team); scene context remains in bottom progress caption only.
+
+## 2026-06-01-v204
+
+- SceneProgress caption: fix active scene stuck on Arrival by using scroll-position detection (getBoundingClientRect focal line) instead of IntersectionObserver partial entries.
+
+## 2026-06-01-v203
+
+- Replaced left SceneRail with top SceneProgress: thin scroll fill bar, seven segment ticks for scene jump, bottom-center active scene caption; removed rail clearance from Featured Projects header.
+
+## 2026-06-01-v202
+
+- Live At Scale: remove parchment/white bottom scrim; keep black through gallery end; multi-stop black→parchment smudge on scale-bridge and scene gradient only.
+
+## 2026-06-01-v201
+
+- Scale scene seam (EventGallery → WhoWeAre): light SceneBridge tone, sharper parchment gradient, gallery fade-out and bottom scrim, solid crew background, delayed portrait reveal, SceneRail backdrop for legibility at boundaries.
+
+## 2026-06-01-v200
+
+- Featured Projects header: separate title lines with readable line-height, project count on its own line (no sup overlap), header inset to clear SceneRail.
+
+## 2026-06-01-v199
+
+- Phase 7 polish: skip link and main landmarks, global focus-visible, motion preference sync (Lenis teardown), SceneRail scene-group tracking, reduced-motion showreel fallback, route ScrollTrigger refresh, SiteNav aria-current, SR hint for project cards.
+
+
+## 2026-06-01-v198
+
+- Phase 6: cinematic project detail pages (poster hero, meta strip, mask-reveal gallery, prev/next nav), local photo path convention under public/assets/projects, ProjectsIndex on Our Projects, CultureContent secondary page, SEO metadata per project.
+
+
+## 2026-06-01-v197
+
+- Phase 5 (Scene 05 · Showreel): pinned scroll-scrub video (Showreel component, Mixkit fallback plus optional public/assets/showreel.mp4), Team mask-reveal and electric-blue tokens, SceneBridge, showreel scene gradient.
+
+
 ## 2026-06-01-v196
 
 - Phase 4 (Scene 04 · Scale): EventGallery mask-reveal mosaic with Scene 04 header and wider grid; WhoWeAre mask-reveal editorial copy and portrait; SceneBridge between gallery and crew; scale scene gradient (black → parchment).

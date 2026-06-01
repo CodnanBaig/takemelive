@@ -1,9 +1,22 @@
 .section {
-  min-height: 195vh;
+  min-height: 175vh;
   position: relative;
-  padding: clamp(4rem, 10vh, 8rem) 0;
+  z-index: 1;
+  padding: clamp(4rem, 10vh, 8rem) 0 clamp(6rem, 14vh, 10rem);
   background: transparent;
   color: var(--tml-white);
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(22vh, 260px);
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgb(6 7 10 / 0.72) 52%, #0a0b0f 100%);
 }
 
 .section::after {
@@ -11,6 +24,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 0;
   background:
     radial-gradient(circle at 66% 56%, rgb(255 255 255 / 0.05), transparent 16%),
     radial-gradient(circle at 24% 82%, rgb(255 255 255 / 0.04), transparent 18%);
@@ -21,11 +35,12 @@
   margin: 0 auto;
   position: sticky;
   top: clamp(38px, 7vh, 78px);
-  z-index: 1;
+  z-index: 2;
   min-height: calc(100vh - clamp(38px, 7vh, 78px));
   display: grid;
   align-content: center;
   gap: clamp(1.5rem, 3vh, 2.5rem);
+  will-change: opacity, transform;
 }
 
 .header {

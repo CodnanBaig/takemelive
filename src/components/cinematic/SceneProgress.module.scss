@@ -1,0 +1,142 @@
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--tml-z-rail);
+  padding:
+    max(0px, env(safe-area-inset-top, 0px))
+    max(0px, env(safe-area-inset-right, 0px))
+    0
+    max(0px, env(safe-area-inset-left, 0px));
+  pointer-events: none;
+}
+
+.bar {
+  position: relative;
+  pointer-events: auto;
+}
+
+.track {
+  position: relative;
+  height: 2px;
+  background: rgb(245 245 240 / 0.1);
+  overflow: hidden;
+}
+
+.fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    rgb(45 125 255 / 0.55) 0%,
+    var(--tml-accent-bright) 55%,
+    rgb(92 155 255 / 0.95) 100%
+  );
+  box-shadow: 0 0 14px rgb(45 125 255 / 0.35);
+  transition: transform 120ms var(--tml-ease-out);
+  will-change: transform;
+}
+
+.segments {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.segment {
+  flex: 1;
+  position: relative;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.segment:focus-visible {
+  outline: none;
+}
+
+.segment:focus-visible .tick {
+  outline: 2px solid var(--tml-accent-bright);
+  outline-offset: 4px;
+}
+
+.tick {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 2px;
+  transform: translateX(-50%);
+  background: rgb(245 245 240 / 0.22);
+  transition:
+    height var(--tml-duration-fast) var(--tml-ease-out),
+    background var(--tml-duration-fast) var(--tml-ease-out),
+    box-shadow var(--tml-duration-fast) var(--tml-ease-out);
+}
+
+.segment:hover .tick {
+  height: 4px;
+  background: rgb(245 245 240 / 0.5);
+}
+
+.segmentActive .tick {
+  height: 5px;
+  background: var(--tml-accent-bright);
+  box-shadow: 0 0 10px var(--tml-accent-glow);
+}
+
+.caption {
+  position: fixed;
+  left: 50%;
+  bottom: max(14px, env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.35rem 0.65rem;
+  border-radius: 2px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(245 245 240 / 0.5);
+  background: rgb(5 6 8 / 0.35);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.captionIndex {
+  font-variant-numeric: tabular-nums;
+  color: rgb(245 245 240 / 0.55);
+}
+
+.captionLabel {
+  opacity: 0.85;
+}
+
+@media (max-width: 900px) {
+  .caption {
+    bottom: max(10px, env(safe-area-inset-bottom, 0px));
+    font-size: 0.58rem;
+    padding: 0.28rem 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transition: none;
+  }
+
+  .tick {
+    transition: none;
+  }
+}

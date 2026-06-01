@@ -1,8 +1,10 @@
 .section {
   position: relative;
+  z-index: 2;
   min-height: 100vh;
-  padding: clamp(4.5rem, 10vh, 8rem) 0;
-  background: transparent;
+  margin-top: -1px;
+  padding: clamp(5.5rem, 12vh, 9rem) 0 clamp(4.5rem, 10vh, 8rem);
+  background: #f6f3ec;
   color: #111217;
 }
 
@@ -35,14 +37,6 @@
 
 .leftRail {
   display: grid;
-  gap: clamp(1.2rem, 2.5vh, 1.8rem);
-}
-
-.meta {
-  position: sticky;
-  top: clamp(88px, 12vh, 132px);
-  display: grid;
-  gap: 0.85rem;
   align-content: start;
 }
 
@@ -54,9 +48,10 @@
   overflow: hidden;
   border-radius: 0;
   border: 1px solid rgb(17 18 23 / 0.12);
-  background: #15161a;
+  background: #e8e4da;
   box-shadow: 0 28px 50px rgb(17 18 23 / 0.14);
   will-change: clip-path, transform;
+  opacity: 0;
 }
 
 .mediaCard::after {
@@ -89,8 +84,8 @@
 }
 
 .studioLine {
-  margin: 0;
-  max-width: 15ch;
+  margin: 0 0 0.15rem;
+  max-width: 22ch;
   font-size: clamp(0.98rem, 1.3vw, 1.2rem);
   line-height: 1.35;
   color: rgb(17 18 23 / 0.76);
@@ -99,7 +94,7 @@
 .content {
   display: grid;
   gap: clamp(1.4rem, 2.8vh, 2.2rem);
-  padding-top: clamp(0.3rem, 1vh, 0.8rem);
+  padding-top: 0;
 }
 
 .accent {
@@ -115,7 +110,7 @@
   font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
   font-size: clamp(3.1rem, 7.6vw, 7.5rem);
   font-weight: 400;
-  line-height: 0.92;
+  line-height: 0.96;
   letter-spacing: 0.01em;
   text-transform: uppercase;
 }
@@ -174,21 +169,8 @@
     gap: 1.75rem;
   }
 
-  .leftRail {
-    gap: 1.15rem;
-  }
-
-  .meta {
-    position: static;
-    gap: 0.45rem;
-  }
-
   .mediaCard {
     max-width: min(100%, 460px);
-  }
-
-  .studioLine {
-    max-width: none;
   }
 
   .heading {

@@ -37,7 +37,8 @@
   top: clamp(4.4rem, 6.5vh, 6rem);
   left: clamp(1rem, 3vw, 2.5rem);
   z-index: 6;
-  max-width: min(52vw, 620px);
+  max-width: min(46vw, 560px);
+  padding-right: 1rem;
   pointer-events: none;
 }
 
@@ -50,15 +51,24 @@
 }
 
 .title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(0.2rem, 0.8vh, 0.45rem);
   margin: 0;
   font-family: var(--font-anton), var(--font-poppins), sans-serif;
   font-size: clamp(3rem, 7vw, 7.5rem);
   font-weight: 400;
-  line-height: 0.84;
-  letter-spacing: -0.08em;
+  line-height: 1;
+  letter-spacing: -0.05em;
   text-transform: uppercase;
-  overflow-wrap: anywhere;
   min-width: 0;
+}
+
+.titleLineWrap {
+  display: block;
+  overflow: hidden;
+  line-height: 0.95;
 }
 
 .titleLine {
@@ -67,11 +77,14 @@
 }
 
 .count {
-  font-size: 0.42em;
-  vertical-align: super;
-  letter-spacing: 0.04em;
+  display: block;
+  margin: 0.1rem 0 0;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: clamp(0.9rem, 1.6vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.16em;
   color: rgb(245 245 240 / 0.55);
-  margin-left: 0.12em;
 }
 
 .stage {
@@ -231,8 +244,12 @@
     top: clamp(4.75rem, 9vh, 6rem);
     left: clamp(1rem, 5vw, 1.4rem);
     max-width: calc(100vw - 2rem);
-    padding: 0;
+    padding: 0 1rem 0 0;
     pointer-events: none;
+  }
+
+  .title {
+    gap: 0.18rem;
   }
 
   .stage {
@@ -272,5 +289,9 @@
 @media (max-width: 768px) {
   .title {
     font-size: clamp(2rem, 11vw, 3.2rem);
+  }
+
+  .count {
+    font-size: clamp(0.78rem, 3.2vw, 0.95rem);
   }
 }

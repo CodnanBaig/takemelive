@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from 'next';
 import { Anton, Poppins } from 'next/font/google';
 import './globals.css';
 import LenisProvider from '@/components/cinematic/LenisProvider';
+import MotionPreferences from '@/components/cinematic/MotionPreferences';
+import RouteScrollRefresh from '@/components/cinematic/RouteScrollRefresh';
+import SkipToContent from '@/components/cinematic/SkipToContent';
 import SiteNav from '@/components/SiteNav';
 
 const poppins = Poppins({
@@ -48,7 +51,10 @@ export default function RootLayout({
         />
       </head>
       <body className={`${poppins.variable} ${anton.variable}`}>
+        <SkipToContent />
+        <MotionPreferences />
         <LenisProvider>
+          <RouteScrollRefresh />
           <SiteNav />
           {children}
         </LenisProvider>

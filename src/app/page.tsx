@@ -9,6 +9,7 @@ import WhyUs from '@/components/home/WhyUs';
 import HowItWorks from '@/components/home/HowItWorks';
 import FeaturedProjects from '@/components/home/FeaturedProjects';
 import Services from '@/components/home/Services';
+import Showreel from '@/components/home/Showreel';
 import Team from '@/components/home/Team';
 import CTA from '@/components/home/CTA';
 import Footer from '@/components/home/Footer';
@@ -16,16 +17,16 @@ import HomeSplineSection from '@/components/home/HomeSplineSection';
 import HomeScrollScenes from '@/components/home/HomeScrollScenes';
 import CinematicAtmosphere from '@/components/cinematic/CinematicAtmosphere';
 import SceneBridge from '@/components/cinematic/SceneBridge';
-import SceneRail from '@/components/cinematic/SceneRail';
+import SceneProgress from '@/components/cinematic/SceneProgress';
 import styles from './page.module.scss';
 
 export default function Home() {
   return (
-    <main className={styles.main}>
+    <main id="main-content" className={styles.main} tabIndex={-1}>
       <HomeScrollScenes />
       <CinematicAtmosphere />
       <LogoThemeSync />
-      <SceneRail />
+      <SceneProgress />
 
       <div className={styles.logoContainer}>
         <Image
@@ -55,7 +56,7 @@ export default function Home() {
 
       <div className={styles.sceneGroup} data-scene="scale" id="scene-scale">
         <EventGallery />
-        <SceneBridge id="scale-bridge" />
+        <SceneBridge id="scale-bridge" tone="light" />
         <WhoWeAre />
       </div>
 
@@ -66,6 +67,8 @@ export default function Home() {
       </div>
 
       <div className={styles.sceneGroup} data-scene="showreel" id="scene-showreel">
+        <Showreel />
+        <SceneBridge id="showreel-bridge" tone="toDark" />
         <Team />
       </div>
 

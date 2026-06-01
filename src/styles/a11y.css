@@ -1,0 +1,75 @@
+/* Phase 7 — global accessibility and motion fallbacks */
+
+.skipLink {
+  position: fixed;
+  top: max(0.75rem, env(safe-area-inset-top, 0px));
+  left: max(0.75rem, env(safe-area-inset-left, 0px));
+  z-index: calc(var(--tml-z-rail) + 2);
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--tml-accent);
+  background: var(--tml-black);
+  color: var(--tml-white);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 180ms ease;
+}
+
+.skipLink:focus {
+  transform: translateY(0);
+  outline: none;
+}
+
+.skipLink:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--tml-accent-bright);
+  outline-offset: 3px;
+}
+
+#main-content:focus {
+  outline: none;
+}
+
+#main-content:focus-visible {
+  outline: 2px solid var(--tml-accent);
+  outline-offset: 4px;
+}
+
+:where(a, button, input, textarea, select, summary, [tabindex]:not([tabindex='-1'])):focus-visible {
+  outline: 2px solid var(--tml-accent-bright);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+html[data-reduce-motion='true'] [data-cinematic-grain],
+html[data-reduce-motion='true'] [data-cinematic-beam] {
+  opacity: 0.06;
+}
+
+html[data-reduce-motion='true'] .showreelVideo {
+  display: none;
+}
+
+html[data-reduce-motion='true'] .showreelPoster {
+  opacity: 1;
+}

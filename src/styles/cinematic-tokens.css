@@ -23,7 +23,7 @@
   --tml-z-atmosphere: 5;
   --tml-z-content: 10;
   --tml-z-logo: 50;
-  --tml-z-rail: 55;
+  --tml-z-rail: 55; /* scene progress bar */
   --tml-z-nav: 60;
 
   --tml-scene-min-height: 100dvh;

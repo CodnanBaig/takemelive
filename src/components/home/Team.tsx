@@ -2,8 +2,11 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import {
+  MASK_HIDDEN_BOTTOM,
+  MASK_VISIBLE,
+} from '@/lib/maskReveal';
 import { sectionRevealScroll } from '@/lib/scrollScene';
-import ScrollOrnament from './ScrollOrnament';
 import styles from './Team.module.scss';
 
 const TEAM_ROLES = [
@@ -49,7 +52,6 @@ export default function Team() {
 
     const headlineLines = Array.from(section.querySelectorAll<HTMLElement>('[data-team-line]'));
     const intro = section.querySelector<HTMLElement>('[data-team-intro]');
-    const kicker = section.querySelector<HTMLElement>('[data-team-kicker]');
     const board = section.querySelector<HTMLElement>('[data-team-board]');
     const heroMedia = section.querySelector<HTMLElement>('[data-team-hero-media]');
     const heroImage = section.querySelector<HTMLElement>('[data-team-hero-image]');
@@ -63,22 +65,23 @@ export default function Team() {
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set(
-          [kicker, ...headlineLines, intro, board, heroMedia, heroImage, ...chips, ...roles, ...roleImages],
-          {
-            autoAlpha: 1,
-            x: 0,
-            y: 0,
-            yPercent: 0,
-            scale: 1,
-            rotateY: 0,
-            skewY: 0,
-          },
+          [...headlineLines, intro, board, heroMedia, ...chips, ...roles, ...roleImages].filter(
+            Boolean,
+          ),
+          { clipPath: MASK_VISIBLE, x: 0, y: 0, scale: 1, rotateY: 0 },
         );
+        if (heroImage) {
+          gsap.set(heroImage, { yPercent: 0, scale: 1 });
+        }
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const isCompact = window.matchMedia('(max-width: 900px)').matches;
-
+        gsap.set([...headlineLines, intro, ...chips].filter(Boolean), {
+          clipPath: MASK_HIDDEN_BOTTOM,
+        });
+        gsap.set([board, heroMedia, ...roles].filter(Boolean), {
+          clipPath: MASK_HIDDEN_BOTTOM,
+        });
         gsap.set(roles, {
           transformPerspective: 1200,
           transformOrigin: '50% 50%',
@@ -86,71 +89,48 @@ export default function Team() {
 
         gsap
           .timeline({
-            scrollTrigger: sectionRevealScroll(section, 0.76),
+            scrollTrigger: sectionRevealScroll(section, 0.78),
           })
-          .fromTo(kicker, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, ease: 'none', duration: 0.24 }, 0)
-          .fromTo(
+          .to(
             headlineLines,
-            isCompact
-              ? { autoAlpha: 0, y: 28, skewY: 0 }
-              : { autoAlpha: 0, yPercent: 112, skewY: 5 },
-            isCompact
-              ? {
-                  autoAlpha: 1,
-                  y: 0,
-                  skewY: 0,
-                  stagger: 0.07,
-                  ease: 'none',
-                  duration: 0.52,
-                }
-              : {
-                  autoAlpha: 1,
-                  yPercent: 0,
-                  skewY: 0,
-                  stagger: 0.07,
-                  ease: 'none',
-                  duration: 0.52,
-                },
-            0.08,
-          )
-          .fromTo(intro, { autoAlpha: 0, y: 32 }, { autoAlpha: 1, y: 0, ease: 'none', duration: 0.42 }, 0.28)
-          .fromTo(
-            chips,
-            { autoAlpha: 0, y: 18, scale: 0.95 },
-            { autoAlpha: 1, y: 0, scale: 1, stagger: 0.08, ease: 'none', duration: 0.34 },
-            0.38,
-          )
-          .fromTo(
-            board,
-            { autoAlpha: 0, y: 62 },
-            { autoAlpha: 1, y: 0, ease: 'none', duration: 0.54 },
-            0.28,
-          )
-          .fromTo(
-            heroMedia,
-            { autoAlpha: 0, scale: 0.96 },
-            { autoAlpha: 1, scale: 1, ease: 'none', duration: 0.54 },
-            0.34,
-          )
-          .fromTo(
-            roles,
-            { autoAlpha: 0, y: 54, rotateY: -5 },
             {
-              autoAlpha: 1,
-              y: 0,
-              rotateY: 0,
-              stagger: 0.08,
-              ease: 'none',
-              duration: 0.5,
+              clipPath: MASK_VISIBLE,
+              stagger: 0.07,
+              duration: 0.62,
+              ease: 'power3.out',
             },
-            0.42,
+            0,
           )
-          .fromTo(
+          .to(intro, { clipPath: MASK_VISIBLE, duration: 0.5, ease: 'power3.out' }, 0.14)
+          .to(
+            chips,
+            {
+              clipPath: MASK_VISIBLE,
+              stagger: 0.06,
+              duration: 0.45,
+              ease: 'power3.out',
+            },
+            0.3,
+          )
+          .to(board, { clipPath: MASK_VISIBLE, duration: 0.58, ease: 'power3.out' }, 0.28)
+          .to(heroMedia, { clipPath: MASK_VISIBLE, duration: 0.55, ease: 'power3.out' }, 0.34)
+          .to(
+            roles,
+            {
+              clipPath: MASK_VISIBLE,
+              stagger: 0.07,
+              duration: 0.52,
+              ease: 'power3.out',
+            },
+            0.4,
+          )
+          .to(
             roleImages,
-            { autoAlpha: 0.5, scale: 1.12 },
-            { autoAlpha: 1, scale: 1, stagger: 0.08, ease: 'none', duration: 0.42 },
-            0.48,
+            { scale: 1, duration: 0.42, ease: 'power3.out', stagger: 0.06 },
+            0.46,
           );
+
+        gsap.set(roleImages, { scale: 1.1 });
 
         gsap
           .timeline({
@@ -222,17 +202,14 @@ export default function Team() {
     <section
       id="chapter-team"
       data-chapter="team"
+      data-scene="showreel"
       data-logo-invert="1"
       ref={sectionRef}
       className={styles.section}
       aria-label="Team"
     >
-      <ScrollOrnament variant="glyph-light" position="tl" />
       <div className={styles.inner}>
         <div className={styles.masthead}>
-          <p className={styles.kicker} data-team-kicker>
-            Team
-          </p>
           <h2 data-team-headline className={styles.headline}>
             <span data-team-line>People behind</span>
             <span data-team-line>the live moment.</span>

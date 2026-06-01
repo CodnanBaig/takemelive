@@ -4,7 +4,6 @@
   margin: 0;
   overflow: hidden;
   pointer-events: none;
-  background: linear-gradient(180deg, var(--tml-black) 0%, transparent 100%);
 }
 
 .line {
@@ -35,4 +34,43 @@
   background: radial-gradient(ellipse at center, var(--tml-accent-glow), transparent 70%);
   filter: blur(28px);
   opacity: 0.5;
+}
+
+/* Dark scene → lighter content below */
+.toneDark {
+  background: linear-gradient(180deg, var(--tml-black) 0%, transparent 100%);
+}
+
+/* Black gallery → smudged parchment crew */
+.toneLight {
+  height: clamp(10rem, 20vh, 16rem);
+  margin-top: -1px;
+  background: linear-gradient(
+    180deg,
+    #0a0b0f 0%,
+    #101218 18%,
+    #1e2028 36%,
+    #3a3834 54%,
+    #6e6960 72%,
+    #b8b2a6 88%,
+    #f6f3ec 100%
+  );
+}
+
+.toneLight .glow {
+  opacity: 0.18;
+  filter: blur(26px);
+}
+
+.toneLight .line {
+  opacity: 0.4;
+}
+
+/* Parchment → dark showreel */
+.toneToDark {
+  background: linear-gradient(180deg, #f6f3ec 0%, #1a1b20 55%, var(--tml-black) 100%);
+}
+
+.toneToDark .glow {
+  opacity: 0.35;
 }
