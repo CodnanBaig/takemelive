@@ -66,6 +66,14 @@
 
 .sceneGroup[data-scene='scale'] {
   z-index: 4;
+  background: linear-gradient(
+    180deg,
+    var(--tml-black) 0%,
+    #06070a 14%,
+    #0a0b0f 42%,
+    #ece8df 78%,
+    #f6f3ec 100%
+  );
 }
 
 .sceneGroup[data-scene='innovation'] {

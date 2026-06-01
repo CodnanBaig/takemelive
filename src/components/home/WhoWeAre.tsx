@@ -2,8 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import {
+  MASK_HIDDEN_BOTTOM,
+  MASK_HIDDEN_RIGHT,
+  MASK_VISIBLE,
+} from '@/lib/maskReveal';
 import { sectionRevealScroll } from '@/lib/scrollScene';
-import ScrollOrnament from './ScrollOrnament';
 import styles from './WhoWeAre.module.scss';
 
 const PORTRAIT_IMAGE = {
@@ -16,7 +20,7 @@ const FALLBACK_IMAGE_SRC =
   'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=80';
 
 const HEADLINE_LINES = [
-  "Squad",
+  'Squad',
   'of creators,',
   'dreamers, and doers.',
 ];
@@ -55,12 +59,9 @@ export default function WhoWeAre() {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([eyebrow, headingLines, roles, bodyLines, accent, mediaCard], {
-          autoAlpha: 1,
-          x: 0,
-          y: 0,
-          scale: 1,
-          clearProps: 'all',
+        gsap.set([eyebrow, ...headingLines, ...roles, ...bodyLines, mediaCard].filter(Boolean), {
+          clipPath: MASK_VISIBLE,
+          clearProps: 'transform,opacity',
         });
         if (mediaImage) {
           gsap.set(mediaImage, { yPercent: 0, scale: 1.14 });
@@ -72,6 +73,21 @@ export default function WhoWeAre() {
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         const isCompact = window.matchMedia('(max-width: 900px)').matches;
+
+        gsap.set(headingLines, { clipPath: MASK_HIDDEN_BOTTOM });
+        gsap.set(roles, { clipPath: MASK_HIDDEN_BOTTOM });
+        gsap.set(bodyLines, { clipPath: MASK_HIDDEN_BOTTOM });
+        if (eyebrow) {
+          gsap.set(eyebrow, { clipPath: MASK_HIDDEN_BOTTOM });
+        }
+        if (accent) {
+          gsap.set(accent, { scaleX: 0, transformOrigin: 'left center' });
+        }
+        if (mediaCard) {
+          gsap.set(mediaCard, {
+            clipPath: isCompact ? MASK_HIDDEN_BOTTOM : MASK_HIDDEN_RIGHT,
+          });
+        }
 
         if (mediaCard) {
           const mediaTimeline = gsap.timeline({
@@ -87,94 +103,88 @@ export default function WhoWeAre() {
           mediaTimeline
             .fromTo(
               mediaCard,
-              {
-                xPercent: isCompact ? 0 : 30,
-                autoAlpha: 0.45,
-              },
-              {
-                xPercent: 0,
-                autoAlpha: 1,
-                ease: 'none',
-                duration: 0.34,
-              },
+              { xPercent: isCompact ? 0 : 24 },
+              { xPercent: 0, ease: 'none', duration: 0.34 },
             )
-            .to(
-              mediaCard,
-              {
-                xPercent: 0,
-                autoAlpha: 1,
-                ease: 'none',
-                duration: 0.32,
-              },
-            )
-            .to(
-              mediaCard,
-              {
-                xPercent: isCompact ? 0 : -34,
-                autoAlpha: 0.72,
-                ease: 'none',
-                duration: 0.34,
-              },
-            );
+            .to(mediaCard, { xPercent: 0, ease: 'none', duration: 0.32 })
+            .to(mediaCard, {
+              xPercent: isCompact ? 0 : -28,
+              ease: 'none',
+              duration: 0.34,
+            });
         }
 
         if (mediaImage) {
           gsap.set(mediaImage, { scale: 1.14 });
+          gsap.fromTo(
+            mediaImage,
+            { yPercent: -14 },
+            {
+              yPercent: 14,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: section,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+              },
+            },
+          );
         }
 
         gsap
           .timeline({
-            scrollTrigger: sectionRevealScroll(section, 0.78),
+            scrollTrigger: sectionRevealScroll(section, 0.8),
           })
-          .fromTo(
+          .to(
             eyebrow,
-            { autoAlpha: 0, y: 22 },
-            { autoAlpha: 1, y: 0, ease: 'none', duration: 0.3 },
+            { clipPath: MASK_VISIBLE, duration: 0.45, ease: 'power3.out' },
             0,
           )
-          .fromTo(
+          .to(
             accent,
-            { scaleX: 0, transformOrigin: 'left center' },
-            { scaleX: 1, ease: 'none', duration: 0.45 },
-            0.05,
+            { scaleX: 1, duration: 0.5, ease: 'power3.out' },
+            0.04,
           )
-          .fromTo(
+          .to(
             headingLines,
-            { yPercent: 110, autoAlpha: 0.15 },
             {
-              yPercent: 0,
-              autoAlpha: 1,
+              clipPath: MASK_VISIBLE,
               stagger: 0.07,
-              ease: 'none',
-              duration: 0.55,
+              duration: 0.62,
+              ease: 'power3.out',
             },
-            0.12,
+            0.1,
           )
-          .fromTo(
+          .to(
+            mediaCard,
+            {
+              clipPath: MASK_VISIBLE,
+              duration: 0.7,
+              ease: 'power3.out',
+            },
+            0.14,
+          )
+          .to(
             roles,
-            { y: 28, autoAlpha: 0.2 },
             {
-              y: 0,
-              autoAlpha: 1,
+              clipPath: MASK_VISIBLE,
               stagger: 0.06,
-              ease: 'none',
-              duration: 0.5,
+              duration: 0.55,
+              ease: 'power3.out',
             },
-            0.28,
+            0.26,
           )
-          .fromTo(
+          .to(
             bodyLines,
-            { y: 24, autoAlpha: 0.2 },
             {
-              y: 0,
-              autoAlpha: 1,
+              clipPath: MASK_VISIBLE,
               stagger: 0.07,
-              ease: 'none',
-              duration: 0.52,
+              duration: 0.55,
+              ease: 'power3.out',
             },
-            0.4,
+            0.38,
           );
-
       });
 
       return () => {
@@ -191,18 +201,18 @@ export default function WhoWeAre() {
     <section
       id="chapter-who-we-are"
       data-chapter="who-we-are"
+      data-scene="scale"
       data-logo-invert="0"
       ref={sectionRef}
       className={styles.section}
       aria-label="Who we are"
     >
-      <ScrollOrnament variant="glyph-dark" position="tl" />
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.leftRail}>
             <div className={styles.meta}>
               <p className={styles.kicker} data-eyebrow>
-                WHO WE ARE
+                Scene 04 · The crew
               </p>
               <p className={styles.studioLine}>A creative experience studio</p>
             </div>

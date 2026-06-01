@@ -1,9 +1,14 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { gsap } from '@/lib/gsap';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
+import {
+  MASK_HIDDEN_BOTTOM,
+  MASK_VISIBLE,
+  animateMaskReveal,
+  setMaskHidden,
+} from '@/lib/maskReveal';
 import { sectionRevealScroll } from '@/lib/scrollScene';
-import ScrollOrnament from './ScrollOrnament';
 import styles from './EventGallery.module.scss';
 
 const IMAGE_ITEMS = [
@@ -72,40 +77,64 @@ export default function EventGallery() {
     const cards = section.querySelectorAll<HTMLElement>('[data-parallax-item]');
     const images = section.querySelectorAll<HTMLElement>('[data-parallax-image]');
     const backgroundWords = section.querySelectorAll<HTMLElement>('[data-bg-word]');
+    const titleLines = section.querySelectorAll<HTMLElement>('[data-title-line]');
+    const sectionKicker = section.querySelector<HTMLElement>('[data-section-kicker]');
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(cards, { autoAlpha: 1, y: 0, yPercent: 0 });
+        gsap.set([...cards, ...titleLines, sectionKicker].filter(Boolean), {
+          clipPath: MASK_VISIBLE,
+        });
         gsap.set(images, { yPercent: 0, scale: 1.16 });
         gsap.set(backgroundWords, { yPercent: 0, xPercent: 0 });
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.fromTo(
-          cards,
-          { autoAlpha: 0.2, y: 56, scale: 0.94 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1,
-            stagger: 0.08,
-            ease: 'none',
-            scrollTrigger: sectionRevealScroll(section, 0.82),
+        if (titleLines.length) {
+          setMaskHidden(titleLines);
+        }
+        if (sectionKicker) {
+          setMaskHidden(sectionKicker);
+        }
+        gsap.set(cards, { clipPath: MASK_HIDDEN_BOTTOM });
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 82%',
+          once: true,
+          onEnter: () => {
+            if (sectionKicker) {
+              animateMaskReveal(sectionKicker, 'bottom', { duration: 0.5 });
+            }
+            if (titleLines.length) {
+              animateMaskReveal(titleLines, 'bottom', {
+                duration: 0.78,
+                stagger: 0.08,
+              });
+            }
           },
-        );
+        });
+
+        gsap.to(cards, {
+          clipPath: MASK_VISIBLE,
+          stagger: 0.055,
+          ease: 'power3.out',
+          duration: 0.72,
+          scrollTrigger: sectionRevealScroll(section, 0.88),
+        });
 
         images.forEach((image, index) => {
           const speed = Number(image.dataset.speed ?? 16);
           const direction = index % 2 === 0 ? 1 : -1;
-          const shift = Math.max(20, speed * 1.2) * direction;
+          const shift = Math.max(22, speed * 1.35) * direction;
           gsap.fromTo(
             image,
-            { yPercent: -shift, scale: 1.16 },
+            { yPercent: -shift, scale: 1.18 },
             {
               yPercent: shift,
-              scale: 1.16,
+              scale: 1.18,
               ease: 'none',
               scrollTrigger: {
                 trigger: section,
@@ -119,7 +148,7 @@ export default function EventGallery() {
         });
 
         backgroundWords.forEach((word, index) => {
-          const drift = index % 2 === 0 ? 48 : -48;
+          const drift = index % 2 === 0 ? 56 : -56;
           gsap.fromTo(
             word,
             { yPercent: 0, xPercent: index % 2 === 0 ? -drift : drift },
@@ -152,13 +181,27 @@ export default function EventGallery() {
     <section
       id="chapter-event-gallery"
       data-chapter="event-gallery"
+      data-scene="scale"
       data-logo-invert="1"
       ref={sectionRef}
       className={styles.section}
       aria-label="Event gallery"
     >
-      <ScrollOrnament variant="glyph-light" position="bl" />
       <div className={styles.inner}>
+        <header className={styles.header}>
+          <p className={styles.kicker} data-section-kicker>
+            Scene 04 · Scale
+          </p>
+          <h2 className={styles.title}>
+            <span className={styles.titleLine} data-title-line>
+              Live at
+            </span>
+            <span className={styles.titleLine} data-title-line>
+              scale
+            </span>
+          </h2>
+        </header>
+
         <div className={styles.backgroundWords} aria-hidden="true">
           <span data-bg-word>TAKE</span>
           <span data-bg-word>ME LIVE</span>

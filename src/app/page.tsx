@@ -55,6 +55,7 @@ export default function Home() {
 
       <div className={styles.sceneGroup} data-scene="scale" id="scene-scale">
         <EventGallery />
+        <SceneBridge id="scale-bridge" />
         <WhoWeAre />
       </div>
 

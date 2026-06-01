@@ -1,12 +1,9 @@
 .section {
-  min-height: 185vh;
+  min-height: 195vh;
   position: relative;
   padding: clamp(4rem, 10vh, 8rem) 0;
-  background:
-    radial-gradient(circle at 12% 18%, rgb(245 245 240 / 0.08), transparent 28%),
-    radial-gradient(circle at 78% 24%, rgb(245 245 240 / 0.06), transparent 32%),
-    radial-gradient(circle at 42% 72%, rgb(245 245 240 / 0.05), transparent 30%),
-    #06070a;
+  background: transparent;
+  color: var(--tml-white);
 }
 
 .section::after {
@@ -20,7 +17,7 @@
 }
 
 .inner {
-  width: min(82vw, 980px);
+  width: min(94vw, 1240px);
   margin: 0 auto;
   position: sticky;
   top: clamp(38px, 7vh, 78px);
@@ -28,14 +25,37 @@
   min-height: calc(100vh - clamp(38px, 7vh, 78px));
   display: grid;
   align-content: center;
+  gap: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.header {
+  position: relative;
+  z-index: 3;
+  max-width: min(52ch, 720px);
 }
 
 .kicker {
-  margin: 0 0 clamp(1rem, 2.2vh, 1.8rem);
+  margin: 0 0 0.4rem;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-size: 0.78rem;
-  color: rgb(245 245 240 / 0.72);
+  letter-spacing: 0.28em;
+  font-size: 0.72rem;
+  color: var(--tml-accent-bright);
+  will-change: clip-path;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-anton), var(--font-poppins), sans-serif;
+  font-size: clamp(2.8rem, 7.2vw, 6.5rem);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.titleLine {
+  display: block;
+  will-change: clip-path;
 }
 
 .galleryGrid {
@@ -43,10 +63,10 @@
   z-index: 2;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: 28px;
+  grid-auto-rows: 30px;
   grid-auto-flow: dense;
-  min-height: min(88vh, 860px);
-  gap: clamp(0.45rem, 0.8vw, 0.8rem);
+  min-height: min(92vh, 920px);
+  gap: clamp(0.5rem, 0.9vw, 0.85rem);
 }
 
 .backgroundWords {
@@ -85,9 +105,12 @@
   margin: 0;
   border-radius: 0;
   overflow: hidden;
-  border: 1px solid rgb(245 245 240 / 0.17);
-  box-shadow: 0 28px 40px rgb(0 0 0 / 0.34);
+  border: 1px solid rgb(45 125 255 / 0.12);
+  box-shadow:
+    0 32px 56px rgb(0 0 0 / 0.45),
+    0 0 0 1px rgb(255 255 255 / 0.04) inset;
   background: #101113;
+  will-change: clip-path;
 }
 
 .image {

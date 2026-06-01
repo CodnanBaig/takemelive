@@ -1,3 +1,8 @@
+## 2026-06-01-v196
+
+- Phase 4 (Scene 04 · Scale): EventGallery mask-reveal mosaic with Scene 04 header and wider grid; WhoWeAre mask-reveal editorial copy and portrait; SceneBridge between gallery and crew; scale scene gradient (black → parchment).
+
+
 ## 2026-06-01-v195
 
 - Phase 3 (Scene 03 · Projects): poster-scale stack cards with focus scaling, trailer typography (Anton poster titles + accent taglines), mask-reveal section header, marquee project order (BLACKPINK lead + posterTitle/tagline fields), data-scene="projects", electric-blue stage atmosphere.

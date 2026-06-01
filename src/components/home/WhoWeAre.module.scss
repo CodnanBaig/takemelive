@@ -2,10 +2,7 @@
   position: relative;
   min-height: 100vh;
   padding: clamp(4.5rem, 10vh, 8rem) 0;
-  background:
-    radial-gradient(circle at 18% 18%, rgb(255 255 255 / 0.3), transparent 24%),
-    radial-gradient(circle at 84% 28%, rgb(17 18 23 / 0.08), transparent 30%),
-    linear-gradient(180deg, #f6f3ec 0%, #ece8df 100%);
+  background: transparent;
   color: #111217;
 }
 
@@ -59,7 +56,7 @@
   border: 1px solid rgb(17 18 23 / 0.12);
   background: #15161a;
   box-shadow: 0 28px 50px rgb(17 18 23 / 0.14);
-  will-change: transform, opacity;
+  will-change: clip-path, transform;
 }
 
 .mediaCard::after {
@@ -85,9 +82,10 @@
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.28em;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  color: rgb(17 18 23 / 0.62);
+  color: var(--tml-accent);
+  will-change: clip-path;
 }
 
 .studioLine {
@@ -129,6 +127,12 @@
 
 .lineWrap span {
   display: inline-block;
+  will-change: clip-path;
+}
+
+.role,
+.bodyCopy p {
+  will-change: clip-path;
 }
 
 .roles {
