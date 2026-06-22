@@ -16,7 +16,6 @@ import CTA from '@/components/home/CTA';
 import Footer from '@/components/home/Footer';
 import HomeScrollScenes from '@/components/home/HomeScrollScenes';
 import CinematicAtmosphere from '@/components/cinematic/CinematicAtmosphere';
-import SceneProgress from '@/components/cinematic/SceneProgress';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -25,7 +24,6 @@ export default function Home() {
       <HomeScrollScenes />
       <CinematicAtmosphere />
       <LogoThemeSync />
-      <SceneProgress />
 
       <div className={styles.logoContainer}>
         <Image
