@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { gsap } from '@/lib/gsap';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 import {
   MASK_HIDDEN_BOTTOM,
   MASK_HIDDEN_RIGHT,
@@ -10,20 +10,21 @@ import {
 import { sectionRevealScroll } from '@/lib/scrollScene';
 import styles from './WhoWeAre.module.scss';
 
-const PORTRAIT_IMAGE = {
-  src: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1200&q=80',
-  alt: 'Creative team in a live production environment',
+const GROUP_IMAGE = {
+  src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
+  alt: 'Creative team collaborating together',
   speed: 16,
 };
 
 const FALLBACK_IMAGE_SRC =
-  'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=80';
+  'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80';
 
 const HEADLINE_LINES = [
-  'Squad',
-  'of creators,',
-  'dreamers, and doers.',
-];
+  { id: 'lead', text: 'Squad of' },
+  { id: 'creators', text: 'Creators,' },
+  { id: 'dreamers', text: 'Dreamers,' },
+  { id: 'doers', text: '&\u00a0Doers.' },
+] as const;
 
 const ROLE_TITLES = [
   'Visionary designers.',
@@ -107,7 +108,7 @@ export default function WhoWeAre() {
           );
         }
 
-        gsap
+        const revealTimeline = gsap
           .timeline({
             scrollTrigger: sectionRevealScroll(section, 0.8),
           })
@@ -156,12 +157,24 @@ export default function WhoWeAre() {
             },
             0.38,
           );
+
+        requestAnimationFrame(() => {
+          ScrollTrigger.refresh();
+          const st = revealTimeline.scrollTrigger;
+          if (st) {
+            revealTimeline.progress(st.progress);
+          }
+        });
       });
 
       return () => {
         mm.revert();
       };
     }, section);
+
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
 
     return () => {
       ctx.revert();
@@ -183,12 +196,12 @@ export default function WhoWeAre() {
           <div className={styles.leftRail}>
             <figure className={styles.mediaCard} data-media-card data-scroll-depth>
               <img
-                src={PORTRAIT_IMAGE.src}
-                alt={PORTRAIT_IMAGE.alt}
+                src={GROUP_IMAGE.src}
+                alt={GROUP_IMAGE.alt}
                 loading="lazy"
                 className={styles.mediaImage}
                 data-parallax-image
-                data-speed={PORTRAIT_IMAGE.speed}
+                data-speed={GROUP_IMAGE.speed}
                 onError={(event) => {
                   const target = event.currentTarget;
                   if (target.src !== FALLBACK_IMAGE_SRC) {
@@ -204,8 +217,15 @@ export default function WhoWeAre() {
             <div className={styles.accent} data-accent aria-hidden="true" />
             <h2 className={styles.heading}>
               {HEADLINE_LINES.map((line) => (
-                <span key={line} className={styles.lineWrap}>
-                  <span data-heading-line>{line}</span>
+                <span key={line.id} className={styles.lineWrap}>
+                  <span
+                    data-heading-line
+                    className={
+                      line.id === 'lead' ? styles.headlineLead : styles.headlineEmphasis
+                    }
+                  >
+                    {line.text}
+                  </span>
                 </span>
               ))}
             </h2>

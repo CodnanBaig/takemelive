@@ -1,3 +1,5 @@
+import { projectAsset } from '@/lib/projectMedia';
+
 export type FeaturedProject = {
   slug: string;
   title: string;
@@ -48,11 +50,13 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
       'From reveal to encore, the visual system amplified every beat — turning each venue into a shared, high-voltage moment for millions of fans.',
     coverImage:
       'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80',
+    localCover: projectAsset('BlackPink_MiddleEast-001.jpg'),
     gallery: [
       'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80',
       'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1600&q=80',
     ],
+    localGallery: [projectAsset('BlackPink_MiddleEast-001.jpg')],
   },
   {
     slug: 'token-2049-io-net',
@@ -69,11 +73,13 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
       'Minimal physical elements combined with high-impact digital storytelling created an immersive atmosphere that captured attention and reinforced technological innovation.',
     coverImage:
       'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1800&q=80',
+    localCover: projectAsset('PHOTO-2024-04-18-22-15-27.jpg'),
     gallery: [
       'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1800&q=80',
       'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80',
     ],
+    localGallery: [projectAsset('PHOTO-2024-04-18-22-15-27.jpg')],
   },
   {
     slug: 'lusail-super-cup',
@@ -90,11 +96,13 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
       'Through large-format staging, synchronized lighting, and immersive visual storytelling, the experience set a new benchmark for live event production in the region.',
     coverImage:
       'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80',
+    localCover: projectAsset('69 bottom qatar.jpg'),
     gallery: [
       'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80',
       'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1600&q=80',
     ],
+    localGallery: [projectAsset('69 bottom qatar.jpg')],
   },
   {
     slug: 'maraya-concert-series',
@@ -111,11 +119,13 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
       'Each performance blended artistic storytelling, technical precision, and immersive production to create unforgettable live moments.',
     coverImage:
       'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1800&q=80',
+    localCover: projectAsset('Maraya_One_Republic-030.jpg'),
     gallery: [
       'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1800&q=80',
       'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=1600&q=80',
     ],
+    localGallery: [projectAsset('Maraya_One_Republic-030.jpg')],
   },
   {
     slug: 'red-bull-energy-lounge',
@@ -132,11 +142,13 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
       'Blending spatial storytelling with interactive elements, the experience created a dynamic destination where conversations, content, and brand engagement came together in one cohesive space.',
     coverImage:
       'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80',
+    localCover: projectAsset('IMG_9410.jpg'),
     gallery: [
       'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80',
       'https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80',
     ],
+    localGallery: [projectAsset('IMG_9410.jpg'), projectAsset('IMG_0304.JPG')],
   },
   {
     slug: 'soundstorm-main-stage',
@@ -153,11 +165,13 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
       'From artist reveal to headline moments, the production system delivered consistent impact across multi-day programming.',
     coverImage:
       'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80',
+    localCover: projectAsset('QatarLive_21_MAJIDA-061.jpg'),
     gallery: [
       'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80',
       'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1600&q=80',
     ],
+    localGallery: [projectAsset('QatarLive_21_MAJIDA-061.jpg')],
   },
   {
     slug: 'formula-1-paddock-club',
@@ -174,11 +188,13 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
       'Layered lighting, modular staging, and precision timing turned the paddock club into a seamless extension of the race weekend experience.',
     coverImage:
       'https://images.unsplash.com/photo-1551958219-ac55feef6081?auto=format&fit=crop&w=1800&q=80',
+    localCover: projectAsset('69 bottom qatar.jpg'),
     gallery: [
       'https://images.unsplash.com/photo-1551958219-ac55feef6081?auto=format&fit=crop&w=1800&q=80',
       'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1517649763961-0c62306601b7?auto=format&fit=crop&w=1600&q=80',
     ],
+    localGallery: [projectAsset('69 bottom qatar.jpg')],
   },
   {
     slug: 'leap-agenda-expo',
@@ -195,11 +211,13 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
       'Integrated LED architecture and modular zones created a scalable footprint that could evolve across multiple show days.',
     coverImage:
       'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1800&q=80',
+    localCover: projectAsset('PHNTM DMO-14.jpg'),
     gallery: [
       'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1800&q=80',
       'https://images.unsplash.com/photo-1505373877841-8d25f39d466b?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1600&q=80',
     ],
+    localGallery: [projectAsset('PHNTM DMO-14.jpg')],
   },
   {
     slug: 'national-day-gala',
@@ -216,11 +234,13 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
       'Coordinated stagecraft and lighting transitions supported a dignified program with broadcast-level reliability.',
     coverImage:
       'https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1800&q=80',
+    localCover: projectAsset('IMG_3571.JPG'),
     gallery: [
       'https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1800&q=80',
       'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1600&q=80',
     ],
+    localGallery: [projectAsset('IMG_3571.JPG')],
   },
 ];
 

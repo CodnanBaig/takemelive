@@ -70,11 +70,14 @@
   width: clamp(96px, 9vw, 146px);
   height: auto;
   max-height: none;
-  filter: brightness(0) invert(1) grayscale(1) contrast(1.08);
 }
 
 .logoLight {
-  filter: brightness(0) invert(1) grayscale(1) contrast(1.08) drop-shadow(0 0 1px rgb(0 0 0 / 0.38));
+  filter: brightness(0) grayscale(1) contrast(1.08);
+}
+
+.logoDark {
+  filter: brightness(0) invert(1) grayscale(1) contrast(1.08);
 }
 
 .body {
@@ -85,7 +88,7 @@
 
 .addressGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1.2rem, 3vw, 3.2rem);
   padding-bottom: clamp(1.6rem, 3vh, 2.6rem);
   border-bottom: 1px solid rgb(232 232 245 / 0.34);
@@ -141,7 +144,7 @@
 
 .bottomNav {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
   border-bottom: 1px solid rgb(232 232 245 / 0.34);
 }
 

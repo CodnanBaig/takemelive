@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
-import ScrollOrnament from './ScrollOrnament';
 import styles from './WhyUs.module.scss';
 
 type Pillar = {
@@ -63,7 +62,6 @@ export default function WhyUs() {
     const tickerCurrent = section.querySelector<HTMLElement>('[data-ticker-current]');
     const tickerLabel = section.querySelector<HTMLElement>('[data-ticker-label]');
     const progressBar = section.querySelector<HTMLElement>('[data-progress-bar]');
-    const marquee = section.querySelector<HTMLElement>('[data-marquee]');
     const panels = Array.from(section.querySelectorAll<HTMLElement>('[data-panel]'));
     const stage = section.querySelector<HTMLElement>('[data-stage]');
 
@@ -76,7 +74,7 @@ export default function WhyUs() {
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set(
-          [eyebrow, ...Array.from(headlineWords), lead, tickerCurrent, tickerLabel, marquee, ...panels],
+          [eyebrow, ...Array.from(headlineWords), lead, tickerCurrent, tickerLabel, ...panels],
           { autoAlpha: 1, x: 0, y: 0, yPercent: 0, clearProps: 'all' },
         );
         gsap.set(panels, { autoAlpha: 1, position: 'relative' });
@@ -111,20 +109,6 @@ export default function WhyUs() {
           )
           .fromTo(lead, { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'none' }, 0.3);
 
-        if (marquee) {
-          gsap.to(marquee, {
-            xPercent: -50,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 0.6,
-              invalidateOnRefresh: true,
-            },
-          });
-        }
-
         if (isCompact) {
           panels.forEach((panel) => {
             const number = panel.querySelector<HTMLElement>('[data-panel-number]');
@@ -152,20 +136,6 @@ export default function WhyUs() {
               .to(body, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'none' }, 0.2)
               .to(meta, { autoAlpha: 1, y: 0, duration: 0.4, ease: 'none' }, 0.28)
               .to(rule, { scaleX: 1, duration: 0.6, ease: 'none' }, 0.05);
-
-            if (number) {
-              gsap.to(number, {
-                yPercent: -22,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: panel,
-                  start: 'top bottom',
-                  end: 'bottom top',
-                  scrub: 0.8,
-                  invalidateOnRefresh: true,
-                },
-              });
-            }
           });
 
           if (progressBar) {
@@ -293,13 +263,13 @@ export default function WhyUs() {
           if (rule) {
             master.to(rule, { scaleX: 1, duration: 0.55, ease: 'none' }, start + 0.05);
           }
+        });
 
-          if (number) {
-            master.to(
-              number,
-              { yPercent: -18, x: -24, duration: 0.7, ease: 'none' },
-              start + 0.25,
-            );
+        requestAnimationFrame(() => {
+          ScrollTrigger.refresh();
+          const st = master.scrollTrigger;
+          if (st) {
+            master.progress(st.progress);
           }
         });
       });
@@ -324,14 +294,6 @@ export default function WhyUs() {
       className={styles.section}
       aria-label="Why Take Me Live"
     >
-      <ScrollOrnament variant="glyph-light" position="br" />
-      <div className={styles.marqueeWrap} aria-hidden="true">
-        <div className={styles.marquee} data-marquee>
-          <span>Why · Live · System · Why · Live · System · </span>
-          <span>Why · Live · System · Why · Live · System · </span>
-        </div>
-      </div>
-
       <div className={styles.stage} data-stage>
         <div className={styles.grid}>
           <header className={styles.intro}>
@@ -366,12 +328,9 @@ export default function WhyUs() {
           <div className={styles.panelArea}>
             {PILLARS.map((pillar) => (
               <article key={pillar.number} data-panel className={styles.panel} aria-label={pillar.title}>
-                <span className={styles.panelGhost} data-panel-number aria-hidden="true">
-                  {pillar.number}
-                </span>
                 <div className={styles.panelBody}>
                   <p className={styles.panelTag}>
-                    <span>{pillar.number}</span>
+                    <span data-panel-number>{pillar.number}</span>
                     <span className={styles.panelDivider} aria-hidden="true" />
                     <span>{pillar.label}</span>
                   </p>

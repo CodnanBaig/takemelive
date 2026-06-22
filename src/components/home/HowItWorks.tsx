@@ -45,6 +45,13 @@ const PHASES = [
   },
 ] as const;
 
+const HEADLINE_LINES = [
+  'DISCOVER TO GO',
+  'LIVE,',
+  'BUILT AS ONE',
+  'CONTINUOUS SYSTEM.',
+] as const;
+
 const FALLBACK_IMAGE_SRC =
   'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=80';
 
@@ -203,7 +210,13 @@ export default function HowItWorks() {
       <div className={styles.inner}>
         <div className={styles.header}>
           <p className={styles.kicker}>How It Works</p>
-          <h2 className={styles.heading}>DISCOVER TO GO LIVE, BUILT AS ONE CONTINUOUS SYSTEM.</h2>
+          <h2 className={styles.heading}>
+            {HEADLINE_LINES.map((line) => (
+              <span key={line} className={styles.headingLine}>
+                {line}
+              </span>
+            ))}
+          </h2>
         </div>
 
         <div className={styles.layout}>

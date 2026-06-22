@@ -7,7 +7,10 @@ import { sectionRevealScroll, sectionSpanScroll } from '@/lib/scrollScene';
 import ScrollOrnament from './ScrollOrnament';
 import styles from './Hero.module.scss';
 
-const HERO_WORDS = ['EXPERIENCES', 'THAT', 'MOVE', 'PEOPLE.'];
+const HERO_LINES = [
+  ['EXPERIENCES', 'THAT'],
+  ['MOVE', 'PEOPLE.'],
+] as const;
 
 const SUBHEADING_LINES = [
   'Creative experience studio designing live moments,',
@@ -29,7 +32,6 @@ export default function Hero() {
     }
 
     const words = heading.querySelectorAll('[data-word]');
-    const wordElements = Array.from(words) as HTMLElement[];
     const subLines = section.querySelectorAll('[data-subline]');
 
     const ctx = gsap.context(() => {
@@ -134,41 +136,27 @@ export default function Hero() {
       });
 
       mm.add('(pointer:fine) and (prefers-reduced-motion: no-preference)', () => {
-        const spotXTo = gsap.quickTo(heading, '--spot-x', { duration: 0.34, ease: 'power2.out' });
-        const spotYTo = gsap.quickTo(heading, '--spot-y', { duration: 0.34, ease: 'power2.out' });
-        const spotSizeTo = gsap.quickTo(heading, '--spot-size', { duration: 0.5, ease: 'power2.out' });
+        const spotXTo = gsap.quickTo(heading, '--spot-x', { duration: 1.45, ease: 'power3.out' });
+        const spotYTo = gsap.quickTo(heading, '--spot-y', { duration: 1.45, ease: 'power3.out' });
         const spotOpacityTo = gsap.quickTo(heading, '--spot-opacity', {
-          duration: 0.32,
-          ease: 'power2.out',
+          duration: 0.85,
+          ease: 'power3.out',
         });
 
         const setPointer = (event: PointerEvent) => {
           const headingBounds = heading.getBoundingClientRect();
           spotXTo(event.clientX - headingBounds.left);
           spotYTo(event.clientY - headingBounds.top);
-
-          wordElements.forEach((word) => {
-            const bounds = word.getBoundingClientRect();
-            gsap.to(word, {
-              '--spot-x': event.clientX - bounds.left,
-              '--spot-y': event.clientY - bounds.top,
-              duration: 0.28,
-              ease: 'power2.out',
-              overwrite: 'auto',
-            });
-          });
         };
 
         const handlePointerEnter = (event: PointerEvent) => {
           setPointer(event);
-          spotSizeTo(380);
           spotOpacityTo(1);
         };
 
         const handlePointerMove = (event: PointerEvent) => setPointer(event);
 
         const handlePointerLeave = () => {
-          spotSizeTo(120);
           spotOpacityTo(0);
         };
 
@@ -208,13 +196,25 @@ export default function Hero() {
       <ScrollOrnament variant="glyph-dark" position="bl" />
       <div className={styles.inner}>
         <h1 ref={headingRef} className={styles.heading} data-scroll-shift>
-          {HERO_WORDS.map((word) => (
-            <span key={word} className={styles.wordWrap}>
-              <span data-word className={styles.word}>
-                {word}
-              </span>
+          {HERO_LINES.map((line) => (
+            <span key={line.join(' ')} className={styles.lineWrap}>
+              {line.map((word) => (
+                <span key={word} className={styles.wordWrap}>
+                  <span data-word className={styles.word}>
+                    {word}
+                  </span>
+                </span>
+              ))}
             </span>
           ))}
+          {/* Single spotlight overlay — same text, absolute over the base */}
+          <span className={styles.spotlightOverlay} aria-hidden="true">
+            {HERO_LINES.map((line) => (
+              <span key={line.join(' ')} className={styles.lineWrap}>
+                <span className={styles.spotlightText}>{line.join(' ')}</span>
+              </span>
+            ))}
+          </span>
         </h1>
         <div className={styles.subheadingWrap}>
           {SUBHEADING_LINES.map((line) => (

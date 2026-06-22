@@ -1,5 +1,20 @@
 .page {
   min-height: 100vh;
-  min-height: 100dvh;
-  background: var(--tml-black);
+  background: #000;
+  position: relative;
+}
+
+.globeStage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.galleryOverlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
 }

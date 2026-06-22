@@ -19,7 +19,7 @@
   background:
     radial-gradient(circle at 14% 6%, var(--why-accent-soft), transparent 30%),
     radial-gradient(circle at 88% 92%, oklch(0.97 0.01 106 / 0.05), transparent 26%),
-    var(--why-paper);
+    var(--tml-stage-alt);
   color: var(--why-ink);
   overflow: clip;
   isolation: isolate;
@@ -37,28 +37,6 @@
   background-size: 80px 80px;
   mask-image: radial-gradient(circle at 60% 40%, #000 0%, transparent 78%);
   opacity: 0.55;
-}
-
-.marqueeWrap {
-  position: absolute;
-  inset: auto 0 6%;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-.marquee {
-  display: flex;
-  width: max-content;
-  font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(7rem, 16vw, 14rem);
-  line-height: 0.86;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: oklch(0.97 0.01 106 / 0.045);
-  white-space: nowrap;
-  will-change: transform;
 }
 
 .stage {
@@ -187,20 +165,6 @@
   align-content: center;
   gap: clamp(0.9rem, 1.5vh, 1.4rem);
   will-change: transform, opacity;
-}
-
-.panelGhost {
-  position: absolute;
-  inset: auto auto -6% -8%;
-  z-index: 0;
-  font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(12rem, 28vw, 22rem);
-  line-height: 0.82;
-  letter-spacing: 0.015em;
-  color: oklch(0.97 0.01 106 / 0.05);
-  pointer-events: none;
-  will-change: transform, opacity;
-  font-variant-numeric: tabular-nums;
 }
 
 .panelBody {
@@ -365,12 +329,6 @@
     border-bottom: none;
   }
 
-  .panelGhost {
-    inset: -10% -20% auto auto;
-    font-size: clamp(8rem, 38vw, 14rem);
-    color: oklch(0.97 0.01 106 / 0.06);
-  }
-
   .panelTitle {
     font-size: clamp(1.6rem, 7.5vw, 2.4rem);
     max-width: 100%;
@@ -397,16 +355,9 @@
     font-size: clamp(0.96rem, 4vw, 1.02rem);
     max-width: 100%;
   }
-
-  .panelGhost {
-    font-size: clamp(7rem, 42vw, 11rem);
-    inset: -8% -25% auto auto;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee,
-  .panelGhost,
   .progressBar,
   .panelRule {
     animation: none;

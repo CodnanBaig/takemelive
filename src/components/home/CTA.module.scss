@@ -2,8 +2,8 @@
   position: relative;
   min-height: 100vh;
   padding: clamp(6.4rem, 11vh, 9.2rem) 0 clamp(4.5rem, 8vh, 7rem);
-  background: #f6f3ec;
-  color: #111217;
+  background: var(--tml-parchment);
+  color: var(--tml-ink-dark);
   overflow: clip;
 }
 
@@ -139,14 +139,18 @@
 }
 
 .nextBtn {
-  width: 26px;
-  height: 26px;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border: none;
   border-radius: 0;
   background: #ffffff;
   color: rgb(17 18 23 / 0.8);
-  font-size: 0.76rem;
-  box-shadow: 0 5px 12px rgb(0 0 0 / 0.1);
+  font-size: 0.9rem;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
   cursor: pointer;
 }
 
@@ -197,9 +201,10 @@
   }
 
   .heading {
-    max-width: 10ch;
-    font-size: clamp(2.15rem, 11.8vw, 4.2rem);
+    max-width: 12ch;
+    font-size: clamp(2.15rem, 11.8vw, 6rem);
     overflow-wrap: anywhere;
+    text-wrap: balance;
   }
 
   .bubble {
@@ -210,7 +215,16 @@
     grid-template-columns: 1fr;
   }
 
-  .fieldMain input,
+  .fieldLabel {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(17 18 23 / 0.62);
+}
+
+.fieldMain input,
   .fieldMain input::placeholder {
     text-align: left;
   }

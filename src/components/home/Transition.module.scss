@@ -1,4 +1,5 @@
 .transition {
+  --stage-tone: 0;
   min-height: 100vh;
   min-height: 100dvh;
   background: var(--tml-white);
@@ -8,11 +9,15 @@
 }
 
 .stage {
+  --manifesto-center: 40%;
+  --manifesto-size: clamp(2.65rem, 9.8vw, 10rem);
+  --manifesto-line-gap: clamp(0.12rem, 0.35vh, 0.28rem);
+  --sub-margin: clamp(1.5rem, 3.5vh, 3rem);
   position: relative;
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
-  background: var(--tml-white);
+  background: color-mix(in srgb, var(--tml-white) calc((1 - var(--stage-tone)) * 100%), var(--tml-black));
 }
 
 .blackCurtain {
@@ -44,72 +49,147 @@
   pointer-events: none;
 }
 
-.textViewport {
+.headlineStack {
   position: absolute;
   inset-inline: 0;
-  top: 50%;
+  top: var(--manifesto-center);
   transform: translateY(-50%);
-  z-index: 4;
-  overflow: hidden;
-  max-width: 100vw;
-  display: grid;
-  gap: clamp(1.2rem, 2.4vh, 2rem);
+  z-index: 3;
   padding-inline: clamp(0.75rem, 2vw, 2rem);
+  pointer-events: none;
 }
 
 .textRail {
-  width: min(94vw, 1580px);
+  width: min(96vw, 1580px);
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-  gap: clamp(0.2rem, 0.8vw, 0.55rem) clamp(0.35rem, 1.2vw, 0.85rem);
-  will-change: transform;
+  display: grid;
+  gap: clamp(0.12rem, 0.35vh, 0.28rem);
+  justify-items: center;
 }
 
-.railWord {
-  display: block;
+.manifestoLine {
+  position: relative;
   overflow: hidden;
-  line-height: 0.9;
+  line-height: 0.92;
+  text-align: center;
+  width: 100%;
 }
 
 .railWordInner {
   font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
   display: block;
-  font-size: clamp(2.8rem, 10.5vw, 11rem);
+  font-size: var(--manifesto-size);
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.01em;
-  color: #111217;
-  padding-block: 0.04em;
+  letter-spacing: 0.012em;
+  color: color-mix(in srgb, #111217 calc((1 - var(--stage-tone)) * 100%), #f5f5f0);
+  padding-block: 0.02em;
+  white-space: nowrap;
 }
 
+/* Above headline, below sublines — circular hole reveals lit headline */
+.spotlightVeil {
+  --spot-radius: 0px;
+  --spot-x: 50;
+  --spot-y: 40;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  visibility: hidden;
+  background: radial-gradient(
+    circle var(--spot-radius) at calc(var(--spot-x) * 1%) calc(var(--spot-y) * 1%),
+    transparent 0%,
+    transparent 44%,
+    rgb(0 0 0 / 0.88) 68%,
+    rgb(0 0 0 / 0.98) 100%
+  );
+  will-change: opacity, background;
+}
+
+/* Always above the veil so sublines stay readable */
 .subheading {
-  width: min(84vw, 980px);
+  position: absolute;
+  inset-inline: 0;
+  /* Headline block is centered at --manifesto-center; offset from its bottom edge */
+  top: calc(
+    var(--manifesto-center) + var(--manifesto-size) * 0.92 + var(--manifesto-line-gap) * 0.5 +
+      var(--sub-margin)
+  );
+  z-index: 6;
+  width: min(78vw, 720px);
   margin: 0 auto;
   display: grid;
-  gap: clamp(0.35rem, 0.9vh, 0.7rem);
+  gap: clamp(0.12rem, 0.35vh, 0.28rem);
+  padding-inline: clamp(0.75rem, 2vw, 2rem);
+  pointer-events: none;
 }
 
 .subLine {
   margin: 0;
   overflow: hidden;
-  font-size: clamp(1rem, 1.55vw, 1.42rem);
-  line-height: 1.45;
-  color: rgb(17 18 23 / 0.88);
+  font-size: clamp(0.98rem, 1.45vw, 1.28rem);
+  line-height: 1.28;
+  color: color-mix(
+    in srgb,
+    rgb(17 18 23 / 0.82) calc((1 - var(--stage-tone)) * 100%),
+    rgb(245 245 240 / 0.82)
+  );
   text-align: center;
   font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.subLine:nth-child(1) {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.subLine:nth-child(3) {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.subLine:nth-child(5) {
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 900px) {
+  .stage {
+    --manifesto-size: clamp(2.35rem, 11.5vw, 6.5rem);
+  }
 }
 
 @media (max-width: 640px) {
+  .stage {
+    --manifesto-center: 36%;
+    --manifesto-size: clamp(2rem, 10.5vw, 3.75rem);
+    --sub-margin: clamp(1.25rem, 4vh, 2.25rem);
+  }
+
   .railWordInner {
-    font-size: clamp(2rem, 12vw, 3.6rem);
+    white-space: normal;
     overflow-wrap: anywhere;
+    letter-spacing: 0.006em;
   }
 
   .subLine {
-    font-size: clamp(0.95rem, 3.4vw, 1.05rem);
-    line-height: 1.4;
+    font-size: clamp(0.92rem, 3.2vw, 1.02rem);
+    line-height: 1.26;
+  }
+
+  .subheading {
+    /* Extra clearance when headline lines wrap on narrow viewports */
+    top: calc(
+      var(--manifesto-center) + var(--manifesto-size) * 2.1 + var(--manifesto-line-gap) +
+        var(--sub-margin)
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlightVeil {
+    display: none;
   }
 }

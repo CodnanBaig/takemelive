@@ -10,21 +10,6 @@
   color: var(--tml-white);
 }
 
-.main::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  background: repeating-linear-gradient(
-    0deg,
-    rgb(255 255 255 / 0.004) 0px,
-    rgb(255 255 255 / 0.004) 1px,
-    transparent 1px,
-    transparent 4px
-  );
-}
-
 .logoContainer {
   position: fixed;
   top: max(clamp(16px, 2.2vw, 28px), env(safe-area-inset-top, 0px));
@@ -51,13 +36,6 @@
 
 .sceneGroup[data-scene='manifesto'] {
   z-index: 2;
-  background: linear-gradient(
-    180deg,
-    var(--tml-white) 0%,
-    var(--tml-white) 38%,
-    var(--tml-black) 52%,
-    var(--tml-void) 100%
-  );
 }
 
 .sceneGroup[data-scene='projects'] {
@@ -66,21 +44,6 @@
 
 .sceneGroup[data-scene='scale'] {
   z-index: 4;
-  background: linear-gradient(
-    180deg,
-    var(--tml-black) 0%,
-    #06070a 10%,
-    #0a0b0f 34%,
-    #0a0b0f 58%,
-    #0c0d11 62%,
-    #14151a 68%,
-    #2a2b30 74%,
-    #4a4844 80%,
-    #8f8a7f 86%,
-    #cfc9be 92%,
-    #f6f3ec 96%,
-    #f6f3ec 100%
-  );
 }
 
 .sceneGroup[data-scene='innovation'] {
@@ -89,13 +52,6 @@
 
 .sceneGroup[data-scene='showreel'] {
   z-index: 6;
-  background: linear-gradient(
-    180deg,
-    #f6f3ec 0%,
-    var(--tml-black) 8%,
-    #030405 55%,
-    #07080a 100%
-  );
 }
 
 .sceneGroup[data-scene='contact'] {

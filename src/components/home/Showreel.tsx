@@ -7,9 +7,9 @@ import {
   setMaskHidden,
 } from '@/lib/maskReveal';
 import {
-  SHOWREEL_FALLBACK_MP4,
   SHOWREEL_LOCAL_SRC,
   SHOWREEL_POSTER,
+  pickRandomShowreelVideo,
 } from '@/content/showreel';
 import { prefersReducedMotion } from '@/lib/motionPrefs';
 import styles from './Showreel.module.scss';
@@ -29,8 +29,34 @@ export default function Showreel() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const progressBarRef = useRef<HTMLSpanElement | null>(null);
   const timecodeRef = useRef<HTMLParagraphElement | null>(null);
-  const [posterVisible, setPosterVisible] = useState(false);
-  const [videoSrc, setVideoSrc] = useState(SHOWREEL_LOCAL_SRC);
+  const [posterVisible, setPosterVisible] = useState(true);
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const resolveSource = async () => {
+      try {
+        const response = await fetch(SHOWREEL_LOCAL_SRC, { method: 'HEAD' });
+        if (!cancelled && response.ok) {
+          setVideoSrc(SHOWREEL_LOCAL_SRC);
+          return;
+        }
+      } catch {
+        // Use random remote clip when local file is missing.
+      }
+
+      if (!cancelled) {
+        setVideoSrc(pickRandomShowreelVideo());
+      }
+    };
+
+    void resolveSource();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -90,10 +116,17 @@ export default function Showreel() {
     };
 
     const onError = () => {
-      if (videoSrc === SHOWREEL_LOCAL_SRC) {
-        setVideoSrc(SHOWREEL_FALLBACK_MP4);
+      if (!videoSrc) {
+        setPosterVisible(true);
         return;
       }
+
+      const fallback = pickRandomShowreelVideo(videoSrc);
+      if (fallback !== videoSrc) {
+        setVideoSrc(fallback);
+        return;
+      }
+
       setPosterVisible(true);
     };
 
@@ -159,16 +192,19 @@ export default function Showreel() {
     >
       <div className={styles.pin} data-showreel-pin>
         <div className={styles.frame}>
-          <video
-            ref={videoRef}
-            className={`${styles.video} showreelVideo`}
-            src={videoSrc}
-            poster={SHOWREEL_POSTER}
-            muted
-            playsInline
-            preload="metadata"
-            aria-hidden="true"
-          />
+          {videoSrc ? (
+            <video
+              key={videoSrc}
+              ref={videoRef}
+              className={`${styles.video} showreelVideo`}
+              src={videoSrc}
+              poster={SHOWREEL_POSTER}
+              muted
+              playsInline
+              preload="metadata"
+              aria-hidden="true"
+            />
+          ) : null}
           <img
             src={SHOWREEL_POSTER}
             alt=""

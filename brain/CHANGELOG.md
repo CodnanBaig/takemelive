@@ -1,3 +1,7 @@
+## 2026-06-01-v207
+
+- Showreel uses a random Mixkit live-event clip on each load when local showreel.mp4 is absent; retries another random URL on playback error.
+
 ## 2026-06-01-v206
 
 - Who We Are: move "A creative experience studio" into content column above headline; remove sticky left meta and horizontal card scrub so copy no longer sits behind portrait.

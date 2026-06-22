@@ -15,7 +15,7 @@
   padding: clamp(5rem, 9vh, 8rem) 0;
   overflow: clip;
   color: var(--team-ink);
-  background: transparent;
+  background: var(--tml-black);
 }
 
 .section::before {
@@ -29,19 +29,6 @@
     linear-gradient(rgb(245 245 240 / 0.035) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
-}
-
-.section::after {
-  content: 'CREW';
-  position: absolute;
-  right: -0.08em;
-  bottom: -0.16em;
-  pointer-events: none;
-  color: rgb(245 245 240 / 0.055);
-  font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(8rem, 22vw, 20rem);
-  line-height: 0.8;
-  letter-spacing: -0.02em;
 }
 
 .inner {
@@ -77,14 +64,14 @@
 .headline {
   margin: 0;
   min-width: 0;
-  max-width: 11ch;
+  max-width: 14ch;
   font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(3.2rem, 8vw, 8.2rem);
+  font-size: clamp(2.8rem, 8vw, 6rem);
   font-weight: 400;
-  line-height: 0.84;
+  line-height: 0.88;
   letter-spacing: -0.01em;
   text-transform: uppercase;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .headline span {
@@ -149,7 +136,7 @@
   overflow: hidden;
   border: 1px solid var(--team-line);
   background: #0b0c0e;
-  box-shadow: 0 30px 70px rgb(0 0 0 / 0.35);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.28);
 }
 
 .heroMedia img {
@@ -220,7 +207,7 @@
   background:
     linear-gradient(135deg, rgb(45 125 255 / 0.12), rgb(245 245 240 / 0.035)),
     var(--team-panel);
-  box-shadow: 0 24px 54px rgb(0 0 0 / 0.32);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.22);
 }
 
 .roleImage {
@@ -260,17 +247,17 @@
 
 .roleCopy {
   display: grid;
-  align-content: center;
-  gap: 0.62rem;
+  align-content: start;
+  gap: 0.5rem;
   min-width: 0;
 }
 
 .roleCard h3 {
   margin: 0;
   font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-size: clamp(1.5rem, 2.6vw, 2.6rem);
   font-weight: 400;
-  line-height: 0.9;
+  line-height: 0.95;
   letter-spacing: 0.006em;
   text-transform: uppercase;
 }
@@ -347,10 +334,6 @@
     padding: clamp(4.25rem, 8vh, 5.75rem) 0;
   }
 
-  .section::after {
-    display: none;
-  }
-
   .inner {
     width: min(92vw, 680px);
   }
@@ -388,7 +371,12 @@
   }
 
   .tagList {
-    display: none;
+    gap: 0.3rem;
+  }
+
+  .tagList li {
+    font-size: 0.6rem;
+    padding: 0.22rem 0.38rem;
   }
 }
 

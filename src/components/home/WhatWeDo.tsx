@@ -105,17 +105,17 @@ export default function WhatWeDo() {
       <div className={styles.inner}>
         <div className={styles.content}>
           <div className={styles.copy}>
-            <p className={styles.kicker} data-scroll-shift>
-              Manifesto
-            </p>
+            <p className={styles.kicker}>Manifesto</p>
             <h2 ref={titleRef} data-scroll-shift>
               IMMERSIVE EXPERIENCES BUILT TO STAY WITH PEOPLE.
             </h2>
             <div className={styles.lines}>
               {LINES.map((line, index) => (
-                <p key={line} data-line className={styles.lineRow}>
+                <p key={line} className={styles.lineRow}>
                   <span className={styles.lineIndex}>{`0${index + 1}`}</span>
-                  <span className={styles.lineText}>{line}</span>
+                  <span className={styles.lineBody} data-line>
+                    <span className={styles.lineText}>{line}</span>
+                  </span>
                 </p>
               ))}
             </div>

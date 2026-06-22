@@ -17,6 +17,11 @@ const SITE_LINKS = [
   { label: 'Contact', href: '#chapter-cta' },
 ] as const;
 
+const CONTACT_LINKS = [
+  { label: 'mg@takemelive.com', href: 'mailto:mg@takemelive.com' },
+  { label: 'Instagram', href: 'https://www.instagram.com/takemelive' },
+] as const;
+
 export default function Footer() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const lightTrackRef = useRef<HTMLDivElement | null>(null);
@@ -60,6 +65,30 @@ export default function Footer() {
       velocityBoost *= 0.9;
     };
 
+    const startTicker = () => {
+      if (!tickerAttached) {
+        gsap.ticker.add(ticker);
+        tickerAttached = true;
+      }
+    };
+
+    const stopTicker = () => {
+      if (tickerAttached) {
+        gsap.ticker.remove(ticker);
+        tickerAttached = false;
+      }
+    };
+
+    const visibilitySt = ScrollTrigger.create({
+      trigger: section,
+      start: 'top bottom',
+      end: 'bottom top',
+      onEnter: startTicker,
+      onEnterBack: startTicker,
+      onLeave: stopTicker,
+      onLeaveBack: stopTicker,
+    });
+
     const st = ScrollTrigger.create({
       trigger: section,
       start: 'top bottom',
@@ -75,14 +104,10 @@ export default function Footer() {
       },
     });
 
-    gsap.ticker.add(ticker);
-    tickerAttached = true;
-
     return () => {
       st.kill();
-      if (tickerAttached) {
-        gsap.ticker.remove(ticker);
-      }
+      visibilitySt.kill();
+      stopTicker();
     };
   }, []);
 
@@ -152,6 +177,18 @@ export default function Footer() {
               {SITE_LINKS.map((item) => (
                 <li key={item.label}>
                   <a href={item.href} data-cursor="link">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </article>
+          <article className={styles.linkColumn}>
+            <h3>Contact</h3>
+            <ul>
+              {CONTACT_LINKS.map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} data-cursor="link" {...(item.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
                     {item.label}
                   </a>
                 </li>

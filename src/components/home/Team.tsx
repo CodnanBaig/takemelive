@@ -7,7 +7,10 @@ import {
   MASK_VISIBLE,
 } from '@/lib/maskReveal';
 import { sectionRevealScroll } from '@/lib/scrollScene';
+import { projectAsset } from '@/lib/projectMedia';
 import styles from './Team.module.scss';
+
+const HERO_IMAGE = projectAsset('IMG_9410.jpg');
 
 const TEAM_ROLES = [
   {
@@ -16,8 +19,7 @@ const TEAM_ROLES = [
     field: 'Concept and space',
     note: 'Translate brand intent into visual and spatial systems that feel immediate.',
     tags: ['Concept', 'Visual language', 'Environment'],
-    image:
-      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80',
+    image: projectAsset('Maraya_One_Republic-030.jpg'),
   },
   {
     code: '02',
@@ -25,8 +27,7 @@ const TEAM_ROLES = [
     field: 'Interaction layer',
     note: 'Build interactions and intelligence that make ambitious ideas truly perform.',
     tags: ['Interactive', 'AI moments', 'Show control'],
-    image:
-      'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80',
+    image: projectAsset('PHOTO-2024-04-18-22-15-27.jpg'),
   },
   {
     code: '03',
@@ -34,8 +35,7 @@ const TEAM_ROLES = [
     field: 'Delivery control',
     note: 'Orchestrate execution with precision from first concept through showtime.',
     tags: ['Crew', 'Vendors', 'Run of show'],
-    image:
-      'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1400&q=80',
+    image: projectAsset('69 bottom qatar.jpg'),
   },
 ] as const;
 
@@ -230,7 +230,7 @@ export default function Team() {
 
         <div className={styles.board} data-team-board>
           <figure className={styles.heroMedia} data-team-hero-media>
-            <img src={TEAM_ROLES[1].image} alt="" loading="lazy" data-team-hero-image />
+            <img src={HERO_IMAGE} alt="" loading="lazy" data-team-hero-image />
             <figcaption>
               <span>One crew</span>
               <span>From concept to showtime</span>

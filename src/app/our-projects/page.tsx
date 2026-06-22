@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import ProjectsGlobe from '@/components/projects/ProjectsGlobe';
-import ProjectsIndex from '@/components/projects/ProjectsIndex';
-import ProjectsIntro from '@/components/projects/ProjectsIntro';
+import ProjectsGallery from '@/components/projects/ProjectsGallery';
 import styles from './page.module.scss';
 
 export const metadata: Metadata = {
@@ -13,9 +12,12 @@ export const metadata: Metadata = {
 export default function OurProjectsPage() {
   return (
     <main id="main-content" className={styles.page} tabIndex={-1}>
-      <ProjectsIntro />
-      <ProjectsGlobe />
-      <ProjectsIndex />
+      <div className={styles.globeStage}>
+        <ProjectsGlobe />
+      </div>
+      <div className={styles.galleryOverlay}>
+        <ProjectsGallery />
+      </div>
     </main>
   );
 }

@@ -2,6 +2,10 @@
 :root {
   --tml-black: #000000;
   --tml-void: #050608;
+  --tml-stage: #040506;
+  --tml-stage-alt: oklch(0.085 0.012 264);
+  --tml-parchment: #f6f3ec;
+  --tml-ink-dark: #111217;
   --tml-surface: #08090a;
   --tml-surface-raised: #0e1014;
   --tml-white: #f5f5f0;

@@ -8,6 +8,20 @@ import styles from './CTA.module.scss';
 
 const FORM_FIELDS = ['First Name*', 'Email*', 'Company', 'Project Type', 'Tell us about your idea'] as const;
 
+function fieldLabel(field: (typeof FORM_FIELDS)[number]): string {
+  return field.replace(/\*$/, '').trim();
+}
+
+function submitLabel(stepIndex: number, isComplete: boolean): string {
+  if (isComplete) {
+    return 'Start over';
+  }
+  if (stepIndex >= FORM_FIELDS.length - 1) {
+    return 'Submit';
+  }
+  return 'Next question';
+}
+
 export default function CTA() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const stepRef = useRef<HTMLDivElement | null>(null);
@@ -230,19 +244,30 @@ export default function CTA() {
                   <p className={styles.thankYou}>Perfect - our team will reach out shortly.</p>
                 ) : (
                   <div className={styles.fieldMain}>
+                    <label className={styles.fieldLabel} htmlFor="cta-input">
+                      {fieldLabel(currentField)}
+                    </label>
                     <input
                       id="cta-input"
                       name="cta-input"
-                      type="text"
+                      type={currentField.includes('Email') ? 'email' : 'text'}
                       value={responses[stepIndex]}
                       onChange={handleChange}
                       autoComplete="off"
-                      placeholder={`Enter ${currentField.toLowerCase()}`}
+                      required={currentField.includes('*')}
+                      aria-required={currentField.includes('*')}
+                      placeholder={`Enter ${fieldLabel(currentField).toLowerCase()}`}
                     />
                   </div>
                 )}
-                <button type="submit" className={styles.nextBtn}>
-                  {isComplete ? '↺' : stepIndex === FORM_FIELDS.length - 1 ? '✓' : '→'}
+                <button
+                  type="submit"
+                  className={styles.nextBtn}
+                  aria-label={submitLabel(stepIndex, isComplete)}
+                >
+                  <span aria-hidden="true">
+                    {isComplete ? '↺' : stepIndex === FORM_FIELDS.length - 1 ? '✓' : '→'}
+                  </span>
                 </button>
               </div>
             </form>

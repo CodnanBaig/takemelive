@@ -1,11 +1,7 @@
 .section {
+  width: 100%;
+  height: 100%;
   position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgb(45 125 255 / 0.14), transparent 55%),
-    var(--tml-black);
-  color: var(--tml-white);
   overflow: hidden;
 }
 
@@ -15,18 +11,6 @@
 }
 
 .hint {
-  position: absolute;
-  left: 1.25rem;
-  right: 1.25rem;
-  bottom: 1.25rem;
-  display: flex;
-  justify-content: center;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.78rem;
-  opacity: 0.55;
-  color: rgb(245 245 240 / 0.55);
-  pointer-events: none;
+  display: none;
 }
 

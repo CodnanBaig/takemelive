@@ -6,9 +6,12 @@ import { useEffect, useRef, type MouseEvent } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { animateMaskReveal, setMaskHidden } from '@/lib/maskReveal';
 import { FEATURED_PROJECTS, getPosterTitle } from '@/content/featuredProjects';
+import { resolveProjectCover } from '@/lib/projectMedia';
 import styles from './FeaturedProjects.module.scss';
 
-const FALLBACK_IMAGE_SRC = FEATURED_PROJECTS[0]?.coverImage ?? '';
+const FALLBACK_IMAGE_SRC = FEATURED_PROJECTS[0]
+  ? resolveProjectCover(FEATURED_PROJECTS[0])
+  : '';
 
 type StackMetrics = {
   cardWidth: number;
@@ -243,6 +246,13 @@ export default function FeaturedProjects() {
         });
         gsap.ticker.add(renderLoop);
 
+        requestAnimationFrame(() => {
+          ScrollTrigger.refresh();
+          targetProgress = trigger.progress;
+          currentProgress = targetProgress;
+          applyStackLayout(currentProgress, gsap.ticker.time * 1000);
+        });
+
         const resizeObserver = new ResizeObserver(() => {
           refreshMobileMetrics();
           applyStackLayout(trigger.progress, gsap.ticker.time * 1000);
@@ -283,6 +293,13 @@ export default function FeaturedProjects() {
           },
         });
         gsap.ticker.add(renderLoop);
+
+        requestAnimationFrame(() => {
+          ScrollTrigger.refresh();
+          targetProgress = trigger.progress;
+          currentProgress = targetProgress;
+          applyStackLayout(currentProgress, gsap.ticker.time * 1000);
+        });
 
         const resizeObserver = new ResizeObserver(() => {
           refreshMetrics();
@@ -634,7 +651,7 @@ export default function FeaturedProjects() {
                 <span className={styles.cardIndex}>{String(index).padStart(2, '0')}</span>
                 <div className={styles.cardFrame} data-card-frame>
                   <img
-                    src={project.coverImage}
+                    src={resolveProjectCover(project)}
                     alt={project.summary}
                     className={styles.cardImage}
                     data-card-image

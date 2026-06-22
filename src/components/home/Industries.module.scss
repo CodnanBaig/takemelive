@@ -1,8 +1,8 @@
 .section {
   min-height: 100vh;
   padding: clamp(4.6rem, 9vh, 7rem) 0;
-  background: #f6f3ec;
-  color: #111217;
+  background: var(--tml-parchment);
+  color: var(--tml-ink-dark);
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -108,7 +108,7 @@
   background:
     linear-gradient(132deg, rgb(17 18 23 / 0.06), rgb(17 18 23 / 0.02)),
     #ece8dc;
-  box-shadow: 0 22px 44px rgb(0 0 0 / 0.14);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.12);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -157,7 +157,7 @@
   display: block;
   margin: 0;
   font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(3.4rem, 8vw, 8.2rem);
+  font-size: clamp(2.4rem, 7vw, 6rem);
   line-height: 0.86;
   letter-spacing: 0.016em;
   text-transform: uppercase;
@@ -175,7 +175,7 @@
   left: 0;
   top: 0;
   font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(3.4rem, 8vw, 8.2rem);
+  font-size: clamp(2.4rem, 7vw, 6rem);
   line-height: 0.86;
   letter-spacing: 0.016em;
   text-transform: uppercase;
