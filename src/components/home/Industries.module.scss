@@ -82,7 +82,7 @@
   margin: 0;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
   font-size: clamp(2.4rem, 7vw, 6.4rem);
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   line-height: 0.92;
   letter-spacing: 0.015em;
   text-transform: uppercase;
@@ -157,6 +157,7 @@
   display: block;
   margin: 0;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
+  font-weight: var(--tml-display-weight);
   font-size: clamp(2.4rem, 7vw, 6rem);
   line-height: 0.86;
   letter-spacing: 0.016em;
@@ -175,6 +176,7 @@
   left: 0;
   top: 0;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
+  font-weight: var(--tml-display-weight);
   font-size: clamp(2.4rem, 7vw, 6rem);
   line-height: 0.86;
   letter-spacing: 0.016em;

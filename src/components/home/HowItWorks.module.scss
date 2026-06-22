@@ -51,7 +51,7 @@
   margin: 0;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
   font-size: clamp(2.9rem, 8vw, 7.5rem);
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   line-height: 0.96;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -103,6 +103,7 @@
 .featuredIndex {
   margin: 0;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
+  font-weight: var(--tml-display-weight);
   font-size: clamp(1.6rem, 3.6vw, 2.8rem);
   line-height: 0.9;
   color: #d0df59;

@@ -17,6 +17,8 @@
   --tml-accent-soft: rgb(45 125 255 / 0.14);
   --tml-accent-line: rgb(45 125 255 / 0.55);
 
+  --tml-display-weight: 700;
+
   --tml-duration-fast: 150ms;
   --tml-duration-base: 280ms;
   --tml-duration-scene: 640ms;

@@ -15,7 +15,7 @@ const poppins = Poppins({
 });
 
 const oswald = Oswald({
-  weight: ['300', '400', '500', '600', '700'],
+  weight: '700',
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-oswald',

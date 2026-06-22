@@ -54,7 +54,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-oswald), sans-serif;
-  font-weight: 500;
+  font-weight: var(--tml-display-weight);
 }
 
 /* Mobile-specific border removal */

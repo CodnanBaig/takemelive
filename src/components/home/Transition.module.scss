@@ -79,7 +79,7 @@
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
   display: block;
   font-size: var(--manifesto-size);
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   text-transform: uppercase;
   letter-spacing: 0.012em;
   color: color-mix(in srgb, #111217 calc((1 - var(--stage-tone)) * 100%), #f5f5f0);

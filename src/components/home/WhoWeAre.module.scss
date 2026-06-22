@@ -110,7 +110,7 @@
   width: 100%;
   max-width: 100%;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   line-height: 0.92;
   letter-spacing: 0.01em;
 }
@@ -118,7 +118,7 @@
 .headlineLead {
   display: block;
   font-size: clamp(1.75rem, 4vw, 3.5rem);
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   line-height: 1;
   letter-spacing: 0.015em;
   text-transform: none;
@@ -128,7 +128,7 @@
 .headlineEmphasis {
   display: block;
   font-size: clamp(2.75rem, 7vw, 6.75rem);
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   line-height: 0.9;
   letter-spacing: 0.01em;
   text-transform: uppercase;

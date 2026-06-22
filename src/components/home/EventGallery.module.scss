@@ -50,7 +50,7 @@
   margin: 0;
   font-family: var(--font-oswald), var(--font-poppins), sans-serif;
   font-size: clamp(2.8rem, 7.2vw, 6rem);
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   line-height: 0.86;
   letter-spacing: -0.03em;
   text-transform: uppercase;
@@ -87,6 +87,7 @@
 
 .backgroundWords span {
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
+  font-weight: var(--tml-display-weight);
   font-size: clamp(3rem, 12vw, 6rem);
   line-height: 0.88;
   letter-spacing: -0.03em;

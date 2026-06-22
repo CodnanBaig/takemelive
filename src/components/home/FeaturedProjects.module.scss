@@ -58,7 +58,7 @@
   margin: 0;
   font-family: var(--font-oswald), var(--font-poppins), sans-serif;
   font-size: clamp(3rem, 7vw, 7.5rem);
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   line-height: 1;
   letter-spacing: -0.05em;
   text-transform: uppercase;
@@ -198,7 +198,7 @@
   margin: 0;
   font-family: var(--font-oswald), var(--font-poppins), sans-serif;
   font-size: clamp(1.35rem, 2.8vw, 2.35rem);
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   line-height: 0.9;
   letter-spacing: -0.04em;
   text-transform: uppercase;

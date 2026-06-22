@@ -20,7 +20,7 @@ Cinematic, immersive, high-impact storytelling portfolio for a live experience a
 ## Typography
 
 ### Display
-- Font: [Oswald](https://fonts.google.com/specimen/Oswald)
+- Font: [Oswald](https://fonts.google.com/specimen/Oswald) **Bold (700)**
 - Usage: Headings, section titles
 - Sizing: fluid `clamp()`, **6rem maximum** on homepage display lines
 - Letter-spacing: **0 to 0.02em** on large Oswald (condensed; avoid tight negative tracking)

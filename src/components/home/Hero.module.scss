@@ -31,7 +31,7 @@
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: 0.015em;
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   display: grid;
   gap: 0.08em;
   justify-items: center;

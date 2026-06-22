@@ -67,7 +67,7 @@
   max-width: 14ch;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
   font-size: clamp(2.8rem, 8vw, 6rem);
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   line-height: 0.88;
   letter-spacing: -0.01em;
   text-transform: uppercase;
@@ -256,7 +256,7 @@
   margin: 0;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
   font-size: clamp(1.5rem, 2.6vw, 2.6rem);
-  font-weight: 400;
+  font-weight: var(--tml-display-weight);
   line-height: 0.95;
   letter-spacing: 0.006em;
   text-transform: uppercase;
