@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Anton, Poppins } from 'next/font/google';
+import { Oswald, Poppins } from 'next/font/google';
 import './globals.css';
 import LenisProvider from '@/components/cinematic/LenisProvider';
 import MotionPreferences from '@/components/cinematic/MotionPreferences';
@@ -14,11 +14,11 @@ const poppins = Poppins({
   variable: '--font-poppins',
 });
 
-const anton = Anton({
-  weight: '400',
+const oswald = Oswald({
+  weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-anton',
+  variable: '--font-oswald',
 });
 
 export const metadata: Metadata = {
@@ -50,7 +50,7 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
       </head>
-      <body className={`${poppins.variable} ${anton.variable}`}>
+      <body className={`${poppins.variable} ${oswald.variable}`}>
         <SkipToContent />
         <MotionPreferences />
         <LenisProvider>

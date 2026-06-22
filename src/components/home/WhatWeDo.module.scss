@@ -43,7 +43,7 @@
 .inner h2 {
   margin: 0;
   overflow: hidden;
-  font-family: var(--font-anton), var(--font-poppins), sans-serif;
+  font-family: var(--font-oswald), var(--font-poppins), sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.01em;
   line-height: 0.92;
@@ -78,7 +78,7 @@
 }
 
 .lineIndex {
-  font-family: var(--font-anton), sans-serif;
+  font-family: var(--font-oswald), sans-serif;
   letter-spacing: 0.08em;
   font-size: clamp(0.76rem, 0.9vw, 0.94rem);
   color: var(--tml-accent-bright);

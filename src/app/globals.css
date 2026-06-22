@@ -6,6 +6,7 @@
   --y: 0px;
   --size: 5px;
   --font-poppins: 'Poppins', sans-serif;
+  --font-oswald: 'Oswald', sans-serif;
 }
 
 html {
@@ -44,6 +45,16 @@ body {
   padding: 0;
   border: none;
   outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-oswald), sans-serif;
+  font-weight: 500;
 }
 
 /* Mobile-specific border removal */

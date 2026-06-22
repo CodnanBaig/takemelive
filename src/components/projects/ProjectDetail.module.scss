@@ -70,7 +70,7 @@
 .posterTitle {
   margin: 0;
   max-width: 12ch;
-  font-family: var(--font-anton), var(--font-poppins), sans-serif;
+  font-family: var(--font-oswald), var(--font-poppins), sans-serif;
   font-size: clamp(3rem, 11vw, 8.5rem);
   font-weight: 400;
   line-height: 0.84;
@@ -198,7 +198,7 @@
 }
 
 .navLink strong {
-  font-family: var(--font-anton), var(--font-poppins), sans-serif;
+  font-family: var(--font-oswald), var(--font-poppins), sans-serif;
   font-size: clamp(1.2rem, 2.4vw, 1.8rem);
   font-weight: 400;
   text-transform: uppercase;

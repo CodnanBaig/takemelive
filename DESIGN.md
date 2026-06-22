@@ -20,13 +20,13 @@ Cinematic, immersive, high-impact storytelling portfolio for a live experience a
 ## Typography
 
 ### Display
-- Font: `Anton`
+- Font: [Oswald](https://fonts.google.com/specimen/Oswald)
 - Usage: Headings, section titles
 - Sizing: fluid `clamp()`, **6rem maximum** on homepage display lines
-- Letter-spacing: **≥ -0.04em** (prefer `-0.03em` on large Anton)
+- Letter-spacing: **0 to 0.02em** on large Oswald (condensed; avoid tight negative tracking)
 
 ### Body
-- Font: `Poppins`
+- Font: Poppins
 - Weights: 200–700
 - Line length: 65–75ch where prose blocks apply
 - Use `text-wrap: balance` on major headings

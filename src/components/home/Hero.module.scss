@@ -26,7 +26,7 @@
   --spot-radius: clamp(200px, 24vw, 320px);
   --spot-opacity: 0;
   margin: 0;
-  font-family: var(--font-anton), var(--font-poppins), sans-serif;
+  font-family: var(--font-oswald), var(--font-poppins), sans-serif;
   font-size: clamp(3.5rem, 12.5vw, 14rem);
   line-height: 1;
   text-transform: uppercase;
@@ -133,7 +133,7 @@
   overflow: hidden;
   position: absolute;
   left: 50%;
-  bottom: 2rem;
+  bottom: clamp(4.75rem, 9vh, 6rem);
   transform: translateX(-50%);
   color: rgb(245 245 240 / 0.62);
   display: grid;

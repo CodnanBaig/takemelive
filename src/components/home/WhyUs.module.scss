@@ -74,7 +74,7 @@
 
 .headline {
   margin: 0;
-  font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
+  font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
   font-size: clamp(3rem, 6.6vw, 6.4rem);
   line-height: 0.88;
   letter-spacing: 0.012em;
@@ -117,7 +117,7 @@
 }
 
 .tickerNum {
-  font-family: var(--font-anton), Impact, sans-serif;
+  font-family: var(--font-oswald), Impact, sans-serif;
   font-size: clamp(2.4rem, 4vw, 3.4rem);
   line-height: 0.9;
   letter-spacing: 0.02em;
@@ -188,7 +188,7 @@
 
 .panelTag span:first-child {
   color: var(--why-accent);
-  font-family: var(--font-anton), Impact, sans-serif;
+  font-family: var(--font-oswald), Impact, sans-serif;
   font-size: 1rem;
   letter-spacing: 0.08em;
 }
@@ -201,7 +201,7 @@
 
 .panelTitle {
   margin: 0;
-  font-family: var(--font-anton), Impact, 'Arial Narrow Bold', sans-serif;
+  font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
   font-size: clamp(1.85rem, 3.6vw, 3.4rem);
   line-height: 0.96;
   letter-spacing: 0.012em;
