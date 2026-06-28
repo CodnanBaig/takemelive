@@ -15,6 +15,7 @@ const HERO_IMAGE = projectAsset('IMG_9410.jpg');
 const TEAM_ROLES = [
   {
     code: '01',
+    value: 'Design intent',
     title: 'Designers',
     field: 'Concept and space',
     note: 'Translate brand intent into visual and spatial systems that feel immediate.',
@@ -23,6 +24,7 @@ const TEAM_ROLES = [
   },
   {
     code: '02',
+    value: 'Technical direction',
     title: 'Technologists',
     field: 'Interaction layer',
     note: 'Build interactions and intelligence that make ambitious ideas truly perform.',
@@ -31,6 +33,7 @@ const TEAM_ROLES = [
   },
   {
     code: '03',
+    value: 'Live delivery',
     title: 'Producers',
     field: 'Delivery control',
     note: 'Orchestrate execution with precision from first concept through showtime.',
@@ -38,8 +41,6 @@ const TEAM_ROLES = [
     image: projectAsset('69 bottom qatar.jpg'),
   },
 ] as const;
-
-const VALUES = ['Design intent', 'Technical direction', 'Live delivery'] as const;
 
 export default function Team() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -51,11 +52,9 @@ export default function Team() {
     }
 
     const headlineLines = Array.from(section.querySelectorAll<HTMLElement>('[data-team-line]'));
-    const intro = section.querySelector<HTMLElement>('[data-team-intro]');
     const board = section.querySelector<HTMLElement>('[data-team-board]');
     const heroMedia = section.querySelector<HTMLElement>('[data-team-hero-media]');
     const heroImage = section.querySelector<HTMLElement>('[data-team-hero-image]');
-    const chips = Array.from(section.querySelectorAll<HTMLElement>('[data-team-chip]'));
     const roles = Array.from(section.querySelectorAll<HTMLElement>('[data-team-role]'));
     const roleImages = Array.from(section.querySelectorAll<HTMLElement>('[data-team-role-image]'));
     const hoverCleanups: Array<() => void> = [];
@@ -65,9 +64,7 @@ export default function Team() {
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set(
-          [...headlineLines, intro, board, heroMedia, ...chips, ...roles, ...roleImages].filter(
-            Boolean,
-          ),
+          [...headlineLines, board, heroMedia, ...roles, ...roleImages].filter(Boolean),
           { clipPath: MASK_VISIBLE, x: 0, y: 0, scale: 1, rotateY: 0 },
         );
         if (heroImage) {
@@ -76,7 +73,7 @@ export default function Team() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.set([...headlineLines, intro, ...chips].filter(Boolean), {
+        gsap.set(headlineLines, {
           clipPath: MASK_HIDDEN_BOTTOM,
         });
         gsap.set([board, heroMedia, ...roles].filter(Boolean), {
@@ -101,18 +98,7 @@ export default function Team() {
             },
             0,
           )
-          .to(intro, { clipPath: MASK_VISIBLE, duration: 0.5, ease: 'power3.out' }, 0.14)
-          .to(
-            chips,
-            {
-              clipPath: MASK_VISIBLE,
-              stagger: 0.06,
-              duration: 0.45,
-              ease: 'power3.out',
-            },
-            0.3,
-          )
-          .to(board, { clipPath: MASK_VISIBLE, duration: 0.58, ease: 'power3.out' }, 0.28)
+          .to(board, { clipPath: MASK_VISIBLE, duration: 0.58, ease: 'power3.out' }, 0.2)
           .to(heroMedia, { clipPath: MASK_VISIBLE, duration: 0.55, ease: 'power3.out' }, 0.34)
           .to(
             roles,
@@ -148,9 +134,9 @@ export default function Team() {
           const cardMedia = roleImages[index];
           const enter = () => {
             gsap.to(role, {
-              x: 10,
-              y: -6,
-              rotateY: index % 2 === 0 ? 1.5 : -1.5,
+              x: 8,
+              y: -4,
+              rotateY: index % 2 === 0 ? 1.2 : -1.2,
               duration: 0.28,
               ease: 'power2.out',
               overwrite: true,
@@ -209,24 +195,16 @@ export default function Team() {
       aria-label="Team"
     >
       <div className={styles.inner}>
-        <div className={styles.masthead}>
+        <header className={styles.masthead}>
           <h2 data-team-headline className={styles.headline}>
-            <span data-team-line>People behind</span>
-            <span data-team-line>the live moment.</span>
-          </h2>
-          <p data-team-intro className={styles.intro}>
-            Designers, technologists, and producers working as one crew from first idea to final
-            show call.
-          </p>
-        </div>
-
-        <div className={styles.values} aria-label="Team strengths">
-          {VALUES.map((value) => (
-            <span key={value} className={styles.valueChip} data-team-chip>
-              {value}
+            <span data-team-line className={styles.headlineLine}>
+              People behind
             </span>
-          ))}
-        </div>
+            <span data-team-line className={styles.headlineLine}>
+              the live moment.
+            </span>
+          </h2>
+        </header>
 
         <div className={styles.board} data-team-board>
           <figure className={styles.heroMedia} data-team-hero-media>
@@ -240,22 +218,23 @@ export default function Team() {
           <div className={styles.roleStack}>
             {TEAM_ROLES.map((role) => (
               <article key={role.title} className={styles.roleCard} data-team-role>
-                <figure className={styles.roleImage}>
-                  <img src={role.image} alt="" loading="lazy" data-team-role-image />
-                </figure>
-                <div className={styles.roleMeta}>
-                  <span>{role.code}</span>
-                  <span>{role.field}</span>
+                <div className={styles.roleLead}>
+                  <span className={styles.roleIndex}>{role.code}</span>
+                  <span className={styles.roleValue}>{role.value}</span>
                 </div>
-                <div className={styles.roleCopy}>
+                <div className={styles.roleBody}>
+                  <p className={styles.roleField}>{role.field}</p>
                   <h3>{role.title}</h3>
-                  <p>{role.note}</p>
+                  <p className={styles.roleNote}>{role.note}</p>
                   <ul className={styles.tagList} aria-label={`${role.title} capabilities`}>
                     {role.tags.map((tag) => (
                       <li key={tag}>{tag}</li>
                     ))}
                   </ul>
                 </div>
+                <figure className={styles.roleImage}>
+                  <img src={role.image} alt="" loading="lazy" data-team-role-image />
+                </figure>
               </article>
             ))}
           </div>

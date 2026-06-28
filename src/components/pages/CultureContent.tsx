@@ -38,7 +38,6 @@ export default function CultureContent() {
       return;
     }
 
-    const kicker = page.querySelector<HTMLElement>('[data-culture-kicker]');
     const title = page.querySelector<HTMLElement>('[data-culture-title]');
     const lead = page.querySelector<HTMLElement>('[data-culture-lead]');
     const cards = page.querySelectorAll<HTMLElement>('[data-culture-card]');
@@ -47,20 +46,17 @@ export default function CultureContent() {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([kicker, title, lead, ...cards].filter(Boolean), { clipPath: MASK_VISIBLE });
+        gsap.set([title, lead, ...cards].filter(Boolean), { clipPath: MASK_VISIBLE });
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const heroTargets = [kicker, title, lead].filter(Boolean) as HTMLElement[];
+        const heroTargets = [title, lead].filter(Boolean) as HTMLElement[];
         setMaskHidden(heroTargets);
-        if (kicker) {
-          animateMaskReveal(kicker, 'bottom', { duration: 0.48, delay: 0.04 });
-        }
         if (title) {
-          animateMaskReveal(title, 'bottom', { duration: 0.78, delay: 0.1 });
+          animateMaskReveal(title, 'bottom', { duration: 0.78, delay: 0.04 });
         }
         if (lead) {
-          animateMaskReveal(lead, 'bottom', { duration: 0.62, delay: 0.2 });
+          animateMaskReveal(lead, 'bottom', { duration: 0.62, delay: 0.14 });
         }
 
         gsap.set(cards, { clipPath: MASK_HIDDEN_BOTTOM });
@@ -83,9 +79,6 @@ export default function CultureContent() {
     <main id="main-content" className={styles.page} ref={pageRef} tabIndex={-1}>
       <div className={styles.inner}>
         <header className={styles.hero}>
-          <p className={styles.kicker} data-culture-kicker>
-            Studio
-          </p>
           <h1 className={styles.title} data-culture-title>
             Our culture
           </h1>

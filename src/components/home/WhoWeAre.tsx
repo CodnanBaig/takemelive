@@ -11,13 +11,12 @@ import { sectionRevealScroll } from '@/lib/scrollScene';
 import styles from './WhoWeAre.module.scss';
 
 const GROUP_IMAGE = {
-  src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
-  alt: 'Creative team collaborating together',
+  src: '/assets/IMG_0304.webp',
+  alt: 'Take Me Live crew on a large-scale live production',
   speed: 16,
 };
 
-const FALLBACK_IMAGE_SRC =
-  'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80';
+const FALLBACK_IMAGE_SRC = '/assets/IMG_3571.webp';
 
 const HEADLINE_LINES = [
   { id: 'lead', text: 'Squad of' },
@@ -213,7 +212,6 @@ export default function WhoWeAre() {
           </div>
 
           <div className={styles.content}>
-            <p className={styles.studioLine}>A creative experience studio</p>
             <div className={styles.accent} data-accent aria-hidden="true" />
             <h2 className={styles.heading}>
               {HEADLINE_LINES.map((line) => (

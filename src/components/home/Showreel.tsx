@@ -7,10 +7,10 @@ import {
   setMaskHidden,
 } from '@/lib/maskReveal';
 import {
+  pickShowreelVideo,
   SHOWREEL_LOCAL_SRC,
-  SHOWREEL_POSTER,
-  pickRandomShowreelVideo,
 } from '@/content/showreel';
+import type { ShowreelConfig } from '@/lib/content/types';
 import { prefersReducedMotion } from '@/lib/motionPrefs';
 import styles from './Showreel.module.scss';
 
@@ -24,7 +24,11 @@ function formatTimecode(seconds: number): string {
   return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 }
 
-export default function Showreel() {
+type ShowreelProps = {
+  showreelConfig: ShowreelConfig;
+};
+
+export default function Showreel({ showreelConfig }: ShowreelProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const progressBarRef = useRef<HTMLSpanElement | null>(null);
@@ -36,18 +40,19 @@ export default function Showreel() {
     let cancelled = false;
 
     const resolveSource = async () => {
+      const localSrc = showreelConfig.localSrc || SHOWREEL_LOCAL_SRC;
       try {
-        const response = await fetch(SHOWREEL_LOCAL_SRC, { method: 'HEAD' });
+        const response = await fetch(localSrc, { method: 'HEAD' });
         if (!cancelled && response.ok) {
-          setVideoSrc(SHOWREEL_LOCAL_SRC);
+          setVideoSrc(localSrc);
           return;
         }
       } catch {
-        // Use random remote clip when local file is missing.
+        // Use configured remote clip when local file is missing.
       }
 
       if (!cancelled) {
-        setVideoSrc(pickRandomShowreelVideo());
+        setVideoSrc(pickShowreelVideo(showreelConfig));
       }
     };
 
@@ -56,7 +61,7 @@ export default function Showreel() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [showreelConfig]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -121,7 +126,7 @@ export default function Showreel() {
         return;
       }
 
-      const fallback = pickRandomShowreelVideo(videoSrc);
+      const fallback = pickShowreelVideo(showreelConfig, videoSrc);
       if (fallback !== videoSrc) {
         setVideoSrc(fallback);
         return;
@@ -178,7 +183,7 @@ export default function Showreel() {
       scrollTrigger?.kill();
       ctx.revert();
     };
-  }, [videoSrc]);
+  }, [videoSrc, showreelConfig]);
 
   return (
     <section
@@ -198,7 +203,7 @@ export default function Showreel() {
               ref={videoRef}
               className={`${styles.video} showreelVideo`}
               src={videoSrc}
-              poster={SHOWREEL_POSTER}
+              poster={showreelConfig.poster}
               muted
               playsInline
               preload="metadata"
@@ -206,7 +211,7 @@ export default function Showreel() {
             />
           ) : null}
           <img
-            src={SHOWREEL_POSTER}
+            src={showreelConfig.poster}
             alt=""
             className={`${styles.poster} showreelPoster ${posterVisible ? styles.posterVisible : ''}`}
             aria-hidden="true"

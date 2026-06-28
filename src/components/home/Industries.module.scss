@@ -4,7 +4,8 @@
   background: var(--tml-parchment);
   color: var(--tml-ink-dark);
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   isolation: isolate;
 }
 
@@ -37,104 +38,17 @@
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: rgb(17 18 23 / 0.72);
-}
-
-.columns {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.55fr);
-  align-items: start;
-  gap: clamp(1.2rem, 3vw, 3.2rem);
-}
-
-.columns::after {
-  content: '';
-  position: absolute;
-  top: 0.4rem;
-  bottom: 0.4rem;
-  left: calc(36.7% + clamp(0.6rem, 1.5vw, 1.6rem));
-  width: 1px;
-  background:
-    linear-gradient(
-      to bottom,
-      rgb(17 18 23 / 0.12) 0%,
-      rgb(17 18 23 / 0.5) 18%,
-      rgb(108 127 30 / 0.75) 50%,
-      rgb(17 18 23 / 0.5) 82%,
-      rgb(17 18 23 / 0.12) 100%
-    );
-  background-size: 100% 220%;
-  animation: dividerFlow 2.8s linear infinite;
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-.intro {
-  width: 100%;
-  margin: 0;
-  display: grid;
-  gap: clamp(0.9rem, 1.6vh, 1.3rem);
-  text-align: left;
-  max-width: 52ch;
-}
-
-.intro .lead {
-  margin: 0;
-  font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(2.4rem, 7vw, 6.4rem);
-  font-weight: var(--tml-display-weight);
-  line-height: 0.92;
-  letter-spacing: 0.015em;
-  text-transform: uppercase;
-  color: rgb(17 18 23 / 0.96);
-}
-
-.intro p {
-  margin: 0;
-  font-size: clamp(1.12rem, 1.45vw, 1.36rem);
-  line-height: 1.64;
-  color: rgb(17 18 23 / 0.84);
-  max-width: 42ch;
-}
-
-.preview {
-  position: relative;
-  width: min(100%, 540px);
-  aspect-ratio: 16 / 10;
-  margin-top: clamp(0.5rem, 1.2vh, 0.9rem);
-  border-radius: 0;
-  overflow: hidden;
-  border: 1px solid rgb(17 18 23 / 0.14);
-  background:
-    linear-gradient(132deg, rgb(17 18 23 / 0.06), rgb(17 18 23 / 0.02)),
-    #ece8dc;
-  box-shadow: 0 8px 20px rgb(0 0 0 / 0.12);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.previewItem {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-}
-
-.previewItem :global(img) {
-  object-fit: cover;
-  filter: saturate(1.05) contrast(1.04);
+  text-align: center;
 }
 
 .block {
   width: 100%;
   max-width: 100%;
-  margin: 0;
-  text-align: right;
+  margin: 0 auto;
+  padding-top: clamp(3.25rem, 7vh, 5rem);
+  text-align: center;
   line-height: 1;
-  overflow-x: auto;
-  overflow-y: visible;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
+  overflow: visible;
 }
 
 .item {
@@ -143,7 +57,7 @@
   --ripple-size: 0px;
   position: relative;
   display: inline-block;
-  margin-right: clamp(0.45rem, 0.9vw, 1rem);
+  margin-inline: clamp(0.22rem, 0.45vw, 0.5rem);
   margin-bottom: clamp(0.16rem, 0.4vw, 0.36rem);
   padding: 0.06em 0;
   outline: none;
@@ -164,7 +78,7 @@
   text-transform: uppercase;
   color: rgb(17 18 23 / 0.94);
   white-space: nowrap;
-  transform-origin: left center;
+  transform-origin: center center;
   will-change: transform;
   transition:
     transform 220ms ease,
@@ -194,7 +108,7 @@
   position: absolute;
   left: 50%;
   bottom: calc(100% + 0.9rem);
-  transform: translateX(-50%);
+  translate: -50% 0;
   min-width: min(52vw, 300px);
   max-width: min(68vw, 420px);
   padding: 0.64rem 0.98rem;
@@ -243,6 +157,22 @@
   z-index: 25;
 }
 
+.item[data-tooltip-placement='below'] .tooltip {
+  bottom: auto;
+  top: calc(100% + 0.75rem);
+  transform-origin: 50% 0;
+}
+
+.item[data-tooltip-placement='below'] .tooltip::after {
+  top: auto;
+  bottom: calc(100% - 1px);
+  border-right: 1px solid rgb(246 243 236 / 0.2);
+  border-bottom: none;
+  border-top: 1px solid rgb(246 243 236 / 0.2);
+  border-left: 1px solid rgb(246 243 236 / 0.2);
+  transform: translateX(-50%) rotate(45deg);
+}
+
 .item:focus-visible {
   outline: 2px solid rgb(167 255 71 / 0.7);
   outline-offset: 0.2rem;
@@ -266,28 +196,16 @@
   .item:hover .tooltip,
   .item:focus-within .tooltip {
     opacity: 1;
-    transform: translateX(-50%) translateY(-2px);
+    translate: -50% -2px;
   }
 }
 
 @media (max-width: 840px) {
-  .columns {
-    grid-template-columns: 1fr;
-    gap: clamp(1.1rem, 2.2vh, 1.8rem);
-  }
-
-  .columns::after {
-    display: none;
-  }
-
-  .intro {
-    max-width: 100%;
-    text-align: center;
-    justify-items: center;
-  }
-
   .block {
-    text-align: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    padding-top: clamp(4rem, 10vh, 5.5rem);
   }
 
   .tooltip {
@@ -295,28 +213,6 @@
     max-width: min(84vw, 340px);
     white-space: normal;
     border-radius: 0;
-  }
-}
-
-@media (max-width: 640px) {
-  .columns {
-    gap: 1rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .columns::after {
-    animation: none;
-    background-position: 0 50%;
-  }
-}
-
-@keyframes dividerFlow {
-  from {
-    background-position: 0 0%;
-  }
-  to {
-    background-position: 0 220%;
   }
 }
 

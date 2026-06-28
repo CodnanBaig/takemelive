@@ -2,8 +2,8 @@
   min-height: 100vh;
   min-height: 100dvh;
   display: grid;
-  align-items: center;
-  padding: clamp(7rem, 10vh, 9rem) clamp(1rem, 3vw, 2.5rem) clamp(5rem, 7vh, 6.5rem);
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2.5rem);
   position: relative;
   isolation: isolate;
   background:
@@ -12,10 +12,13 @@
 }
 
 .inner {
-  width: min(1280px, 96vw);
+  width: min(1280px, 100%);
+  max-width: 100%;
   margin: 0 auto;
   display: grid;
   gap: clamp(1.2rem, 2vw, 2rem);
+  justify-items: center;
+  text-align: center;
   position: relative;
   z-index: 1;
 }
@@ -26,20 +29,21 @@
   --spot-radius: clamp(200px, 24vw, 320px);
   --spot-opacity: 0;
   margin: 0;
+  width: 100%;
   font-family: var(--font-oswald), var(--font-poppins), sans-serif;
-  font-size: clamp(3.5rem, 12.5vw, 14rem);
-  line-height: 1;
+  font-size: clamp(2.85rem, 10vw, 8.75rem);
+  line-height: 0.94;
   text-transform: uppercase;
-  letter-spacing: 0.015em;
+  letter-spacing: 0.008em;
   font-weight: var(--tml-display-weight);
   display: grid;
   gap: 0.08em;
   justify-items: center;
   max-width: 100%;
+  overflow-x: clip;
   user-select: none;
   position: relative;
   isolation: isolate;
-  text-wrap: balance;
 }
 
 .heading::after {
@@ -55,7 +59,8 @@
   display: grid;
   gap: 0.08em;
   justify-items: center;
-  align-content: start;
+  align-content: center;
+  width: 100%;
   opacity: calc(var(--spot-opacity) * 0.52);
   -webkit-mask-image: radial-gradient(
     circle var(--spot-radius) at calc(var(--spot-x) * 1px) calc(var(--spot-y) * 1px),
@@ -83,12 +88,18 @@
 .lineWrap {
   display: flex;
   justify-content: center;
+  align-items: baseline;
   flex-wrap: nowrap;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
   gap: 0.22em;
+  white-space: nowrap;
 }
 
 .wordWrap {
   display: block;
+  flex: 0 0 auto;
   overflow: hidden;
   position: relative;
   z-index: 1;
@@ -152,8 +163,8 @@
 
 @media (max-width: 900px) {
   .heading {
-    font-size: clamp(2.85rem, 17vw, 7.4rem);
-    line-height: 1.02;
+    font-size: clamp(2.35rem, 9.2vw, 6.5rem);
+    line-height: 0.96;
   }
 }
 
@@ -173,10 +184,10 @@
 
 @media (max-width: 640px) {
   .hero {
-    padding-top: max(clamp(5.25rem, 18vw, 6.75rem), env(safe-area-inset-top, 0px));
-    padding-inline: max(clamp(0.85rem, 4vw, 1.25rem), env(safe-area-inset-left, 0px))
-      max(clamp(0.85rem, 4vw, 1.25rem), env(safe-area-inset-right, 0px));
-    padding-bottom: max(clamp(4rem, 10vw, 5.5rem), env(safe-area-inset-bottom, 0px));
+    padding: max(clamp(0.85rem, 4vw, 1.25rem), env(safe-area-inset-top, 0px))
+      max(clamp(0.85rem, 4vw, 1.25rem), env(safe-area-inset-right, 0px))
+      max(clamp(0.85rem, 4vw, 1.25rem), env(safe-area-inset-bottom, 0px))
+      max(clamp(0.85rem, 4vw, 1.25rem), env(safe-area-inset-left, 0px));
   }
 
   .subheading {
@@ -184,23 +195,10 @@
   }
 
   .heading {
-    font-size: clamp(2.35rem, 12vw, 4.2rem);
-    line-height: 1.06;
-    letter-spacing: 0.004em;
-    justify-items: start;
-    overflow-wrap: anywhere;
-    hyphens: auto;
-  }
-
-  .lineWrap {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    max-width: 100%;
-  }
-
-  .wordWrap {
-    display: block;
-    max-width: 100%;
+    font-size: clamp(2rem, 8.5vw, 4.25rem);
+    line-height: 1;
+    letter-spacing: 0.006em;
+    justify-items: center;
   }
 
   .inner {

@@ -34,7 +34,10 @@
 
 .header {
   position: absolute;
-  top: clamp(4.4rem, 6.5vh, 6rem);
+  top: calc(
+    max(clamp(16px, 2.2vw, 28px), env(safe-area-inset-top, 0px)) +
+      clamp(128px, 13vw, 220px) * 64 / 220 + clamp(0.75rem, 2vh, 1.25rem)
+  );
   left: clamp(1rem, 3vw, 2.5rem);
   z-index: 6;
   max-width: min(46vw, 560px);
@@ -241,7 +244,10 @@
 @media (max-width: 900px) {
   .header {
     position: absolute;
-    top: clamp(4.75rem, 9vh, 6rem);
+    top: calc(
+      max(clamp(16px, 2.2vw, 28px), env(safe-area-inset-top, 0px)) +
+        clamp(116px, 26vw, 176px) * 64 / 220 + clamp(0.65rem, 1.8vh, 1rem)
+    );
     left: clamp(1rem, 5vw, 1.4rem);
     max-width: calc(100vw - 2rem);
     padding: 0 1rem 0 0;
@@ -287,6 +293,13 @@
 }
 
 @media (max-width: 768px) {
+  .header {
+    top: calc(
+      max(14px, env(safe-area-inset-top, 0px)) + clamp(116px, 26vw, 176px) * 64 / 220 +
+        clamp(0.5rem, 1.5vh, 0.85rem)
+    );
+  }
+
   .title {
     font-size: clamp(2rem, 11vw, 3.2rem);
   }

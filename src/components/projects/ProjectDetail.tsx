@@ -27,8 +27,6 @@ export default function ProjectDetail({ project, adjacent }: ProjectDetailProps)
   const pageRef = useRef<HTMLElement | null>(null);
   const coverSrc = resolveProjectCover(project);
   const galleryImages = resolveProjectGallery(project);
-  const indexLabel = String(adjacent.index + 1).padStart(2, '0');
-  const totalLabel = String(adjacent.total).padStart(2, '0');
 
   useEffect(() => {
     const page = pageRef.current;
@@ -36,7 +34,6 @@ export default function ProjectDetail({ project, adjacent }: ProjectDetailProps)
       return;
     }
 
-    const kicker = page.querySelector<HTMLElement>('[data-detail-kicker]');
     const poster = page.querySelector<HTMLElement>('[data-detail-poster]');
     const tagline = page.querySelector<HTMLElement>('[data-detail-tagline]');
     const leadLines = page.querySelectorAll<HTMLElement>('[data-detail-lead]');
@@ -46,23 +43,20 @@ export default function ProjectDetail({ project, adjacent }: ProjectDetailProps)
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([kicker, poster, tagline, ...leadLines, ...figures].filter(Boolean), {
+        gsap.set([poster, tagline, ...leadLines, ...figures].filter(Boolean), {
           clipPath: MASK_VISIBLE,
         });
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const heroTargets = [kicker, poster, tagline].filter(Boolean) as HTMLElement[];
+        const heroTargets = [poster, tagline].filter(Boolean) as HTMLElement[];
         setMaskHidden(heroTargets);
 
-        if (kicker) {
-          animateMaskReveal(kicker, 'bottom', { duration: 0.5, delay: 0.05 });
-        }
         if (poster) {
-          animateMaskReveal(poster, 'bottom', { duration: 0.82, delay: 0.12 });
+          animateMaskReveal(poster, 'bottom', { duration: 0.82, delay: 0.05 });
         }
         if (tagline) {
-          animateMaskReveal(tagline, 'bottom', { duration: 0.62, delay: 0.22 });
+          animateMaskReveal(tagline, 'bottom', { duration: 0.62, delay: 0.15 });
         }
 
         gsap.set(leadLines, { clipPath: MASK_HIDDEN_BOTTOM });
@@ -121,9 +115,6 @@ export default function ProjectDetail({ project, adjacent }: ProjectDetailProps)
           <Link href="/#chapter-featured-projects" className={styles.backLink}>
             Back to projects
           </Link>
-          <p className={styles.kicker} data-detail-kicker>
-            Project {indexLabel} / {totalLabel}
-          </p>
           <h1 className={styles.posterTitle} data-detail-poster>
             {getPosterTitle(project)}
           </h1>

@@ -45,10 +45,9 @@ export default function Hero() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const isCompact = window.matchMedia('(max-width: 900px)').matches;
-
         setMaskHidden(words, 'bottom');
         setMaskHidden(subLines, 'bottom');
+        gsap.set(words, { x: 0, yPercent: 0 });
         gsap.set(indicator, { clipPath: 'inset(0% 0% 100% 0%)' });
 
         const loadTimeline = gsap.timeline({ defaults: { ease: 'power4.out' } });
@@ -94,7 +93,7 @@ export default function Hero() {
             words,
             {
               yPercent: (index) => -10 - index * 4,
-              x: (index) => (isCompact ? 0 : index % 2 === 0 ? -14 : 14),
+              x: 0,
               scale: (index) => 1 - index * 0.012,
               ease: 'none',
               stagger: 0.04,
@@ -195,7 +194,7 @@ export default function Hero() {
       <ScrollOrnament variant="glyph-light" position="tr" />
       <ScrollOrnament variant="glyph-dark" position="bl" />
       <div className={styles.inner}>
-        <h1 ref={headingRef} className={styles.heading} data-scroll-shift>
+        <h1 ref={headingRef} className={styles.heading}>
           {HERO_LINES.map((line) => (
             <span key={line.join(' ')} className={styles.lineWrap}>
               {line.map((word) => (

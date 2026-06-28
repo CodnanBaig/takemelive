@@ -22,20 +22,14 @@ const SUBHEADING_LINES = [
 type SpotPoint = { x: number; y: number };
 
 const FALLBACK_SPOT_PATH: SpotPoint[] = [
-  { x: 22, y: 33 },
-  { x: 50, y: 33 },
-  { x: 78, y: 33 },
-  { x: 78, y: 46 },
-  { x: 50, y: 46 },
-  { x: 22, y: 46 },
-  { x: 50, y: 40 },
+  { x: 50, y: 58 },
+  { x: 50, y: 63 },
+  { x: 50, y: 68 },
+  { x: 50, y: 73 },
+  { x: 50, y: 78 },
 ];
 
-function buildSpotPath(
-  stage: HTMLElement,
-  railLines: NodeListOf<Element>,
-  subLines: NodeListOf<Element>,
-): SpotPoint[] {
+function buildSpotPath(stage: HTMLElement, subLines: NodeListOf<Element>): SpotPoint[] {
   const stageRect = stage.getBoundingClientRect();
   if (!stageRect.width || !stageRect.height) {
     return FALLBACK_SPOT_PATH;
@@ -48,29 +42,19 @@ function buildSpotPath(
 
   const path: SpotPoint[] = [];
 
-  railLines.forEach((line, lineIndex) => {
+  subLines.forEach((line, lineIndex) => {
     const rect = line.getBoundingClientRect();
     if (!rect.width) return;
 
     const midY = rect.top + rect.height * 0.5;
-    const fractions = lineIndex % 2 === 0 ? [0.14, 0.5, 0.86] : [0.86, 0.5, 0.14];
+    const fractions = lineIndex % 2 === 0 ? [0.22, 0.5, 0.78] : [0.78, 0.5, 0.22];
 
     fractions.forEach((fraction) => {
       path.push(toPct(rect.left + rect.width * fraction, midY));
     });
   });
 
-  if (path.length === 0) {
-    return FALLBACK_SPOT_PATH;
-  }
-
-  const firstSub = subLines[0];
-  if (firstSub) {
-    const subRect = firstSub.getBoundingClientRect();
-    path.push(toPct(subRect.left + subRect.width * 0.5, subRect.top + subRect.height * 0.5));
-  }
-
-  return path;
+  return path.length > 0 ? path : FALLBACK_SPOT_PATH;
 }
 
 export default function Transition() {
@@ -92,7 +76,18 @@ export default function Transition() {
       return;
     }
 
-    const getSpotPath = () => buildSpotPath(stage, railLines, subLines);
+    const getSpotPath = () => buildSpotPath(stage, subLines);
+
+    const getSpotRadius = () => {
+      const subheading = stage.querySelector(`.${styles.subheading}`) as HTMLElement | null;
+      if (subheading) {
+        const rect = subheading.getBoundingClientRect();
+        if (rect.width && rect.height) {
+          return Math.min(Math.max(rect.width * 0.52, rect.height * 0.72), 320);
+        }
+      }
+      return Math.min(window.innerWidth * 0.24, 280);
+    };
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
@@ -115,8 +110,6 @@ export default function Transition() {
         gsap.set(subLines, { clipPath: MASK_HIDDEN_BOTTOM, y: 14, opacity: 0.35, filter: 'blur(6px)' });
         gsap.set(section, { '--stage-tone': 0 });
         gsap.set(document.documentElement, { '--logo-invert': 1 });
-
-        const getSpotRadius = () => Math.min(window.innerWidth * 0.52, 580);
 
         const getPinDistance = () => {
           const revealDistance = window.innerHeight * 0.9;
@@ -235,7 +228,7 @@ export default function Transition() {
             spotlightVeil,
             {
               '--spot-x': () => getSpotPath()[0]?.x ?? 50,
-              '--spot-y': () => getSpotPath()[0]?.y ?? 40,
+              '--spot-y': () => getSpotPath()[0]?.y ?? 65,
             },
             spotlightStart,
           )

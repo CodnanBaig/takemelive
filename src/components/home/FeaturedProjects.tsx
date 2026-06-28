@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, type MouseEvent } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { animateMaskReveal, setMaskHidden } from '@/lib/maskReveal';
-import { FEATURED_PROJECTS, getPosterTitle } from '@/content/featuredProjects';
+import { getPosterTitle, type FeaturedProject } from '@/content/featuredProjects';
 import { resolveProjectCover } from '@/lib/projectMedia';
 import styles from './FeaturedProjects.module.scss';
 
-const FALLBACK_IMAGE_SRC = FEATURED_PROJECTS[0]
-  ? resolveProjectCover(FEATURED_PROJECTS[0])
-  : '';
+type FeaturedProjectsProps = {
+  projects: FeaturedProject[];
+};
 
 type StackMetrics = {
   cardWidth: number;
@@ -64,7 +64,8 @@ function computeMobileStackMetrics(stageWidth: number, stageHeight: number, coun
   };
 }
 
-export default function FeaturedProjects() {
+export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
+  const fallbackImageSrc = projects[0] ? resolveProjectCover(projects[0]) : '';
   const router = useRouter();
   const sectionRef = useRef<HTMLElement | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
@@ -77,7 +78,7 @@ export default function FeaturedProjects() {
   const selectedCardRef = useRef<HTMLAnchorElement | null>(null);
   const selectedHrefRef = useRef<string | null>(null);
   const selectedIndexRef = useRef<number | null>(null);
-  const projectCount = FEATURED_PROJECTS.length;
+  const projectCount = projects.length;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -638,7 +639,7 @@ export default function FeaturedProjects() {
 
         <div className={styles.stage} ref={stageRef}>
           <div className={styles.stack} ref={stackRef}>
-            {FEATURED_PROJECTS.map((project, index) => (
+            {projects.map((project, index) => (
               <Link
                 key={project.slug}
                 href={`/projects/${project.slug}`}
@@ -658,8 +659,8 @@ export default function FeaturedProjects() {
                     loading={index < 2 ? 'eager' : 'lazy'}
                     onError={(event) => {
                       const target = event.currentTarget;
-                      if (target.src !== FALLBACK_IMAGE_SRC) {
-                        target.src = FALLBACK_IMAGE_SRC;
+                      if (target.src !== fallbackImageSrc && fallbackImageSrc) {
+                        target.src = fallbackImageSrc;
                       }
                     }}
                   />

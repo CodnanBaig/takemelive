@@ -65,6 +65,12 @@
   overflow: hidden;
 }
 
+.main :global(section[data-chapter='event-gallery']),
+.main :global(section[data-chapter='industries']) {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
 .main :global([data-scroll-shift]) {
   will-change: transform;
 }

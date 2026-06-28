@@ -1,18 +1,23 @@
-/* Impeccable · Team section · brand register · reference: Truck'N Roll culture energy
- * states: reveal · scroll-scrub · hover · reduced-motion
- * critique: P4 H4 E4 S4 R4 V4
+/* Impeccable · Team section · brand register
+ * masthead: 2-line headline
+ * cards: index rail · body · image column
  */
+
 .section {
   --team-ink: #f5f5f0;
-  --team-muted: rgb(245 245 240 / 0.7);
-  --team-line: rgb(245 245 240 / 0.16);
+  --team-muted: rgb(245 245 240 / 0.68);
+  --team-line: rgb(245 245 240 / 0.14);
   --team-accent: var(--tml-accent-bright);
-  --team-paper: var(--tml-black);
-  --team-panel: rgb(255 255 255 / 0.045);
+  --team-panel: rgb(255 255 255 / 0.035);
+  --team-space-xs: 0.5rem;
+  --team-space-sm: 0.75rem;
+  --team-space-md: 1.25rem;
+  --team-space-lg: clamp(1.75rem, 3.5vh, 2.75rem);
 
   position: relative;
   min-height: 100vh;
-  padding: clamp(5rem, 9vh, 8rem) 0;
+  scroll-margin-top: 5rem;
+  padding: clamp(5.75rem, 10vh, 7.5rem) 0 clamp(4rem, 7vh, 5.5rem);
   overflow: clip;
   color: var(--team-ink);
   background: var(--tml-black);
@@ -23,12 +28,12 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.2;
+  opacity: 0.16;
   background:
     linear-gradient(90deg, rgb(245 245 240 / 0.05) 1px, transparent 1px),
     linear-gradient(rgb(245 245 240 / 0.035) 1px, transparent 1px);
   background-size: 72px 72px;
-  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
 }
 
 .inner {
@@ -37,106 +42,57 @@
   width: min(92vw, 1280px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.4rem, 3vh, 2.4rem);
-  align-items: stretch;
+  gap: var(--team-space-lg);
 }
 
 .masthead {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.42fr);
-  gap: clamp(1rem, 3vw, 3rem);
-  align-items: end;
-  padding-bottom: clamp(0.5rem, 1.5vh, 1rem);
-}
-
-.kicker {
-  grid-column: 1 / -1;
-  margin: 0;
-  color: var(--tml-accent-bright);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  will-change: clip-path;
+  padding-bottom: var(--team-space-md);
+  border-bottom: 1px solid var(--team-line);
 }
 
 .headline {
   margin: 0;
   min-width: 0;
-  max-width: 14ch;
+  width: max-content;
+  max-width: 100%;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(2.8rem, 8vw, 6rem);
+  font-size: clamp(2.4rem, 5.6vw, 4.85rem);
   font-weight: var(--tml-display-weight);
-  line-height: 0.88;
-  letter-spacing: -0.01em;
+  line-height: 0.9;
+  letter-spacing: 0.012em;
   text-transform: uppercase;
-  overflow-wrap: break-word;
 }
 
-.headline span {
+.headlineLine {
   display: block;
   overflow: hidden;
+  white-space: nowrap;
   will-change: clip-path;
 }
 
-.intro,
-.valueChip,
 .board,
 .heroMedia,
 .roleCard {
   will-change: clip-path;
 }
 
-.summary {
-  display: grid;
-  align-content: end;
-  min-width: 0;
-}
-
-.intro {
-  margin: 0;
-  max-width: 34ch;
-  color: rgb(245 245 240 / 0.8);
-  font-size: clamp(1rem, 1.35vw, 1.22rem);
-  line-height: 1.6;
-}
-
-.values {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-}
-
-.valueChip {
-  padding: 0.46rem 0.72rem;
-  border: 1px solid var(--team-line);
-  border-radius: 999px;
-  color: rgb(245 245 240 / 0.9);
-  background: rgb(255 255 255 / 0.035);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .board {
   display: grid;
-  grid-template-columns: minmax(280px, 0.86fr) minmax(0, 1.14fr);
-  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
+  gap: clamp(1.25rem, 2.4vw, 2rem);
   align-items: stretch;
-  min-height: auto;
+  min-height: clamp(400px, 50vh, 560px);
   perspective: 1200px;
 }
 
 .heroMedia {
   position: relative;
-  min-height: clamp(420px, 56vw, 680px);
+  min-height: 0;
+  height: 100%;
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--team-line);
   background: #0b0c0e;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.28);
 }
 
 .heroMedia img {
@@ -155,8 +111,8 @@
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, transparent 42%, rgb(0 0 0 / 0.68) 100%),
-    linear-gradient(90deg, rgb(45 125 255 / 0.22), transparent 38%);
+    linear-gradient(180deg, transparent 48%, rgb(0 0 0 / 0.72) 100%),
+    linear-gradient(90deg, rgb(45 125 255 / 0.18), transparent 42%);
 }
 
 .heroMedia figcaption {
@@ -168,53 +124,131 @@
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  color: rgb(245 245 240 / 0.76);
-  font-size: 0.7rem;
+  color: rgb(245 245 240 / 0.72);
+  font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .roleStack {
   display: grid;
-  gap: 0.72rem;
+  gap: var(--team-space-sm);
   align-content: stretch;
-  min-width: 0;
+  min-height: 0;
 }
 
 .roleCard {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(104px, 0.32fr) minmax(112px, 0.34fr) minmax(0, 1fr);
-  gap: clamp(0.75rem, 1.5vw, 1.15rem);
+  grid-template-columns: minmax(72px, 0.18fr) minmax(0, 1fr) clamp(96px, 14vw, 128px);
   align-items: stretch;
-  min-height: 0;
-  padding: clamp(0.72rem, 1.2vw, 1rem);
+  min-height: clamp(108px, 14vh, 132px);
+  overflow: hidden;
   border: 1px solid var(--team-line);
-  background:
-    linear-gradient(135deg, rgb(245 245 240 / 0.07), rgb(245 245 240 / 0.022)),
-    var(--team-panel);
+  background: var(--team-panel);
   transform-style: preserve-3d;
   will-change: transform, opacity;
   transition:
-    border-color 220ms ease,
-    background 220ms ease,
-    box-shadow 260ms ease;
+    border-color 220ms var(--tml-ease-out),
+    background 220ms var(--tml-ease-out);
 }
 
 .roleCard:hover {
-  border-color: rgb(45 125 255 / 0.45);
-  background:
-    linear-gradient(135deg, rgb(45 125 255 / 0.12), rgb(245 245 240 / 0.035)),
-    var(--team-panel);
-  box-shadow: 0 8px 20px rgb(0 0 0 / 0.22);
+  border-color: rgb(45 125 255 / 0.4);
+  background: rgb(45 125 255 / 0.07);
+}
+
+.roleLead {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.85rem 0.65rem 0.85rem 0.85rem;
+  border-right: 1px solid var(--team-line);
+  background: rgb(0 0 0 / 0.22);
+}
+
+.roleIndex {
+  font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: var(--tml-display-weight);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--team-accent);
+}
+
+.roleValue {
+  color: rgb(245 245 240 / 0.55);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.roleBody {
+  display: grid;
+  align-content: center;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 0.85rem 1rem;
+}
+
+.roleField {
+  margin: 0;
+  color: var(--team-muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.roleCard h3 {
+  margin: 0;
+  font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
+  font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+  font-weight: var(--tml-display-weight);
+  line-height: 0.96;
+  letter-spacing: 0.008em;
+  text-transform: uppercase;
+}
+
+.roleNote {
+  margin: 0;
+  max-width: 36ch;
+  color: rgb(245 245 240 / 0.7);
+  font-size: clamp(0.8rem, 0.9vw, 0.88rem);
+  line-height: 1.45;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  padding: 0;
+  margin: 0.15rem 0 0;
+  list-style: none;
+}
+
+.tagList li {
+  padding: 0.18rem 0.38rem;
+  border: 1px solid rgb(245 245 240 / 0.1);
+  color: rgb(245 245 240 / 0.62);
+  background: rgb(0 0 0 / 0.24);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .roleImage {
   position: relative;
-  min-width: 0;
+  min-height: 0;
   margin: 0;
   overflow: hidden;
+  border-left: 1px solid var(--team-line);
   background: #111;
 }
 
@@ -222,179 +256,80 @@
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 136px;
   object-fit: cover;
   filter: saturate(0.88) contrast(1.08);
   will-change: transform;
 }
 
-.roleMeta {
-  display: grid;
-  align-content: space-between;
-  justify-content: stretch;
-  gap: 1rem;
-  margin: 0;
-  color: var(--team-muted);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.roleMeta span:first-child {
-  color: var(--team-accent);
-}
-
-.roleCopy {
-  display: grid;
-  align-content: start;
-  gap: 0.5rem;
-  min-width: 0;
-}
-
-.roleCard h3 {
-  margin: 0;
-  font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(1.5rem, 2.6vw, 2.6rem);
-  font-weight: var(--tml-display-weight);
-  line-height: 0.95;
-  letter-spacing: 0.006em;
-  text-transform: uppercase;
-}
-
-.roleCard p {
-  margin: 0;
-  max-width: 42ch;
-  color: rgb(245 245 240 / 0.76);
-  font-size: clamp(0.92rem, 1vw, 1rem);
-  line-height: 1.5;
-}
-
-.tagList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.38rem;
-  padding: 0;
-  margin: 0.1rem 0 0;
-  list-style: none;
-}
-
-.tagList li {
-  padding: 0.28rem 0.46rem;
-  border: 1px solid rgb(245 245 240 / 0.12);
-  color: rgb(245 245 240 / 0.72);
-  background: rgb(0 0 0 / 0.18);
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 @media (max-width: 1020px) {
-  .masthead,
   .board {
     grid-template-columns: 1fr;
-  }
-
-  .headline {
-    max-width: 12ch;
-  }
-
-  .intro {
-    max-width: 54ch;
+    min-height: 0;
   }
 
   .heroMedia {
-    min-height: clamp(300px, 54vw, 480px);
-  }
-
-  .roleCard {
-    grid-template-columns: minmax(136px, 0.34fr) minmax(0, 1fr);
-  }
-
-  .roleImage {
-    grid-row: span 2;
-  }
-
-  .roleMeta {
-    grid-template-columns: auto 1fr;
-    align-content: start;
-    justify-content: start;
-    gap: 0.7rem;
-  }
-
-  .roleCopy {
-    grid-column: 2;
+    min-height: clamp(280px, 48vw, 420px);
+    height: auto;
   }
 }
 
 @media (max-width: 720px) {
   .section {
     min-height: 0;
-    padding: clamp(4.25rem, 8vh, 5.75rem) 0;
+    padding: clamp(5rem, 9vh, 6.5rem) 0 clamp(3.5rem, 6vh, 4.5rem);
   }
 
   .inner {
     width: min(92vw, 680px);
+    gap: clamp(1.5rem, 3vh, 2rem);
   }
 
   .headline {
-    font-size: clamp(2.7rem, 14vw, 4.9rem);
-    line-height: 0.9;
-  }
-
-  .values {
-    gap: 0.45rem;
-  }
-
-  .valueChip {
-    font-size: 0.68rem;
+    font-size: clamp(2.15rem, 10.5vw, 3.6rem);
   }
 
   .roleCard {
-    grid-template-columns: minmax(86px, 0.34fr) minmax(0, 1fr);
+    grid-template-columns: 3.5rem minmax(0, 1fr) clamp(72px, 20vw, 96px);
+    min-height: 0;
   }
 
-  .roleImage {
-    grid-row: span 2;
+  .roleLead {
+    padding: 0.65rem 0.5rem 0.65rem 0.65rem;
   }
 
-  .roleMeta {
-    grid-template-columns: auto 1fr;
-    align-content: start;
-    justify-content: start;
-    gap: 0.7rem;
+  .roleValue {
+    display: none;
   }
 
-  .roleCopy {
-    grid-column: 2;
-  }
-
-  .tagList {
-    gap: 0.3rem;
+  .roleBody {
+    padding: 0.65rem 0.75rem;
   }
 
   .tagList li {
-    font-size: 0.6rem;
-    padding: 0.22rem 0.38rem;
-  }
-}
-
-@media (max-width: 420px) {
-  .roleCard {
-    grid-template-columns: 1fr;
-  }
-
-  .roleImage {
-    grid-row: auto;
-    aspect-ratio: 16 / 9;
-  }
-
-  .roleCopy {
-    grid-column: auto;
+    font-size: 0.52rem;
+    padding: 0.16rem 0.3rem;
   }
 
   .heroMedia figcaption {
     display: grid;
+    gap: 0.35rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .headlineLine {
+    white-space: normal;
+  }
+
+  .roleCard {
+    grid-template-columns: 3rem 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .roleImage {
+    grid-column: 1 / -1;
+    border-left: none;
+    border-top: 1px solid var(--team-line);
+    aspect-ratio: 16 / 7;
   }
 }

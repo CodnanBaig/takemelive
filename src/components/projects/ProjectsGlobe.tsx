@@ -4,13 +4,17 @@ import { useEffect, useMemo, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import DomeGallery, { type DomeGalleryApi } from '@/components/dome-gallery/DomeGallery';
-import { FEATURED_PROJECTS } from '@/content/featuredProjects';
+import type { FeaturedProject } from '@/content/featuredProjects';
 import { resolveProjectCover } from '@/lib/projectMedia';
 import styles from './ProjectsGlobe.module.scss';
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
-export default function ProjectsGlobe() {
+type ProjectsGlobeProps = {
+  projects: FeaturedProject[];
+};
+
+export default function ProjectsGlobe({ projects }: ProjectsGlobeProps) {
   const domeRef = useRef<DomeGalleryApi | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const jiggleStateRef = useRef({
@@ -20,13 +24,13 @@ export default function ProjectsGlobe() {
   });
 
   const globeItems = useMemo(() => {
-    const ten = Array.from({ length: 10 }, (_, i) => FEATURED_PROJECTS[i % FEATURED_PROJECTS.length]);
+    const ten = Array.from({ length: 10 }, (_, i) => projects[i % projects.length]);
     return ten.map((project) => ({
       src: resolveProjectCover(project),
       alt: project.title,
       href: `/projects/${project.slug}`,
     }));
-  }, []);
+  }, [projects]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);

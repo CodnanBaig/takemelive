@@ -105,7 +105,6 @@ export default function WhatWeDo() {
       <div className={styles.inner}>
         <div className={styles.content}>
           <div className={styles.copy}>
-            <p className={styles.kicker}>Manifesto</p>
             <h2 ref={titleRef} data-scroll-shift>
               IMMERSIVE EXPERIENCES BUILT TO STAY WITH PEOPLE.
             </h2>

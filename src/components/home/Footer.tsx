@@ -4,17 +4,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
-import { FEATURED_PROJECTS } from '@/content/featuredProjects';
-import ScrollOrnament from './ScrollOrnament';
+import type { FeaturedProject } from '@/content/featuredProjects';
 import styles from './Footer.module.scss';
 
 const MARQUEE_ITEMS = Array.from({ length: 18 }, (_, index) => `item-${index}`);
 const SITE_LINKS = [
   { label: 'Home', href: '#chapter-hero' },
+  { label: 'Our Projects', href: '/our-projects' },
   { label: 'Services', href: '#chapter-services' },
   { label: 'Industries', href: '#chapter-industries' },
   { label: 'Team', href: '#chapter-team' },
-  { label: 'Contact', href: '#chapter-cta' },
+  { label: 'Contact', href: '/contact' },
 ] as const;
 
 const CONTACT_LINKS = [
@@ -22,7 +22,11 @@ const CONTACT_LINKS = [
   { label: 'Instagram', href: 'https://www.instagram.com/takemelive' },
 ] as const;
 
-export default function Footer() {
+type FooterProps = {
+  projects: FeaturedProject[];
+};
+
+export default function Footer({ projects }: FooterProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const lightTrackRef = useRef<HTMLDivElement | null>(null);
   const darkTrackRef = useRef<HTMLDivElement | null>(null);
@@ -53,8 +57,8 @@ export default function Footer() {
       }
 
       const boost = Math.abs(velocityBoost);
-      lightX += scrollDirection * (-0.28 - boost * 0.085);
-      darkX += scrollDirection * (0.6 + boost * 0.085);
+      lightX += scrollDirection * (-0.22 - boost * 0.065);
+      darkX += scrollDirection * (0.48 + boost * 0.065);
 
       lightX = gsap.utils.wrap(-lightLoopWidth, 0, lightX);
       darkX = gsap.utils.wrap(-darkLoopWidth, 0, darkX);
@@ -79,37 +83,55 @@ export default function Footer() {
       }
     };
 
-    const visibilitySt = ScrollTrigger.create({
-      trigger: section,
-      start: 'top bottom',
-      end: 'bottom top',
-      onEnter: startTicker,
-      onEnterBack: startTicker,
-      onLeave: stopTicker,
-      onLeaveBack: stopTicker,
-    });
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
 
-    const st = ScrollTrigger.create({
-      trigger: section,
-      start: 'top bottom',
-      end: 'bottom top',
-      onUpdate(self) {
-        const raw = self.getVelocity() / 170;
-        velocityBoost = gsap.utils.clamp(-10, 10, raw);
-        if (Math.abs(raw) > 0.01) {
-          scrollDirection = raw > 0 ? 1 : -1;
-        } else {
-          scrollDirection = self.direction >= 0 ? 1 : -1;
-        }
-      },
-    });
+      mm.add('(prefers-reduced-motion: reduce)', () => {
+        gsap.set([lightTrack, darkTrack], { x: 0 });
+        stopTicker();
+      });
+
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const visibilitySt = ScrollTrigger.create({
+          trigger: section,
+          start: 'top bottom',
+          end: 'bottom top',
+          onEnter: startTicker,
+          onEnterBack: startTicker,
+          onLeave: stopTicker,
+          onLeaveBack: stopTicker,
+        });
+
+        const st = ScrollTrigger.create({
+          trigger: section,
+          start: 'top bottom',
+          end: 'bottom top',
+          onUpdate(self) {
+            const raw = self.getVelocity() / 170;
+            velocityBoost = gsap.utils.clamp(-10, 10, raw);
+            if (Math.abs(raw) > 0.01) {
+              scrollDirection = raw > 0 ? 1 : -1;
+            } else {
+              scrollDirection = self.direction >= 0 ? 1 : -1;
+            }
+          },
+        });
+
+        return () => {
+          st.kill();
+          visibilitySt.kill();
+          stopTicker();
+        };
+      });
+    }, section);
 
     return () => {
-      st.kill();
-      visibilitySt.kill();
+      ctx.revert();
       stopTicker();
     };
   }, []);
+
+  const year = new Date().getFullYear();
 
   return (
     <footer
@@ -120,7 +142,6 @@ export default function Footer() {
       className={styles.footer}
       aria-label="Footer"
     >
-      <ScrollOrnament variant="glyph-light" position="tr" />
       <div className={styles.marqueeStack}>
         <div className={`${styles.strip} ${styles.stripLight}`} aria-hidden="true">
           <div className={styles.track} ref={lightTrackRef}>
@@ -133,7 +154,7 @@ export default function Footer() {
                   height={28}
                   className={styles.logoLight}
                 />
-                <span>TakeMeLive</span>
+                <span>Take Me Live</span>
               </span>
             ))}
           </div>
@@ -150,7 +171,7 @@ export default function Footer() {
                   height={28}
                   className={styles.logoDark}
                 />
-                <span>TakeMeLive</span>
+                <span>Take Me Live</span>
               </span>
             ))}
           </div>
@@ -158,11 +179,24 @@ export default function Footer() {
       </div>
 
       <div className={styles.body}>
-        <div className={styles.addressGrid}>
-          <article className={styles.linkColumn}>
+        <div className={styles.bodyGrid}>
+          <div className={styles.brandBlock}>
+            <Image
+              src="/assets/ImageToStl.com_TML-primary-logo.png"
+              alt="Take Me Live"
+              width={140}
+              height={42}
+              className={styles.brandLogo}
+            />
+            <p className={styles.brandTagline}>
+              Live experience studio designing immersive environments from concept through show call.
+            </p>
+          </div>
+
+          <nav className={styles.linkColumn} aria-label="Featured projects">
             <h3>Featured Projects</h3>
-            <ul>
-              {FEATURED_PROJECTS.map((project) => (
+            <ul className={styles.projectList}>
+              {projects.map((project) => (
                 <li key={project.slug}>
                   <Link href={`/projects/${project.slug}`} data-cursor="link">
                     {project.title}
@@ -170,39 +204,46 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </article>
-          <article className={styles.linkColumn}>
+          </nav>
+
+          <nav className={styles.linkColumn} aria-label="Site navigation">
             <h3>Site</h3>
             <ul>
               {SITE_LINKS.map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} data-cursor="link">
+                  <Link href={item.href} data-cursor="link">
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
-          </article>
-          <article className={styles.linkColumn}>
+          </nav>
+
+          <nav className={styles.linkColumn} aria-label="Contact">
             <h3>Contact</h3>
             <ul>
               {CONTACT_LINKS.map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} data-cursor="link" {...(item.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                  <a
+                    href={item.href}
+                    data-cursor="link"
+                    {...(item.href.startsWith('http')
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                  >
                     {item.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </article>
+          </nav>
         </div>
 
-        <div className={styles.bottomNav}>
-          {FEATURED_PROJECTS.map((project) => (
-            <a key={project.slug} href={`/projects/${project.slug}`} data-cursor="link">
-              {project.client}
-            </a>
-          ))}
+        <div className={styles.bottomBar}>
+          <p>© {year} Take Me Live. All rights reserved.</p>
+          <Link href="/contact" className={styles.bottomCta} data-cursor="link">
+            Start a project
+          </Link>
         </div>
       </div>
     </footer>

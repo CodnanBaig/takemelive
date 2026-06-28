@@ -35,16 +35,7 @@
 .header {
   display: grid;
   gap: 1rem;
-  max-width: 960px;
-}
-
-.kicker {
-  margin: 0;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: rgb(245 245 240 / 0.68);
+  max-width: 100%;
 }
 
 .heading {
@@ -59,6 +50,7 @@
 
 .headingLine {
   display: block;
+  text-wrap: balance;
 }
 
 .layout {

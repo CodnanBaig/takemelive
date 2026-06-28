@@ -54,7 +54,7 @@
   inset-inline: 0;
   top: var(--manifesto-center);
   transform: translateY(-50%);
-  z-index: 3;
+  z-index: 6;
   padding-inline: clamp(0.75rem, 2vw, 2rem);
   pointer-events: none;
 }
@@ -87,11 +87,11 @@
   white-space: nowrap;
 }
 
-/* Above headline, below sublines — circular hole reveals lit headline */
+/* Circular hole reveals lit subcopy; headline stays above the veil */
 .spotlightVeil {
   --spot-radius: 0px;
   --spot-x: 50;
-  --spot-y: 40;
+  --spot-y: 65;
   position: absolute;
   inset: 0;
   z-index: 5;
@@ -107,7 +107,6 @@
   will-change: opacity, background;
 }
 
-/* Always above the veil so sublines stay readable */
 .subheading {
   position: absolute;
   inset-inline: 0;
@@ -116,7 +115,7 @@
     var(--manifesto-center) + var(--manifesto-size) * 0.92 + var(--manifesto-line-gap) * 0.5 +
       var(--sub-margin)
   );
-  z-index: 6;
+  z-index: 4;
   width: min(78vw, 720px);
   margin: 0 auto;
   display: grid;

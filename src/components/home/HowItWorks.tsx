@@ -12,27 +12,24 @@ const PHASES = [
     shortTitle: 'Discover',
     description: 'Align on intent, audience behavior, and what success should feel like in the room.',
     detail: 'We map the audience, the objective, and the emotional outcome before design decisions start.',
-    image:
-      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Creative team mapping experience strategy on a wall of notes',
+    image: '/assets/BlackPink_MiddleEast-006.webp',
+    alt: 'BLACKPINK stadium production during discovery and show planning',
   },
   {
     title: 'DESIGN',
     shortTitle: 'Design',
     description: 'Shape narrative, visual language, and interaction systems into one coherent experience.',
     detail: 'Story, scenography, digital touchpoints, and flow get built as one visual language.',
-    image:
-      'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Design team reviewing immersive environment concepts in studio',
+    image: '/assets/Maraya_One_Republic-015.webp',
+    alt: 'OneRepublic concert visual design at Maraya Concert Hall',
   },
   {
     title: 'BUILD',
     shortTitle: 'Build',
     description: 'Produce assets, environments, and technical layers with production-grade reliability.',
     detail: 'Fabrication, content, staging, and technical systems are assembled with execution in mind.',
-    image:
-      'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Production crew working across lighting and technical equipment',
+    image: '/assets/PHNTM%20IO.net-02.webp',
+    alt: 'PHNTM immersive environment during technical production and build',
   },
   {
     title: 'GO LIVE',
@@ -46,14 +43,11 @@ const PHASES = [
 ] as const;
 
 const HEADLINE_LINES = [
-  'DISCOVER TO GO',
-  'LIVE,',
-  'BUILT AS ONE',
-  'CONTINUOUS SYSTEM.',
+  'Discover to go live,',
+  'built as one continuous system.',
 ] as const;
 
-const FALLBACK_IMAGE_SRC =
-  'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=80';
+const FALLBACK_IMAGE_SRC = '/assets/IMG_9412.webp';
 
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -209,7 +203,6 @@ export default function HowItWorks() {
       <ScrollOrnament variant="glyph-dark" position="br" />
       <div className={styles.inner}>
         <div className={styles.header}>
-          <p className={styles.kicker}>How It Works</p>
           <h2 className={styles.heading}>
             {HEADLINE_LINES.map((line) => (
               <span key={line} className={styles.headingLine}>

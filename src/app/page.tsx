@@ -16,9 +16,15 @@ import CTA from '@/components/home/CTA';
 import Footer from '@/components/home/Footer';
 import HomeScrollScenes from '@/components/home/HomeScrollScenes';
 import CinematicAtmosphere from '@/components/cinematic/CinematicAtmosphere';
+import { getFeaturedProjects, getShowreelConfig } from '@/lib/content/store';
 import styles from './page.module.scss';
 
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
+  const projects = getFeaturedProjects();
+  const showreel = getShowreelConfig();
+
   return (
     <main id="main-content" className={styles.main} tabIndex={-1}>
       <HomeScrollScenes />
@@ -47,7 +53,7 @@ export default function Home() {
       </div>
 
       <div className={styles.sceneGroup} data-scene="projects" id="scene-projects">
-        <FeaturedProjects />
+        <FeaturedProjects projects={projects} />
       </div>
 
       <div className={styles.sceneGroup} data-scene="scale" id="scene-scale">
@@ -63,13 +69,13 @@ export default function Home() {
       </div>
 
       <div className={styles.sceneGroup} data-scene="showreel" id="scene-showreel">
-        <Showreel />
+        <Showreel showreelConfig={showreel} />
         <Team />
       </div>
 
       <div className={styles.sceneGroup} data-scene="contact" id="scene-contact">
         <CTA />
-        <Footer />
+        <Footer projects={projects} />
       </div>
     </main>
   );

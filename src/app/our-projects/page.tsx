@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import ProjectsGlobe from '@/components/projects/ProjectsGlobe';
-import ProjectsGallery from '@/components/projects/ProjectsGallery';
+import ProjectsCarousel from '@/components/projects/ProjectsCarousel';
+import { getFeaturedProjects } from '@/lib/content/store';
 import styles from './page.module.scss';
 
 export const metadata: Metadata = {
@@ -9,15 +9,14 @@ export const metadata: Metadata = {
     'Browse Take Me Live productions — stadium tours, festivals, brand worlds, and ceremonial live experiences.',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default function OurProjectsPage() {
+  const projects = getFeaturedProjects();
+
   return (
     <main id="main-content" className={styles.page} tabIndex={-1}>
-      <div className={styles.globeStage}>
-        <ProjectsGlobe />
-      </div>
-      <div className={styles.galleryOverlay}>
-        <ProjectsGallery />
-      </div>
+      <ProjectsCarousel projects={projects} />
     </main>
   );
 }

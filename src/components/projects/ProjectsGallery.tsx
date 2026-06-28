@@ -2,11 +2,15 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
-import { FEATURED_PROJECTS } from '@/content/featuredProjects';
+import type { FeaturedProject } from '@/content/featuredProjects';
 import { resolveProjectCover } from '@/lib/projectMedia';
 import styles from './ProjectsGallery.module.scss';
 
-export default function ProjectsGallery() {
+type ProjectsGalleryProps = {
+  projects: FeaturedProject[];
+};
+
+export default function ProjectsGallery({ projects }: ProjectsGalleryProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -58,7 +62,7 @@ export default function ProjectsGallery() {
 
   return (
     <section ref={sectionRef} className={styles.gallery}>
-      {FEATURED_PROJECTS.map((project, index) => (
+      {projects.map((project, index) => (
         <div key={project.slug} className={styles.card} data-project-card>
           <div className={styles.imageWrap}>
             <img src={resolveProjectCover(project)} alt={project.title} data-card-image />

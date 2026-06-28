@@ -2,18 +2,21 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ProjectDetail from '@/components/projects/ProjectDetail';
 import {
-  FEATURED_PROJECTS,
   getAdjacentProjects,
   getFeaturedProjectBySlug,
-} from '@/content/featuredProjects';
+  getFeaturedProjects,
+} from '@/lib/content/store';
 import { resolveProjectCover } from '@/lib/projectMedia';
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return FEATURED_PROJECTS.map((project) => ({ slug: project.slug }));
+  return getFeaturedProjects().map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {

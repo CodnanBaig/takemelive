@@ -25,16 +25,22 @@
   top: clamp(38px, 7vh, 78px);
   z-index: 2;
   min-height: calc(100vh - clamp(38px, 7vh, 78px));
+  min-height: calc(100dvh - clamp(38px, 7vh, 78px));
   display: grid;
-  align-content: center;
+  align-content: start;
+  justify-items: center;
   gap: clamp(1.5rem, 3vh, 2.5rem);
+  padding-block: clamp(1rem, 4vh, 2rem) clamp(1.5rem, 4vh, 2.5rem);
   will-change: opacity, transform;
 }
 
 .header {
   position: relative;
   z-index: 3;
+  width: 100%;
   max-width: min(52ch, 720px);
+  margin-inline: auto;
+  text-align: center;
 }
 
 .kicker {
@@ -51,13 +57,25 @@
   font-family: var(--font-oswald), var(--font-poppins), sans-serif;
   font-size: clamp(2.8rem, 7.2vw, 6rem);
   font-weight: var(--tml-display-weight);
-  line-height: 0.86;
-  letter-spacing: -0.03em;
+  line-height: 1;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
+  text-wrap: balance;
+  display: flex;
+  flex-direction: column;
+  gap: 0.04em;
+}
+
+.titleLineWrap {
+  display: block;
+  overflow: hidden;
+  line-height: 1.08;
+  padding-block: 0.02em 0.1em;
 }
 
 .titleLine {
   display: block;
+  line-height: 1.08;
   will-change: clip-path;
 }
 
@@ -88,9 +106,9 @@
 .backgroundWords span {
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
   font-weight: var(--tml-display-weight);
-  font-size: clamp(3rem, 12vw, 6rem);
-  line-height: 0.88;
-  letter-spacing: -0.03em;
+  font-size: clamp(6rem, 21vw, 18rem);
+  line-height: 0.84;
+  letter-spacing: 0.02em;
   color: rgb(170 170 170 / 0.28);
   text-transform: uppercase;
   user-select: none;

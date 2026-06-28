@@ -13,57 +13,56 @@ import styles from './EventGallery.module.scss';
 
 const IMAGE_ITEMS = [
   {
-    src: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1100&q=80',
-    alt: 'Crowd at a live concert with lights',
+    src: '/assets/BlackPink_MiddleEast-005.webp',
+    alt: 'BLACKPINK stadium production in the Middle East',
     variant: 'topLeft',
     speed: 18,
   },
   {
-    src: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Stage production setup with audience',
+    src: '/assets/Qatar_Live-026.webp',
+    alt: 'Qatar Live festival stage and crowd',
     variant: 'topCenter',
     speed: 14,
   },
   {
-    src: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80',
-    alt: 'Event crowd hands raised under lights',
+    src: '/assets/Lusail_Opening-182.webp',
+    alt: 'Lusail stadium opening ceremony',
     variant: 'topRight',
     speed: 22,
   },
   {
-    src: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80',
-    alt: 'DJ performance with colorful smoke and lighting',
+    src: '/assets/Maraya_One_Republic-025.webp',
+    alt: 'OneRepublic live at Maraya Concert Hall',
     variant: 'midLeft',
     speed: 16,
   },
   {
-    src: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Festival crowd and stage visuals at night',
+    src: '/assets/PHNTM%20DMO-03.webp',
+    alt: 'PHNTM immersive brand activation',
     variant: 'midCenter',
     speed: 20,
   },
   {
-    src: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Packed live show with bright stage lights',
+    src: '/assets/maraya_john_legend-033.webp',
+    alt: 'John Legend performance at Maraya',
     variant: 'midRight',
     speed: 19,
   },
   {
-    src: 'https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Large audience at a night event',
+    src: '/assets/QatarLive_21_MAJIDA-064.webp',
+    alt: 'Majida El Roumi at Qatar Live',
     variant: 'bottomLeft',
     speed: 15,
   },
   {
-    src: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Concert production visuals and stage beams',
+    src: '/assets/Lusail_Opening-159.webp',
+    alt: 'Lusail opening night production visuals',
     variant: 'bottomRight',
     speed: 21,
   },
 ] as const;
 
-const FALLBACK_IMAGE_SRC =
-  'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=80';
+const FALLBACK_IMAGE_SRC = '/assets/Qatar_Live-024.webp';
 
 export default function EventGallery() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -137,7 +136,7 @@ export default function EventGallery() {
                 trigger: section,
                 start: 'top bottom',
                 end: 'bottom top',
-                scrub: true,
+                scrub: 0.75,
                 invalidateOnRefresh: true,
               },
             },
@@ -188,6 +187,19 @@ export default function EventGallery() {
       };
     }, section);
 
+    const refreshParallax = () => {
+      ScrollTrigger.refresh();
+    };
+
+    section.querySelectorAll<HTMLImageElement>('[data-parallax-image]').forEach((image) => {
+      if (image.complete) {
+        return;
+      }
+      image.addEventListener('load', refreshParallax, { once: true });
+    });
+
+    requestAnimationFrame(refreshParallax);
+
     return () => {
       ctx.revert();
     };
@@ -206,11 +218,15 @@ export default function EventGallery() {
       <div className={styles.inner} data-gallery-stage>
         <header className={styles.header}>
           <h2 className={styles.title}>
-            <span className={styles.titleLine} data-title-line>
-              Live at
+            <span className={styles.titleLineWrap}>
+              <span className={styles.titleLine} data-title-line>
+                Live at
+              </span>
             </span>
-            <span className={styles.titleLine} data-title-line>
-              scale
+            <span className={styles.titleLineWrap}>
+              <span className={styles.titleLine} data-title-line>
+                scale
+              </span>
             </span>
           </h2>
         </header>

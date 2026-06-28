@@ -56,7 +56,6 @@ export default function WhyUs() {
       return;
     }
 
-    const eyebrow = section.querySelector<HTMLElement>('[data-eyebrow]');
     const headlineWords = section.querySelectorAll<HTMLElement>('[data-headline-word]');
     const lead = section.querySelector<HTMLElement>('[data-lead]');
     const tickerCurrent = section.querySelector<HTMLElement>('[data-ticker-current]');
@@ -74,7 +73,7 @@ export default function WhyUs() {
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set(
-          [eyebrow, ...Array.from(headlineWords), lead, tickerCurrent, tickerLabel, ...panels],
+          [...Array.from(headlineWords), lead, tickerCurrent, tickerLabel, ...panels],
           { autoAlpha: 1, x: 0, y: 0, yPercent: 0, clearProps: 'all' },
         );
         gsap.set(panels, { autoAlpha: 1, position: 'relative' });
@@ -94,7 +93,6 @@ export default function WhyUs() {
               invalidateOnRefresh: true,
             },
           })
-          .fromTo(eyebrow, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: 'none' }, 0)
           .fromTo(
             headlineWords,
             { yPercent: 110, autoAlpha: 0 },
@@ -297,9 +295,6 @@ export default function WhyUs() {
       <div className={styles.stage} data-stage>
         <div className={styles.grid}>
           <header className={styles.intro}>
-            <p className={styles.kicker} data-eyebrow>
-              Why us
-            </p>
             <h2 className={styles.headline}>
               {['More', 'than', 'a vendor.', 'A live', 'system.'].map((word) => (
                 <span key={word} className={styles.headlineWrap}>

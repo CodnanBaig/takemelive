@@ -7,7 +7,7 @@ import styles from './SiteNav.module.scss';
 const NAV_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'Our Projects', href: '/our-projects' },
-  { label: 'Our Culture', href: '/our-culture' },
+  { label: 'Contact', href: '/contact' },
 ] as const;
 
 export default function SiteNav() {

@@ -40,9 +40,18 @@ const SERVICES = [
 ] as const;
 
 const SERVICE_MEDIA = [
-  'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80',
-  'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1300&q=80',
+  {
+    src: '/assets/Lusail_Opening-156.webp',
+    alt: 'Lusail stadium opening ceremony production',
+  },
+  {
+    src: '/assets/PHNTM%20DMO-13.webp',
+    alt: 'PHNTM immersive brand activation environment',
+  },
+  {
+    src: '/assets/Qatar_Live-028.webp',
+    alt: 'Qatar Live festival stage and audience',
+  },
 ] as const;
 
 export default function Services() {
@@ -242,7 +251,6 @@ export default function Services() {
       </div>
       <div className={styles.inner}>
         <header className={styles.header}>
-          <p className={styles.kicker}>Services</p>
           <h2 data-services-headline>END-TO-END EXPERIENCE CREATION.</h2>
           <p className={styles.intro} data-services-intro>
             From concept to execution, we design and deliver experiences that connect brands with people in meaningful ways.
@@ -252,9 +260,9 @@ export default function Services() {
         </header>
 
         <div className={styles.mediaRail}>
-          {SERVICE_MEDIA.map((src, index) => (
-            <figure key={src} className={styles.mediaCard} data-service-media-card>
-              <img src={src} alt="Services showcase visual" loading="lazy" data-service-media-image />
+          {SERVICE_MEDIA.map((item, index) => (
+            <figure key={item.src} className={styles.mediaCard} data-service-media-card>
+              <img src={item.src} alt={item.alt} loading="lazy" data-service-media-image />
               <figcaption>{`0${index + 1}`}</figcaption>
             </figure>
           ))}
