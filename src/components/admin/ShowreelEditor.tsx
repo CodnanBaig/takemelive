@@ -75,7 +75,7 @@ export default function ShowreelEditor({ initialConfig }: ShowreelEditorProps) {
   return (
     <AdminShell
       title="Homepage showreel"
-      lead="Set the scroll-scrub video and poster used in the homepage showreel section."
+      lead="Set the showreel video and poster used in the homepage showreel section."
     >
       <form onSubmit={(event) => void save(event)} className={styles.stack}>
         <AdminPanel

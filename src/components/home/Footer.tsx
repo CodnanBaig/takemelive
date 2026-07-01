@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { prefersReducedMotion } from '@/lib/motionPrefs';
 import type { FeaturedProject } from '@/content/featuredProjects';
 import styles from './Footer.module.scss';
 
@@ -83,50 +84,30 @@ export default function Footer({ projects }: FooterProps) {
       }
     };
 
-    const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
+    if (prefersReducedMotion()) {
+      gsap.set([lightTrack, darkTrack], { x: 0 });
+      return;
+    }
 
-      mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([lightTrack, darkTrack], { x: 0 });
-        stopTicker();
-      });
+    startTicker();
 
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const visibilitySt = ScrollTrigger.create({
-          trigger: section,
-          start: 'top bottom',
-          end: 'bottom top',
-          onEnter: startTicker,
-          onEnterBack: startTicker,
-          onLeave: stopTicker,
-          onLeaveBack: stopTicker,
-        });
-
-        const st = ScrollTrigger.create({
-          trigger: section,
-          start: 'top bottom',
-          end: 'bottom top',
-          onUpdate(self) {
-            const raw = self.getVelocity() / 170;
-            velocityBoost = gsap.utils.clamp(-10, 10, raw);
-            if (Math.abs(raw) > 0.01) {
-              scrollDirection = raw > 0 ? 1 : -1;
-            } else {
-              scrollDirection = self.direction >= 0 ? 1 : -1;
-            }
-          },
-        });
-
-        return () => {
-          st.kill();
-          visibilitySt.kill();
-          stopTicker();
-        };
-      });
-    }, section);
+    const st = ScrollTrigger.create({
+      trigger: section,
+      start: 'top bottom',
+      end: 'bottom top',
+      onUpdate(self) {
+        const raw = self.getVelocity() / 170;
+        velocityBoost = gsap.utils.clamp(-10, 10, raw);
+        if (Math.abs(raw) > 0.01) {
+          scrollDirection = raw > 0 ? 1 : -1;
+        } else {
+          scrollDirection = self.direction >= 0 ? 1 : -1;
+        }
+      },
+    });
 
     return () => {
-      ctx.revert();
+      st.kill();
       stopTicker();
     };
   }, []);
