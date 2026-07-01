@@ -9,14 +9,14 @@ export default function RouteScrollRefresh() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (pathname === '/contact') {
-      scrollToTop();
-    }
+    history.scrollRestoration = 'manual';
+  }, []);
+
+  useEffect(() => {
+    scrollToTop();
 
     const frame = requestAnimationFrame(() => {
-      if (pathname === '/contact') {
-        scrollToTop();
-      }
+      scrollToTop();
       ScrollTrigger.refresh();
     });
 

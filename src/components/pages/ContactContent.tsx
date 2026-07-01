@@ -8,7 +8,6 @@ import {
   setMaskVisible,
 } from '@/lib/maskReveal';
 import { sectionRevealScroll, sectionSpanScroll } from '@/lib/scrollScene';
-import { scrollToTop } from '@/lib/smoothScroll';
 import type { FeaturedProject } from '@/content/featuredProjects';
 import CinematicAtmosphere from '@/components/cinematic/CinematicAtmosphere';
 import HomeScrollScenes from '@/components/home/HomeScrollScenes';
@@ -134,16 +133,6 @@ export default function ContactContent({ projects }: ContactContentProps) {
   const currentStep = FORM_STEPS[stepIndex];
 
   const progressDots = useMemo(() => FORM_STEPS.length, []);
-
-  useEffect(() => {
-    const previousRestoration = history.scrollRestoration;
-    history.scrollRestoration = 'manual';
-    scrollToTop();
-
-    return () => {
-      history.scrollRestoration = previousRestoration;
-    };
-  }, []);
 
   useEffect(() => {
     const hero = heroRef.current;
