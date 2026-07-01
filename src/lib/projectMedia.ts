@@ -1,11 +1,29 @@
 import type { FeaturedProject } from '@/content/featuredProjects';
 
-/** Path convention for production photography dropped into the repo */
+/** Event folders under public/ — source of truth for project photography */
+export const EVENT_FOLDERS = {
+  blackPink: 'Black Pink Concert',
+  cinemaMedley: 'Cinema Medley',
+  dubaiMedia: 'Dubai Media Annual Gala',
+  ioNet: 'IO Net',
+  lusail: 'Lusail Super Cup',
+  maraya: 'Maraya Concert Series',
+  qatarLive: 'Qatar Live 2021',
+  redBullBasement: 'Red Bull Basement UAE National Finals',
+  redBullEnergy: 'Red Bull Energy Lounge',
+} as const;
+
+/** Build a URL for a file inside a public event folder */
+export function eventImage(folder: string, filename: string): string {
+  return `/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`;
+}
+
+/** @deprecated Use eventImage with EVENT_FOLDERS */
 export function projectMediaPath(slug: string, filename: string): string {
   return `/assets/projects/${slug}/${filename}`;
 }
 
-/** Flat files under public/assets/projects/ (encodes spaces and special chars) */
+/** @deprecated Use eventImage with EVENT_FOLDERS */
 export function projectAsset(filename: string): string {
   return `/assets/projects/${encodeURI(filename)}`;
 }

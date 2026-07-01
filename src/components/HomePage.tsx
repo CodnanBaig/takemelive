@@ -6,6 +6,7 @@ import Link from 'next/link';
 import SyncModal from './SyncModal';
 import LiquidButton from './LiquidButton';
 import HoverReveal from './HoverReveal';
+import { EVENT_FOLDERS, eventImage } from '@/lib/projectMedia';
 import styles from './HomePage.module.css';
 
 export default function HomePage() {
@@ -118,7 +119,7 @@ export default function HomePage() {
       <div 
         className="container-fluid d-flex flex-column min-vh-100"
         style={{
-          background: "linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.65)), url('/assets/Take-Me-Live-Under-Construction.jpg')",
+          background: `linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.65)), url('${eventImage(EVENT_FOLDERS.cinemaMedley, 'cm5.webp')}')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',

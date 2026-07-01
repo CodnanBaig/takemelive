@@ -5,8 +5,11 @@ import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import { MASK_HIDDEN_BOTTOM, MASK_HIDDEN_RIGHT, MASK_VISIBLE } from '@/lib/maskReveal';
 import { sectionRevealScroll } from '@/lib/scrollScene';
+import { EVENT_FOLDERS, eventImage } from '@/lib/projectMedia';
 import ScrollOrnament from './ScrollOrnament';
 import styles from './WhatWeDo.module.scss';
+
+const HERO_IMAGE = eventImage(EVENT_FOLDERS.redBullBasement, 'basement6.webp');
 
 const LINES = [
   'Take Me Live creates bold, immersive environments where brands connect with people in real time.',
@@ -127,8 +130,8 @@ export default function WhatWeDo() {
             aria-label="Live production planning table"
           >
             <Image
-              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80"
-              alt="Crowd at a live concert with stage lights and raised hands"
+              src={HERO_IMAGE}
+              alt="Red Bull Basement national finals production environment"
               fill
               sizes="(max-width: 960px) 92vw, 38vw"
             />

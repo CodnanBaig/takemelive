@@ -7,10 +7,10 @@ import {
   MASK_VISIBLE,
 } from '@/lib/maskReveal';
 import { sectionRevealScroll } from '@/lib/scrollScene';
-import { projectAsset } from '@/lib/projectMedia';
+import { EVENT_FOLDERS, eventImage } from '@/lib/projectMedia';
 import styles from './Team.module.scss';
 
-const HERO_IMAGE = projectAsset('IMG_9410.jpg');
+const HERO_IMAGE = eventImage(EVENT_FOLDERS.redBullEnergy, 'el2.webp');
 
 const TEAM_ROLES = [
   {
@@ -20,7 +20,7 @@ const TEAM_ROLES = [
     field: 'Concept and space',
     note: 'Translate brand intent into visual and spatial systems that feel immediate.',
     tags: ['Concept', 'Visual language', 'Environment'],
-    image: projectAsset('Maraya_One_Republic-030.jpg'),
+    image: eventImage(EVENT_FOLDERS.maraya, 'Maraya_One_Republic-020.webp'),
   },
   {
     code: '02',
@@ -29,7 +29,7 @@ const TEAM_ROLES = [
     field: 'Interaction layer',
     note: 'Build interactions and intelligence that make ambitious ideas truly perform.',
     tags: ['Interactive', 'AI moments', 'Show control'],
-    image: projectAsset('PHOTO-2024-04-18-22-15-27.jpg'),
+    image: eventImage(EVENT_FOLDERS.ioNet, 'io2.webp'),
   },
   {
     code: '03',
@@ -38,7 +38,7 @@ const TEAM_ROLES = [
     field: 'Delivery control',
     note: 'Orchestrate execution with precision from first concept through showtime.',
     tags: ['Crew', 'Vendors', 'Run of show'],
-    image: projectAsset('69 bottom qatar.jpg'),
+    image: eventImage(EVENT_FOLDERS.lusail, 'Lusail_Opening-252.webp'),
   },
 ] as const;
 

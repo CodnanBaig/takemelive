@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import { sectionRevealScroll } from '@/lib/scrollScene';
+import { EVENT_FOLDERS, eventImage } from '@/lib/projectMedia';
 import ScrollOrnament from './ScrollOrnament';
 import styles from './Services.module.scss';
 
@@ -41,15 +42,15 @@ const SERVICES = [
 
 const SERVICE_MEDIA = [
   {
-    src: '/assets/Lusail_Opening-156.webp',
+    src: eventImage(EVENT_FOLDERS.lusail, 'Lusail_Opening-108.webp'),
     alt: 'Lusail stadium opening ceremony production',
   },
   {
-    src: '/assets/PHNTM%20DMO-13.webp',
-    alt: 'PHNTM immersive brand activation environment',
+    src: eventImage(EVENT_FOLDERS.redBullBasement, 'basement4.webp'),
+    alt: 'Red Bull Basement immersive brand activation environment',
   },
   {
-    src: '/assets/Qatar_Live-028.webp',
+    src: eventImage(EVENT_FOLDERS.qatarLive, 'Qatar_Live-028.webp'),
     alt: 'Qatar Live festival stage and audience',
   },
 ] as const;

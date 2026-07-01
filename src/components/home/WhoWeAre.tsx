@@ -8,15 +8,16 @@ import {
   MASK_VISIBLE,
 } from '@/lib/maskReveal';
 import { sectionRevealScroll } from '@/lib/scrollScene';
+import { EVENT_FOLDERS, eventImage } from '@/lib/projectMedia';
 import styles from './WhoWeAre.module.scss';
 
 const GROUP_IMAGE = {
-  src: '/assets/IMG_0304.webp',
+  src: eventImage(EVENT_FOLDERS.redBullEnergy, 'el3.webp'),
   alt: 'Take Me Live crew on a large-scale live production',
   speed: 16,
 };
 
-const FALLBACK_IMAGE_SRC = '/assets/IMG_3571.webp';
+const FALLBACK_IMAGE_SRC = eventImage(EVENT_FOLDERS.dubaiMedia, 'dm2.webp');
 
 const HEADLINE_LINES = [
   { id: 'lead', text: 'Squad of' },

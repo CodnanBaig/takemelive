@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { sectionRevealScroll } from '@/lib/scrollScene';
+import { EVENT_FOLDERS, eventImage } from '@/lib/projectMedia';
 import ScrollOrnament from './ScrollOrnament';
 import styles from './HowItWorks.module.scss';
 
@@ -12,7 +13,7 @@ const PHASES = [
     shortTitle: 'Discover',
     description: 'Align on intent, audience behavior, and what success should feel like in the room.',
     detail: 'We map the audience, the objective, and the emotional outcome before design decisions start.',
-    image: '/assets/BlackPink_MiddleEast-006.webp',
+    image: eventImage(EVENT_FOLDERS.blackPink, 'bp4.webp'),
     alt: 'BLACKPINK stadium production during discovery and show planning',
   },
   {
@@ -20,7 +21,7 @@ const PHASES = [
     shortTitle: 'Design',
     description: 'Shape narrative, visual language, and interaction systems into one coherent experience.',
     detail: 'Story, scenography, digital touchpoints, and flow get built as one visual language.',
-    image: '/assets/Maraya_One_Republic-015.webp',
+    image: eventImage(EVENT_FOLDERS.maraya, 'Maraya_One_Republic-010.webp'),
     alt: 'OneRepublic concert visual design at Maraya Concert Hall',
   },
   {
@@ -28,17 +29,16 @@ const PHASES = [
     shortTitle: 'Build',
     description: 'Produce assets, environments, and technical layers with production-grade reliability.',
     detail: 'Fabrication, content, staging, and technical systems are assembled with execution in mind.',
-    image: '/assets/PHNTM%20IO.net-02.webp',
-    alt: 'PHNTM immersive environment during technical production and build',
+    image: eventImage(EVENT_FOLDERS.ioNet, 'io3.webp'),
+    alt: 'IO Net immersive environment during technical production and build',
   },
   {
     title: 'GO LIVE',
     shortTitle: 'Go Live',
     description: 'Launch, operate, and optimize in real time with a single accountable execution team.',
     detail: 'The final experience goes live with on-ground control, iteration, and measurable delivery.',
-    image:
-      'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Live event atmosphere with audience and stage lights in motion',
+    image: eventImage(EVENT_FOLDERS.lusail, 'Lusail_Opening-326.webp'),
+    alt: 'Lusail Super Cup live stadium production at go-live',
   },
 ] as const;
 
@@ -47,7 +47,7 @@ const HEADLINE_LINES = [
   'built as one continuous system.',
 ] as const;
 
-const FALLBACK_IMAGE_SRC = '/assets/IMG_9412.webp';
+const FALLBACK_IMAGE_SRC = eventImage(EVENT_FOLDERS.cinemaMedley, 'cm7.webp');
 
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement | null>(null);

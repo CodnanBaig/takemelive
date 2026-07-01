@@ -9,60 +9,61 @@ import {
   setMaskHidden,
 } from '@/lib/maskReveal';
 import { sectionRevealScroll } from '@/lib/scrollScene';
+import { EVENT_FOLDERS, eventImage } from '@/lib/projectMedia';
 import styles from './EventGallery.module.scss';
 
 const IMAGE_ITEMS = [
   {
-    src: '/assets/BlackPink_MiddleEast-005.webp',
+    src: eventImage(EVENT_FOLDERS.blackPink, 'bp3.webp'),
     alt: 'BLACKPINK stadium production in the Middle East',
     variant: 'topLeft',
     speed: 18,
   },
   {
-    src: '/assets/Qatar_Live-026.webp',
+    src: eventImage(EVENT_FOLDERS.qatarLive, 'Qatar_Live-039.webp'),
     alt: 'Qatar Live festival stage and crowd',
     variant: 'topCenter',
     speed: 14,
   },
   {
-    src: '/assets/Lusail_Opening-182.webp',
+    src: eventImage(EVENT_FOLDERS.lusail, 'Lusail_Opening-298.webp'),
     alt: 'Lusail stadium opening ceremony',
     variant: 'topRight',
     speed: 22,
   },
   {
-    src: '/assets/Maraya_One_Republic-025.webp',
+    src: eventImage(EVENT_FOLDERS.maraya, 'Maraya_One_Republic-014.webp'),
     alt: 'OneRepublic live at Maraya Concert Hall',
     variant: 'midLeft',
     speed: 16,
   },
   {
-    src: '/assets/PHNTM%20DMO-03.webp',
-    alt: 'PHNTM immersive brand activation',
+    src: eventImage(EVENT_FOLDERS.redBullBasement, 'basement2.webp'),
+    alt: 'Red Bull Basement immersive brand activation',
     variant: 'midCenter',
     speed: 20,
   },
   {
-    src: '/assets/maraya_john_legend-033.webp',
+    src: eventImage(EVENT_FOLDERS.maraya, 'maraya_john_legend-033.webp'),
     alt: 'John Legend performance at Maraya',
     variant: 'midRight',
     speed: 19,
   },
   {
-    src: '/assets/QatarLive_21_MAJIDA-064.webp',
+    src: eventImage(EVENT_FOLDERS.qatarLive, 'QatarLive_21_MAJIDA-175.webp'),
     alt: 'Majida El Roumi at Qatar Live',
     variant: 'bottomLeft',
     speed: 15,
   },
   {
-    src: '/assets/Lusail_Opening-159.webp',
+    src: eventImage(EVENT_FOLDERS.lusail, 'Lusail_Opening-159.webp'),
     alt: 'Lusail opening night production visuals',
     variant: 'bottomRight',
     speed: 21,
   },
 ] as const;
 
-const FALLBACK_IMAGE_SRC = '/assets/Qatar_Live-024.webp';
+const FALLBACK_IMAGE_SRC = eventImage(EVENT_FOLDERS.qatarLive, 'Qatar_Live-028.webp');
 
 export default function EventGallery() {
   const sectionRef = useRef<HTMLElement | null>(null);
