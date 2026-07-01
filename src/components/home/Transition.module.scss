@@ -54,7 +54,7 @@
   inset-inline: 0;
   top: var(--manifesto-center);
   transform: translateY(-50%);
-  z-index: 6;
+  z-index: 4;
   padding-inline: clamp(0.75rem, 2vw, 2rem);
   pointer-events: none;
 }
@@ -87,11 +87,12 @@
   white-space: nowrap;
 }
 
-/* Circular hole reveals lit subcopy; headline stays above the veil */
+/* Circular hole reveals lit manifesto + subcopy beneath the dark veil */
 .spotlightVeil {
   --spot-radius: 0px;
   --spot-x: 50;
   --spot-y: 65;
+  --spot-feather: 44%;
   position: absolute;
   inset: 0;
   z-index: 5;
@@ -100,7 +101,7 @@
   background: radial-gradient(
     circle var(--spot-radius) at calc(var(--spot-x) * 1%) calc(var(--spot-y) * 1%),
     transparent 0%,
-    transparent 44%,
+    transparent var(--spot-feather),
     rgb(0 0 0 / 0.88) 68%,
     rgb(0 0 0 / 0.98) 100%
   );
@@ -156,7 +157,7 @@
 
 @media (max-width: 900px) {
   .stage {
-    --manifesto-size: clamp(2.35rem, 11.5vw, 6.5rem);
+    --manifesto-size: clamp(2.35rem, 11.5vw, 6rem);
   }
 }
 

@@ -32,5 +32,27 @@
   --tml-z-rail: 55; /* scene progress bar */
   --tml-z-nav: 60;
 
+  /* Fixed logo anchor: top offset + rendered logo height + breathing room before section copy */
+  --tml-logo-top: max(clamp(16px, 2.2vw, 28px), env(safe-area-inset-top, 0px));
+  --tml-logo-width: clamp(128px, 13vw, 220px);
+  --tml-logo-height: calc(var(--tml-logo-width) * 615 / 1500);
+  --tml-logo-gap: clamp(1.35rem, 3.2vh, 2.35rem);
+  --tml-logo-clearance: calc(var(--tml-logo-top) + var(--tml-logo-height) + var(--tml-logo-gap));
+
   --tml-scene-min-height: 100dvh;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --tml-logo-top: max(14px, env(safe-area-inset-top, 0px));
+    --tml-logo-width: clamp(116px, 26vw, 176px);
+    --tml-logo-gap: clamp(1rem, 2.5vh, 1.75rem);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --tml-logo-width: clamp(100px, 30vw, 132px);
+    --tml-logo-gap: clamp(0.85rem, 2vh, 1.25rem);
+  }
 }

@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './admin.module.scss';
 
 export default function AdminLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [email, setEmail] = useState('admin@tml.com');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -38,42 +39,67 @@ export default function AdminLoginForm() {
 
   return (
     <div className={styles.loginPage}>
-      <form className={styles.loginCard} onSubmit={(event) => void handleSubmit(event)}>
-        <div>
-          <h1 className={styles.loginTitle}>Admin sign in</h1>
-          <p className={styles.loginLead}>Manage projects, media, and the homepage showreel.</p>
-        </div>
+      <div className={styles.loginGlow} aria-hidden />
 
-        <label className={styles.field}>
-          <span className={styles.label}>Email</span>
-          <input
-            className={styles.input}
-            type="email"
-            autoComplete="username"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
+      <main className={styles.loginMain}>
+        <header className={styles.loginIntro}>
+          <Image
+            className={styles.loginLogo}
+            src="/assets/ImageToStl.com_TML-primary-logo.png"
+            alt="Take Me Live"
+            width={220}
+            height={64}
+            priority
           />
-        </label>
+          <p className={styles.loginIntroCopy}>
+            Manage projects, media, and the homepage showreel.
+          </p>
+        </header>
 
-        <label className={styles.field}>
-          <span className={styles.label}>Password</span>
-          <input
-            className={styles.input}
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-        </label>
+        <form className={styles.loginCard} onSubmit={(event) => void handleSubmit(event)}>
+          <div className={styles.loginCardHeader}>
+            <h1 className={styles.loginTitle}>Sign in</h1>
+            <p className={styles.loginLead}>Use your admin credentials to continue.</p>
+          </div>
 
-        {error ? <p className={styles.statusError}>{error}</p> : null}
+          <div className={styles.loginFields}>
+            <label className={styles.field}>
+              <span className={styles.label}>Email</span>
+              <input
+                className={styles.input}
+                type="email"
+                autoComplete="username"
+                placeholder="you@takemelive.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+              />
+            </label>
 
-        <button type="submit" className={styles.buttonPrimary} disabled={loading}>
-          {loading ? 'Signing in…' : 'Sign in'}
-        </button>
-      </form>
+            <label className={styles.field}>
+              <span className={styles.label}>Password</span>
+              <input
+                className={styles.input}
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+              />
+            </label>
+          </div>
+
+          {error ? (
+            <p className={styles.statusError} role="alert">
+              {error}
+            </p>
+          ) : null}
+
+          <button type="submit" className={styles.buttonPrimary} disabled={loading}>
+            {loading ? 'Signing in…' : 'Sign in'}
+          </button>
+        </form>
+      </main>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import type { ShowreelConfig } from '@/lib/content/types';
 
-export const SHOWREEL_LOCAL_SRC = '/assets/showreel.mp4';
+export const SHOWREEL_LOCAL_SRC = '/IMG_1003_optimized.mp4';
 
 export function pickShowreelVideo(config: ShowreelConfig, exclude?: string): string {
   if (config.primaryVideo.trim()) {

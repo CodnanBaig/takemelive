@@ -137,13 +137,12 @@ export default function Footer({ projects }: FooterProps) {
     <footer
       id="chapter-footer"
       data-chapter="footer"
-      data-logo-invert="1"
       ref={sectionRef}
       className={styles.footer}
       aria-label="Footer"
     >
       <div className={styles.marqueeStack}>
-        <div className={`${styles.strip} ${styles.stripLight}`} aria-hidden="true">
+        <div className={`${styles.strip} ${styles.stripLight}`} data-logo-invert="0" aria-hidden="true">
           <div className={styles.track} ref={lightTrackRef}>
             {repeatedItems.map((item, index) => (
               <span key={`light-${item}-${index}`} className={styles.marqueeItem}>
@@ -160,7 +159,7 @@ export default function Footer({ projects }: FooterProps) {
           </div>
         </div>
 
-        <div className={`${styles.strip} ${styles.stripDark}`} aria-hidden="true">
+        <div className={`${styles.strip} ${styles.stripDark}`} data-logo-invert="1" aria-hidden="true">
           <div className={styles.track} ref={darkTrackRef}>
             {repeatedItems.map((item, index) => (
               <span key={`dark-${item}-${index}`} className={styles.marqueeItem}>
@@ -178,7 +177,7 @@ export default function Footer({ projects }: FooterProps) {
         </div>
       </div>
 
-      <div className={styles.body}>
+      <div className={styles.body} data-logo-invert="1">
         <div className={styles.bodyGrid}>
           <div className={styles.brandBlock}>
             <Image

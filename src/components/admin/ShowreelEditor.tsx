@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { ShowreelConfig } from '@/lib/content/types';
 import AdminShell, { AdminPanel } from '@/components/admin/AdminShell';
+import { IconUpload } from '@/components/admin/AdminIcons';
 import styles from '@/components/admin/admin.module.scss';
 
 type ShowreelEditorProps = {
@@ -76,8 +77,11 @@ export default function ShowreelEditor({ initialConfig }: ShowreelEditorProps) {
       title="Homepage showreel"
       lead="Set the scroll-scrub video and poster used in the homepage showreel section."
     >
-      <form onSubmit={(event) => void save(event)}>
-        <AdminPanel>
+      <form onSubmit={(event) => void save(event)} className={styles.stack}>
+        <AdminPanel
+          title="Video source"
+          description="The homepage showreel uses the local file when present, otherwise the primary URL or fallback pool."
+        >
           <div className={styles.grid2}>
             <label className={styles.field}>
               <span className={styles.label}>Primary video URL</span>
@@ -123,21 +127,24 @@ export default function ShowreelEditor({ initialConfig }: ShowreelEditorProps) {
 
             <div className={styles.field}>
               <span className={styles.label}>Upload local MP4</span>
-              <label className={styles.buttonGhost}>
-                Choose video file
-                <input
-                  hidden
-                  type="file"
-                  accept="video/mp4,video/webm"
-                  onChange={(event) => {
-                    const file = event.target.files?.[0];
-                    if (file) {
-                      void uploadShowreel(file);
-                    }
-                  }}
-                />
-              </label>
-              {uploading ? <span className={styles.status}>Uploading…</span> : null}
+              <div className={styles.actions}>
+                <label className={styles.fileButton}>
+                  <IconUpload className={styles.iconSm} />
+                  Choose video file
+                  <input
+                    hidden
+                    type="file"
+                    accept="video/mp4,video/webm"
+                    onChange={(event) => {
+                      const file = event.target.files?.[0];
+                      if (file) {
+                        void uploadShowreel(file);
+                      }
+                    }}
+                  />
+                </label>
+                {uploading ? <span className={styles.badgeMuted}>Uploading…</span> : null}
+              </div>
             </div>
 
             <div className={`${styles.field} ${styles.fieldFull}`}>
@@ -187,12 +194,12 @@ export default function ShowreelEditor({ initialConfig }: ShowreelEditorProps) {
           </div>
         </AdminPanel>
 
-        <div className={styles.actions} style={{ marginTop: '1rem' }}>
+        <div className={styles.formFooter}>
           <button type="submit" className={styles.buttonPrimary}>
             Save showreel
           </button>
-          {status ? <span className={styles.statusSuccess}>{status}</span> : null}
-          {error ? <span className={styles.statusError}>{error}</span> : null}
+          {status ? <span className={styles.statusSuccess} role="status">{status}</span> : null}
+          {error ? <span className={styles.statusError} role="alert">{error}</span> : null}
         </div>
       </form>
     </AdminShell>

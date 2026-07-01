@@ -10,21 +10,6 @@
   color: var(--tml-white);
 }
 
-.logoContainer {
-  position: fixed;
-  top: max(clamp(16px, 2.2vw, 28px), env(safe-area-inset-top, 0px));
-  left: max(clamp(14px, 2.2vw, 28px), env(safe-area-inset-left, 0px));
-  z-index: var(--tml-z-logo);
-  pointer-events: none;
-}
-
-.logo {
-  width: clamp(128px, 13vw, 220px);
-  height: auto;
-  filter: brightness(0) invert(var(--logo-invert));
-  transition: filter 140ms linear;
-}
-
 .sceneGroup {
   position: relative;
   isolation: isolate;
@@ -85,18 +70,7 @@
   content: none;
 }
 
-@media (max-width: 900px) {
-  .logo {
-    width: clamp(116px, 26vw, 176px);
-  }
-}
-
 @media (max-width: 768px) {
-  .logoContainer {
-    top: max(14px, env(safe-area-inset-top, 0px));
-    left: max(14px, env(safe-area-inset-left, 0px));
-  }
-
   .main :global(section[data-chapter]),
   .main :global(section[data-scene]) {
     max-width: 100vw;

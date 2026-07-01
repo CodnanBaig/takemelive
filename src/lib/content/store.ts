@@ -42,7 +42,7 @@ export function writeFeaturedProjects(projects: FeaturedProject[]): void {
 
 export const getShowreelConfig = cache((): ShowreelConfig => {
   return readJsonFile<ShowreelConfig>('showreel.json', {
-    localSrc: '/assets/showreel.mp4',
+    localSrc: '/IMG_1003_optimized.mp4',
     primaryVideo: '',
     fallbackVideos: [],
     poster:

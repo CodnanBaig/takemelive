@@ -7,7 +7,12 @@ export type FeaturedProject = {
   client: string;
   year: string;
   location: string;
+  services: string;
+  concept: string;
+  story: string;
+  /** @deprecated Use `concept` — kept for SEO and legacy admin fields */
   summary: string;
+  /** @deprecated Use `story` — kept for SEO and legacy admin fields */
   description: string;
   coverImage: string;
   localCover?: string;

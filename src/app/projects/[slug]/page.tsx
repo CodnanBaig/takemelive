@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   return {
     title: `${project.title} | Take Me Live`,
-    description: project.summary,
+    description: project.concept || project.summary,
     openGraph: {
       title: project.title,
       description: project.tagline,

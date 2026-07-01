@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Hero from '@/components/home/Hero';
 import Transition from '@/components/home/Transition';
 import WhatWeDo from '@/components/home/WhatWeDo';
@@ -30,18 +29,6 @@ export default function Home() {
       <HomeScrollScenes />
       <CinematicAtmosphere />
       <LogoThemeSync />
-
-      <div className={styles.logoContainer}>
-        <Image
-          src="/assets/ImageToStl.com_TML-primary-logo.png"
-          alt="Take Me Live Logo"
-          className={styles.logo}
-          width={220}
-          height={64}
-          style={{ height: 'auto' }}
-          priority
-        />
-      </div>
 
       <div className={styles.sceneGroup} data-scene="arrival" id="scene-arrival">
         <Hero />

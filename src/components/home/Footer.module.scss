@@ -220,6 +220,14 @@
     gap: 1.75rem;
   }
 
+  .body {
+    padding:
+      clamp(2rem, 5vh, 2.75rem)
+      max(1rem, env(safe-area-inset-right, 0px))
+      max(1.5rem, env(safe-area-inset-bottom, 0px))
+      max(1rem, env(safe-area-inset-left, 0px));
+  }
+
   .projectList {
     column-count: 1;
   }

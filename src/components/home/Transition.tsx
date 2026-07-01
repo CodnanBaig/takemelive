@@ -29,7 +29,11 @@ const FALLBACK_SPOT_PATH: SpotPoint[] = [
   { x: 50, y: 78 },
 ];
 
-function buildSpotPath(stage: HTMLElement, subLines: NodeListOf<Element>): SpotPoint[] {
+function buildSpotPath(
+  stage: HTMLElement,
+  railLines: NodeListOf<Element>,
+  subLines: NodeListOf<Element>,
+): SpotPoint[] {
   const stageRect = stage.getBoundingClientRect();
   if (!stageRect.width || !stageRect.height) {
     return FALLBACK_SPOT_PATH;
@@ -41,6 +45,13 @@ function buildSpotPath(stage: HTMLElement, subLines: NodeListOf<Element>): SpotP
   });
 
   const path: SpotPoint[] = [];
+
+  railLines.forEach((line) => {
+    const rect = line.getBoundingClientRect();
+    if (!rect.width) return;
+
+    path.push(toPct(rect.left + rect.width * 0.5, rect.top + rect.height * 0.5));
+  });
 
   subLines.forEach((line, lineIndex) => {
     const rect = line.getBoundingClientRect();
@@ -76,17 +87,61 @@ export default function Transition() {
       return;
     }
 
-    const getSpotPath = () => buildSpotPath(stage, subLines);
+    const getSpotPath = () => buildSpotPath(stage, railLines, subLines);
 
-    const getSpotRadius = () => {
-      const subheading = stage.querySelector(`.${styles.subheading}`) as HTMLElement | null;
-      if (subheading) {
-        const rect = subheading.getBoundingClientRect();
+    const getSpotRadius = (pointIndex = 0) => {
+      const path = getSpotPath();
+      const point = path[pointIndex];
+      const manifestoLine = railLines[Math.min(pointIndex, railLines.length - 1)] as
+        | HTMLElement
+        | undefined;
+
+      if (manifestoLine && pointIndex < railLines.length) {
+        const rect = manifestoLine.getBoundingClientRect();
         if (rect.width && rect.height) {
-          return Math.min(Math.max(rect.width * 0.52, rect.height * 0.72), 320);
+          return Math.min(Math.max(rect.width * 0.28, rect.height * 1.35, 220), 420);
         }
       }
-      return Math.min(window.innerWidth * 0.24, 280);
+
+      if (point) {
+        const subheading = stage.querySelector(`.${styles.subheading}`) as HTMLElement | null;
+        if (subheading) {
+          const rect = subheading.getBoundingClientRect();
+          if (rect.width && rect.height) {
+            return Math.min(Math.max(rect.width * 0.48, rect.height * 0.68), 300);
+          }
+        }
+      }
+
+      return Math.min(window.innerWidth * 0.22, 260);
+    };
+
+    const getBloomCenter = (): SpotPoint => {
+      const stageRect = stage.getBoundingClientRect();
+      const headlineStack = stage.querySelector(`.${styles.headlineStack}`) as HTMLElement | null;
+      const subheading = stage.querySelector(`.${styles.subheading}`) as HTMLElement | null;
+
+      if (!stageRect.width || !stageRect.height || !headlineStack || !subheading) {
+        return { x: 50, y: 50 };
+      }
+
+      const headlineRect = headlineStack.getBoundingClientRect();
+      const subRect = subheading.getBoundingClientRect();
+      const centerY = (headlineRect.top + subRect.bottom) * 0.5;
+
+      return {
+        x: 50,
+        y: ((centerY - stageRect.top) / stageRect.height) * 100,
+      };
+    };
+
+    const getBloomRadius = () => {
+      const rect = stage.getBoundingClientRect();
+      if (!rect.width || !rect.height) {
+        return Math.max(window.innerWidth, window.innerHeight) * 1.15;
+      }
+
+      return Math.hypot(rect.width, rect.height) * 0.78;
     };
 
     const ctx = gsap.context(() => {
@@ -99,7 +154,6 @@ export default function Transition() {
         gsap.set(railLines, { clipPath: MASK_VISIBLE });
         gsap.set(subLines, { clipPath: MASK_VISIBLE, y: 0, opacity: 1, filter: 'blur(0px)' });
         gsap.set(section, { '--stage-tone': 1 });
-        document.documentElement.style.setProperty('--logo-invert', '0');
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
@@ -109,14 +163,13 @@ export default function Transition() {
         gsap.set(railLines, { clipPath: MASK_HIDDEN_BOTTOM });
         gsap.set(subLines, { clipPath: MASK_HIDDEN_BOTTOM, y: 14, opacity: 0.35, filter: 'blur(6px)' });
         gsap.set(section, { '--stage-tone': 0 });
-        gsap.set(document.documentElement, { '--logo-invert': 1 });
 
         const getPinDistance = () => {
           const revealDistance = window.innerHeight * 0.9;
           const manifestoDistance = window.innerHeight * 0.95;
           const sublineDistance = window.innerHeight * 0.55;
-          const spotlightDistance = window.innerHeight * 1.05;
-          const holdDistance = window.innerHeight * 0.35;
+          const spotlightDistance = window.innerHeight * 3.6;
+          const holdDistance = window.innerHeight * 0.45;
           const exitDistance = window.innerHeight * 0.85;
           return Math.round(
             revealDistance +
@@ -134,9 +187,12 @@ export default function Transition() {
         const sublineStart = 0.44;
         const sublineEnd = 0.58;
         const spotlightStart = 0.6;
-        const spotlightEnd = 0.82;
-        const exitStart = 0.88;
+        const spotlightEnd = 0.9;
+        const exitStart = 0.94;
         const spotlightSpan = spotlightEnd - spotlightStart;
+        const spotlightOpenShare = 0.12;
+        const spotlightPathShare = 0.66;
+        const spotlightBloomShare = 0.22;
 
         const timeline = gsap.timeline({
           scrollTrigger: {
@@ -144,7 +200,7 @@ export default function Transition() {
             start: 'top top',
             end: () => `+=${getPinDistance()}`,
             pin: true,
-            scrub: 0.72,
+            scrub: 0.95,
             anticipatePin: 1,
             fastScrollEnd: true,
             invalidateOnRefresh: true,
@@ -168,15 +224,6 @@ export default function Transition() {
               autoAlpha: 0.35,
               duration: curtainEnd,
               ease: 'power2.inOut',
-            },
-            0,
-          )
-          .to(
-            document.documentElement,
-            {
-              '--logo-invert': 0,
-              duration: curtainEnd,
-              ease: 'none',
             },
             0,
           )
@@ -234,31 +281,50 @@ export default function Transition() {
           )
           .fromTo(
             spotlightVeil,
-            { '--spot-radius': '0px' },
+            { '--spot-radius': '0px', '--spot-feather': '44%' },
             {
-              '--spot-radius': () => `${getSpotRadius()}px`,
-              duration: spotlightSpan,
+              '--spot-radius': () => `${getSpotRadius(0)}px`,
+              duration: spotlightSpan * spotlightOpenShare,
               ease: 'power2.out',
             },
             spotlightStart,
           );
 
         const spotPath = getSpotPath();
+        const pathEndTime = spotlightStart + spotlightSpan * (spotlightOpenShare + spotlightPathShare);
         const moveStep =
-          spotPath.length > 1 ? spotlightSpan / (spotPath.length - 1) : spotlightSpan;
+          spotPath.length > 1
+            ? (spotlightSpan * spotlightPathShare) / (spotPath.length - 1)
+            : spotlightSpan * spotlightPathShare;
 
         spotPath.slice(1).forEach((_, index) => {
+          const pointIndex = index + 1;
           timeline.to(
             spotlightVeil,
             {
-              '--spot-x': () => getSpotPath()[index + 1]?.x ?? spotPath[index + 1].x,
-              '--spot-y': () => getSpotPath()[index + 1]?.y ?? spotPath[index + 1].y,
+              '--spot-x': () => getSpotPath()[pointIndex]?.x ?? spotPath[pointIndex].x,
+              '--spot-y': () => getSpotPath()[pointIndex]?.y ?? spotPath[pointIndex].y,
+              '--spot-radius': () => `${getSpotRadius(pointIndex)}px`,
               duration: moveStep,
-              ease: 'sine.inOut',
+              ease: 'power3.inOut',
             },
-            spotlightStart + moveStep * index,
+            spotlightStart + spotlightSpan * spotlightOpenShare + moveStep * index,
           );
         });
+
+        const bloomCenter = getBloomCenter();
+        timeline.to(
+          spotlightVeil,
+          {
+            '--spot-x': bloomCenter.x,
+            '--spot-y': bloomCenter.y,
+            '--spot-radius': () => `${getBloomRadius()}px`,
+            '--spot-feather': '62%',
+            duration: spotlightSpan * spotlightBloomShare,
+            ease: 'power4.out',
+          },
+          pathEndTime,
+        );
 
         timeline
           .to(
@@ -286,7 +352,6 @@ export default function Transition() {
             spotlightVeil,
             {
               autoAlpha: 0,
-              '--spot-radius': '0px',
               duration: 0.2,
               ease: 'power2.in',
             },
@@ -300,7 +365,6 @@ export default function Transition() {
     }, section);
 
     return () => {
-      document.documentElement.style.setProperty('--logo-invert', '1');
       ctx.revert();
     };
   }, []);
@@ -311,13 +375,12 @@ export default function Transition() {
       data-chapter="transition"
       data-scene="manifesto"
       ref={sectionRef}
-      data-logo-control="manual"
       className={styles.transition}
       aria-label="Manifesto"
     >
       <ScrollOrnament variant="glyph-light" position="tl" />
-      <div className={styles.stage}>
-        <div ref={curtainRef} className={styles.blackCurtain} aria-hidden>
+      <div className={styles.stage} data-logo-invert="0">
+        <div ref={curtainRef} className={styles.blackCurtain} data-logo-invert="1" aria-hidden>
           <div ref={lightSweepRef} className={styles.lightSweep} />
         </div>
         <div className={styles.headlineStack}>

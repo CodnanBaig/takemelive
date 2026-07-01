@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { FeaturedProject } from '@/lib/content/types';
 import AdminShell, { AdminPanel } from '@/components/admin/AdminShell';
+import { IconUpload } from '@/components/admin/AdminIcons';
 import styles from '@/components/admin/admin.module.scss';
 
 type ProjectEditorProps = {
@@ -20,6 +21,9 @@ type FormState = {
   client: string;
   year: string;
   location: string;
+  services: string;
+  concept: string;
+  story: string;
   summary: string;
   description: string;
   coverImage: string;
@@ -40,6 +44,9 @@ function toFormState(project?: FeaturedProject): FormState {
     client: project?.client ?? '',
     year: project?.year ?? '',
     location: project?.location ?? '',
+    services: project?.services ?? '',
+    concept: project?.concept ?? project?.summary ?? '',
+    story: project?.story ?? project?.description ?? '',
     summary: project?.summary ?? '',
     description: project?.description ?? '',
     coverImage: project?.coverImage ?? '',
@@ -159,6 +166,8 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
 
     const payload = {
       ...form,
+      summary: form.concept.trim(),
+      description: form.story.trim(),
       gallery: form.gallery.map((item) => item.trim()).filter(Boolean),
       localGallery: form.localGallery.map((item) => item.trim()).filter(Boolean),
       videos: form.videos.map((item) => item.trim()).filter(Boolean),
@@ -219,8 +228,11 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
         ) : null
       }
     >
-      <form onSubmit={(event) => void handleSubmit(event)}>
-        <AdminPanel>
+      <form onSubmit={(event) => void handleSubmit(event)} className={styles.stack}>
+        <AdminPanel
+          title="Project details"
+          description="Core metadata shown on the portfolio index and project pages."
+        >
           <div className={styles.grid2}>
             <label className={styles.field}>
               <span className={styles.label}>Title</span>
@@ -241,6 +253,7 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
                 placeholder="auto-generated-from-title"
                 required={mode === 'edit'}
               />
+              <span className={styles.hint}>Used in URLs and upload folders. Set before uploading files.</span>
             </label>
 
             <label className={styles.field}>
@@ -280,7 +293,7 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
             </label>
 
             <label className={styles.field}>
-              <span className={styles.label}>Year</span>
+              <span className={styles.label}>Date</span>
               <input
                 className={styles.input}
                 value={form.year}
@@ -298,28 +311,38 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
             </label>
 
             <label className={`${styles.field} ${styles.fieldFull}`}>
-              <span className={styles.label}>Summary</span>
+              <span className={styles.label}>Services</span>
               <textarea
                 className={styles.textarea}
-                value={form.summary}
-                onChange={(event) => updateField('summary', event.target.value)}
+                value={form.services}
+                onChange={(event) => updateField('services', event.target.value)}
               />
             </label>
 
             <label className={`${styles.field} ${styles.fieldFull}`}>
-              <span className={styles.label}>Description</span>
+              <span className={styles.label}>Concept</span>
               <textarea
                 className={styles.textarea}
-                value={form.description}
-                onChange={(event) => updateField('description', event.target.value)}
+                value={form.concept}
+                onChange={(event) => updateField('concept', event.target.value)}
+              />
+            </label>
+
+            <label className={`${styles.field} ${styles.fieldFull}`}>
+              <span className={styles.label}>Story</span>
+              <textarea
+                className={styles.textarea}
+                value={form.story}
+                onChange={(event) => updateField('story', event.target.value)}
               />
             </label>
           </div>
         </AdminPanel>
 
-        <div style={{ height: '1rem' }} />
-
-        <AdminPanel>
+        <AdminPanel
+          title="Media"
+          description="Upload local assets or paste remote URLs. Local files take priority on the site."
+        >
           <div className={styles.grid2}>
             <label className={styles.field}>
               <span className={styles.label}>Cover image URL</span>
@@ -343,8 +366,9 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
             <div className={`${styles.field} ${styles.fieldFull}`}>
               <span className={styles.label}>Upload media</span>
               <div className={styles.actions}>
-                <label className={styles.buttonGhost}>
-                  Upload cover
+                <label className={styles.fileButton}>
+                  <IconUpload className={styles.iconSm} />
+                  Cover image
                   <input
                     hidden
                     type="file"
@@ -357,8 +381,9 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
                     }}
                   />
                 </label>
-                <label className={styles.buttonGhost}>
-                  Upload gallery image
+                <label className={styles.fileButton}>
+                  <IconUpload className={styles.iconSm} />
+                  Gallery image
                   <input
                     hidden
                     type="file"
@@ -371,8 +396,9 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
                     }}
                   />
                 </label>
-                <label className={styles.buttonGhost}>
-                  Upload video
+                <label className={styles.fileButton}>
+                  <IconUpload className={styles.iconSm} />
+                  Video
                   <input
                     hidden
                     type="file"
@@ -385,7 +411,7 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
                     }}
                   />
                 </label>
-                {uploading ? <span className={styles.status}>Uploading…</span> : null}
+                {uploading ? <span className={styles.badgeMuted}>Uploading…</span> : null}
               </div>
             </div>
 
@@ -432,12 +458,12 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
           </div>
         </AdminPanel>
 
-        <div className={styles.actions} style={{ marginTop: '1rem' }}>
+        <div className={styles.formFooter}>
           <button type="submit" className={styles.buttonPrimary}>
             Save project
           </button>
-          {status ? <span className={styles.statusSuccess}>{status}</span> : null}
-          {error ? <span className={styles.statusError}>{error}</span> : null}
+          {status ? <span className={styles.statusSuccess} role="status">{status}</span> : null}
+          {error ? <span className={styles.statusError} role="alert">{error}</span> : null}
         </div>
       </form>
     </AdminShell>

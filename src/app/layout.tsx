@@ -5,6 +5,7 @@ import LenisProvider from '@/components/cinematic/LenisProvider';
 import MotionPreferences from '@/components/cinematic/MotionPreferences';
 import RouteScrollRefresh from '@/components/cinematic/RouteScrollRefresh';
 import SkipToContent from '@/components/cinematic/SkipToContent';
+import SiteLogo from '@/components/SiteLogo';
 import SiteNavWrapper from '@/components/SiteNavWrapper';
 
 const poppins = Poppins({
@@ -56,6 +57,7 @@ export default function RootLayout({
         <LenisProvider>
           <RouteScrollRefresh />
           <SiteNavWrapper />
+          <SiteLogo />
           {children}
         </LenisProvider>
       </body>

@@ -723,6 +723,7 @@ export default function ProjectsCarousel({ projects }: ProjectsCarouselProps) {
         </button>
 
         <div ref={taglineRef} className={styles.taglineCard}>
+          <p className={styles.mobileClient}>{project.client}</p>
           <p ref={categoryRef} className={styles.category}>
             {categoryLabel}
           </p>
@@ -741,7 +742,7 @@ export default function ProjectsCarousel({ projects }: ProjectsCarouselProps) {
       </div>
 
       <p className={styles.srOnly} aria-live="polite">
-        {project.title}. {project.tagline}
+        {project.client}. {project.event}. {project.year}. {project.tagline}
       </p>
     </section>
   );

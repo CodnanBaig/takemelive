@@ -89,7 +89,7 @@ export default function SceneProgress() {
   const progressPercent = Math.round(progress * 100);
 
   return (
-    <nav className={styles.progress} aria-label="Scroll progress">
+    <nav className={styles.progress} data-scene-progress aria-label="Scroll progress">
       <div className={styles.bar}>
         <div
           className={styles.track}

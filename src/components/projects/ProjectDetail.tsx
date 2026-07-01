@@ -13,6 +13,7 @@ import { sectionRevealScroll } from '@/lib/scrollScene';
 import type { AdjacentProjects, FeaturedProject } from '@/content/featuredProjects';
 import { getPosterTitle } from '@/content/featuredProjects';
 import { resolveProjectCover, resolveProjectGallery } from '@/lib/projectMedia';
+import ProjectGallery from '@/components/projects/ProjectGallery';
 import styles from './ProjectDetail.module.scss';
 
 type ProjectDetailProps = {
@@ -125,58 +126,58 @@ export default function ProjectDetail({ project, adjacent }: ProjectDetailProps)
       </header>
 
       <div className={styles.body} data-detail-body>
-        <dl className={styles.meta}>
-          <div>
-            <dt>Client</dt>
-            <dd>{project.client}</dd>
-          </div>
-          <div>
-            <dt>Event</dt>
-            <dd>{project.event}</dd>
-          </div>
-          <div>
-            <dt>Year</dt>
-            <dd>{project.year}</dd>
-          </div>
-          <div>
-            <dt>Location</dt>
-            <dd>{project.location}</dd>
-          </div>
-        </dl>
+        <div className={styles.editorial}>
+          <dl className={styles.meta}>
+            <div>
+              <dt>Client</dt>
+              <dd>{project.client}</dd>
+            </div>
+            <div>
+              <dt>Location</dt>
+              <dd>{project.location}</dd>
+            </div>
+            <div>
+              <dt>Date</dt>
+              <dd>{project.year}</dd>
+            </div>
+            <div>
+              <dt>Services</dt>
+              <dd>{project.services}</dd>
+            </div>
+          </dl>
 
-        <section className={styles.lead} aria-label="Project overview">
-          <p data-detail-lead>{project.summary}</p>
-          <p data-detail-lead>{project.description}</p>
-        </section>
+          <section className={styles.writeup} aria-label="Project writeup">
+            <div className={styles.writeupBlock}>
+              <h2 className={styles.writeupHeading}>Concept</h2>
+              {project.concept.split(/\n\n+/).map((paragraph, index) => (
+                <p key={`concept-${index}`} data-detail-lead>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+            <div className={styles.writeupBlock}>
+              <h2 className={styles.writeupHeading}>Story</h2>
+              {project.story.split(/\n\n+/).map((paragraph, index) => (
+                <p key={`story-${index}`} data-detail-lead>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </section>
+        </div>
 
-        <section className={styles.gallery} aria-label={`${project.title} gallery`}>
-          {galleryImages.map((image, index) => (
-            <figure key={`${image}-${index}`} className={styles.figure} data-detail-figure>
-              <img
-                src={image}
-                alt={`${project.title} production still ${index + 1}`}
-                loading={index === 0 ? 'eager' : 'lazy'}
-                onError={(event) => {
-                  const target = event.currentTarget;
-                  if (target.src !== FALLBACK_IMAGE) {
-                    target.src = FALLBACK_IMAGE;
-                  }
-                }}
-              />
-            </figure>
-          ))}
-        </section>
+        <ProjectGallery
+          key={galleryImages.join('|')}
+          images={galleryImages}
+          projectTitle={project.title}
+        />
 
         <nav className={styles.nav} aria-label="Project navigation">
           <Link href={`/projects/${adjacent.prev.slug}`} className={styles.navLink}>
             <span>Previous</span>
             <strong>{getPosterTitle(adjacent.prev)}</strong>
           </Link>
-          <Link
-            href={`/projects/${adjacent.next.slug}`}
-            className={styles.navLink}
-            style={{ textAlign: 'right', marginLeft: 'auto' }}
-          >
+          <Link href={`/projects/${adjacent.next.slug}`} className={`${styles.navLink} ${styles.navLinkNext}`}>
             <span>Next</span>
             <strong>{getPosterTitle(adjacent.next)}</strong>
           </Link>

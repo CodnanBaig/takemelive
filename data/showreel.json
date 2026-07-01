@@ -1,16 +1,9 @@
 {
-  "localSrc": "/assets/showreel.mp4",
+  "localSrc": "/IMG_1003_optimized.mp4",
   "primaryVideo": "",
   "fallbackVideos": [
-    "https://assets.mixkit.co/videos/preview/mixkit-crowd-at-a-concert-4052-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-people-at-a-concert-4048-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-dj-playing-music-at-a-concert-4338-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-stadium-lights-at-a-concert-4175-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-concert-lights-and-smoke-4173-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-audience-watching-a-concert-4380-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-rock-band-performing-on-stage-4379-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-singer-performing-on-stage-4378-large.mp4"
+    "https://assets.mixkit.co/videos/preview/mixkit-crowd-at-a-concert-4052-large.mp4"
   ],
-  "poster": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1920&q=80",
-  "useRandomFallback": true
+  "poster": "",
+  "useRandomFallback": false
 }

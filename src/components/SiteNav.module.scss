@@ -2,13 +2,18 @@
   position: fixed;
   top: max(clamp(14px, 2.1vw, 26px), env(safe-area-inset-top, 0px));
   right: max(clamp(14px, 2.1vw, 26px), env(safe-area-inset-right, 0px));
-  z-index: 60;
+  z-index: var(--tml-z-nav);
   display: inline-flex;
   align-items: center;
   gap: 0;
   border: 1px solid rgb(245 245 240 / 0.24);
   backdrop-filter: blur(6px);
   background: rgb(8 9 10 / 0.28);
+}
+
+.desktopLinks {
+  display: inline-flex;
+  align-items: center;
 }
 
 .link {
@@ -25,6 +30,7 @@
   text-decoration: none;
   color: #f5f5f0;
   mix-blend-mode: difference;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .link:last-child {
@@ -41,25 +47,186 @@
   outline-offset: 2px;
 }
 
+.menuBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #f5f5f0;
+  cursor: pointer;
+  mix-blend-mode: difference;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menuBtn:focus-visible {
+  outline: 2px solid var(--tml-accent);
+  outline-offset: 2px;
+}
+
+.menuIcon {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  transition:
+    background 180ms var(--tml-ease-out),
+    transform 180ms var(--tml-ease-out);
+}
+
+.menuIcon::before,
+.menuIcon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transition: transform 220ms var(--tml-ease-out);
+}
+
+.menuIcon::before {
+  top: -6px;
+}
+
+.menuIcon::after {
+  top: 6px;
+}
+
+.menuIcon[data-open] {
+  background: transparent;
+}
+
+.menuIcon[data-open]::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menuIcon[data-open]::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--tml-z-nav) + 1);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.mobileMenuOpen {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: rgb(0 0 0 / 0.62);
+  opacity: 0;
+  transition: opacity 240ms var(--tml-ease-out);
+  cursor: pointer;
+}
+
+.mobileMenuOpen .backdrop {
+  opacity: 1;
+}
+
+.mobilePanel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(88vw, 320px);
+  height: 100%;
+  padding:
+    max(clamp(4.5rem, 12vh, 6rem), calc(env(safe-area-inset-top, 0px) + 3.5rem))
+    max(1rem, env(safe-area-inset-right, 0px))
+    max(1.25rem, env(safe-area-inset-bottom, 0px))
+    1.25rem;
+  border-left: 1px solid rgb(245 245 240 / 0.14);
+  background: rgb(5 6 8 / 0.96);
+  backdrop-filter: blur(12px);
+  transform: translateX(100%);
+  transition: transform 280ms var(--tml-ease-out);
+}
+
+.mobileMenuOpen .mobilePanel {
+  transform: translateX(0);
+}
+
+.mobileList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0.65rem 0.5rem;
+  font-family: var(--font-oswald), sans-serif;
+  font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+  font-weight: var(--tml-display-weight);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgb(245 245 240 / 0.82);
+  border-bottom: 1px solid rgb(245 245 240 / 0.08);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobileLink:hover,
+.mobileLink:focus-visible {
+  color: var(--tml-white);
+}
+
+.mobileLinkActive {
+  color: var(--tml-accent-bright);
+}
+
+.mobileLink:focus-visible {
+  outline: 2px solid var(--tml-accent);
+  outline-offset: 3px;
+}
+
 @media (max-width: 720px) {
   .nav {
     top: max(10px, env(safe-area-inset-top, 0px));
     right: max(10px, env(safe-area-inset-right, 0px));
   }
 
-  .link {
-    min-height: 44px;
-    padding: 0.38rem 0.54rem;
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
+  .desktopLinks {
+    display: none;
+  }
+
+  .menuBtn {
+    display: inline-flex;
   }
 }
 
-@media (max-width: 380px) {
-  .link {
-    min-height: 44px;
-    padding: 0.38rem 0.48rem;
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .mobilePanel,
+  .menuIcon,
+  .menuIcon::before,
+  .menuIcon::after {
+    transition: none;
+  }
+
+  .mobileMenuOpen .mobilePanel {
+    transform: none;
+  }
+
+  .mobileMenuOpen .backdrop {
+    opacity: 1;
   }
 }

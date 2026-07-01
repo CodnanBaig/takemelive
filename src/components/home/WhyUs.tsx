@@ -81,194 +81,181 @@ export default function WhyUs() {
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const isCompact = window.matchMedia('(max-width: 900px)').matches;
+        const layoutMm = gsap.matchMedia();
 
-        gsap
-          .timeline({
+        layoutMm.add('(max-width: 900px)', () => {
+          gsap.set(
+            [...Array.from(headlineWords), lead, ...panels].filter(Boolean),
+            { autoAlpha: 1, x: 0, y: 0, yPercent: 0, clearProps: 'all' },
+          );
+          gsap.set(panels, { position: 'relative', autoAlpha: 1, yPercent: 0, clearProps: 'transform' });
+          panels.forEach((panel) => {
+            panel
+              .querySelectorAll<HTMLElement>(
+                '[data-panel-number], [data-panel-title-line], [data-panel-body], [data-panel-meta], [data-panel-rule]',
+              )
+              .forEach((node) => {
+                gsap.set(node, { autoAlpha: 1, y: 0, yPercent: 0, scaleX: 1, clearProps: 'all' });
+              });
+          });
+          if (progressBar) {
+            gsap.set(progressBar, { scaleX: 1 });
+          }
+
+          panels.forEach((panel) => {
+            ScrollTrigger.create({
+              trigger: panel,
+              start: 'top 90%',
+              once: true,
+              onEnter: () => {
+                gsap.fromTo(
+                  panel,
+                  { autoAlpha: 0.72, y: 18 },
+                  { autoAlpha: 1, y: 0, duration: 0.55, ease: 'power3.out' },
+                );
+              },
+            });
+          });
+        });
+
+        layoutMm.add('(min-width: 901px)', () => {
+          gsap
+            .timeline({
+              scrollTrigger: {
+                trigger: section,
+                start: 'top 78%',
+                end: 'top 28%',
+                scrub: 0.6,
+                invalidateOnRefresh: true,
+              },
+            })
+            .fromTo(
+              headlineWords,
+              { yPercent: 110, autoAlpha: 0 },
+              {
+                yPercent: 0,
+                autoAlpha: 1,
+                duration: 0.55,
+                stagger: 0.08,
+                ease: 'none',
+              },
+              0.05,
+            )
+            .fromTo(lead, { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'none' }, 0.3);
+
+          gsap.set(panels, {
+            position: 'absolute',
+            inset: 0,
+            autoAlpha: 0,
+          });
+          gsap.set(panels[0], { autoAlpha: 1 });
+
+          const panelSegments = panels.length;
+          const pinDistance = () => window.innerHeight * (panelSegments * 0.9 + 0.4);
+
+          const master = gsap.timeline({
             scrollTrigger: {
               trigger: section,
-              start: 'top 78%',
-              end: 'top 28%',
-              scrub: 0.6,
+              start: 'top top',
+              end: () => `+=${pinDistance()}`,
+              pin: stage,
+              pinSpacing: true,
+              scrub: 0.85,
+              anticipatePin: 1,
               invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                const progress = self.progress;
+                if (progressBar) {
+                  gsap.set(progressBar, { scaleX: progress });
+                }
+                const activeIndex = Math.min(
+                  panels.length - 1,
+                  Math.max(0, Math.floor(progress * panels.length - 1e-6)),
+                );
+                const active = PILLARS[activeIndex];
+                if (tickerCurrent && tickerCurrent.dataset.value !== active.number) {
+                  tickerCurrent.dataset.value = active.number;
+                  tickerCurrent.textContent = active.number;
+                  gsap.fromTo(
+                    tickerCurrent,
+                    { yPercent: 60, autoAlpha: 0 },
+                    { yPercent: 0, autoAlpha: 1, duration: 0.45, ease: 'power3.out', overwrite: true },
+                  );
+                }
+                if (tickerLabel && tickerLabel.dataset.value !== active.label) {
+                  tickerLabel.dataset.value = active.label;
+                  tickerLabel.textContent = active.label;
+                  gsap.fromTo(
+                    tickerLabel,
+                    { autoAlpha: 0, x: 12 },
+                    { autoAlpha: 1, x: 0, duration: 0.45, ease: 'power3.out', overwrite: true },
+                  );
+                }
+              },
             },
-          })
-          .fromTo(
-            headlineWords,
-            { yPercent: 110, autoAlpha: 0 },
-            {
-              yPercent: 0,
-              autoAlpha: 1,
-              duration: 0.55,
-              stagger: 0.08,
-              ease: 'none',
-            },
-            0.05,
-          )
-          .fromTo(lead, { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'none' }, 0.3);
+          });
 
-        if (isCompact) {
-          panels.forEach((panel) => {
+          const segmentLength = 1;
+          panels.forEach((panel, index) => {
             const number = panel.querySelector<HTMLElement>('[data-panel-number]');
             const titleLines = panel.querySelectorAll<HTMLElement>('[data-panel-title-line]');
             const body = panel.querySelector<HTMLElement>('[data-panel-body]');
             const meta = panel.querySelector<HTMLElement>('[data-panel-meta]');
             const rule = panel.querySelector<HTMLElement>('[data-panel-rule]');
 
-            gsap.set(panel, { position: 'relative', autoAlpha: 1 });
-            gsap.set([number, titleLines, body, meta], { autoAlpha: 0, y: 28 });
+            gsap.set([number, body, meta], { autoAlpha: 0, y: 40 });
+            gsap.set(titleLines, {
+              autoAlpha: 0,
+              yPercent: 110,
+              clipPath: 'inset(0% 0% 100% 0%)',
+            });
             if (rule) gsap.set(rule, { scaleX: 0, transformOrigin: 'left center' });
 
-            gsap
-              .timeline({
-                scrollTrigger: {
-                  trigger: panel,
-                  start: 'top 82%',
-                  end: 'top 50%',
-                  scrub: 0.5,
-                  invalidateOnRefresh: true,
-                },
-              })
-              .to(number, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'none' }, 0)
-              .to(titleLines, { autoAlpha: 1, y: 0, stagger: 0.06, duration: 0.5, ease: 'none' }, 0.05)
-              .to(body, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'none' }, 0.2)
-              .to(meta, { autoAlpha: 1, y: 0, duration: 0.4, ease: 'none' }, 0.28)
-              .to(rule, { scaleX: 1, duration: 0.6, ease: 'none' }, 0.05);
-          });
+            const start = index * segmentLength;
 
-          if (progressBar) {
-            gsap.fromTo(
-              progressBar,
-              { scaleX: 0 },
-              {
-                scaleX: 1,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: section,
-                  start: 'top 60%',
-                  end: 'bottom 70%',
-                  scrub: 0.5,
-                  invalidateOnRefresh: true,
-                },
-              },
-            );
-          }
-
-          return;
-        }
-
-        gsap.set(panels, {
-          position: 'absolute',
-          inset: 0,
-          autoAlpha: 0,
-        });
-        gsap.set(panels[0], { autoAlpha: 1 });
-
-        const panelSegments = panels.length;
-        const pinDistance = () => window.innerHeight * (panelSegments * 0.9 + 0.4);
-
-        const master = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: () => `+=${pinDistance()}`,
-            pin: stage,
-            pinSpacing: true,
-            scrub: 0.85,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              const progress = self.progress;
-              if (progressBar) {
-                gsap.set(progressBar, { scaleX: progress });
-              }
-              const activeIndex = Math.min(
-                panels.length - 1,
-                Math.max(0, Math.floor(progress * panels.length - 1e-6)),
+            if (index > 0) {
+              master.to(
+                panels[index - 1],
+                { autoAlpha: 0, yPercent: -10, duration: 0.4, ease: 'none' },
+                start - 0.2,
               );
-              const active = PILLARS[activeIndex];
-              if (tickerCurrent && tickerCurrent.dataset.value !== active.number) {
-                tickerCurrent.dataset.value = active.number;
-                tickerCurrent.textContent = active.number;
-                gsap.fromTo(
-                  tickerCurrent,
-                  { yPercent: 60, autoAlpha: 0 },
-                  { yPercent: 0, autoAlpha: 1, duration: 0.45, ease: 'power3.out', overwrite: true },
-                );
-              }
-              if (tickerLabel && tickerLabel.dataset.value !== active.label) {
-                tickerLabel.dataset.value = active.label;
-                tickerLabel.textContent = active.label;
-                gsap.fromTo(
-                  tickerLabel,
-                  { autoAlpha: 0, x: 12 },
-                  { autoAlpha: 1, x: 0, duration: 0.45, ease: 'power3.out', overwrite: true },
-                );
-              }
-            },
-          },
-        });
+              master.fromTo(
+                panel,
+                { autoAlpha: 0, yPercent: 18 },
+                { autoAlpha: 1, yPercent: 0, duration: 0.5, ease: 'none' },
+                start - 0.1,
+              );
+            }
 
-        const segmentLength = 1;
-        panels.forEach((panel, index) => {
-          const number = panel.querySelector<HTMLElement>('[data-panel-number]');
-          const titleLines = panel.querySelectorAll<HTMLElement>('[data-panel-title-line]');
-          const body = panel.querySelector<HTMLElement>('[data-panel-body]');
-          const meta = panel.querySelector<HTMLElement>('[data-panel-meta]');
-          const rule = panel.querySelector<HTMLElement>('[data-panel-rule]');
+            master
+              .to(number, { autoAlpha: 1, y: 0, duration: 0.4, ease: 'none' }, start + 0.05)
+              .to(
+                titleLines,
+                {
+                  autoAlpha: 1,
+                  yPercent: 0,
+                  clipPath: 'inset(0% 0% 0% 0%)',
+                  stagger: 0.05,
+                  duration: 0.5,
+                  ease: 'none',
+                },
+                start + 0.1,
+              )
+              .to(body, { autoAlpha: 1, y: 0, duration: 0.45, ease: 'none' }, start + 0.25)
+              .to(meta, { autoAlpha: 1, y: 0, duration: 0.4, ease: 'none' }, start + 0.32);
 
-          gsap.set([number, body, meta], { autoAlpha: 0, y: 40 });
-          gsap.set(titleLines, {
-            autoAlpha: 0,
-            yPercent: 110,
-            clipPath: 'inset(0% 0% 100% 0%)',
+            if (rule) {
+              master.to(rule, { scaleX: 1, duration: 0.55, ease: 'none' }, start + 0.05);
+            }
           });
-          if (rule) gsap.set(rule, { scaleX: 0, transformOrigin: 'left center' });
 
-          const start = index * segmentLength;
-
-          if (index > 0) {
-            master.to(
-              panels[index - 1],
-              { autoAlpha: 0, yPercent: -10, duration: 0.4, ease: 'none' },
-              start - 0.2,
-            );
-            master.fromTo(
-              panel,
-              { autoAlpha: 0, yPercent: 18 },
-              { autoAlpha: 1, yPercent: 0, duration: 0.5, ease: 'none' },
-              start - 0.1,
-            );
-          }
-
-          master
-            .to(number, { autoAlpha: 1, y: 0, duration: 0.4, ease: 'none' }, start + 0.05)
-            .to(
-              titleLines,
-              {
-                autoAlpha: 1,
-                yPercent: 0,
-                clipPath: 'inset(0% 0% 0% 0%)',
-                stagger: 0.05,
-                duration: 0.5,
-                ease: 'none',
-              },
-              start + 0.1,
-            )
-            .to(body, { autoAlpha: 1, y: 0, duration: 0.45, ease: 'none' }, start + 0.25)
-            .to(meta, { autoAlpha: 1, y: 0, duration: 0.4, ease: 'none' }, start + 0.32);
-
-          if (rule) {
-            master.to(rule, { scaleX: 1, duration: 0.55, ease: 'none' }, start + 0.05);
-          }
-        });
-
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh();
-          const st = master.scrollTrigger;
-          if (st) {
-            master.progress(st.progress);
-          }
+          requestAnimationFrame(() => {
+            ScrollTrigger.refresh();
+            const st = master.scrollTrigger;
+            if (st) {
+              master.progress(st.progress);
+            }
+          });
         });
       });
 

@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { setLenis } from '@/lib/lenis';
 import { prefersReducedMotion, subscribeMotionPreference } from '@/lib/motionPrefs';
 
 type LenisProviderProps = {
@@ -28,6 +29,7 @@ export default function LenisProvider({ children }: LenisProviderProps) {
         lenis.destroy();
         lenis = null;
       }
+      setLenis(null);
       ScrollTrigger.scrollerProxy(document.documentElement, {});
       ScrollTrigger.clearScrollMemory();
       ScrollTrigger.refresh();
@@ -43,6 +45,8 @@ export default function LenisProvider({ children }: LenisProviderProps) {
         smoothWheel: true,
         syncTouch: false,
       });
+
+      setLenis(lenis);
 
       lenis.on('scroll', ScrollTrigger.update);
 

@@ -1,0 +1,55 @@
+.logoContainer {
+  position: fixed;
+  top: max(clamp(16px, 2.2vw, 28px), env(safe-area-inset-top, 0px));
+  left: max(clamp(14px, 2.2vw, 28px), env(safe-area-inset-left, 0px));
+  z-index: var(--tml-z-logo);
+  pointer-events: none;
+}
+
+.logoControl {
+  display: block;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 2px;
+}
+
+.logoControl:focus-visible {
+  outline: 2px solid var(--tml-accent);
+  outline-offset: 4px;
+}
+
+.logo {
+  width: clamp(128px, 13vw, 220px);
+  height: auto;
+  filter: brightness(0) invert(var(--logo-invert, 1));
+  transition: filter 240ms var(--tml-ease-out);
+}
+
+@media (max-width: 900px) {
+  .logo {
+    width: clamp(116px, 26vw, 176px);
+  }
+}
+
+@media (max-width: 768px) {
+  .logoContainer {
+    top: max(14px, env(safe-area-inset-top, 0px));
+    left: max(14px, env(safe-area-inset-left, 0px));
+  }
+
+  .logo {
+    width: var(--tml-logo-width);
+  }
+}
+
+@media (max-width: 480px) {
+  .logoControl {
+    max-width: calc(100vw - 4.5rem - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+  }
+}

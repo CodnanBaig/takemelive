@@ -38,3 +38,20 @@
   line-height: 1.6;
   color: rgb(245 245 240 / 0.76);
 }
+
+@media (max-width: 640px) {
+  .intro {
+    padding-top: max(clamp(4.5rem, 10vh, 5.5rem), calc(env(safe-area-inset-top, 0px) + 3.5rem));
+  }
+
+  .title {
+    font-size: clamp(2.15rem, 11vw, 3.4rem);
+    letter-spacing: 0.006em;
+    line-height: 0.92;
+    overflow-wrap: anywhere;
+  }
+
+  .lead {
+    font-size: clamp(0.96rem, 4vw, 1.05rem);
+  }
+}

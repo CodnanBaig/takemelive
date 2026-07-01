@@ -1,48 +1,193 @@
 [
   {
-    "slug": "blackpink-world-tour",
-    "title": "BLACKPINK World Tour",
-    "posterTitle": "BLACKPINK",
-    "tagline": "Stadium-scale pop spectacle",
-    "event": "World Tour",
-    "client": "BLACKPINK",
-    "year": "2024",
-    "location": "Global stadium tour",
-    "summary": "A global stadium tour production pairing massive LED architecture with precision showcalling for arena-scale impact.",
-    "description": "From reveal to encore, the visual system amplified every beat — turning each venue into a shared, high-voltage moment for millions of fans.",
-    "coverImage": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80",
-    "localCover": "/assets/projects/BlackPink_MiddleEast-001.jpg",
+    "slug": "red-bull-basement-finals",
+    "title": "Red Bull Basement Finals",
+    "posterTitle": "RED BULL",
+    "tagline": "Innovation-focused national finals environment",
+    "event": "Red Bull Basement UAE National Finals",
+    "client": "Red Bull",
+    "year": "April 2026",
+    "location": "DIFC Gate Village, Dubai, UAE",
+    "services": "Project Management | Scenic & Production Design | Custom Build & Execution | Entrance Arch & Media Wall Build | Stage, Demo Gallery & Podcast Area Setup | Audio, Lighting & Video Production | Power, Scaffolding & Technical Site Execution",
+    "concept": "The Red Bull Basement UAE National Finals were designed as a bold innovation-focused event environment, bringing together entrepreneurs, creators, judges, and guests in a high-energy showcase setting. The experience translated the Red Bull Basement platform into a physical space built around pitching, content, networking, and live audience engagement.",
+    "story": "For the Red Bull Basement UAE National Finals, Take Me Live delivered a complete event environment covering project management, scenic build, production infrastructure, technical systems, and guest-facing experience zones. The scope included a branded entrance arch, media wall, main stage, judges platform, demo gallery, and Moniify podcast area, creating a layered environment for presentations, interviews, showcases, and audience interaction.\n\nThe production scope also included audio, lighting, video, LED screen, power distribution, scaffolding, furniture setup, site protection, manpower, and permit coordination. With dedicated production and technical management across setup and dismantle, the finals were executed as a polished, brand-aligned platform for spotlighting the next generation of innovators.",
+    "summary": "The Red Bull Basement UAE National Finals were designed as a bold innovation-focused event environment, bringing together entrepreneurs, creators, judges, and guests in a high-energy showcase setting. The experience translated the Red Bull Basement platform into a physical space built around pitching, content, networking, and live audience engagement.",
+    "description": "For the Red Bull Basement UAE National Finals, Take Me Live delivered a complete event environment covering project management, scenic build, production infrastructure, technical systems, and guest-facing experience zones. The scope included a branded entrance arch, media wall, main stage, judges platform, demo gallery, and Moniify podcast area, creating a layered environment for presentations, interviews, showcases, and audience interaction.\n\nThe production scope also included audio, lighting, video, LED screen, power distribution, scaffolding, furniture setup, site protection, manpower, and permit coordination. With dedicated production and technical management across setup and dismantle, the finals were executed as a polished, brand-aligned platform for spotlighting the next generation of innovators.",
+    "coverImage": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80",
+    "localCover": "/assets/projects/PHNTM DMO-14.jpg",
     "gallery": [
-      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80",
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1600&q=80"
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80"
     ],
     "localGallery": [
-      "/assets/projects/BlackPink_MiddleEast-001.jpg"
+      "/assets/projects/PHNTM DMO-14.jpg",
+      "/assets/PHNTM DMO-03.webp",
+      "/assets/PHNTM DMO-13.webp"
+    ],
+    "videos": [],
+    "localVideos": []
+  },
+  {
+    "slug": "red-bull-energy-lounge",
+    "title": "1 Billion Summit",
+    "posterTitle": "RED BULL",
+    "tagline": "Red Bull Energy Lounge at 1 Billion Summit",
+    "event": "1 Billion Summit",
+    "client": "Red Bull",
+    "year": "January 2026",
+    "location": "Jumeirah Emirates Towers, Dubai, UAE",
+    "services": "Networking Lounge & Exhibition Stand Design | Scenic & Production Design | Art Direction | Technical Design | Custom Build & Execution | Interactive Experience Integration",
+    "concept": "The Red Bull Energy Lounge was conceived as a multi-zone experiential stand designed to energize networking and content creation within the fast-paced environment of the 1 Billion Summit. The concept translated Red Bull's high-performance DNA into a bold architectural space that balanced intensity, movement, and social interaction.",
+    "story": "For the 1 Billion Summit, Take Me Live delivered the Red Bull Energy Lounge as an immersive exhibition and networking destination featuring layered experiences across the stand. A central hospitality zone anchored by the Red Bull bar set the tone, supported by a DJ area that drove energy and atmosphere throughout the day. Interactive F1 simulator zones brought a playful, competitive element, while a dedicated streaming room enabled live content capture directly from the activation. A standout podcast area hosted Ahmad Jaber (AJ) of Jibber with Jaber, providing a live broadcast platform where conversations and interviews unfolded over the three-day summit, adding cultural and influencer relevance. A basement-inspired zone added depth and contrast, creating intimate pockets within the larger layout. Thoughtful spatial planning ensured smooth guest flow between high-energy and relaxed spaces, allowing visitors to engage with the Red Bull brand in multiple meaningful ways that complemented the dynamic environment of the summit.",
+    "summary": "The Red Bull Energy Lounge was conceived as a multi-zone experiential stand designed to energize networking and content creation within the fast-paced environment of the 1 Billion Summit. The concept translated Red Bull's high-performance DNA into a bold architectural space that balanced intensity, movement, and social interaction.",
+    "description": "For the 1 Billion Summit, Take Me Live delivered the Red Bull Energy Lounge as an immersive exhibition and networking destination featuring layered experiences across the stand. A central hospitality zone anchored by the Red Bull bar set the tone, supported by a DJ area that drove energy and atmosphere throughout the day. Interactive F1 simulator zones brought a playful, competitive element, while a dedicated streaming room enabled live content capture directly from the activation. A standout podcast area hosted Ahmad Jaber (AJ) of Jibber with Jaber, providing a live broadcast platform where conversations and interviews unfolded over the three-day summit, adding cultural and influencer relevance. A basement-inspired zone added depth and contrast, creating intimate pockets within the larger layout. Thoughtful spatial planning ensured smooth guest flow between high-energy and relaxed spaces, allowing visitors to engage with the Red Bull brand in multiple meaningful ways that complemented the dynamic environment of the summit.",
+    "coverImage": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80",
+    "localCover": "/assets/projects/IMG_9410.jpg",
+    "gallery": [
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80"
+    ],
+    "localGallery": [
+      "/assets/projects/IMG_9410.jpg",
+      "/assets/projects/IMG_0304.JPG",
+      "/assets/IMG_0304.webp"
     ],
     "videos": [],
     "localVideos": []
   },
   {
     "slug": "token-2049-io-net",
-    "title": "Token 2049",
+    "title": "TOKEN 2049",
     "posterTitle": "TOKEN 2049",
-    "tagline": "Cyberpunk LED environment",
-    "event": "io.net",
-    "client": "io.net",
-    "year": "2024",
-    "location": "Singapore",
-    "summary": "A cyberpunk-inspired environment powered by dynamic LED visuals, transforming the space into a futuristic brand experience.",
-    "description": "Minimal physical elements combined with high-impact digital storytelling created an immersive atmosphere that captured attention and reinforced technological innovation.",
+    "tagline": "Cyberpunk LED environment for ioNet",
+    "event": "Token 2049 & Super AI",
+    "client": "IO NET",
+    "year": "April & June 2024",
+    "location": "Madinat Jumeirah, Dubai (Token 2049) & Singapore (Super AI)",
+    "services": "Networking Lounge & Exhibition Stand Design | Scenic & Production Design | Art Direction | Technical Design | Content Creation | Execution",
+    "concept": "Cyberpunk-inspired exhibition stands and networking lounges for ioNet, showcasing their cutting-edge GPU technology and cryptocurrency launch. The minimalist design relied entirely on dynamic LED visuals to create a futuristic, high-tech ambiance, powered by BC8.ai, an ioNet-backed technology platform.",
+    "story": "Take Me Live partnered with Phoenix, a U.S. agency, to create cyberpunk-themed exhibition stands and networking lounges for ioNet at both Token 2049 in Dubai (April) and Super AI in Singapore (June). Powered by ioNet's BC8.ai platform, the designs featured towering LED monoliths displaying custom cyberpunk visuals: neon cityscapes, futuristic interfaces, and real-time data. These screens provided all the lighting, casting a vibrant glow across each space. Live countdowns and interactive elements further engaged attendees. The bold aesthetic and immersive visuals reinforced ioNet's brand and technological leadership, making the spaces highlights of both events.",
+    "summary": "Cyberpunk-inspired exhibition stands and networking lounges for ioNet, showcasing their cutting-edge GPU technology and cryptocurrency launch. The minimalist design relied entirely on dynamic LED visuals to create a futuristic, high-tech ambiance, powered by BC8.ai, an ioNet-backed technology platform.",
+    "description": "Take Me Live partnered with Phoenix, a U.S. agency, to create cyberpunk-themed exhibition stands and networking lounges for ioNet at both Token 2049 in Dubai (April) and Super AI in Singapore (June). Powered by ioNet's BC8.ai platform, the designs featured towering LED monoliths displaying custom cyberpunk visuals: neon cityscapes, futuristic interfaces, and real-time data. These screens provided all the lighting, casting a vibrant glow across each space. Live countdowns and interactive elements further engaged attendees. The bold aesthetic and immersive visuals reinforced ioNet's brand and technological leadership, making the spaces highlights of both events.",
     "coverImage": "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1800&q=80",
     "localCover": "/assets/projects/PHOTO-2024-04-18-22-15-27.jpg",
     "gallery": [
-      "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1800&q=80",
-      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80"
+      "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1800&q=80"
     ],
     "localGallery": [
-      "/assets/projects/PHOTO-2024-04-18-22-15-27.jpg"
+      "/assets/projects/PHOTO-2024-04-18-22-15-27.jpg",
+      "/assets/PHNTM IO.net-02.webp",
+      "/assets/PHOTO-2024-04-18-22-15-27.webp"
+    ],
+    "videos": [],
+    "localVideos": []
+  },
+  {
+    "slug": "dubai-media-annual-gala",
+    "title": "Dubai Media Annual Gala",
+    "posterTitle": "DUBAI MEDIA",
+    "tagline": "Immersive corporate gala production",
+    "event": "Dubai Media Annual Gala",
+    "client": "Dubai Media",
+    "year": "February 2024",
+    "location": "Grand Hyatt, Dubai",
+    "services": "Stage & LED Screen Installation | Scenic & Production Design | Art Direction, Technical Design | Content Creation | Execution",
+    "concept": "The event was designed to be an engaging and immersive experience, blending technology, entertainment, and creativity to celebrate Dubai Media's corporate culture. A sleek LED stage served as the focal point, complemented by interactive installations such as an AI-powered photobooth, mosaic photobooth, and LED flooring. Live entertainment and a curated art gallery added depth, ensuring a dynamic and memorable atmosphere.",
+    "story": "With just four days to execute, Take Me Live transformed Dubai Media's event into a seamless, high-energy production. Guests were welcomed by LED screens displaying their names via QR code scanning, setting an interactive tone from the start. Inside, a bold LED stage anchored the space, while digital activations and live entertainment—including an iPad magician, violinist, Arabic calligraphers, and a caricaturist—kept guests engaged. A live raffle draw with custom animations built anticipation, while a dedicated art gallery celebrated employee creativity, reinforcing Dubai Media's commitment to talent and innovation. The presence of Sheikh Hasher bin Maktoum bin Juma Al Maktoum added prestige, with a VIP concierge ensuring a seamless experience. Despite the tight timeline, Take Me Live delivered a visually striking and engaging event, creating a lasting impact on attendees and solidifying Dubai Media's reputation for innovation and creativity.",
+    "summary": "The event was designed to be an engaging and immersive experience, blending technology, entertainment, and creativity to celebrate Dubai Media's corporate culture. A sleek LED stage served as the focal point, complemented by interactive installations such as an AI-powered photobooth, mosaic photobooth, and LED flooring. Live entertainment and a curated art gallery added depth, ensuring a dynamic and memorable atmosphere.",
+    "description": "With just four days to execute, Take Me Live transformed Dubai Media's event into a seamless, high-energy production. Guests were welcomed by LED screens displaying their names via QR code scanning, setting an interactive tone from the start. Inside, a bold LED stage anchored the space, while digital activations and live entertainment—including an iPad magician, violinist, Arabic calligraphers, and a caricaturist—kept guests engaged. A live raffle draw with custom animations built anticipation, while a dedicated art gallery celebrated employee creativity, reinforcing Dubai Media's commitment to talent and innovation. The presence of Sheikh Hasher bin Maktoum bin Juma Al Maktoum added prestige, with a VIP concierge ensuring a seamless experience. Despite the tight timeline, Take Me Live delivered a visually striking and engaging event, creating a lasting impact on attendees and solidifying Dubai Media's reputation for innovation and creativity.",
+    "coverImage": "https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1800&q=80",
+    "localCover": "/assets/projects/IMG_3571.JPG",
+    "gallery": [
+      "https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1800&q=80"
+    ],
+    "localGallery": [
+      "/assets/projects/IMG_3571.JPG",
+      "/assets/IMG_3571.webp"
+    ],
+    "videos": [],
+    "localVideos": []
+  },
+  {
+    "slug": "maraya-concert-series",
+    "title": "Maraya Concert Series",
+    "posterTitle": "MARAYA",
+    "tagline": "Iconic venue, amplified",
+    "event": "Maraya Concert Series",
+    "client": "Live Nation Middle East",
+    "year": "September 2022–March 2023",
+    "location": "AlUla, Saudi Arabia",
+    "services": "Production | Content",
+    "concept": "Set against the breathtaking backdrop of AlUla, the world's largest mirrored structure, Maraya became the stage for the Maraya Concert Series, an unprecedented cultural showcase. Live Nation Middle East and PHNTM partnered with Take Me Live to produce a concert experience that celebrated the venue's heritage while pushing the boundaries of immersive production. The creative direction focused on elegant minimalism fused with meaningful storytelling, ensuring each performance reflected the artist's identity and the spirit of AlUla.",
+    "story": "Take Me Live brought 28 unforgettable shows to life, featuring global stars like Andrea Bocelli, Mariah Carey, Westlife, John Legend, and Usher, alongside Arabic icons such as Mohammed Abdo, Kadim Al Sahir, Magida El Roumi, Assala Nasri, Angham, and Guy Manoukian. Each concert was uniquely tailored, with custom lighting, content, and stage design developed to reflect each artist's essence while respecting Maraya's architectural integrity. Our team produced immersive 90-minute visual journeys, blending modern artistry with cultural nuance. With 2.8 million global viewers and 400 guests per evening, the Maraya Concert Series became a cultural milestone. It underscored Take Me Live's ability to deliver high-impact, sensitive productions in one of the world's most symbolic venues.",
+    "summary": "Set against the breathtaking backdrop of AlUla, the world's largest mirrored structure, Maraya became the stage for the Maraya Concert Series, an unprecedented cultural showcase. Live Nation Middle East and PHNTM partnered with Take Me Live to produce a concert experience that celebrated the venue's heritage while pushing the boundaries of immersive production. The creative direction focused on elegant minimalism fused with meaningful storytelling, ensuring each performance reflected the artist's identity and the spirit of AlUla.",
+    "description": "Take Me Live brought 28 unforgettable shows to life, featuring global stars like Andrea Bocelli, Mariah Carey, Westlife, John Legend, and Usher, alongside Arabic icons such as Mohammed Abdo, Kadim Al Sahir, Magida El Roumi, Assala Nasri, Angham, and Guy Manoukian. Each concert was uniquely tailored, with custom lighting, content, and stage design developed to reflect each artist's essence while respecting Maraya's architectural integrity. Our team produced immersive 90-minute visual journeys, blending modern artistry with cultural nuance. With 2.8 million global viewers and 400 guests per evening, the Maraya Concert Series became a cultural milestone. It underscored Take Me Live's ability to deliver high-impact, sensitive productions in one of the world's most symbolic venues.",
+    "coverImage": "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1800&q=80",
+    "localCover": "/assets/projects/Maraya_One_Republic-030.jpg",
+    "gallery": [
+      "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1800&q=80"
+    ],
+    "localGallery": [
+      "/assets/projects/Maraya_One_Republic-030.jpg",
+      "/assets/Maraya_One_Republic-002.webp",
+      "/assets/Maraya_One_Republic-005.webp",
+      "/assets/Maraya_One_Republic-015.webp",
+      "/assets/Maraya_One_Republic-025.webp",
+      "/assets/maraya_john_legend-033.webp"
+    ],
+    "videos": [],
+    "localVideos": []
+  },
+  {
+    "slug": "blackpink-me-tour",
+    "title": "Blackpink ME Tour",
+    "posterTitle": "BLACKPINK",
+    "tagline": "Stadium-scale pop spectacle",
+    "event": "Blackpink Middle East Tour",
+    "client": "Live Nation Middle East",
+    "year": "January 2023",
+    "location": "Riyadh, Saudi Arabia & Abu Dhabi, UAE",
+    "services": "Production",
+    "concept": "In the heart of the Middle East, PHNTM and Live Nation partnered with Take Me Live to bring Blackpink's electrifying energy to the stage across Abu Dhabi and Riyadh. The mission was to fuse cutting-edge technology with artistic precision, transforming each venue into an immersive visual and sonic spectacle. Dynamic LED displays, intricate lighting, and explosive effects created a high-impact experience worthy of the global superstars.",
+    "story": "Commissioned by Live Nation Middle East, PHNTM and Take Me Live collaborated to deliver the full technical production for Blackpink's Middle Eastern tour. Working from an extensive rider, Take Me Live led local vendor management, ensuring flawless execution in both cities.\n\nStaged on the Star Live Titan—the world's largest outdoor structure—the shows featured six automated LED screens, 500 lighting fixtures, 40 lasers, and 100 special effects units including flames, CO2, and pyrotechnics.\n\nWe also supported an 18-camera iMAG system that streamed live footage to massive side LED screens, amplifying the experience for over 70,000 fans.\n\nThe tour concluded with a synchronized pyrotechnic finale designed alongside the touring team. This seamless blend of technology and creativity reinforced PHNTM, Live Nation, and Take Me Live's reputation for delivering large-scale, world-class productions.",
+    "summary": "In the heart of the Middle East, PHNTM and Live Nation partnered with Take Me Live to bring Blackpink's electrifying energy to the stage across Abu Dhabi and Riyadh. The mission was to fuse cutting-edge technology with artistic precision, transforming each venue into an immersive visual and sonic spectacle. Dynamic LED displays, intricate lighting, and explosive effects created a high-impact experience worthy of the global superstars.",
+    "description": "Commissioned by Live Nation Middle East, PHNTM and Take Me Live collaborated to deliver the full technical production for Blackpink's Middle Eastern tour. Working from an extensive rider, Take Me Live led local vendor management, ensuring flawless execution in both cities.\n\nStaged on the Star Live Titan—the world's largest outdoor structure—the shows featured six automated LED screens, 500 lighting fixtures, 40 lasers, and 100 special effects units including flames, CO2, and pyrotechnics.\n\nWe also supported an 18-camera iMAG system that streamed live footage to massive side LED screens, amplifying the experience for over 70,000 fans.\n\nThe tour concluded with a synchronized pyrotechnic finale designed alongside the touring team. This seamless blend of technology and creativity reinforced PHNTM, Live Nation, and Take Me Live's reputation for delivering large-scale, world-class productions.",
+    "coverImage": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80",
+    "localCover": "/assets/projects/BlackPink_MiddleEast-001.jpg",
+    "gallery": [
+      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80"
+    ],
+    "localGallery": [
+      "/assets/projects/BlackPink_MiddleEast-001.jpg",
+      "/assets/BlackPink_MiddleEast-005.webp",
+      "/assets/BlackPink_MiddleEast-006.webp"
+    ],
+    "videos": [],
+    "localVideos": []
+  },
+  {
+    "slug": "qatar-live-2021",
+    "title": "Qatar Live 2021",
+    "posterTitle": "QATAR LIVE",
+    "tagline": "Experiential landmark for the Arab Cup",
+    "event": "Qatar Live 2021",
+    "client": "Live Nation Middle East",
+    "year": "December 2021",
+    "location": "Doha, Qatar",
+    "services": "Production | Content | Experiential",
+    "concept": "Qatar Live 2021 was conceived as a cultural and creative landmark for the Arab Cup, a spectacular fusion of tradition and technology. With PHNTM leading the creative direction, Take Me Live was brought in as the execution partner to reimagine the Doha Exhibition and Convention Center into an immersive, never-before-seen live event arena. The vision was clear: a seamless integration of architectural innovation, immersive content, and emotionally charged stage design that celebrated the spirit of Doha on a global platform.",
+    "story": "When PHNTM needed a production powerhouse capable of delivering their boldest vision yet, they partnered with Take Me Live. Over 20 days, our team transformed 5.5 million square feet into a living, breathing spectacle anchored by \"The Flower,\" a massive projection-mapped sculpture built with 92 petals and 482 rigging points. To bring this monumental installation to life, we engineered a bespoke ground support system to overcome technical challenges posed by the venue's porous roof.\n\nFrom custom-branded lobbies and tailored photo zones to a fully immersive concert environment for 17,500 guests, every detail was executed with precision and artistry. The event's scale, creativity, and flawless execution set a new benchmark for live events in the region. Qatar Live 2021 became a defining moment in experiential production.",
+    "summary": "Qatar Live 2021 was conceived as a cultural and creative landmark for the Arab Cup, a spectacular fusion of tradition and technology. With PHNTM leading the creative direction, Take Me Live was brought in as the execution partner to reimagine the Doha Exhibition and Convention Center into an immersive, never-before-seen live event arena. The vision was clear: a seamless integration of architectural innovation, immersive content, and emotionally charged stage design that celebrated the spirit of Doha on a global platform.",
+    "description": "When PHNTM needed a production powerhouse capable of delivering their boldest vision yet, they partnered with Take Me Live. Over 20 days, our team transformed 5.5 million square feet into a living, breathing spectacle anchored by \"The Flower,\" a massive projection-mapped sculpture built with 92 petals and 482 rigging points. To bring this monumental installation to life, we engineered a bespoke ground support system to overcome technical challenges posed by the venue's porous roof.\n\nFrom custom-branded lobbies and tailored photo zones to a fully immersive concert environment for 17,500 guests, every detail was executed with precision and artistry. The event's scale, creativity, and flawless execution set a new benchmark for live events in the region. Qatar Live 2021 became a defining moment in experiential production.",
+    "coverImage": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80",
+    "localCover": "/assets/projects/QatarLive_21_MAJIDA-061.jpg",
+    "gallery": [
+      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80"
+    ],
+    "localGallery": [
+      "/assets/projects/QatarLive_21_MAJIDA-061.jpg",
+      "/assets/QatarLive_21_MAJIDA-064.webp",
+      "/assets/Qatar_Live-024.webp",
+      "/assets/Qatar_Live-026.webp",
+      "/assets/Qatar_Live-028.webp"
     ],
     "videos": [],
     "localVideos": []
@@ -53,165 +198,51 @@
     "posterTitle": "FIFA",
     "tagline": "Stadium-scale live spectacle",
     "event": "Lusail Super Cup",
-    "client": "FIFA",
-    "year": "2024",
-    "location": "Lusail, Qatar",
-    "summary": "A stadium-scale production combining culture, sport, and technology into one unified live spectacle.",
-    "description": "Through large-format staging, synchronized lighting, and immersive visual storytelling, the experience set a new benchmark for live event production in the region.",
+    "client": "FIFA & Supreme Committee for Delivery & Legacy",
+    "year": "September 2022",
+    "location": "Doha, Qatar",
+    "services": "Full Show & Stadium-Scale Production",
+    "concept": "In the heart of Doha, as Lusail Stadium prepared for its global debut, PHNTM and Live Nation partnered with Take Me Live to stage the Lusail Super Cup, a pre-World Cup moment that signaled what was to come. More than a football match, it was a cultural statement.\n\nThe challenge was to blend Arab heritage with next-generation production to craft a visual anthem for football in the region. Drawing from the stadium's lantern-inspired design and Islamic geometry, we transformed Lusail into a vibrant showcase of Middle Eastern pride and global sport.",
+    "story": "With 77,575 fans in attendance, 3,500 fireworks, 500 lighting fixtures, and 80,000 synchronized LED wristbands, the Lusail Super Cup delivered an immersive spectacle of culture, sport, and innovation.\n\nTake Me Live engineered key production elements, from a circular stage echoing fanar patterns to a stadium-wide light show. Egyptian icon Amr Diab's headline performance lit up the night in perfect sync with the dynamic visuals.\n\nEvery detail, from camera blocking to pyro timing, was precision-calibrated for live and broadcast impact.\n\nThe Lusail Super Cup became a defining moment, proving the region's readiness and setting a new production standard ahead of FIFA World Cup 2022.",
+    "summary": "In the heart of Doha, as Lusail Stadium prepared for its global debut, PHNTM and Live Nation partnered with Take Me Live to stage the Lusail Super Cup, a pre-World Cup moment that signaled what was to come. More than a football match, it was a cultural statement.\n\nThe challenge was to blend Arab heritage with next-generation production to craft a visual anthem for football in the region. Drawing from the stadium's lantern-inspired design and Islamic geometry, we transformed Lusail into a vibrant showcase of Middle Eastern pride and global sport.",
+    "description": "With 77,575 fans in attendance, 3,500 fireworks, 500 lighting fixtures, and 80,000 synchronized LED wristbands, the Lusail Super Cup delivered an immersive spectacle of culture, sport, and innovation.\n\nTake Me Live engineered key production elements, from a circular stage echoing fanar patterns to a stadium-wide light show. Egyptian icon Amr Diab's headline performance lit up the night in perfect sync with the dynamic visuals.\n\nEvery detail, from camera blocking to pyro timing, was precision-calibrated for live and broadcast impact.\n\nThe Lusail Super Cup became a defining moment, proving the region's readiness and setting a new production standard ahead of FIFA World Cup 2022.",
     "coverImage": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80",
-    "localCover": "/assets/projects/69%20bottom%20qatar.jpg",
+    "localCover": "/assets/projects/69 bottom qatar.jpg",
     "gallery": [
-      "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80",
-      "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1600&q=80"
+      "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80"
     ],
     "localGallery": [
-      "/assets/projects/69%20bottom%20qatar.jpg"
+      "/assets/projects/69 bottom qatar.jpg",
+      "/assets/Lusail_Opening-156.webp",
+      "/assets/Lusail_Opening-159.webp",
+      "/assets/Lusail_Opening-181.webp",
+      "/assets/Lusail_Opening-182.webp"
     ],
     "videos": [],
     "localVideos": []
   },
   {
-    "slug": "maraya-concert-series",
-    "title": "Maraya Concert Series",
-    "posterTitle": "MARAYA",
-    "tagline": "Iconic venue, amplified",
-    "event": "Live Nation Middle East",
-    "client": "Live Nation Middle East",
-    "year": "2023",
-    "location": "AlUla, Saudi Arabia",
-    "summary": "A series of large-scale concert experiences designed to complement one of the world's most iconic architectural venues.",
-    "description": "Each performance blended artistic storytelling, technical precision, and immersive production to create unforgettable live moments.",
-    "coverImage": "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1800&q=80",
-    "localCover": "/assets/projects/Maraya_One_Republic-030.jpg",
+    "slug": "cinema-medley",
+    "title": "Cinema Medley",
+    "posterTitle": "CINEMA MEDLEY",
+    "tagline": "Immersive symphonic film-score experience",
+    "event": "Cinema Medley & Cinema Medley 2",
+    "client": "Imperial Orchestra",
+    "year": "May & December 2024",
+    "location": "Coca-Cola Arena, Dubai",
+    "services": "Stage Design | Technical | Production",
+    "concept": "Imperial Orchestra made its grand debut in the Middle East with two spectacular performances at Coca-Cola Arena, Dubai. The first show, Cinema Medley, took place in May, followed by an even more ambitious sequel, Cinema Medley 2, in December. Both productions were designed to deliver an immersive symphonic experience, blending the power of live orchestration with cutting-edge stage and technical execution.",
+    "story": "Imperial Orchestra made its Dubai debut with Cinema Medley in May, followed by Cinema Medley 2 in December. With high client expectations, every production detail was meticulously executed. The December show featured 120 musicians, an orchestra, choir, and folk instruments, performing legendary soundtracks from films like Oppenheimer, The Mandalorian, Lord of the Rings, Titanic, James Bond, and more. The orchestra made history premiering the Oppenheimer symphonic suite. The visually striking stage setup enhanced the grandeur of the full symphony, while cutting-edge technical production ensured flawless synchronization of sound, lighting, and visuals. Delivered within tight deadlines, the seamless integration of music, visuals, and stagecraft exceeded expectations, reinforcing the orchestra's reputation for unforgettable musical experiences. The emotional and breathtaking performance left a lasting impression, cementing Imperial Orchestra's presence in the Middle East.",
+    "summary": "Imperial Orchestra made its grand debut in the Middle East with two spectacular performances at Coca-Cola Arena, Dubai. The first show, Cinema Medley, took place in May, followed by an even more ambitious sequel, Cinema Medley 2, in December. Both productions were designed to deliver an immersive symphonic experience, blending the power of live orchestration with cutting-edge stage and technical execution.",
+    "description": "Imperial Orchestra made its Dubai debut with Cinema Medley in May, followed by Cinema Medley 2 in December. With high client expectations, every production detail was meticulously executed. The December show featured 120 musicians, an orchestra, choir, and folk instruments, performing legendary soundtracks from films like Oppenheimer, The Mandalorian, Lord of the Rings, Titanic, James Bond, and more. The orchestra made history premiering the Oppenheimer symphonic suite. The visually striking stage setup enhanced the grandeur of the full symphony, while cutting-edge technical production ensured flawless synchronization of sound, lighting, and visuals. Delivered within tight deadlines, the seamless integration of music, visuals, and stagecraft exceeded expectations, reinforcing the orchestra's reputation for unforgettable musical experiences. The emotional and breathtaking performance left a lasting impression, cementing Imperial Orchestra's presence in the Middle East.",
+    "coverImage": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1800&q=80",
+    "localCover": "/assets/IMG_7139.webp",
     "gallery": [
-      "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1800&q=80",
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=1600&q=80"
+      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1800&q=80"
     ],
     "localGallery": [
-      "/assets/projects/Maraya_One_Republic-030.jpg"
-    ],
-    "videos": [],
-    "localVideos": []
-  },
-  {
-    "slug": "red-bull-energy-lounge",
-    "title": "Red Bull Energy Lounge",
-    "posterTitle": "RED BULL",
-    "tagline": "Immersive brand world",
-    "event": "1 Billion Summit",
-    "client": "Red Bull",
-    "year": "2024",
-    "location": "Riyadh",
-    "summary": "An immersive networking and content environment designed to reflect Red Bull's high-performance energy.",
-    "description": "Blending spatial storytelling with interactive elements, the experience created a dynamic destination where conversations, content, and brand engagement came together in one cohesive space.",
-    "coverImage": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80",
-    "localCover": "/assets/projects/IMG_9410.jpg",
-    "gallery": [
-      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80",
-      "https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80"
-    ],
-    "localGallery": [
-      "/assets/projects/IMG_9410.jpg",
-      "/assets/projects/IMG_0304.JPG"
-    ],
-    "videos": [],
-    "localVideos": []
-  },
-  {
-    "slug": "soundstorm-main-stage",
-    "title": "Soundstorm Main Stage",
-    "posterTitle": "SOUNDSTORM",
-    "tagline": "Festival main stage",
-    "event": "Soundstorm",
-    "client": "MDLBEAST",
-    "year": "2023",
-    "location": "Riyadh",
-    "summary": "Festival-scale stage design pairing cinematic visuals with synchronized lighting for peak crowd energy.",
-    "description": "From artist reveal to headline moments, the production system delivered consistent impact across multi-day programming.",
-    "coverImage": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80",
-    "localCover": "/assets/projects/QatarLive_21_MAJIDA-061.jpg",
-    "gallery": [
-      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80",
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1600&q=80"
-    ],
-    "localGallery": [
-      "/assets/projects/QatarLive_21_MAJIDA-061.jpg"
-    ],
-    "videos": [],
-    "localVideos": []
-  },
-  {
-    "slug": "formula-1-paddock-club",
-    "title": "Formula 1 Paddock Club",
-    "posterTitle": "F1",
-    "tagline": "Paddock hospitality",
-    "event": "Qatar Grand Prix",
-    "client": "F1",
-    "year": "2024",
-    "location": "Lusail Circuit",
-    "summary": "A premium hospitality environment engineered for broadcast-quality moments and high-touch guest flow.",
-    "description": "Layered lighting, modular staging, and precision timing turned the paddock club into a seamless extension of the race weekend experience.",
-    "coverImage": "https://images.unsplash.com/photo-1551958219-ac55feef6081?auto=format&fit=crop&w=1800&q=80",
-    "localCover": "/assets/projects/69%20bottom%20qatar.jpg",
-    "gallery": [
-      "https://images.unsplash.com/photo-1551958219-ac55feef6081?auto=format&fit=crop&w=1800&q=80",
-      "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1517649763961-0c62306601b7?auto=format&fit=crop&w=1600&q=80"
-    ],
-    "localGallery": [
-      "/assets/projects/69%20bottom%20qatar.jpg"
-    ],
-    "videos": [],
-    "localVideos": []
-  },
-  {
-    "slug": "leap-agenda-expo",
-    "title": "LEAP Agenda Expo",
-    "posterTitle": "LEAP",
-    "tagline": "Tech-forward expo build",
-    "event": "LEAP",
-    "client": "LEAP",
-    "year": "2024",
-    "location": "Riyadh",
-    "summary": "A technology-forward expo build balancing bold brand presence with flexible visitor circulation.",
-    "description": "Integrated LED architecture and modular zones created a scalable footprint that could evolve across multiple show days.",
-    "coverImage": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1800&q=80",
-    "localCover": "/assets/projects/PHNTM%20DMO-14.jpg",
-    "gallery": [
-      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1800&q=80",
-      "https://images.unsplash.com/photo-1505373877841-8d25f39d466b?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1600&q=80"
-    ],
-    "localGallery": [
-      "/assets/projects/PHNTM%20DMO-14.jpg"
-    ],
-    "videos": [],
-    "localVideos": []
-  },
-  {
-    "slug": "national-day-gala",
-    "title": "National Day Gala",
-    "posterTitle": "NATIONAL DAY",
-    "tagline": "Ceremonial gala production",
-    "event": "National Day",
-    "client": "Government Protocol",
-    "year": "2023",
-    "location": "Doha",
-    "summary": "A ceremonial gala production weaving national narrative, live performance, and precision cueing.",
-    "description": "Coordinated stagecraft and lighting transitions supported a dignified program with broadcast-level reliability.",
-    "coverImage": "https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1800&q=80",
-    "localCover": "/assets/projects/IMG_3571.JPG",
-    "gallery": [
-      "https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1800&q=80",
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1600&q=80"
-    ],
-    "localGallery": [
-      "/assets/projects/IMG_3571.JPG"
+      "/assets/IMG_7139.webp",
+      "/assets/IMG_9412.webp"
     ],
     "videos": [],
     "localVideos": []
