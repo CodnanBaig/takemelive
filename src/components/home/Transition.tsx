@@ -2,14 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
-import { MASK_HIDDEN_BOTTOM, MASK_VISIBLE } from '@/lib/maskReveal';
 import ScrollOrnament from './ScrollOrnament';
 import styles from './Transition.module.scss';
-
-const MANIFESTO_LINES = [
-  'NOT EVERYTHING NEEDS ATTENTION.',
-  'YOUR BRAND DOES.',
-] as const;
 
 const SUBHEADING_LINES = [
   'We create experiences designed to be seen, felt, and remembered.',
@@ -19,180 +13,73 @@ const SUBHEADING_LINES = [
   'Because when something happens live, it matters more.',
 ];
 
-type SpotPoint = { x: number; y: number };
-
-const FALLBACK_SPOT_PATH: SpotPoint[] = [
-  { x: 50, y: 58 },
-  { x: 50, y: 63 },
-  { x: 50, y: 68 },
-  { x: 50, y: 73 },
-  { x: 50, y: 78 },
-];
-
-function buildSpotPath(
-  stage: HTMLElement,
-  railLines: NodeListOf<Element>,
-  subLines: NodeListOf<Element>,
-): SpotPoint[] {
-  const stageRect = stage.getBoundingClientRect();
-  if (!stageRect.width || !stageRect.height) {
-    return FALLBACK_SPOT_PATH;
-  }
-
-  const toPct = (clientX: number, clientY: number): SpotPoint => ({
-    x: ((clientX - stageRect.left) / stageRect.width) * 100,
-    y: ((clientY - stageRect.top) / stageRect.height) * 100,
-  });
-
-  const path: SpotPoint[] = [];
-
-  railLines.forEach((line) => {
-    const rect = line.getBoundingClientRect();
-    if (!rect.width) return;
-
-    path.push(toPct(rect.left + rect.width * 0.5, rect.top + rect.height * 0.5));
-  });
-
-  subLines.forEach((line, lineIndex) => {
-    const rect = line.getBoundingClientRect();
-    if (!rect.width) return;
-
-    const midY = rect.top + rect.height * 0.5;
-    const fractions = lineIndex % 2 === 0 ? [0.22, 0.5, 0.78] : [0.78, 0.5, 0.22];
-
-    fractions.forEach((fraction) => {
-      path.push(toPct(rect.left + rect.width * fraction, midY));
-    });
-  });
-
-  return path.length > 0 ? path : FALLBACK_SPOT_PATH;
-}
-
 export default function Transition() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const curtainRef = useRef<HTMLDivElement | null>(null);
-  const lightSweepRef = useRef<HTMLDivElement | null>(null);
-  const spotlightVeilRef = useRef<HTMLDivElement | null>(null);
+  const gateLeftRef = useRef<HTMLDivElement | null>(null);
+  const gateRightRef = useRef<HTMLDivElement | null>(null);
+  const scopeRef = useRef<HTMLDivElement | null>(null);
+  const scopeCoordRef = useRef<HTMLDivElement | null>(null);
+  const timecodeRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const curtain = curtainRef.current;
-    const lightSweep = lightSweepRef.current;
-    const spotlightVeil = spotlightVeilRef.current;
-    const railLines = section?.querySelectorAll('[data-rail-line]');
-    const subLines = section?.querySelectorAll('[data-subline]');
-    const stage = section?.querySelector(`.${styles.stage}`) as HTMLElement | null;
+    const gateLeft = gateLeftRef.current;
+    const gateRight = gateRightRef.current;
+    const timecode = timecodeRef.current;
 
-    if (!section || !curtain || !lightSweep || !spotlightVeil || !railLines || !subLines || !stage) {
+    if (!section || !gateLeft || !gateRight) {
       return;
     }
 
-    const getSpotPath = () => buildSpotPath(stage, railLines, subLines);
-
-    const getSpotRadius = (pointIndex = 0) => {
-      const path = getSpotPath();
-      const point = path[pointIndex];
-      const manifestoLine = railLines[Math.min(pointIndex, railLines.length - 1)] as
-        | HTMLElement
-        | undefined;
-
-      if (manifestoLine && pointIndex < railLines.length) {
-        const rect = manifestoLine.getBoundingClientRect();
-        if (rect.width && rect.height) {
-          return Math.min(Math.max(rect.width * 0.28, rect.height * 1.35, 220), 420);
-        }
-      }
-
-      if (point) {
-        const subheading = stage.querySelector(`.${styles.subheading}`) as HTMLElement | null;
-        if (subheading) {
-          const rect = subheading.getBoundingClientRect();
-          if (rect.width && rect.height) {
-            return Math.min(Math.max(rect.width * 0.48, rect.height * 0.68), 300);
-          }
-        }
-      }
-
-      return Math.min(window.innerWidth * 0.22, 260);
-    };
-
-    const getBloomCenter = (): SpotPoint => {
-      const stageRect = stage.getBoundingClientRect();
-      const headlineStack = stage.querySelector(`.${styles.headlineStack}`) as HTMLElement | null;
-      const subheading = stage.querySelector(`.${styles.subheading}`) as HTMLElement | null;
-
-      if (!stageRect.width || !stageRect.height || !headlineStack || !subheading) {
-        return { x: 50, y: 50 };
-      }
-
-      const headlineRect = headlineStack.getBoundingClientRect();
-      const subRect = subheading.getBoundingClientRect();
-      const centerY = (headlineRect.top + subRect.bottom) * 0.5;
-
-      return {
-        x: 50,
-        y: ((centerY - stageRect.top) / stageRect.height) * 100,
-      };
-    };
-
-    const getBloomRadius = () => {
-      const rect = stage.getBoundingClientRect();
-      if (!rect.width || !rect.height) {
-        return Math.max(window.innerWidth, window.innerHeight) * 1.15;
-      }
-
-      return Math.hypot(rect.width, rect.height) * 0.78;
+    const getPinDistance = () => {
+      const revealDistance = window.innerHeight * 0.9;
+      const manifestoDistance = window.innerHeight * 1.25;
+      const sublineDistance = window.innerHeight * 0.65;
+      const holdDistance = window.innerHeight * 0.5;
+      const exitDistance = window.innerHeight * 0.85;
+      return Math.round(
+        revealDistance +
+          manifestoDistance +
+          sublineDistance +
+          holdDistance +
+          exitDistance,
+      );
     };
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(curtain, { xPercent: -102 });
-        gsap.set(lightSweep, { xPercent: 120, autoAlpha: 0 });
-        gsap.set(spotlightVeil, { autoAlpha: 0, '--spot-radius': '0px' });
-        gsap.set(railLines, { clipPath: MASK_VISIBLE });
-        gsap.set(subLines, { clipPath: MASK_VISIBLE, y: 0, opacity: 1, filter: 'blur(0px)' });
-        gsap.set(section, { '--stage-tone': 1 });
+        gsap.set(gateLeft, { xPercent: -101 });
+        gsap.set(gateRight, { xPercent: 101 });
+        const gridLines = section.querySelectorAll('[data-grid-line]');
+        const brackets = section.querySelectorAll('[data-hud-bracket]');
+        const telemetries = section.querySelectorAll('[data-telemetry]');
+        const manifestoRows = section.querySelectorAll('[data-manifesto-row]');
+        const subLines = section.querySelectorAll('[data-subline]');
+
+        gsap.set(gridLines, { scaleX: 1, scaleY: 1 });
+        gsap.set(brackets, { opacity: 1, scale: 1 });
+        gsap.set(telemetries, { opacity: 1, y: 0 });
+        gsap.set(manifestoRows, { opacity: 1, y: 0, filter: 'none' });
+        gsap.set(subLines, { opacity: 1, y: 0 });
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.set(curtain, { xPercent: 0 });
-        gsap.set(lightSweep, { xPercent: -140, autoAlpha: 0.9 });
-        gsap.set(spotlightVeil, { autoAlpha: 0, '--spot-radius': '0px' });
-        gsap.set(railLines, { clipPath: MASK_HIDDEN_BOTTOM });
-        gsap.set(subLines, { clipPath: MASK_HIDDEN_BOTTOM, y: 14, opacity: 0.35, filter: 'blur(6px)' });
-        gsap.set(section, { '--stage-tone': 0 });
+        const gridLines = section.querySelectorAll('[data-grid-line]');
+        const brackets = section.querySelectorAll('[data-hud-bracket]');
+        const telemetries = section.querySelectorAll('[data-telemetry]');
+        const manifestoRows = section.querySelectorAll('[data-manifesto-row]');
+        const subLines = section.querySelectorAll('[data-subline]');
 
-        const getPinDistance = () => {
-          const revealDistance = window.innerHeight * 0.9;
-          const manifestoDistance = window.innerHeight * 0.95;
-          const sublineDistance = window.innerHeight * 0.55;
-          const spotlightDistance = window.innerHeight * 3.6;
-          const holdDistance = window.innerHeight * 0.45;
-          const exitDistance = window.innerHeight * 0.85;
-          return Math.round(
-            revealDistance +
-              manifestoDistance +
-              sublineDistance +
-              spotlightDistance +
-              holdDistance +
-              exitDistance,
-          );
-        };
-
-        const curtainEnd = 0.22;
-        const headlineStart = 0.24;
-        const headlineEnd = 0.42;
-        const sublineStart = 0.44;
-        const sublineEnd = 0.58;
-        const spotlightStart = 0.6;
-        const spotlightEnd = 0.9;
-        const exitStart = 0.94;
-        const spotlightSpan = spotlightEnd - spotlightStart;
-        const spotlightOpenShare = 0.12;
-        const spotlightPathShare = 0.66;
-        const spotlightBloomShare = 0.22;
+        // Setup start state
+        gsap.set(gateLeft, { xPercent: 0 });
+        gsap.set(gateRight, { xPercent: 0 });
+        gsap.set(gridLines, { scaleX: 0, scaleY: 0 });
+        gsap.set(brackets, { opacity: 0, scale: 1.3 });
+        gsap.set(telemetries, { opacity: 0, y: 10 });
+        gsap.set(manifestoRows, { opacity: 0, y: 30, filter: 'blur(8px)' });
+        gsap.set(subLines, { opacity: 0, y: 15 });
 
         const timeline = gsap.timeline({
           scrollTrigger: {
@@ -204,159 +91,81 @@ export default function Transition() {
             anticipatePin: 1,
             fastScrollEnd: true,
             invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (timecode) {
+                const totalFrames = Math.floor(self.progress * 240);
+                const sec = Math.floor(totalFrames / 60);
+                const frame = totalFrames % 60;
+                timecode.innerText = `TC: 00:00:0${sec}:${frame.toString().padStart(2, '0')}`;
+              }
+            },
           },
         });
 
         timeline
-          .to(
-            curtain,
-            {
-              xPercent: -102,
-              duration: curtainEnd,
-              ease: 'power2.inOut',
-            },
-            0,
-          )
-          .to(
-            lightSweep,
-            {
-              xPercent: 160,
-              autoAlpha: 0.35,
-              duration: curtainEnd,
-              ease: 'power2.inOut',
-            },
-            0,
-          )
-          .to(
-            lightSweep,
-            {
-              autoAlpha: 0,
-              duration: 0.1,
-              ease: 'none',
-            },
-            curtainEnd - 0.02,
-          )
-          .to(
-            railLines,
-            {
-              clipPath: MASK_VISIBLE,
-              duration: headlineEnd - headlineStart,
-              ease: 'power3.out',
-              stagger: 0.12,
-            },
-            headlineStart,
-          )
-          .to(
-            subLines,
-            {
-              clipPath: MASK_VISIBLE,
-              y: 0,
-              opacity: 1,
-              filter: 'blur(0px)',
-              duration: sublineEnd - sublineStart,
-              ease: 'power3.out',
-              stagger: 0.07,
-            },
-            sublineStart,
-          )
-          .set(subLines, { opacity: 1, filter: 'none' }, sublineEnd)
-          .to(
-            section,
-            {
-              '--stage-tone': 1,
-              duration: spotlightEnd - spotlightStart,
-              ease: 'power2.inOut',
-            },
-            spotlightStart,
-          )
-          .set(subLines, { opacity: 1, filter: 'none' }, spotlightStart)
-          .set(spotlightVeil, { autoAlpha: 1 }, spotlightStart)
-          .set(
-            spotlightVeil,
-            {
-              '--spot-x': () => getSpotPath()[0]?.x ?? 50,
-              '--spot-y': () => getSpotPath()[0]?.y ?? 65,
-            },
-            spotlightStart,
-          )
-          .fromTo(
-            spotlightVeil,
-            { '--spot-radius': '0px', '--spot-feather': '44%' },
-            {
-              '--spot-radius': () => `${getSpotRadius(0)}px`,
-              duration: spotlightSpan * spotlightOpenShare,
-              ease: 'power2.out',
-            },
-            spotlightStart,
-          );
+          // 1. Gates slide open
+          .to(gateLeft, { xPercent: -101, duration: 0.25, ease: 'power2.inOut' }, 0)
+          .to(gateRight, { xPercent: 101, duration: 0.25, ease: 'power2.inOut' }, 0)
+          
+          // 2. HUD grid and borders draw in
+          .to(gridLines, { scaleX: 1, scaleY: 1, duration: 0.2, ease: 'power2.out', stagger: 0.05 }, 0.1)
+          .to(brackets, { opacity: 1, scale: 1, duration: 0.15, ease: 'back.out(1.5)', stagger: 0.03 }, 0.15)
+          .to(telemetries, { opacity: 1, y: 0, duration: 0.15, ease: 'power2.out', stagger: 0.03 }, 0.18)
 
-        const spotPath = getSpotPath();
-        const pathEndTime = spotlightStart + spotlightSpan * (spotlightOpenShare + spotlightPathShare);
-        const moveStep =
-          spotPath.length > 1
-            ? (spotlightSpan * spotlightPathShare) / (spotPath.length - 1)
-            : spotlightSpan * spotlightPathShare;
+          // 3. Kinetic typography animation
+          .to(manifestoRows[0], { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.15, ease: 'power3.out' }, 0.28)
+          .to(manifestoRows[1], { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.15, ease: 'power3.out' }, 0.36)
+          .to(manifestoRows[2], { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.15, ease: 'power3.out' }, 0.44)
+          .to(manifestoRows[3], { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.18, ease: 'back.out(1.7)' }, 0.52)
 
-        spotPath.slice(1).forEach((_, index) => {
-          const pointIndex = index + 1;
-          timeline.to(
-            spotlightVeil,
-            {
-              '--spot-x': () => getSpotPath()[pointIndex]?.x ?? spotPath[pointIndex].x,
-              '--spot-y': () => getSpotPath()[pointIndex]?.y ?? spotPath[pointIndex].y,
-              '--spot-radius': () => `${getSpotRadius(pointIndex)}px`,
-              duration: moveStep,
-              ease: 'power3.inOut',
-            },
-            spotlightStart + spotlightSpan * spotlightOpenShare + moveStep * index,
-          );
-        });
+          // 4. Subheadings reveal
+          .to(subLines, { opacity: 1, y: 0, duration: 0.2, ease: 'power3.out', stagger: 0.06 }, 0.62)
 
-        const bloomCenter = getBloomCenter();
-        timeline.to(
-          spotlightVeil,
-          {
-            '--spot-x': bloomCenter.x,
-            '--spot-y': bloomCenter.y,
-            '--spot-radius': () => `${getBloomRadius()}px`,
-            '--spot-feather': '62%',
-            duration: spotlightSpan * spotlightBloomShare,
-            ease: 'power4.out',
-          },
-          pathEndTime,
-        );
+          // 5. Exit - collapse elements
+          .to(manifestoRows, { opacity: 0, y: -40, filter: 'blur(8px)', duration: 0.15, ease: 'power2.in', stagger: 0.03 }, 0.9)
+          .to(subLines, { opacity: 0, y: -20, duration: 0.15, ease: 'power2.in', stagger: 0.02 }, 0.92)
+          .to(brackets, { opacity: 0, scale: 0.8, duration: 0.15, ease: 'power2.in' }, 0.94)
+          .to(telemetries, { opacity: 0, y: -10, duration: 0.15, ease: 'power2.in' }, 0.94)
+          .to(gridLines, { scaleX: 0, scaleY: 0, duration: 0.15, ease: 'power2.in' }, 0.95);
+      });
 
-        timeline
-          .to(
-            railLines,
-            {
-              clipPath: MASK_HIDDEN_BOTTOM,
-              duration: 0.24,
-              ease: 'power2.in',
-              stagger: 0.05,
-            },
-            exitStart,
-          )
-          .to(
-            subLines,
-            {
-              clipPath: MASK_HIDDEN_BOTTOM,
-              opacity: 0,
-              duration: 0.24,
-              ease: 'power2.in',
-              stagger: 0.04,
-            },
-            exitStart,
-          )
-          .to(
-            spotlightVeil,
-            {
-              autoAlpha: 0,
-              duration: 0.2,
-              ease: 'power2.in',
-            },
-            exitStart,
-          );
+      mm.add('(pointer:fine) and (prefers-reduced-motion: no-preference)', () => {
+        const scope = scopeRef.current;
+        const coordText = scopeCoordRef.current;
+        if (!scope || !coordText) return;
+
+        const xTo = gsap.quickTo(scope, '--scope-x', { duration: 0.15, ease: 'power2.out' });
+        const yTo = gsap.quickTo(scope, '--scope-y', { duration: 0.15, ease: 'power2.out' });
+        const opacityTo = gsap.quickTo(scope, 'opacity', { duration: 0.3, ease: 'power2.out' });
+
+        gsap.set(scope, { opacity: 0 });
+
+        const handlePointerMove = (e: PointerEvent) => {
+          const rect = section.getBoundingClientRect();
+          const xPct = ((e.clientX - rect.left) / rect.width) * 100;
+          const yPct = ((e.clientY - rect.top) / rect.height) * 100;
+          xTo(xPct);
+          yTo(yPct);
+          coordText.innerText = `X: ${xPct.toFixed(1)}% | Y: ${yPct.toFixed(1)}%`;
+        };
+
+        const handlePointerEnter = () => {
+          opacityTo(1);
+        };
+
+        const handlePointerLeave = () => {
+          opacityTo(0);
+        };
+
+        section.addEventListener('pointermove', handlePointerMove);
+        section.addEventListener('pointerenter', handlePointerEnter);
+        section.addEventListener('pointerleave', handlePointerLeave);
+
+        return () => {
+          section.removeEventListener('pointermove', handlePointerMove);
+          section.removeEventListener('pointerenter', handlePointerEnter);
+          section.removeEventListener('pointerleave', handlePointerLeave);
+        };
       });
 
       return () => {
@@ -380,21 +189,91 @@ export default function Transition() {
     >
       <ScrollOrnament variant="glyph-light" position="tl" />
       <div className={styles.stage} data-logo-invert="0">
-        <div ref={curtainRef} className={styles.blackCurtain} data-logo-invert="1" aria-hidden>
-          <div ref={lightSweepRef} className={styles.lightSweep} />
+        
+        {/* Stark Black-and-White Split Gates */}
+        <div ref={gateLeftRef} className={styles.gateLeft} aria-hidden>
+          <div className={styles.splitTextInner}>TAKE ME LIVE</div>
         </div>
-        <div className={styles.headlineStack}>
-          <div className={styles.textRail} aria-label={MANIFESTO_LINES.join(' ')}>
-            {MANIFESTO_LINES.map((line) => (
-              <div key={line} className={styles.manifestoLine} data-rail-line>
-                <span className={styles.railWordInner} data-rail-word>
-                  {line}
-                </span>
-              </div>
-            ))}
+        <div ref={gateRightRef} className={styles.gateRight} aria-hidden>
+          <div className={styles.splitTextInner}>TAKE ME LIVE</div>
+        </div>
+
+        {/* HUD Grid Overlay */}
+        <div className={styles.hudGridLines}>
+          <div data-grid-line className={`${styles.gridLine} ${styles.gridLineH1}`} />
+          <div data-grid-line className={`${styles.gridLine} ${styles.gridLineH2}`} />
+          <div data-grid-line className={`${styles.gridLine} ${styles.gridLineV1}`} />
+          <div data-grid-line className={`${styles.gridLine} ${styles.gridLineV2}`} />
+        </div>
+
+        {/* HUD Corner Brackets */}
+        <div data-hud-bracket className={`${styles.bracket} ${styles.tl}`} />
+        <div data-hud-bracket className={`${styles.bracket} ${styles.tr}`} />
+        <div data-hud-bracket className={`${styles.bracket} ${styles.bl}`} />
+        <div data-hud-bracket className={`${styles.bracket} ${styles.br}`} />
+
+        {/* HUD Center Crosshair */}
+        <div className={styles.centerCrosshair}>+</div>
+
+        {/* Telemetry Corner Readouts */}
+        <div data-telemetry className={styles.telemetryTL}>
+          <span>LIVE PRODUCTION FLOW // CAM_02</span>
+        </div>
+
+        <div data-telemetry className={styles.telemetryTR}>
+          <span className={styles.recDot}>●</span>
+          <span>REC [60FPS]</span>
+        </div>
+
+        <div data-telemetry className={styles.telemetryBL}>
+          <div className={styles.audioFeed}>
+            <span className={styles.audioLabel}>AUDIO FEED</span>
+            <div className={styles.audioBars}>
+              <div className={`${styles.bar} ${styles.bar1}`} />
+              <div className={`${styles.bar} ${styles.bar2}`} />
+              <div className={`${styles.bar} ${styles.bar3}`} />
+              <div className={`${styles.bar} ${styles.bar4}`} />
+              <div className={`${styles.bar} ${styles.bar5}`} />
+              <div className={`${styles.bar} ${styles.bar6}`} />
+              <div className={`${styles.bar} ${styles.bar7}`} />
+              <div className={`${styles.bar} ${styles.bar8}`} />
+            </div>
           </div>
         </div>
-        <div ref={spotlightVeilRef} className={styles.spotlightVeil} aria-hidden />
+
+        <div data-telemetry className={styles.telemetryBR} ref={timecodeRef}>
+          TC: 00:00:00:00
+        </div>
+
+        {/* Interactive Scope Reticle */}
+        <div ref={scopeRef} className={styles.cursorScope} aria-hidden>
+          <div className={styles.scopeReticle} />
+          <div className={styles.scopeHLine} />
+          <div className={styles.scopeVLine} />
+          <div className={styles.scopeCoords} ref={scopeCoordRef}>
+            X: 00.0% | Y: 00.0%
+          </div>
+        </div>
+
+        {/* Kinetic Manifesto Text */}
+        <div className={styles.headlineStack}>
+          <div className={styles.textRail} aria-label="NOT EVERYTHING NEEDS ATTENTION. YOUR BRAND DOES.">
+            <div data-manifesto-row className={`${styles.manifestoRow} ${styles.stencil}`}>
+              NOT EVERYTHING
+            </div>
+            <div data-manifesto-row className={`${styles.manifestoRow} ${styles.solid}`}>
+              NEEDS ATTENTION.
+            </div>
+            <div data-manifesto-row className={`${styles.manifestoRow} ${styles.stencil}`}>
+              YOUR BRAND
+            </div>
+            <div data-manifesto-row className={`${styles.manifestoRow} ${styles.inverted}`}>
+              <span className={styles.invertedText}>DOES.</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Subheadings */}
         <div className={styles.subheading}>
           {SUBHEADING_LINES.map((line) => (
             <p key={line} className={styles.subLine} data-subline>
@@ -402,6 +281,7 @@ export default function Transition() {
             </p>
           ))}
         </div>
+
       </div>
     </section>
   );

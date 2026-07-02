@@ -1,13 +1,12 @@
 .section {
   min-height: min(100vh, 100dvh);
   color: var(--tml-white);
-  background:
-    radial-gradient(circle at 88% 0%, var(--tml-accent-soft), transparent 42%),
-    linear-gradient(180deg, var(--tml-black) 0%, var(--tml-void) 100%);
+  background: #000000;
   padding: clamp(3rem, 8vh, 6rem) 0 clamp(4rem, 10vh, 7rem);
   display: grid;
   align-items: center;
   position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .inner {
@@ -82,7 +81,7 @@
   font-weight: var(--tml-display-weight);
   letter-spacing: 0.08em;
   font-size: clamp(0.76rem, 0.9vw, 0.94rem);
-  color: var(--tml-accent-bright);
+  color: var(--tml-white);
   flex-shrink: 0;
 }
 
@@ -96,24 +95,22 @@
   width: min(100%, 460px);
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border: 1px solid rgb(245 245 240 / 0.16);
-  background: var(--tml-surface-raised);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #08090a;
 }
 
 .media::after {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, transparent 40%, rgb(0 0 0 / 0.65) 100%),
-    linear-gradient(90deg, var(--tml-accent-soft), transparent 48%);
+  background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.85) 100%);
   pointer-events: none;
   z-index: 1;
 }
 
 .media :global(img) {
   object-fit: cover;
-  filter: saturate(0.92) contrast(1.1);
+  filter: grayscale(100%) contrast(1.25) brightness(0.9);
 }
 
 .media figcaption {

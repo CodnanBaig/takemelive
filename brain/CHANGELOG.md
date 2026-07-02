@@ -1,3 +1,12 @@
+## 2026-07-02-v208
+
+- Completely redesigned the second section of the site (Transition and WhatWeDo manifesto scene group) with a stark, premium black-and-white theme.
+- Replaced the blue spotlight reveal in Transition with split-screen shutter doors ("TAKE ME" / "LIVE") sliding horizontally apart on scroll.
+- Added a cinematic telemetry overlay in Transition, including vertical/horizontal grid lines, viewfinder corner brackets, central crosshair, an active audio level visualizer, and a real-time timecode reader synced to the scroll progress.
+- Created an interactive mouse-scoped targeting reticle with dynamic crosshair tracking lines and real-time cursor coordinate calculations.
+- Integrated brutalist kinetic typography reveals (stenciled Oswald headings with outlines, solid headings, and inverted text blocks).
+- Styled the WhatWeDo component with monochrome tokens (removed blue accent-glows/radial gradients) and added a high-contrast grayscale filter to the event production showcase image.
+
 ## 2026-06-01-v207
 
 - Showreel uses a random Mixkit live-event clip on each load when local showreel.mp4 is absent; retries another random URL on playback error.
