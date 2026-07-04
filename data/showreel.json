@@ -1,0 +1,9 @@
+{
+  "localSrc": "/IMG_1003_optimized.mp4",
+  "primaryVideo": "",
+  "fallbackVideos": [
+    "https://assets.mixkit.co/videos/preview/mixkit-crowd-at-a-concert-4052-large.mp4"
+  ],
+  "poster": "",
+  "useRandomFallback": false
+}

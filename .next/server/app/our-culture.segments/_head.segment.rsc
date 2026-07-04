@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[52977,["/_next/static/chunks/0ce7uakwykb54.js","/_next/static/chunks/0.7mlh~0nk5z_.js","/_next/static/chunks/04kwqj5t5j49m.js"],"ViewportBoundary"]
+3:I[52977,["/_next/static/chunks/0ce7uakwykb54.js","/_next/static/chunks/0.7mlh~0nk5z_.js","/_next/static/chunks/04kwqj5t5j49m.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[27716,["/_next/static/chunks/0ce7uakwykb54.js","/_next/static/chunks/0.7mlh~0nk5z_.js","/_next/static/chunks/04kwqj5t5j49m.js"],"IconMark"]
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Our Culture | Take Me Live"}],["$","meta","1",{"name":"description","content":"How Take Me Live works: collaborative crews, precision under pressure, and purpose-driven live experience craft."}],["$","link","2",{"rel":"icon","href":"/assets/website-fevicon.png"}],["$","$L5","3",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"6tYp6i1uYjQjUmS8ULoiW"}

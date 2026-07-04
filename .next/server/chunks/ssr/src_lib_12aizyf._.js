@@ -1,0 +1,3 @@
+module.exports=[75109,a=>{"use strict";a.s(["getPosterTitle",0,function(a){return(a.posterTitle??a.title).toUpperCase()}])},25628,a=>{"use strict";a.s(["EVENT_FOLDERS",0,{blackPink:"Black Pink Concert",cinemaMedley:"Cinema Medley",dubaiMedia:"Dubai Media Annual Gala",ioNet:"IO Net",lusail:"Lusail Super Cup",maraya:"Maraya Concert Series",qatarLive:"Qatar Live 2021",redBullBasement:"Red Bull Basement UAE National Finals",redBullEnergy:"Red Bull Energy Lounge"},"eventImage",0,function(a,b){return`/${encodeURIComponent(a)}/${encodeURIComponent(b)}`},"resolveProjectCover",0,function(a){return a.localCover??a.coverImage},"resolveProjectGallery",0,function(a){return a.localGallery?.length?a.localGallery:a.gallery}])}];
+
+//# sourceMappingURL=src_lib_12aizyf._.js.map

@@ -1,0 +1,22 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/login/page": "app/admin/login/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/projects/[slug]/page": "app/admin/projects/[slug]/page.js",
+  "/admin/projects/new/page": "app/admin/projects/new/page.js",
+  "/admin/projects/page": "app/admin/projects/page.js",
+  "/admin/showreel/page": "app/admin/showreel/page.js",
+  "/api/admin/projects/[slug]/route": "app/api/admin/projects/[slug]/route.js",
+  "/api/admin/projects/route": "app/api/admin/projects/route.js",
+  "/api/admin/showreel/route": "app/api/admin/showreel/route.js",
+  "/api/admin/upload/route": "app/api/admin/upload/route.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/api/auth/logout/route": "app/api/auth/logout/route.js",
+  "/api/content/route": "app/api/content/route.js",
+  "/contact/page": "app/contact/page.js",
+  "/our-culture/page": "app/our-culture/page.js",
+  "/our-projects/page": "app/our-projects/page.js",
+  "/page": "app/page.js",
+  "/projects/[slug]/page": "app/projects/[slug]/page.js"
+}

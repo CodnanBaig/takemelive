@@ -1,0 +1,22 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/admin/login/page": "/admin/login",
+  "/admin/page": "/admin",
+  "/admin/projects/[slug]/page": "/admin/projects/[slug]",
+  "/admin/projects/new/page": "/admin/projects/new",
+  "/admin/projects/page": "/admin/projects",
+  "/admin/showreel/page": "/admin/showreel",
+  "/api/admin/projects/[slug]/route": "/api/admin/projects/[slug]",
+  "/api/admin/projects/route": "/api/admin/projects",
+  "/api/admin/showreel/route": "/api/admin/showreel",
+  "/api/admin/upload/route": "/api/admin/upload",
+  "/api/auth/login/route": "/api/auth/login",
+  "/api/auth/logout/route": "/api/auth/logout",
+  "/api/content/route": "/api/content",
+  "/contact/page": "/contact",
+  "/our-culture/page": "/our-culture",
+  "/our-projects/page": "/our-projects",
+  "/page": "/",
+  "/projects/[slug]/page": "/projects/[slug]"
+}

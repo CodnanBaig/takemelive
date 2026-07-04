@@ -1,0 +1,13 @@
+var R=require("../../../chunks/ssr/[turbopack]_runtime.js")("server/app/admin/showreel/page.js")
+R.c("server/chunks/ssr/[root-of-the-server]__005.29q._.js")
+R.c("server/chunks/ssr/03m6_next_dist_esm_build_templates_app-page_0wl2wm2.js")
+R.c("server/chunks/ssr/[root-of-the-server]__01nw5ht._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0~wct9y._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0gnty09._.js")
+R.c("server/chunks/ssr/03m6_next_dist_client_components_00n5_ao._.js")
+R.c("server/chunks/ssr/03m6_next_dist_client_components_builtin_forbidden_0wbyy7e.js")
+R.c("server/chunks/ssr/03m6_next_dist_client_components_builtin_unauthorized_0zoghjf.js")
+R.c("server/chunks/ssr/03m6_next_dist_client_components_builtin_global-error_01sb95y.js")
+R.c("server/chunks/ssr/_next-internal_server_app_admin_showreel_page_actions_02mofly.js")
+R.m(38557)
+module.exports=R.m(38557).exports
