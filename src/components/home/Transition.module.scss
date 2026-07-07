@@ -41,26 +41,33 @@
   border-left: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-.splitTextInner {
-  font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(3rem, 11vw, 9.5rem);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-  width: 100vw;
+.logoBurst {
   position: absolute;
-  text-align: center;
+  inset: 0;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 
-.gateLeft .splitTextInner {
-  left: 0;
-  color: #ffffff;
+.assembledMark {
+  display: block;
+  width: clamp(30rem, 72vw, 56rem);
+  height: auto;
+  overflow: visible;
 }
 
-.gateRight .splitTextInner {
-  left: -50vw;
-  color: #000000;
+.burstPiece {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 640px) {
+  .assembledMark {
+    width: clamp(26rem, 88vw, 40rem);
+  }
 }
 
 /* HUD Grid Overlay */
@@ -474,7 +481,7 @@
   .gateLeft {
     transform: translateX(-100%) !important;
   }
-  
+
   .gateRight {
     transform: translateX(100%) !important;
   }

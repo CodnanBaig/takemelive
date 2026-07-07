@@ -2,8 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { TRANSITION_BURST } from '@/lib/transitionShrapnel';
 import ScrollOrnament from './ScrollOrnament';
+import TransitionLogoBurst from './TransitionLogoBurst';
 import styles from './Transition.module.scss';
+
+const BURST_EASE = 'power4.out';
 
 const SUBHEADING_LINES = [
   'We create experiences designed to be seen, felt, and remembered.',
@@ -26,10 +30,15 @@ export default function Transition() {
     const gateLeft = gateLeftRef.current;
     const gateRight = gateRightRef.current;
     const timecode = timecodeRef.current;
+    const shardNodes = gsap.utils.toArray<SVGGElement>('[data-shrapnel]', section);
 
-    if (!section || !gateLeft || !gateRight) {
+    if (!section || !gateLeft || !gateRight || shardNodes.length === 0) {
       return;
     }
+
+    const shardById = new Map(
+      TRANSITION_BURST.map((shard) => [shard.id, shard] as const),
+    );
 
     const getPinDistance = () => {
       const revealDistance = window.innerHeight * 0.9;
@@ -52,6 +61,24 @@ export default function Transition() {
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set(gateLeft, { xPercent: -101 });
         gsap.set(gateRight, { xPercent: 101 });
+
+        shardNodes.forEach((node) => {
+          const shard = shardById.get(node.dataset.shardId ?? '');
+          if (!shard) {
+            return;
+          }
+
+          gsap.set(node, {
+            x: `${shard.end.x}vw`,
+            y: `${shard.end.y}vh`,
+            scale: shard.end.scale,
+            rotation: shard.end.rotate,
+            opacity: 0,
+            transformOrigin: '50% 50%',
+            force3D: true,
+          });
+        });
+
         const gridLines = section.querySelectorAll('[data-grid-line]');
         const brackets = section.querySelectorAll('[data-hud-bracket]');
         const telemetries = section.querySelectorAll('[data-telemetry]');
@@ -72,9 +99,19 @@ export default function Transition() {
         const manifestoRows = section.querySelectorAll('[data-manifesto-row]');
         const subLines = section.querySelectorAll('[data-subline]');
 
-        // Setup start state
         gsap.set(gateLeft, { xPercent: 0 });
         gsap.set(gateRight, { xPercent: 0 });
+        shardNodes.forEach((node) => {
+          gsap.set(node, {
+            x: 0,
+            y: 0,
+            scale: 1,
+            rotation: 0,
+            opacity: 1,
+            transformOrigin: '50% 50%',
+            force3D: true,
+          });
+        });
         gsap.set(gridLines, { scaleX: 0, scaleY: 0 });
         gsap.set(brackets, { opacity: 0, scale: 1.3 });
         gsap.set(telemetries, { opacity: 0, y: 10 });
@@ -87,7 +124,7 @@ export default function Transition() {
             start: 'top top',
             end: () => `+=${getPinDistance()}`,
             pin: true,
-            scrub: 0.95,
+            scrub: 0.9,
             anticipatePin: 1,
             fastScrollEnd: true,
             invalidateOnRefresh: true,
@@ -103,25 +140,39 @@ export default function Transition() {
         });
 
         timeline
-          // 1. Gates slide open
-          .to(gateLeft, { xPercent: -101, duration: 0.25, ease: 'power2.inOut' }, 0)
-          .to(gateRight, { xPercent: 101, duration: 0.25, ease: 'power2.inOut' }, 0)
-          
-          // 2. HUD grid and borders draw in
-          .to(gridLines, { scaleX: 1, scaleY: 1, duration: 0.2, ease: 'power2.out', stagger: 0.05 }, 0.1)
-          .to(brackets, { opacity: 1, scale: 1, duration: 0.15, ease: 'back.out(1.5)', stagger: 0.03 }, 0.15)
-          .to(telemetries, { opacity: 1, y: 0, duration: 0.15, ease: 'power2.out', stagger: 0.03 }, 0.18)
+          .to(gateLeft, { xPercent: -101, duration: 0.3, ease: 'power3.inOut' }, 0)
+          .to(gateRight, { xPercent: 101, duration: 0.3, ease: 'power3.inOut' }, 0);
 
-          // 3. Kinetic typography animation
+        shardNodes.forEach((node) => {
+          const shard = shardById.get(node.dataset.shardId ?? '');
+          if (!shard) {
+            return;
+          }
+
+          timeline.to(
+            node,
+            {
+              x: `${shard.end.x}vw`,
+              y: `${shard.end.y}vh`,
+              scale: shard.end.scale,
+              rotation: shard.end.rotate,
+              opacity: shard.end.opacity,
+              duration: shard.duration,
+              ease: BURST_EASE,
+            },
+            0,
+          );
+        });
+
+        timeline
+          .to(gridLines, { scaleX: 1, scaleY: 1, duration: 0.2, ease: 'power2.out', stagger: 0.05 }, 0.12)
+          .to(brackets, { opacity: 1, scale: 1, duration: 0.15, ease: 'power2.out', stagger: 0.03 }, 0.16)
+          .to(telemetries, { opacity: 1, y: 0, duration: 0.15, ease: 'power2.out', stagger: 0.03 }, 0.18)
           .to(manifestoRows[0], { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.15, ease: 'power3.out' }, 0.28)
           .to(manifestoRows[1], { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.15, ease: 'power3.out' }, 0.36)
           .to(manifestoRows[2], { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.15, ease: 'power3.out' }, 0.44)
-          .to(manifestoRows[3], { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.18, ease: 'back.out(1.7)' }, 0.52)
-
-          // 4. Subheadings reveal
+          .to(manifestoRows[3], { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.15, ease: 'power3.out' }, 0.52)
           .to(subLines, { opacity: 1, y: 0, duration: 0.2, ease: 'power3.out', stagger: 0.06 }, 0.62)
-
-          // 5. Exit - collapse elements
           .to(manifestoRows, { opacity: 0, y: -40, filter: 'blur(8px)', duration: 0.15, ease: 'power2.in', stagger: 0.03 }, 0.9)
           .to(subLines, { opacity: 0, y: -20, duration: 0.15, ease: 'power2.in', stagger: 0.02 }, 0.92)
           .to(brackets, { opacity: 0, scale: 0.8, duration: 0.15, ease: 'power2.in' }, 0.94)
@@ -183,22 +234,17 @@ export default function Transition() {
       id="chapter-transition"
       data-chapter="transition"
       data-scene="manifesto"
+      data-logo-invert="1"
       ref={sectionRef}
       className={styles.transition}
       aria-label="Manifesto"
     >
       <ScrollOrnament variant="glyph-light" position="tl" />
-      <div className={styles.stage} data-logo-invert="0">
-        
-        {/* Stark Black-and-White Split Gates */}
-        <div ref={gateLeftRef} className={styles.gateLeft} aria-hidden>
-          <div className={styles.splitTextInner}>TAKE ME LIVE</div>
-        </div>
-        <div ref={gateRightRef} className={styles.gateRight} aria-hidden>
-          <div className={styles.splitTextInner}>TAKE ME LIVE</div>
-        </div>
+      <div className={styles.stage}>
+        <div ref={gateLeftRef} className={styles.gateLeft} aria-hidden />
+        <div ref={gateRightRef} className={styles.gateRight} aria-hidden />
+        <TransitionLogoBurst />
 
-        {/* HUD Grid Overlay */}
         <div className={styles.hudGridLines}>
           <div data-grid-line className={`${styles.gridLine} ${styles.gridLineH1}`} />
           <div data-grid-line className={`${styles.gridLine} ${styles.gridLineH2}`} />
@@ -206,16 +252,13 @@ export default function Transition() {
           <div data-grid-line className={`${styles.gridLine} ${styles.gridLineV2}`} />
         </div>
 
-        {/* HUD Corner Brackets */}
         <div data-hud-bracket className={`${styles.bracket} ${styles.tl}`} />
         <div data-hud-bracket className={`${styles.bracket} ${styles.tr}`} />
         <div data-hud-bracket className={`${styles.bracket} ${styles.bl}`} />
         <div data-hud-bracket className={`${styles.bracket} ${styles.br}`} />
 
-        {/* HUD Center Crosshair */}
         <div className={styles.centerCrosshair}>+</div>
 
-        {/* Telemetry Corner Readouts */}
         <div data-telemetry className={styles.telemetryTL}>
           <span>LIVE PRODUCTION FLOW // CAM_02</span>
         </div>
@@ -245,7 +288,6 @@ export default function Transition() {
           TC: 00:00:00:00
         </div>
 
-        {/* Interactive Scope Reticle */}
         <div ref={scopeRef} className={styles.cursorScope} aria-hidden>
           <div className={styles.scopeReticle} />
           <div className={styles.scopeHLine} />
@@ -255,7 +297,6 @@ export default function Transition() {
           </div>
         </div>
 
-        {/* Kinetic Manifesto Text */}
         <div className={styles.headlineStack}>
           <div className={styles.textRail} aria-label="NOT EVERYTHING NEEDS ATTENTION. YOUR BRAND DOES.">
             <div data-manifesto-row className={`${styles.manifestoRow} ${styles.stencil}`}>
@@ -273,7 +314,6 @@ export default function Transition() {
           </div>
         </div>
 
-        {/* Subheadings */}
         <div className={styles.subheading}>
           {SUBHEADING_LINES.map((line) => (
             <p key={line} className={styles.subLine} data-subline>
@@ -281,7 +321,6 @@ export default function Transition() {
             </p>
           ))}
         </div>
-
       </div>
     </section>
   );

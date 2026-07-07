@@ -14,6 +14,8 @@
 
 # production
 /build
+.deploy-staging/
+.deploy-worktree/
 
 # misc
 .DS_Store
