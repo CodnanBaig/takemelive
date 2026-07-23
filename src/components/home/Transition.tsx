@@ -11,10 +11,9 @@ const BURST_EASE = 'power4.out';
 
 const SUBHEADING_LINES = [
   'We create experiences designed to be seen, felt, and remembered.',
-  'Moments that stop people.',
-  'Spaces that pull them in.',
-  'Stories that stay with them.',
-  'Because when something happens live, it matters more.',
+  'Bold ideas. Immersive worlds. Flawless execution.',
+  'From first concept to final cue, we bring creativity, technology, and production together.',
+  'Then we take it live.',
 ];
 
 export default function Transition() {
@@ -268,22 +267,6 @@ export default function Transition() {
           <span>REC [60FPS]</span>
         </div>
 
-        <div data-telemetry className={styles.telemetryBL}>
-          <div className={styles.audioFeed}>
-            <span className={styles.audioLabel}>AUDIO FEED</span>
-            <div className={styles.audioBars}>
-              <div className={`${styles.bar} ${styles.bar1}`} />
-              <div className={`${styles.bar} ${styles.bar2}`} />
-              <div className={`${styles.bar} ${styles.bar3}`} />
-              <div className={`${styles.bar} ${styles.bar4}`} />
-              <div className={`${styles.bar} ${styles.bar5}`} />
-              <div className={`${styles.bar} ${styles.bar6}`} />
-              <div className={`${styles.bar} ${styles.bar7}`} />
-              <div className={`${styles.bar} ${styles.bar8}`} />
-            </div>
-          </div>
-        </div>
-
         <div data-telemetry className={styles.telemetryBR} ref={timecodeRef}>
           TC: 00:00:00:00
         </div>
@@ -298,7 +281,7 @@ export default function Transition() {
         </div>
 
         <div className={styles.headlineStack}>
-          <div className={styles.textRail} aria-label="NOT EVERYTHING NEEDS ATTENTION. YOUR BRAND DOES.">
+          <div className={styles.textRail} aria-label="NOT EVERYTHING NEEDS ATTENTION. YOUR EVENT DOES.">
             <div data-manifesto-row className={`${styles.manifestoRow} ${styles.stencil}`}>
               NOT EVERYTHING
             </div>
@@ -306,7 +289,7 @@ export default function Transition() {
               NEEDS ATTENTION.
             </div>
             <div data-manifesto-row className={`${styles.manifestoRow} ${styles.stencil}`}>
-              YOUR BRAND
+              YOUR EVENT
             </div>
             <div data-manifesto-row className={`${styles.manifestoRow} ${styles.inverted}`}>
               <span className={styles.invertedText}>DOES.</span>

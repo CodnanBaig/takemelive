@@ -9,7 +9,8 @@
   min-height: clamp(72vh, 88vh, 92vh);
   display: grid;
   align-items: end;
-  overflow: clip;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .heroMedia {
@@ -60,15 +61,25 @@
 
 .posterTitle {
   margin: 0;
-  max-width: 12ch;
+  max-width: min(22ch, 100%);
   font-family: var(--font-oswald), var(--font-poppins), sans-serif;
   font-size: clamp(3rem, 11vw, 6rem);
   font-weight: var(--tml-display-weight);
-  line-height: 0.88;
-  letter-spacing: -0.03em;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
   text-wrap: balance;
+  overflow: visible;
+  padding-inline: 0.06em;
+  margin-inline: -0.06em;
   will-change: clip-path;
+}
+
+.posterTitleLine {
+  display: block;
+  line-height: 1.02;
+  padding-inline: 0.05em;
+  padding-block: 0.02em 0.06em;
 }
 
 .tagline {
@@ -162,6 +173,87 @@
   color: rgb(245 245 240 / 0.86);
   text-wrap: pretty;
   will-change: clip-path;
+}
+
+.caseStudy {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1.75rem, 3vw, 3rem);
+}
+
+.caseStudyBlock {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.caseStudyPrimary {
+  grid-column: span 6;
+}
+
+.caseStudySecondary {
+  grid-column: span 6;
+}
+
+.caseStudyBlock p {
+  margin: 0;
+  font-size: clamp(1.02rem, 1.2vw, 1.16rem);
+  line-height: 1.72;
+  color: rgb(245 245 240 / 0.86);
+  text-wrap: pretty;
+  will-change: clip-path;
+}
+
+.caseStudySecondary p {
+  max-width: 52ch;
+}
+
+.fullScope {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.fullScopeToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--tml-accent-bright);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.fullScopeToggle:focus-visible {
+  outline: 2px solid var(--tml-accent-bright);
+  outline-offset: 3px;
+}
+
+.fullScopePanel {
+  padding: 1rem 0 0;
+  max-width: 72ch;
+  font-size: clamp(0.92rem, 1.05vw, 1rem);
+  line-height: 1.65;
+  color: rgb(245 245 240 / 0.72);
+}
+
+.galleryHeadline {
+  margin: 0;
+  font-family: var(--font-oswald), var(--font-poppins), sans-serif;
+  font-size: clamp(1.75rem, 3.6vw, 3rem);
+  font-weight: var(--tml-display-weight);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.galleryHeadlineLine {
+  display: block;
 }
 
 .galleryShell {
@@ -274,6 +366,11 @@
   .writeupBlock:last-child {
     padding-top: 0.25rem;
     border-top: 1px solid rgb(245 245 240 / 0.1);
+  }
+
+  .caseStudyPrimary,
+  .caseStudySecondary {
+    grid-column: 1 / -1;
   }
 }
 

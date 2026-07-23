@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from '@/lib/gsap';
 import {
   MASK_HIDDEN_BOTTOM,
@@ -24,10 +24,64 @@ type ProjectDetailProps = {
 const FALLBACK_IMAGE =
   'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1800&q=80';
 
+function renderParagraphs(text: string, keyPrefix: string) {
+  return text.split(/\n\n+/).map((paragraph, index) => (
+    <p key={`${keyPrefix}-${index}`} data-detail-lead>
+      {paragraph}
+    </p>
+  ));
+}
+
+function LegacyWriteup({ project }: { project: FeaturedProject }) {
+  return (
+    <section className={styles.writeup} aria-label="Project writeup">
+      <div className={styles.writeupBlock}>
+        <h2 className={styles.writeupHeading}>Concept</h2>
+        {renderParagraphs(project.concept, 'concept')}
+      </div>
+      <div className={styles.writeupBlock}>
+        <h2 className={styles.writeupHeading}>Story</h2>
+        {renderParagraphs(project.story, 'story')}
+      </div>
+    </section>
+  );
+}
+
+function CaseStudyWriteup({ project }: { project: FeaturedProject }) {
+  const caseStudy = project.caseStudy;
+  if (!caseStudy) {
+    return null;
+  }
+
+  return (
+    <section className={styles.caseStudy} aria-label="Project case study">
+      <div className={`${styles.caseStudyBlock} ${styles.caseStudyPrimary}`}>
+        <h2 className={styles.writeupHeading}>The Brief</h2>
+        {renderParagraphs(caseStudy.brief, 'brief')}
+      </div>
+      <div className={`${styles.caseStudyBlock} ${styles.caseStudyPrimary}`}>
+        <h2 className={styles.writeupHeading}>Our Response</h2>
+        {renderParagraphs(caseStudy.response, 'response')}
+      </div>
+      <div className={`${styles.caseStudyBlock} ${styles.caseStudySecondary}`}>
+        <h2 className={styles.writeupHeading}>The Experience</h2>
+        {renderParagraphs(caseStudy.experience, 'experience')}
+      </div>
+      <div className={`${styles.caseStudyBlock} ${styles.caseStudySecondary}`}>
+        <h2 className={styles.writeupHeading}>{caseStudy.outcomeLabel}</h2>
+        {renderParagraphs(caseStudy.outcome, 'outcome')}
+      </div>
+    </section>
+  );
+}
+
 export default function ProjectDetail({ project, adjacent }: ProjectDetailProps) {
   const pageRef = useRef<HTMLElement | null>(null);
+  const [scopeOpen, setScopeOpen] = useState(false);
   const coverSrc = resolveProjectCover(project);
   const galleryImages = resolveProjectGallery(project);
+  const caseStudy = project.caseStudy;
+  const posterLines = getPosterTitle(project).split('\n');
 
   useEffect(() => {
     const page = pageRef.current;
@@ -101,7 +155,7 @@ export default function ProjectDetail({ project, adjacent }: ProjectDetailProps)
         <div className={styles.heroMedia}>
           <img
             src={coverSrc}
-            alt=""
+            alt={`${project.title} production still`}
             className={styles.heroImage}
             fetchPriority="high"
             onError={(event) => {
@@ -117,7 +171,11 @@ export default function ProjectDetail({ project, adjacent }: ProjectDetailProps)
             Back to projects
           </Link>
           <h1 className={styles.posterTitle} data-detail-poster>
-            {getPosterTitle(project)}
+            {posterLines.map((line) => (
+              <span key={line} className={styles.posterTitleLine}>
+                {line}
+              </span>
+            ))}
           </h1>
           <p className={styles.tagline} data-detail-tagline>
             {project.tagline}
@@ -133,7 +191,7 @@ export default function ProjectDetail({ project, adjacent }: ProjectDetailProps)
               <dd>{project.client}</dd>
             </div>
             <div>
-              <dt>Location</dt>
+              <dt>{project.location.includes('—') || project.location.includes('·') ? 'Locations' : 'Location'}</dt>
               <dd>{project.location}</dd>
             </div>
             <div>
@@ -141,30 +199,42 @@ export default function ProjectDetail({ project, adjacent }: ProjectDetailProps)
               <dd>{project.year}</dd>
             </div>
             <div>
-              <dt>Services</dt>
+              <dt>Scope</dt>
               <dd>{project.services}</dd>
             </div>
           </dl>
 
-          <section className={styles.writeup} aria-label="Project writeup">
-            <div className={styles.writeupBlock}>
-              <h2 className={styles.writeupHeading}>Concept</h2>
-              {project.concept.split(/\n\n+/).map((paragraph, index) => (
-                <p key={`concept-${index}`} data-detail-lead>
-                  {paragraph}
-                </p>
-              ))}
+          {caseStudy?.fullScope ? (
+            <div className={styles.fullScope}>
+              <button
+                type="button"
+                className={styles.fullScopeToggle}
+                aria-expanded={scopeOpen}
+                onClick={() => setScopeOpen((open) => !open)}
+              >
+                Full Scope
+                <span aria-hidden="true">{scopeOpen ? '−' : '+'}</span>
+              </button>
+              {scopeOpen ? (
+                <div className={styles.fullScopePanel} id="project-full-scope">
+                  {project.caseStudy?.fullScope}
+                </div>
+              ) : null}
             </div>
-            <div className={styles.writeupBlock}>
-              <h2 className={styles.writeupHeading}>Story</h2>
-              {project.story.split(/\n\n+/).map((paragraph, index) => (
-                <p key={`story-${index}`} data-detail-lead>
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </section>
+          ) : null}
+
+          {caseStudy ? <CaseStudyWriteup project={project} /> : <LegacyWriteup project={project} />}
         </div>
+
+        {caseStudy?.galleryHeadline ? (
+          <h2 className={styles.galleryHeadline}>
+            {caseStudy.galleryHeadline.split('\n').map((line) => (
+              <span key={line} className={styles.galleryHeadlineLine}>
+                {line}
+              </span>
+            ))}
+          </h2>
+        ) : null}
 
         <ProjectGallery
           key={galleryImages.join('|')}

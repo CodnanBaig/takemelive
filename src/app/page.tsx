@@ -1,4 +1,9 @@
+import type { Metadata } from 'next';
 import Hero from '@/components/home/Hero';
+import JsonLd from '@/components/seo/JsonLd';
+import { SITE_DESCRIPTION, SITE_NAME } from '@/lib/seo/config';
+import { websiteJsonLd } from '@/lib/seo/jsonld';
+import { createPageMetadata } from '@/lib/seo/metadata';
 import Transition from '@/components/home/Transition';
 import WhatWeDo from '@/components/home/WhatWeDo';
 import EventGallery from '@/components/home/EventGallery';
@@ -18,7 +23,18 @@ import CinematicAtmosphere from '@/components/cinematic/CinematicAtmosphere';
 import { getFeaturedProjects, getShowreelConfig } from '@/lib/content/store';
 import styles from './page.module.scss';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
+
+export const metadata: Metadata = {
+  ...createPageMetadata({
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    path: '/',
+  }),
+  title: {
+    absolute: SITE_NAME,
+  },
+};
 
 export default function Home() {
   const projects = getFeaturedProjects();
@@ -26,6 +42,7 @@ export default function Home() {
 
   return (
     <main id="main-content" className={styles.main} tabIndex={-1}>
+      <JsonLd data={websiteJsonLd()} />
       <HomeScrollScenes />
       <CinematicAtmosphere />
       <LogoThemeSync />

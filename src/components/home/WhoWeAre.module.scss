@@ -109,30 +109,23 @@
   margin: 0;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
   font-weight: var(--tml-display-weight);
   line-height: 0.92;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.02em;
 }
 
-.headlineLead {
+.headlineDisplay {
   display: block;
-  font-size: clamp(1.75rem, 4vw, 3.5rem);
+  max-width: 100%;
+  font-size: clamp(2rem, 4.8vw, 4.5rem);
   font-weight: var(--tml-display-weight);
-  line-height: 1;
-  letter-spacing: 0.015em;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
   text-transform: none;
+  text-wrap: balance;
   color: rgb(17 18 23 / 0.92);
-}
-
-.headlineEmphasis {
-  display: block;
-  font-size: clamp(2.75rem, 7vw, 6.75rem);
-  font-weight: var(--tml-display-weight);
-  line-height: 0.9;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .lineWrap {
@@ -141,7 +134,7 @@
 }
 
 .lineWrap span {
-  display: inline-block;
+  display: block;
   will-change: clip-path;
 }
 
@@ -193,13 +186,9 @@
     max-width: min(100%, 460px);
   }
 
-  .headlineLead {
-    font-size: clamp(1.45rem, 6.5vw, 2.4rem);
-  }
-
-  .headlineEmphasis {
-    font-size: clamp(2.35rem, 11vw, 4.5rem);
-    white-space: normal;
+  .headlineDisplay {
+    font-size: clamp(1.75rem, 7.5vw, 3rem);
+    letter-spacing: -0.03em;
   }
 
   .roles {

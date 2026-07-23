@@ -2,8 +2,8 @@ import 'server-only';
 
 import { timingSafeEqual } from 'crypto';
 
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'admin@tml.com';
-export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? 'Admin123!';
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 function safeEqual(a: string, b: string): boolean {
   const bufA = Buffer.from(a);
@@ -15,6 +15,9 @@ function safeEqual(a: string, b: string): boolean {
 }
 
 export function verifyAdminCredentials(email: string, password: string): boolean {
+  if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
+    return false;
+  }
   const normalizedEmail = email.trim().toLowerCase();
   const expectedEmail = ADMIN_EMAIL.trim().toLowerCase();
   return safeEqual(normalizedEmail, expectedEmail) && safeEqual(password, ADMIN_PASSWORD);

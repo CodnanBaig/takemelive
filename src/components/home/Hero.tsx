@@ -13,8 +13,9 @@ const HERO_LINES = [
 ] as const;
 
 const SUBHEADING_LINES = [
-  'Creative experience studio designing live moments,',
-  'immersive environments, and cultural impact.',
+  'Take Me Live is a creative experience studio that turns ambitious ideas into live productions, immersive environments, and brand experiences.',
+  'From first concept to final cue, we bring strategy, design, technology, production, and on-ground delivery together under one accountable team.',
+  'Creative thinking · Production muscle · One team from idea to live.',
 ];
 
 export default function Hero() {

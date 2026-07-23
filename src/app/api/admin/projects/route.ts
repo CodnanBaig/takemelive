@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { revalidateSiteContent } from '@/lib/admin/revalidate';
+import { mergeProjectPayload } from '@/lib/content/normalizeProject';
 import {
   getFeaturedProjects,
   slugifyTitle,
@@ -45,27 +46,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'A project with this slug already exists.' }, { status: 409 });
   }
 
-  const project: FeaturedProject = {
-    slug,
-    title: body.title.trim(),
-    posterTitle: body.posterTitle?.trim() || undefined,
-    tagline: body.tagline?.trim() ?? '',
-    event: body.event?.trim() ?? '',
-    client: body.client?.trim() ?? '',
-    year: body.year?.trim() ?? '',
-    location: body.location?.trim() ?? '',
-    services: body.services?.trim() ?? '',
-    concept: body.concept?.trim() ?? body.summary?.trim() ?? '',
-    story: body.story?.trim() ?? body.description?.trim() ?? '',
-    summary: body.concept?.trim() ?? body.summary?.trim() ?? '',
-    description: body.story?.trim() ?? body.description?.trim() ?? '',
-    coverImage: body.coverImage?.trim() ?? '',
-    localCover: body.localCover?.trim() || undefined,
-    gallery: body.gallery ?? [],
-    localGallery: body.localGallery?.length ? body.localGallery : undefined,
-    videos: body.videos ?? [],
-    localVideos: body.localVideos?.length ? body.localVideos : undefined,
-  };
+  const project = mergeProjectPayload(undefined, { ...body, slug, title: body.title.trim() });
 
   writeFeaturedProjects([...projects, project]);
   revalidateSiteContent();

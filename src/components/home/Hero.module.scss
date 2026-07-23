@@ -31,8 +31,8 @@
   margin: 0;
   width: 100%;
   font-family: var(--font-oswald), var(--font-poppins), sans-serif;
-  font-size: clamp(2.85rem, 10vw, 8.75rem);
-  line-height: 0.94;
+  font-size: clamp(2.85rem, 10vw, 6rem);
+  line-height: 0.96;
   text-transform: uppercase;
   letter-spacing: 0.008em;
   font-weight: var(--tml-display-weight);
@@ -103,6 +103,7 @@
   overflow: hidden;
   position: relative;
   z-index: 1;
+  padding-inline: 0.03em;
 }
 
 .word {
@@ -163,8 +164,8 @@
 
 @media (max-width: 900px) {
   .heading {
-    font-size: clamp(2.35rem, 9.2vw, 6rem);
-    line-height: 0.96;
+    font-size: clamp(2.35rem, 9.2vw, 5.5rem);
+    line-height: 0.98;
   }
 }
 

@@ -4,8 +4,8 @@
 
 | Field | Value |
 |------|-------|
-| Last Assigned ID | 001 |
-| Next ID | 002 |
+| Last Assigned ID | 002 |
+| Next ID | 003 |
 
 ## Ledger Rules
 
@@ -20,14 +20,15 @@
 | Category | Count |
 |----------|-------|
 | Active plans | 0 |
-| Completed | 1 |
-| **Total** | **1** |
+| Completed | 2 |
+| **Total** | **2** |
 
 ## Completed Plans
 
 | ID | Title | Tier | Completed |
 |----|-------|------|-----------|
 | 001 | Homepage audit polish pass | full-feature | 2026-06-22 |
+| 002 | Implement website change briefs | full-feature | 2026-07-23 |
 
 ## Active Plans by Status
 

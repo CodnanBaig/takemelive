@@ -14,6 +14,7 @@ import HomeScrollScenes from '@/components/home/HomeScrollScenes';
 import LogoThemeSync from '@/components/home/LogoThemeSync';
 import Footer from '@/components/home/Footer';
 import ScrollOrnament from '@/components/home/ScrollOrnament';
+import { CONTACT_EMAIL, SOCIAL_LINKS } from '@/lib/seo/config';
 import styles from './ContactContent.module.scss';
 
 const HERO_LINES = [
@@ -525,8 +526,8 @@ export default function ContactContent({ projects }: ContactContentProps) {
         <div className={styles.contactRail} data-contact-rail aria-label="Direct contact">
           <div className={styles.railItem}>
             <span className={styles.railLabel}>Email</span>
-            <a className={styles.railLink} href="mailto:mg@takemelive.com">
-              mg@takemelive.com
+            <a className={styles.railLink} href={`mailto:${CONTACT_EMAIL}`}>
+              {CONTACT_EMAIL}
             </a>
           </div>
           <span className={styles.railDivider} aria-hidden="true" />
@@ -534,7 +535,7 @@ export default function ContactContent({ projects }: ContactContentProps) {
             <span className={styles.railLabel}>Social</span>
             <a
               className={styles.railLink}
-              href="https://www.instagram.com/takemelive"
+              href={SOCIAL_LINKS.instagram}
               target="_blank"
               rel="noopener noreferrer"
             >

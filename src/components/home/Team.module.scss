@@ -122,13 +122,40 @@
   left: 1rem;
   z-index: 1;
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.65rem;
   color: rgb(245 245 240 / 0.72);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.heroCaption > span:last-child,
+.heroCaption > span:nth-last-child(2) {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.heroCaptionRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.heroMarkers {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.heroMarker {
+  font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: var(--tml-display-weight);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--team-accent);
 }
 
 .roleStack {
@@ -141,7 +168,7 @@
 .roleCard {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(72px, 0.18fr) minmax(0, 1fr) clamp(96px, 14vw, 128px);
+  grid-template-columns: minmax(0, 1fr) clamp(96px, 14vw, 128px);
   align-items: stretch;
   min-height: clamp(108px, 14vh, 132px);
   overflow: hidden;
@@ -289,16 +316,8 @@
   }
 
   .roleCard {
-    grid-template-columns: 3.5rem minmax(0, 1fr) clamp(72px, 20vw, 96px);
+    grid-template-columns: minmax(0, 1fr) clamp(72px, 20vw, 96px);
     min-height: 0;
-  }
-
-  .roleLead {
-    padding: 0.65rem 0.5rem 0.65rem 0.65rem;
-  }
-
-  .roleValue {
-    display: none;
   }
 
   .roleBody {
@@ -322,7 +341,7 @@
   }
 
   .roleCard {
-    grid-template-columns: 3rem 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: auto auto;
   }
 

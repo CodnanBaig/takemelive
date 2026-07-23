@@ -260,25 +260,30 @@ export default function Showreel({ showreelConfig }: ShowreelProps) {
             </h2>
             <p className={styles.lead}>
               <span className={styles.leadLine} data-title-line>
-                A vertical cut from the floor: crowds building, cues landing, and the seconds
-                before the house opens.
+                The live moment starts long before the audience arrives.
               </span>
             </p>
             <p className={styles.body}>
               <span className={styles.bodyLine} data-title-line>
-                Stadium builds, festival stages, and broadcast packages, captured where the work
-                actually happens.
+                On site, every build, cue, camera, and crew member moves together—turning plans into a
+                show-ready reality.
+              </span>
+            </p>
+            <p className={styles.body}>
+              <span className={styles.bodyLine} data-title-line>
+                From stadium productions to brand activations and live broadcasts, this is where the work
+                comes alive.
               </span>
             </p>
             <ul className={styles.details} aria-label="Showreel highlights">
               <li className={styles.detailItem} data-title-line>
-                Arena tours and opening ceremonies
+                Stadium and arena productions
               </li>
               <li className={styles.detailItem} data-title-line>
-                Brand activations and festival production
+                Brand activations and festival builds
               </li>
               <li className={styles.detailItem} data-title-line>
-                IMAG, lighting, and live camera packages
+                IMAG, live cameras, lighting, and show systems
               </li>
             </ul>
           </div>
@@ -312,18 +317,20 @@ export default function Showreel({ showreelConfig }: ShowreelProps) {
             ) : null}
 
             <div className={styles.controls}>
-              {isMuted ? (
-                <span className={styles.experienceTag}>Click for better experience</span>
-              ) : null}
-              <button
-                type="button"
-                className={styles.controlBtn}
-                onClick={toggleMute}
-                aria-pressed={!isMuted}
-                aria-label={isMuted ? 'Unmute showreel' : 'Mute showreel'}
-              >
-                {isMuted ? 'Unmute' : 'Mute'}
-              </button>
+              <div className={styles.controlsStack}>
+                {isMuted ? (
+                  <span className={styles.experienceTag}>Click for better experience</span>
+                ) : null}
+                <button
+                  type="button"
+                  className={styles.controlBtn}
+                  onClick={toggleMute}
+                  aria-pressed={!isMuted}
+                  aria-label={isMuted ? 'Unmute showreel' : 'Mute showreel'}
+                >
+                  {isMuted ? 'Unmute' : 'Mute'}
+                </button>
+              </div>
             </div>
           </div>
         </div>

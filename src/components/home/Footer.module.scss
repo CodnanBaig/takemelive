@@ -103,6 +103,14 @@
   text-wrap: pretty;
 }
 
+.locations {
+  margin: 0.75rem 0 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(245 245 240 / 0.55);
+}
+
 .linkColumn {
   display: grid;
   gap: 0;

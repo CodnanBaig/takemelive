@@ -221,12 +221,12 @@ export default function EventGallery() {
           <h2 className={styles.title}>
             <span className={styles.titleLineWrap}>
               <span className={styles.titleLine} data-title-line>
-                Live at
+                Some moments cannot be scrolled past.
               </span>
             </span>
             <span className={styles.titleLineWrap}>
               <span className={styles.titleLine} data-title-line>
-                scale
+                They have to be experienced.
               </span>
             </span>
           </h2>

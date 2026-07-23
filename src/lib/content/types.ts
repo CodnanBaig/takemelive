@@ -1,3 +1,13 @@
+export type ProjectCaseStudy = {
+  brief: string;
+  response: string;
+  experience: string;
+  outcomeLabel: 'The Result' | 'The Impact';
+  outcome: string;
+  galleryHeadline: string;
+  fullScope?: string;
+};
+
 export type FeaturedProject = {
   slug: string;
   title: string;
@@ -14,6 +24,7 @@ export type FeaturedProject = {
   summary: string;
   /** @deprecated Use `story` — kept for SEO and legacy admin fields */
   description: string;
+  caseStudy?: ProjectCaseStudy;
   coverImage: string;
   localCover?: string;
   gallery: string[];

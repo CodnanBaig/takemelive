@@ -6,21 +6,21 @@ import { useEffect, useMemo, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { prefersReducedMotion } from '@/lib/motionPrefs';
 import type { FeaturedProject } from '@/content/featuredProjects';
+import { CONTACT_EMAIL, SOCIAL_LINKS } from '@/lib/seo/config';
 import styles from './Footer.module.scss';
 
 const MARQUEE_ITEMS = Array.from({ length: 18 }, (_, index) => `item-${index}`);
 const SITE_LINKS = [
-  { label: 'Home', href: '#chapter-hero' },
+  { label: 'Home', href: '/#chapter-hero' },
   { label: 'Our Projects', href: '/our-projects' },
-  { label: 'Services', href: '#chapter-services' },
-  { label: 'Industries', href: '#chapter-industries' },
-  { label: 'Team', href: '#chapter-team' },
+  { label: 'Our Culture', href: '/our-culture' },
   { label: 'Contact', href: '/contact' },
 ] as const;
 
 const CONTACT_LINKS = [
-  { label: 'mg@takemelive.com', href: 'mailto:mg@takemelive.com' },
-  { label: 'Instagram', href: 'https://www.instagram.com/takemelive' },
+  { label: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+  { label: 'Instagram', href: SOCIAL_LINKS.instagram },
+  { label: 'LinkedIn', href: SOCIAL_LINKS.linkedin },
 ] as const;
 
 type FooterProps = {
@@ -169,8 +169,10 @@ export default function Footer({ projects }: FooterProps) {
               className={styles.brandLogo}
             />
             <p className={styles.brandTagline}>
-              Live experience studio designing immersive environments from concept through show call.
+              Creative experience studio turning ambitious ideas into live productions, immersive
+              environments, and brand experiences—from concept to final cue.
             </p>
+            <p className={styles.locations}>Dubai · Riyadh · Los Angeles</p>
           </div>
 
           <nav className={styles.linkColumn} aria-label="Featured projects">

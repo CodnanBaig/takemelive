@@ -12,10 +12,10 @@ import styles from './WhatWeDo.module.scss';
 const HERO_IMAGE = eventImage(EVENT_FOLDERS.redBullBasement, 'basement6.webp');
 
 const LINES = [
-  'Take Me Live creates bold, immersive environments where brands connect with people in real time.',
-  'We combine creative thinking, spatial design, technology, and storytelling to turn ideas into experiences that capture attention and create lasting impact.',
-  'From large-scale productions to intimate activations, every detail is designed to perform.',
-  "Because powerful experiences don't just communicate, they stay with people.",
+  'We create bold live environments where people don\u2019t just watch—they step in.',
+  'Creative thinking, spatial design, technology, and storytelling move as one.',
+  'From stadium-scale productions to intimate activations, every detail is built to perform.',
+  'The result: experiences that spark emotion, start conversations, and stay with people.',
 ];
 
 export default function WhatWeDo() {
@@ -135,7 +135,7 @@ export default function WhatWeDo() {
               fill
               sizes="(max-width: 960px) 92vw, 38vw"
             />
-            <figcaption>Show energy, engineered</figcaption>
+            <figcaption>ENERGY, ENGINEERED.</figcaption>
           </figure>
         </div>
       </div>

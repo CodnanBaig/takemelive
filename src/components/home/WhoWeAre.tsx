@@ -20,23 +20,14 @@ const GROUP_IMAGE = {
 const FALLBACK_IMAGE_SRC = eventImage(EVENT_FOLDERS.dubaiMedia, 'dm2.webp');
 
 const HEADLINE_LINES = [
-  { id: 'lead', text: 'Squad of' },
-  { id: 'creators', text: 'Creators,' },
-  { id: 'dreamers', text: 'Dreamers,' },
-  { id: 'doers', text: '&\u00a0Doers.' },
+  { id: 'experience', text: 'The audience sees one experience.' },
+  { id: 'same-way', text: 'We work the same way.' },
 ] as const;
 
-const ROLE_TITLES = [
-  'Visionary designers.',
-  'Technologists.',
-  'Cultural strategists.',
-  'Execution experts.',
-];
-
 const BODY_LINES = [
-  'We bring together creativity, technology, and real-world production to build experiences that connect brands with people in meaningful ways.',
-  'Every idea is approached with curiosity, precision, and the ambition to create something that feels relevant, engaging, and memorable.',
-  "Because great work doesn't just communicate - it creates emotion.",
+  'creators, strategists, technologists, and producers united by one belief.',
+  'Ambitious ideas deserve fearless thinking and flawless execution.',
+  'Different disciplines. One shared standard.',
 ];
 
 export default function WhoWeAre() {
@@ -49,7 +40,6 @@ export default function WhoWeAre() {
     }
 
     const headingLines = section.querySelectorAll('[data-heading-line]');
-    const roles = section.querySelectorAll('[data-role]');
     const bodyLines = section.querySelectorAll('[data-body-line]');
     const accent = section.querySelector('[data-accent]');
     const mediaCard = section.querySelector('[data-media-card]');
@@ -59,7 +49,7 @@ export default function WhoWeAre() {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([...headingLines, ...roles, ...bodyLines].filter(Boolean), {
+        gsap.set([...headingLines, ...bodyLines].filter(Boolean), {
           clipPath: MASK_VISIBLE,
           clearProps: 'transform,opacity',
         });
@@ -78,7 +68,6 @@ export default function WhoWeAre() {
         const isCompact = window.matchMedia('(max-width: 900px)').matches;
 
         gsap.set(headingLines, { clipPath: MASK_HIDDEN_BOTTOM });
-        gsap.set(roles, { clipPath: MASK_HIDDEN_BOTTOM });
         gsap.set(bodyLines, { clipPath: MASK_HIDDEN_BOTTOM });
         if (accent) {
           gsap.set(accent, { scaleX: 0, transformOrigin: 'left center' });
@@ -138,16 +127,6 @@ export default function WhoWeAre() {
             0.14,
           )
           .to(
-            roles,
-            {
-              clipPath: MASK_VISIBLE,
-              stagger: 0.06,
-              duration: 0.55,
-              ease: 'power3.out',
-            },
-            0.26,
-          )
-          .to(
             bodyLines,
             {
               clipPath: MASK_VISIBLE,
@@ -155,7 +134,7 @@ export default function WhoWeAre() {
               duration: 0.55,
               ease: 'power3.out',
             },
-            0.38,
+            0.26,
           );
 
         requestAnimationFrame(() => {
@@ -217,25 +196,12 @@ export default function WhoWeAre() {
             <h2 className={styles.heading}>
               {HEADLINE_LINES.map((line) => (
                 <span key={line.id} className={styles.lineWrap}>
-                  <span
-                    data-heading-line
-                    className={
-                      line.id === 'lead' ? styles.headlineLead : styles.headlineEmphasis
-                    }
-                  >
+                  <span data-heading-line className={styles.headlineDisplay}>
                     {line.text}
                   </span>
                 </span>
               ))}
             </h2>
-
-            <div className={styles.roles}>
-              {ROLE_TITLES.map((role) => (
-                <p key={role} data-role className={styles.role}>
-                  {role}
-                </p>
-              ))}
-            </div>
 
             <div className={styles.bodyCopy}>
               {BODY_LINES.map((line) => (

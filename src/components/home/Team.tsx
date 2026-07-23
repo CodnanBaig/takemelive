@@ -15,29 +15,26 @@ const HERO_IMAGE = eventImage(EVENT_FOLDERS.redBullEnergy, 'el2.webp');
 const TEAM_ROLES = [
   {
     code: '01',
-    value: 'Design intent',
     title: 'Designers',
-    field: 'Concept and space',
-    note: 'Translate brand intent into visual and spatial systems that feel immediate.',
-    tags: ['Concept', 'Visual language', 'Environment'],
+    field: 'Concept & Space',
+    note: 'Turn strategy into visual worlds, spatial journeys, and experiences people feel from the moment they enter.',
+    tags: ['Concept', 'Spatial design', 'Show design'],
     image: eventImage(EVENT_FOLDERS.maraya, 'Maraya_One_Republic-020.webp'),
   },
   {
     code: '02',
-    value: 'Technical direction',
     title: 'Technologists',
-    field: 'Interaction layer',
-    note: 'Build interactions and intelligence that make ambitious ideas truly perform.',
-    tags: ['Interactive', 'AI moments', 'Show control'],
+    field: 'Interaction & Systems',
+    note: 'Build interactive technology, intelligent content, and show-control systems that make ambitious ideas perform seamlessly.',
+    tags: ['Interactive', 'AI/XR', 'Show control'],
     image: eventImage(EVENT_FOLDERS.ioNet, 'io2.webp'),
   },
   {
     code: '03',
-    value: 'Live delivery',
     title: 'Producers',
-    field: 'Delivery control',
-    note: 'Orchestrate execution with precision from first concept through showtime.',
-    tags: ['Crew', 'Vendors', 'Run of show'],
+    field: 'Production & Delivery',
+    note: 'Connect every crew, vendor, timeline, and cue—protecting the original idea from first briefing to final show call.',
+    tags: ['Crew', 'Logistics', 'Run of show'],
     image: eventImage(EVENT_FOLDERS.lusail, 'Lusail_Opening-252.webp'),
   },
 ] as const;
@@ -198,10 +195,10 @@ export default function Team() {
         <header className={styles.masthead}>
           <h2 data-team-headline className={styles.headline}>
             <span data-team-line className={styles.headlineLine}>
-              People behind
+              The people
             </span>
             <span data-team-line className={styles.headlineLine}>
-              the live moment.
+              who take it live.
             </span>
           </h2>
         </header>
@@ -209,19 +206,24 @@ export default function Team() {
         <div className={styles.board} data-team-board>
           <figure className={styles.heroMedia} data-team-hero-media>
             <img src={HERO_IMAGE} alt="" loading="lazy" data-team-hero-image />
-            <figcaption>
-              <span>One crew</span>
-              <span>From concept to showtime</span>
+            <figcaption className={styles.heroCaption}>
+              <div className={styles.heroMarkers} aria-hidden="true">
+                {TEAM_ROLES.map((role) => (
+                  <span key={role.code} className={styles.heroMarker}>
+                    {role.code}
+                  </span>
+                ))}
+              </div>
+              <div className={styles.heroCaptionRow}>
+                <span>One crew</span>
+                <span>From concept to showtime</span>
+              </div>
             </figcaption>
           </figure>
 
           <div className={styles.roleStack}>
             {TEAM_ROLES.map((role) => (
               <article key={role.title} className={styles.roleCard} data-team-role>
-                <div className={styles.roleLead}>
-                  <span className={styles.roleIndex}>{role.code}</span>
-                  <span className={styles.roleValue}>{role.value}</span>
-                </div>
                 <div className={styles.roleBody}>
                   <p className={styles.roleField}>{role.field}</p>
                   <h3>{role.title}</h3>

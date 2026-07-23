@@ -81,7 +81,7 @@
   font-weight: var(--tml-display-weight);
   letter-spacing: 0.08em;
   font-size: clamp(0.76rem, 0.9vw, 0.94rem);
-  color: var(--tml-white);
+  color: var(--tml-accent-bright);
   flex-shrink: 0;
 }
 
@@ -110,7 +110,6 @@
 
 .media :global(img) {
   object-fit: cover;
-  filter: grayscale(100%) contrast(1.25) brightness(0.9);
 }
 
 .media figcaption {

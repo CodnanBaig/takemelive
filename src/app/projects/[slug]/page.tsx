@@ -1,18 +1,21 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ProjectDetail from '@/components/projects/ProjectDetail';
+import JsonLd from '@/components/seo/JsonLd';
 import {
   getAdjacentProjects,
   getFeaturedProjectBySlug,
   getFeaturedProjects,
 } from '@/lib/content/store';
 import { resolveProjectCover } from '@/lib/projectMedia';
+import { breadcrumbJsonLd, projectJsonLd } from '@/lib/seo/jsonld';
+import { createPageMetadata } from '@/lib/seo/metadata';
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
@@ -24,18 +27,20 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const project = getFeaturedProjectBySlug(slug);
 
   if (!project) {
-    return { title: 'Project not found | Take Me Live' };
+    return { title: 'Project not found' };
   }
 
-  return {
-    title: `${project.title} | Take Me Live`,
-    description: project.concept || project.summary,
-    openGraph: {
-      title: project.title,
-      description: project.tagline,
-      images: [{ url: resolveProjectCover(project), alt: project.title }],
-    },
-  };
+  const coverImage = resolveProjectCover(project);
+  const description = project.concept || project.summary;
+
+  return createPageMetadata({
+    title: project.title,
+    description,
+    path: `/projects/${project.slug}`,
+    image: coverImage,
+    imageAlt: project.title,
+    type: 'article',
+  });
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -47,5 +52,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
-  return <ProjectDetail project={project} adjacent={adjacent} />;
+  const coverImage = resolveProjectCover(project);
+
+  return (
+    <>
+      <JsonLd
+        data={[
+          projectJsonLd(project, coverImage),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Our Projects', path: '/our-projects' },
+            { name: project.title, path: `/projects/${project.slug}` },
+          ]),
+        ]}
+      />
+      <ProjectDetail project={project} adjacent={adjacent} />
+    </>
+  );
 }

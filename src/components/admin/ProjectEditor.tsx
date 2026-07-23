@@ -12,6 +12,16 @@ type ProjectEditorProps = {
   mode: 'create' | 'edit';
 };
 
+type CaseStudyFormState = {
+  brief: string;
+  response: string;
+  experience: string;
+  outcomeLabel: 'The Result' | 'The Impact';
+  outcome: string;
+  galleryHeadline: string;
+  fullScope: string;
+};
+
 type FormState = {
   slug: string;
   title: string;
@@ -26,6 +36,7 @@ type FormState = {
   story: string;
   summary: string;
   description: string;
+  caseStudy: CaseStudyFormState;
   coverImage: string;
   localCover: string;
   gallery: string[];
@@ -33,6 +44,18 @@ type FormState = {
   videos: string[];
   localVideos: string[];
 };
+
+function emptyCaseStudy(): CaseStudyFormState {
+  return {
+    brief: '',
+    response: '',
+    experience: '',
+    outcomeLabel: 'The Result',
+    outcome: '',
+    galleryHeadline: '',
+    fullScope: '',
+  };
+}
 
 function toFormState(project?: FeaturedProject): FormState {
   return {
@@ -49,6 +72,17 @@ function toFormState(project?: FeaturedProject): FormState {
     story: project?.story ?? project?.description ?? '',
     summary: project?.summary ?? '',
     description: project?.description ?? '',
+    caseStudy: project?.caseStudy
+      ? {
+          brief: project.caseStudy.brief,
+          response: project.caseStudy.response,
+          experience: project.caseStudy.experience,
+          outcomeLabel: project.caseStudy.outcomeLabel,
+          outcome: project.caseStudy.outcome,
+          galleryHeadline: project.caseStudy.galleryHeadline,
+          fullScope: project.caseStudy.fullScope ?? '',
+        }
+      : emptyCaseStudy(),
     coverImage: project?.coverImage ?? '',
     localCover: project?.localCover ?? '',
     gallery: project?.gallery ?? [''],
@@ -168,6 +202,15 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
       ...form,
       summary: form.concept.trim(),
       description: form.story.trim(),
+      caseStudy: {
+        brief: form.caseStudy.brief.trim(),
+        response: form.caseStudy.response.trim(),
+        experience: form.caseStudy.experience.trim(),
+        outcomeLabel: form.caseStudy.outcomeLabel,
+        outcome: form.caseStudy.outcome.trim(),
+        galleryHeadline: form.caseStudy.galleryHeadline.trim(),
+        fullScope: form.caseStudy.fullScope.trim() || undefined,
+      },
       gallery: form.gallery.map((item) => item.trim()).filter(Boolean),
       localGallery: form.localGallery.map((item) => item.trim()).filter(Boolean),
       videos: form.videos.map((item) => item.trim()).filter(Boolean),
@@ -311,7 +354,7 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
             </label>
 
             <label className={`${styles.field} ${styles.fieldFull}`}>
-              <span className={styles.label}>Services</span>
+              <span className={styles.label}>Scope</span>
               <textarea
                 className={styles.textarea}
                 value={form.services}
@@ -320,7 +363,7 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
             </label>
 
             <label className={`${styles.field} ${styles.fieldFull}`}>
-              <span className={styles.label}>Concept</span>
+              <span className={styles.label}>Concept (legacy fallback)</span>
               <textarea
                 className={styles.textarea}
                 value={form.concept}
@@ -329,11 +372,101 @@ export default function ProjectEditor({ initialProject, mode }: ProjectEditorPro
             </label>
 
             <label className={`${styles.field} ${styles.fieldFull}`}>
-              <span className={styles.label}>Story</span>
+              <span className={styles.label}>Story (legacy fallback)</span>
               <textarea
                 className={styles.textarea}
                 value={form.story}
                 onChange={(event) => updateField('story', event.target.value)}
+              />
+            </label>
+          </div>
+        </AdminPanel>
+
+        <AdminPanel
+          title="Case study"
+          description="Structured editorial blocks shown on the public project page when populated."
+        >
+          <div className={styles.grid2}>
+            <label className={`${styles.field} ${styles.fieldFull}`}>
+              <span className={styles.label}>The Brief</span>
+              <textarea
+                className={styles.textarea}
+                value={form.caseStudy.brief}
+                onChange={(event) =>
+                  updateField('caseStudy', { ...form.caseStudy, brief: event.target.value })
+                }
+              />
+            </label>
+
+            <label className={`${styles.field} ${styles.fieldFull}`}>
+              <span className={styles.label}>Our Response</span>
+              <textarea
+                className={styles.textarea}
+                value={form.caseStudy.response}
+                onChange={(event) =>
+                  updateField('caseStudy', { ...form.caseStudy, response: event.target.value })
+                }
+              />
+            </label>
+
+            <label className={`${styles.field} ${styles.fieldFull}`}>
+              <span className={styles.label}>The Experience</span>
+              <textarea
+                className={styles.textarea}
+                value={form.caseStudy.experience}
+                onChange={(event) =>
+                  updateField('caseStudy', { ...form.caseStudy, experience: event.target.value })
+                }
+              />
+            </label>
+
+            <label className={styles.field}>
+              <span className={styles.label}>Outcome label</span>
+              <select
+                className={styles.input}
+                value={form.caseStudy.outcomeLabel}
+                onChange={(event) =>
+                  updateField('caseStudy', {
+                    ...form.caseStudy,
+                    outcomeLabel: event.target.value as CaseStudyFormState['outcomeLabel'],
+                  })
+                }
+              >
+                <option value="The Result">The Result</option>
+                <option value="The Impact">The Impact</option>
+              </select>
+            </label>
+
+            <label className={`${styles.field} ${styles.fieldFull}`}>
+              <span className={styles.label}>Outcome copy</span>
+              <textarea
+                className={styles.textarea}
+                value={form.caseStudy.outcome}
+                onChange={(event) =>
+                  updateField('caseStudy', { ...form.caseStudy, outcome: event.target.value })
+                }
+              />
+            </label>
+
+            <label className={`${styles.field} ${styles.fieldFull}`}>
+              <span className={styles.label}>Gallery headline</span>
+              <textarea
+                className={styles.textarea}
+                value={form.caseStudy.galleryHeadline}
+                onChange={(event) =>
+                  updateField('caseStudy', { ...form.caseStudy, galleryHeadline: event.target.value })
+                }
+              />
+            </label>
+
+            <label className={`${styles.field} ${styles.fieldFull}`}>
+              <span className={styles.label}>Full Scope (optional disclosure)</span>
+              <textarea
+                className={styles.textarea}
+                value={form.caseStudy.fullScope}
+                onChange={(event) =>
+                  updateField('caseStudy', { ...form.caseStudy, fullScope: event.target.value })
+                }
               />
             </label>
           </div>

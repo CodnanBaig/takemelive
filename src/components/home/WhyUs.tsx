@@ -15,35 +15,35 @@ type Pillar = {
 const PILLARS: Pillar[] = [
   {
     number: '01',
-    label: 'Concepting',
-    title: 'Culture-Led Concepting',
+    label: 'Creative Strategy',
+    title: 'Culture-Led Concepts',
     description:
-      'Ideas are built from audience behavior, not trend-chasing decks. We start where the room already is and design forward from there.',
-    meta: 'Audience · Insight · Intent',
+      'We begin with the audience, the context, and the reason the moment exists—then build the idea around them. Every decision is shaped to feel relevant, culturally aware, and true to the people in the room.',
+    meta: 'Audience · Context · Intent',
   },
   {
     number: '02',
     label: 'Execution',
-    title: 'One Team, Full Execution',
+    title: 'One Team. Full Execution.',
     description:
-      'Strategy, creative, production, and on-ground delivery stay under one roof. No handoffs, no broken telephone, no slipping intent.',
+      'Creative, technical, production, and on-ground delivery move as one. No handoffs, no lost intent, and no gap between what was imagined and what finally goes live.',
     meta: 'Strategy · Build · Show call',
   },
   {
     number: '03',
     label: 'Technology',
-    title: 'Technology That Serves Story',
+    title: 'Technology That Serves the Story',
     description:
-      'Interactive systems are designed to amplify emotion, not distract from it. Tech is invisible until the moment it matters.',
+      'We use technology to deepen participation, amplify emotion, and make the experience feel more alive. From AI to interactive systems and show control, every tool earns its place by serving the story.',
     meta: 'Interactive · AI · Show control',
   },
   {
     number: '04',
     label: 'Impact',
-    title: 'Measured Impact',
+    title: 'Built to Be Remembered',
     description:
-      'Every scene is engineered for lasting recall and trackable engagement — the experience keeps working after the lights go down.',
-    meta: 'Recall · Engagement · Lift',
+      'Every touchpoint is designed to create attention, engagement, and lasting recall—long after the lights go down. The goal is not just to make an impression in the moment, but to create something people continue to talk about.',
+    meta: 'Attention · Engagement · Recall',
   },
 ];
 
@@ -283,15 +283,15 @@ export default function WhyUs() {
         <div className={styles.grid}>
           <header className={styles.intro}>
             <h2 className={styles.headline}>
-              {['More', 'than', 'a vendor.', 'A live', 'system.'].map((word) => (
+              {['More', 'than', 'a vendor.', 'A creative', 'studio', 'built for live.'].map((word) => (
                 <span key={word} className={styles.headlineWrap}>
                   <span data-headline-word>{word}</span>
                 </span>
               ))}
             </h2>
             <p className={styles.lead} data-lead>
-              We combine strategy, production, and live execution into one cohesive system, so the experience
-              lands hard and feels intentional from first contact to final recall.
+              We bring strategy, design, technology, production, and on-ground delivery together as one
+              connected team—from first idea to final cue.
             </p>
 
             <div className={styles.ticker} aria-hidden="true">
@@ -301,8 +301,8 @@ export default function WhyUs() {
                 </span>
                 <span className={styles.tickerTotal}>/ 04</span>
               </div>
-              <span className={styles.tickerLabel} data-ticker-label data-value="Concepting">
-                Concepting
+              <span className={styles.tickerLabel} data-ticker-label data-value="Creative Strategy">
+                Creative Strategy
               </span>
             </div>
           </header>

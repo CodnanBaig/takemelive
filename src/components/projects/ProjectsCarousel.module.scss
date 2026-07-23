@@ -182,19 +182,38 @@
   z-index: 1;
 }
 
-.dragHint {
+.pageHeading {
   position: absolute;
   left: 50%;
-  top: max(clamp(56px, 8vh, 88px), env(safe-area-inset-top, 0px));
+  top: max(clamp(50px, 7vh, 78px), env(safe-area-inset-top, 0px));
   transform: translateX(-50%);
   z-index: calc(var(--tml-z-content) + 2);
+  display: grid;
+  gap: 0.45rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.pageTitle {
+  margin: 0;
+  font-family: var(--font-oswald), var(--font-poppins), sans-serif;
+  font-size: clamp(0.82rem, 1.1vw, 1rem);
+  font-weight: var(--tml-display-weight);
+  letter-spacing: 0.22em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: rgb(245 245 240 / 0.86);
+}
+
+.dragHint {
+  position: static;
+  transform: none;
   margin: 0;
   font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
   font-size: 0.62rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: rgb(245 245 240 / 0.38);
-  pointer-events: none;
 }
 
 .bottomUi {

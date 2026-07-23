@@ -11,32 +11,40 @@ const PHASES = [
   {
     title: 'DISCOVER',
     shortTitle: 'Discover',
-    description: 'Align on intent, audience behavior, and what success should feel like in the room.',
-    detail: 'We map the audience, the objective, and the emotional outcome before design decisions start.',
+    description:
+      'We align on the objective, the audience, the context, and what success should feel like in the room. Every strong experience begins with a clear reason to exist.',
+    detail:
+      'We align on the objective, the audience, the context, and what success should feel like in the room. Every strong experience begins with a clear reason to exist.',
     image: eventImage(EVENT_FOLDERS.blackPink, 'bp4.webp'),
     alt: 'BLACKPINK stadium production during discovery and show planning',
   },
   {
     title: 'DESIGN',
     shortTitle: 'Design',
-    description: 'Shape narrative, visual language, and interaction systems into one coherent experience.',
-    detail: 'Story, scenography, digital touchpoints, and flow get built as one visual language.',
+    description:
+      'We shape the narrative, spatial journey, visual language, and interactions into one coherent world. Every detail is designed around how people move, engage, and remember.',
+    detail:
+      'We shape the narrative, spatial journey, visual language, and interactions into one coherent world. Every detail is designed around how people move, engage, and remember.',
     image: eventImage(EVENT_FOLDERS.maraya, 'Maraya_One_Republic-010.webp'),
     alt: 'OneRepublic concert visual design at Maraya Concert Hall',
   },
   {
-    title: 'BUILD',
-    shortTitle: 'Build',
-    description: 'Produce assets, environments, and technical layers with production-grade reliability.',
-    detail: 'Fabrication, content, staging, and technical systems are assembled with execution in mind.',
+    title: 'ENGINEER & BUILD',
+    shortTitle: 'Engineer & Build',
+    description:
+      'Creative meets technical planning as we produce the environments, content, and systems that bring the idea to life. Everything is tested for safety, reliability, and show-ready precision.',
+    detail:
+      'Creative meets technical planning as we produce the environments, content, and systems that bring the idea to life. Everything is tested for safety, reliability, and show-ready precision.',
     image: eventImage(EVENT_FOLDERS.ioNet, 'io3.webp'),
-    alt: 'IO Net immersive environment during technical production and build',
+    alt: 'io.net immersive environment during technical production and build',
   },
   {
     title: 'GO LIVE',
     shortTitle: 'Go Live',
-    description: 'Launch, operate, and optimize in real time with a single accountable execution team.',
-    detail: 'The final experience goes live with on-ground control, iteration, and measurable delivery.',
+    description:
+      'We rehearse, operate, and adapt in real time through one accountable delivery team. From doors open to final cue, we keep every moving part aligned and protect the experience.',
+    detail:
+      'We rehearse, operate, and adapt in real time through one accountable delivery team. From doors open to final cue, we keep every moving part aligned and protect the experience.',
     image: eventImage(EVENT_FOLDERS.lusail, 'Lusail_Opening-326.webp'),
     alt: 'Lusail Super Cup live stadium production at go-live',
   },

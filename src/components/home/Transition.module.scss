@@ -348,11 +348,11 @@
 
 .manifestoRow {
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(2rem, 7.8vw, 6.8rem);
+  font-size: clamp(2rem, 7.8vw, 6rem);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  line-height: 0.9;
+  line-height: 0.94;
   text-align: center;
   width: 100%;
   white-space: nowrap;
@@ -442,6 +442,11 @@
   .telemetryTR { top: 22px; right: 48px; }
   .telemetryBL { bottom: 22px; left: 48px; }
   .telemetryBR { bottom: 22px; right: 48px; }
+
+  .manifestoRow {
+    white-space: normal;
+    line-height: 0.98;
+  }
 }
 
 @media (max-width: 640px) {
@@ -463,6 +468,7 @@
 
   .manifestoRow {
     font-size: clamp(1.8rem, 8vw, 3.8rem);
+    white-space: normal;
   }
 
   .subheading {

@@ -1,12 +1,15 @@
-import type { Metadata, Viewport } from 'next';
+import type { Viewport } from 'next';
 import { Oswald, Poppins } from 'next/font/google';
 import './globals.css';
 import LenisProvider from '@/components/cinematic/LenisProvider';
 import MotionPreferences from '@/components/cinematic/MotionPreferences';
 import RouteScrollRefresh from '@/components/cinematic/RouteScrollRefresh';
 import SkipToContent from '@/components/cinematic/SkipToContent';
+import JsonLd from '@/components/seo/JsonLd';
 import SiteLogo from '@/components/SiteLogo';
 import SiteNavWrapper from '@/components/SiteNavWrapper';
+import { organizationJsonLd } from '@/lib/seo/jsonld';
+import { rootMetadata } from '@/lib/seo/metadata';
 
 const poppins = Poppins({
   weight: ['200', '300', '400', '500', '600', '700'],
@@ -22,14 +25,7 @@ const oswald = Oswald({
   variable: '--font-oswald',
 });
 
-export const metadata: Metadata = {
-  title: 'Take Me Live',
-  description:
-    'Live experience studio designing immersive productions, cultural moments, and stadium-scale spectacle.',
-  icons: {
-    icon: '/assets/website-fevicon.png',
-  },
-};
+export const metadata = rootMetadata;
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -52,6 +48,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${poppins.variable} ${oswald.variable}`}>
+        <JsonLd data={organizationJsonLd()} />
         <SkipToContent />
         <MotionPreferences />
         <LenisProvider>

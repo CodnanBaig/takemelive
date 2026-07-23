@@ -6,7 +6,7 @@ import { sectionRevealScroll } from '@/lib/scrollScene';
 import ScrollOrnament from './ScrollOrnament';
 import styles from './CTA.module.scss';
 
-const FORM_FIELDS = ['First Name*', 'Email*', 'Company', 'Project Type', 'Tell us about your idea'] as const;
+const FORM_FIELDS = ['First Name*', 'Email*', 'Company', 'Project Type', 'Tell us what you\u2019re planning'] as const;
 
 function fieldLabel(field: (typeof FORM_FIELDS)[number]): string {
   return field.replace(/\*$/, '').trim();
@@ -213,14 +213,16 @@ export default function CTA() {
             LET&apos;S CREATE SOMETHING PEOPLE REMEMBER.
           </h2>
           <p data-cta-copy>
-            If you&apos;re looking to create an experience that connects with audiences in a meaningful way,
-            we&apos;d love to hear from you.
+            Have an idea that needs to happen live?
           </p>
           <p data-cta-copy>
-            Whether it&apos;s a large-scale production, immersive environment, or brand activation - we
-            approach every project with creativity, precision, and purpose.
+            Bring us the ambition, the challenge, or the beginning of an idea.
           </p>
-          <p data-cta-copy>Let&apos;s start the conversation.</p>
+          <p data-cta-copy>
+            From immersive environments and brand activations to large-scale live productions, we bring
+            creativity, technology, and execution together to make it real.
+          </p>
+          <p data-cta-copy>Let&apos;s take it live.</p>
         </div>
 
         <div className={styles.right}>
@@ -228,8 +230,8 @@ export default function CTA() {
             <span className={styles.orb} data-cta-orb aria-hidden="true" />
             <div className={styles.chatTop}>
               <div className={styles.bubble} data-cta-bubble>
-                Hey 👋 Please fill out the following quick questions so our team can get in touch with
-                you.
+                Tell us what you&apos;re planning. Answer a few quick questions and our team will get back
+                to you.
               </div>
             </div>
 

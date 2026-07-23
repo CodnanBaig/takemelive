@@ -1,5 +1,4 @@
-const SESSION_SECRET =
-  process.env.ADMIN_SESSION_SECRET ?? 'tml-dev-session-secret-change-in-production';
+const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET;
 
 export const SESSION_COOKIE = 'tml_admin_session';
 
@@ -9,6 +8,12 @@ type SessionPayload = {
 };
 
 function secretBytes(): Uint8Array {
+  if (!SESSION_SECRET) {
+    throw new Error(
+      'ADMIN_SESSION_SECRET environment variable is required. ' +
+        'Generate a random string and set it in your .env file.',
+    );
+  }
   return new TextEncoder().encode(SESSION_SECRET);
 }
 

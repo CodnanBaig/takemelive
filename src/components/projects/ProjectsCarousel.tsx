@@ -654,9 +654,10 @@ export default function ProjectsCarousel({ projects }: ProjectsCarouselProps) {
         </div>
       </div>
 
-      <p className={styles.dragHint} aria-hidden="true">
-        Drag to explore
-      </p>
+      <div className={styles.pageHeading}>
+        <h1 className={styles.pageTitle}>Our projects</h1>
+        <p className={styles.dragHint}>Drag to explore</p>
+      </div>
 
       <div className={styles.heroStage} aria-hidden="true">
         <div ref={frameRef} className={styles.frame}>

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireAdminSession } from '@/lib/auth/guard';
 import { revalidateProject } from '@/lib/admin/revalidate';
+import { mergeProjectPayload } from '@/lib/content/normalizeProject';
 import {
   getFeaturedProjects,
   slugifyTitle,
@@ -55,29 +56,7 @@ export async function PUT(request: Request, context: RouteContext) {
   }
 
   const current = projects[index];
-  const updated: FeaturedProject = {
-    ...current,
-    ...body,
-    slug: nextSlug,
-    title: body.title?.trim() ?? current.title,
-    posterTitle: body.posterTitle?.trim() || undefined,
-    tagline: body.tagline?.trim() ?? current.tagline,
-    event: body.event?.trim() ?? current.event,
-    client: body.client?.trim() ?? current.client,
-    year: body.year?.trim() ?? current.year,
-    location: body.location?.trim() ?? current.location,
-    services: body.services?.trim() ?? current.services ?? '',
-    concept: body.concept?.trim() ?? current.concept ?? current.summary,
-    story: body.story?.trim() ?? current.story ?? current.description,
-    summary: body.concept?.trim() ?? body.summary?.trim() ?? current.summary,
-    description: body.story?.trim() ?? body.description?.trim() ?? current.description,
-    coverImage: body.coverImage?.trim() ?? current.coverImage,
-    localCover: body.localCover?.trim() || undefined,
-    gallery: body.gallery ?? current.gallery,
-    localGallery: body.localGallery?.length ? body.localGallery : undefined,
-    videos: body.videos ?? current.videos ?? [],
-    localVideos: body.localVideos?.length ? body.localVideos : undefined,
-  };
+  const updated = mergeProjectPayload(current, { ...body, slug: nextSlug });
 
   const nextProjects = [...projects];
   nextProjects[index] = updated;

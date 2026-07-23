@@ -11,32 +11,37 @@ const SERVICES = [
   {
     title: 'Creative Strategy & Experience Design',
     detail:
-      'Concept development, creative direction, spatial design, narrative planning, and visual storytelling.',
-    outcome: 'Designing experiences that communicate clearly and feel considered.',
+      'We shape the central idea, audience journey, spatial environment, and visual language from the ground up.',
+    outcome:
+      'Every creative decision is built around what people should feel, do, and remember.',
   },
   {
     title: 'Interactive Technology & Innovation',
     detail:
-      'Interactive installations, AI-powered experiences, AR/VR environments, projection mapping, and generative visuals.',
-    outcome: 'Integrating technology to enhance engagement and create immersive environments.',
+      'We integrate AI, AR/VR, projection mapping, generative content, and responsive systems into the experience.',
+    outcome:
+      'Technology is used with purpose—to deepen participation, not distract from the story.',
   },
   {
     title: 'Production, Build & Delivery',
     detail:
-      'Stage and scenic fabrication, technical production, lighting and sound engineering, show execution, and on-site delivery.',
-    outcome: 'Ensuring ideas are executed with precision and reliability.',
+      'We engineer, fabricate, install, test, and operate every production layer with show-ready precision.',
+    outcome:
+      'From scenic build to lighting, sound, video, and live execution, we keep the original idea intact all the way to site.',
   },
   {
     title: 'Event Project Management',
     detail:
-      'Planning and coordination, vendor and crew management, budget and timeline control, and operational oversight.',
-    outcome: 'Delivering projects through structured and efficient management.',
+      'We manage timelines, budgets, vendors, permits, crews, logistics, and on-site operations from start to finish.',
+    outcome:
+      'One accountable team keeps every moving part aligned and every decision visible.',
   },
   {
     title: 'Digital Amplification & Content',
     detail:
-      'Live streaming, content creation, social media integration, post-event media, and performance insights.',
-    outcome: 'Extending the life of the experience beyond the moment itself.',
+      'We create screen content, live streams, social moments, event films, and post-event assets that extend the experience beyond the room.',
+    outcome:
+      'The live moment becomes the beginning of a longer story—not the end of it.',
   },
 ] as const;
 
@@ -252,11 +257,10 @@ export default function Services() {
       </div>
       <div className={styles.inner}>
         <header className={styles.header}>
-          <h2 data-services-headline>END-TO-END EXPERIENCE CREATION.</h2>
+          <h2 data-services-headline>EVERYTHING IT TAKES TO TAKE IT LIVE.</h2>
           <p className={styles.intro} data-services-intro>
-            From concept to execution, we design and deliver experiences that connect brands with people in meaningful ways.
-            Each project combines creative thinking, technical expertise, and precise delivery to ensure every detail performs
-            as intended.
+            From strategy and design to technology, production, and show delivery, we bring every moving part
+            together under one roof—so the idea lands exactly as intended.
           </p>
         </header>
 
