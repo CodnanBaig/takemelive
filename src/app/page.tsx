@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import JsonLd from '@/components/seo/JsonLd';
 import CinematicAtmosphere from '@/components/cinematic/CinematicAtmosphere';
-import HomeExperienceV2 from '@/components/home/HomeExperienceV2';
+import HomeExperienceV3 from '@/components/home/HomeExperienceV3';
 import Showreel from '@/components/home/Showreel';
 import Team from '@/components/home/Team';
 import CTA from '@/components/home/CTA';
@@ -35,7 +35,7 @@ export default function Home() {
       <CinematicAtmosphere />
 
       <div className={styles.sceneGroup} data-scene="arrival" id="scene-arrival">
-        <HomeExperienceV2 projects={projects} />
+        <HomeExperienceV3 projects={projects} />
       </div>
 
       <div className={styles.sceneGroup} data-scene="showreel" id="scene-showreel">
