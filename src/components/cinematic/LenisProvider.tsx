@@ -16,6 +16,8 @@ export default function LenisProvider({ children }: LenisProviderProps) {
     let ticker: ((time: number) => void) | null = null;
     let onRefresh: (() => void) | null = null;
 
+    const compactOrTouch = window.matchMedia('(max-width: 959px), (pointer: coarse)');
+
     const teardown = () => {
       if (onRefresh) {
         ScrollTrigger.removeEventListener('refresh', onRefresh);
@@ -32,11 +34,10 @@ export default function LenisProvider({ children }: LenisProviderProps) {
       setLenis(null);
       ScrollTrigger.scrollerProxy(document.documentElement, {});
       ScrollTrigger.clearScrollMemory();
-      ScrollTrigger.refresh();
     };
 
     const setup = () => {
-      if (prefersReducedMotion() || lenis) {
+      if (prefersReducedMotion() || compactOrTouch.matches || lenis) {
         return;
       }
 
@@ -47,13 +48,12 @@ export default function LenisProvider({ children }: LenisProviderProps) {
       });
 
       setLenis(lenis);
-
       lenis.on('scroll', ScrollTrigger.update);
 
       ScrollTrigger.scrollerProxy(document.documentElement, {
         scrollTop(value) {
           if (!lenis) {
-            return 0;
+            return window.scrollY;
           }
           if (typeof value === 'number') {
             lenis.scrollTo(value, { immediate: true });
@@ -82,18 +82,22 @@ export default function LenisProvider({ children }: LenisProviderProps) {
       ScrollTrigger.refresh();
     };
 
-    setup();
-
-    const unsubscribe = subscribeMotionPreference((reduced) => {
-      if (reduced) {
+    const syncScrollingMode = () => {
+      if (prefersReducedMotion() || compactOrTouch.matches) {
         teardown();
-      } else {
-        setup();
+        return;
       }
-    });
+      setup();
+    };
+
+    syncScrollingMode();
+
+    const unsubscribe = subscribeMotionPreference(syncScrollingMode);
+    compactOrTouch.addEventListener('change', syncScrollingMode);
 
     return () => {
       unsubscribe();
+      compactOrTouch.removeEventListener('change', syncScrollingMode);
       teardown();
     };
   }, []);
