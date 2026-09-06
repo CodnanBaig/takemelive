@@ -2,14 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
-import {
-  animateMaskReveal,
-  setMaskHidden,
-} from '@/lib/maskReveal';
-import {
-  pickShowreelVideo,
-  SHOWREEL_LOCAL_SRC,
-} from '@/content/showreel';
+import { animateMaskReveal, setMaskHidden } from '@/lib/maskReveal';
+import { pickShowreelVideo, SHOWREEL_LOCAL_SRC } from '@/content/showreel';
 import type { ShowreelConfig } from '@/lib/content/types';
 import { prefersReducedMotion } from '@/lib/motionPrefs';
 import styles from './Showreel.module.scss';
@@ -21,54 +15,12 @@ type ShowreelProps = {
 export default function Showreel({ showreelConfig }: ShowreelProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const isMutedRef = useRef(true);
 
-  const [posterVisible, setPosterVisible] = useState(true);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  const [videoReady, setVideoReady] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
   const posterSrc = showreelConfig.poster.trim();
-
-  useEffect(() => {
-    isMutedRef.current = isMuted;
-  }, [isMuted]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const resolveSource = async () => {
-      const localSrc = showreelConfig.localSrc || SHOWREEL_LOCAL_SRC;
-      if (!cancelled) {
-        setVideoSrc(localSrc);
-      }
-
-      try {
-        const response = await fetch(localSrc, { method: 'HEAD' });
-        if (!cancelled && response.ok) {
-          return;
-        }
-      } catch {
-        // Fall through to remote clip when local file is missing.
-      }
-
-      if (!cancelled) {
-        setVideoSrc(pickShowreelVideo(showreelConfig));
-      }
-    };
-
-    void resolveSource();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [showreelConfig]);
-
-  const applyMuted = useCallback((muted: boolean) => {
-    const video = videoRef.current;
-    if (video) {
-      video.muted = muted;
-    }
-  }, []);
 
   const playVideo = useCallback(() => {
     const video = videoRef.current;
@@ -81,163 +33,143 @@ export default function Showreel({ showreelConfig }: ShowreelProps) {
     videoRef.current?.pause();
   }, []);
 
-  const setMutedState = useCallback((muted: boolean) => {
-    setIsMuted(muted);
-    isMutedRef.current = muted;
-    applyMuted(muted);
-  }, [applyMuted]);
-
-  const activatePlayback = useCallback(() => {
-    setMutedState(false);
-    playVideo();
-  }, [playVideo, setMutedState]);
-
   useEffect(() => {
-    if (!videoSrc) {
+    const section = sectionRef.current;
+    if (!section) {
       return;
     }
 
+    const loadVideo = () => {
+      setVideoSrc((current) => current ?? showreelConfig.localSrc || SHOWREEL_LOCAL_SRC);
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      loadVideo();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          loadVideo();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '700px 0px', threshold: 0 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [showreelConfig.localSrc]);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || !videoSrc || prefersReducedMotion()) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          playVideo();
+        } else {
+          pauseVideo();
+        }
+      },
+      { threshold: 0.15 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [pauseVideo, playVideo, videoSrc]);
+
+  useEffect(() => {
     const section = sectionRef.current;
     if (!section) {
       return;
     }
 
     const titleLines = section.querySelectorAll<HTMLElement>('[data-title-line]');
-    let playbackTrigger: ScrollTrigger | null = null;
-    let disposed = false;
-
-    const bindPlayback = () => {
-      playbackTrigger?.kill();
-
-      playbackTrigger = ScrollTrigger.create({
-        trigger: section,
-        start: 'top 85%',
-        end: 'bottom 15%',
-        onEnter: () => activatePlayback(),
-        onLeave: () => pauseVideo(),
-        onEnterBack: () => activatePlayback(),
-        onLeaveBack: () => pauseVideo(),
-      });
-    };
-
-    const onReady = (video: HTMLVideoElement) => {
-      if (disposed) {
-        return;
-      }
-
-      videoRef.current = video;
-      applyMuted(isMutedRef.current);
-      video.loop = true;
-
-      if (prefersReducedMotion()) {
-        setPosterVisible(true);
-        video.pause();
-        return;
-      }
-
-      setPosterVisible(false);
-      bindPlayback();
-
-      if (ScrollTrigger.isInViewport(section, 0.2)) {
-        activatePlayback();
-      }
-    };
-
-    const onError = () => {
-      if (!videoSrc) {
-        setPosterVisible(true);
-        return;
-      }
-
-      const fallback = pickShowreelVideo(showreelConfig, videoSrc);
-      if (fallback !== videoSrc) {
-        setVideoSrc(fallback);
-        return;
-      }
-
-      setPosterVisible(true);
-    };
-
-    const attachVideo = (video: HTMLVideoElement) => {
-      const onMetadata = () => onReady(video);
-      video.addEventListener('loadedmetadata', onMetadata);
-      video.addEventListener('error', onError);
-
-      if (video.readyState >= 1) {
-        onReady(video);
-      }
-
-      return () => {
-        video.removeEventListener('loadedmetadata', onMetadata);
-        video.removeEventListener('error', onError);
-        playbackTrigger?.kill();
-      };
-    };
-
-    let detachVideo: (() => void) | undefined;
-
-    const waitForVideo = () => {
-      if (disposed) {
-        return;
-      }
-      const video = videoRef.current;
-      if (video) {
-        detachVideo = attachVideo(video);
-        return;
-      }
-      requestAnimationFrame(waitForVideo);
-    };
-
-    waitForVideo();
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      mm.add('(prefers-reduced-motion: reduce)', () => {
-        pauseVideo();
-        setPosterVisible(true);
+      mm.add('(max-width: 959px), (prefers-reduced-motion: reduce)', () => {
+        if (titleLines.length) {
+          gsap.set(titleLines, { clearProps: 'clip-path,opacity,transform' });
+        }
       });
 
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const titleMm = gsap.matchMedia();
+      mm.add('(min-width: 960px) and (prefers-reduced-motion: no-preference)', () => {
+        if (titleLines.length) {
+          setMaskHidden(titleLines);
+        }
 
-        titleMm.add('(max-width: 959px)', () => {
-          if (titleLines.length) {
-            gsap.set(titleLines, { clearProps: 'clip-path,opacity,transform' });
-          }
-        });
-
-        titleMm.add('(min-width: 960px)', () => {
-          if (titleLines.length) {
-            setMaskHidden(titleLines);
-          }
-          ScrollTrigger.create({
-            trigger: section,
-            start: 'top 72%',
-            once: true,
-            onEnter: () => {
-              if (titleLines.length) {
-                animateMaskReveal(titleLines, 'bottom', {
-                  duration: 0.78,
-                  stagger: 0.07,
-                });
-              }
-            },
-          });
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 72%',
+          once: true,
+          onEnter: () => {
+            if (titleLines.length) {
+              animateMaskReveal(titleLines, 'bottom', {
+                duration: 0.78,
+                stagger: 0.07,
+              });
+            }
+          },
         });
       });
+
+      return () => mm.revert();
     }, section);
 
-    return () => {
-      disposed = true;
-      detachVideo?.();
+    return () => ctx.revert();
+  }, []);
+
+  const onVideoReady = () => {
+    if (prefersReducedMotion()) {
       pauseVideo();
-      ctx.revert();
-    };
-  }, [activatePlayback, applyMuted, pauseVideo, showreelConfig, videoSrc]);
+      setVideoReady(false);
+      return;
+    }
+
+    setVideoReady(true);
+    const section = sectionRef.current;
+    if (!section) {
+      return;
+    }
+
+    const rect = section.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+      playVideo();
+    }
+  };
+
+  const onVideoError = () => {
+    if (!videoSrc) {
+      return;
+    }
+
+    const fallback = pickShowreelVideo(showreelConfig, videoSrc);
+    if (fallback && fallback !== videoSrc) {
+      setVideoReady(false);
+      setVideoSrc(fallback);
+      return;
+    }
+
+    setVideoReady(false);
+    setVideoSrc(null);
+  };
 
   const toggleMute = () => {
-    setMutedState(!isMuted);
+    const nextMuted = !isMuted;
+    setIsMuted(nextMuted);
+    if (videoRef.current) {
+      videoRef.current.muted = nextMuted;
+    }
+    if (!nextMuted) {
+      playVideo();
+    }
   };
 
   return (
@@ -299,10 +231,12 @@ export default function Showreel({ showreelConfig }: ShowreelProps) {
                   className={styles.video}
                   src={videoSrc}
                   poster={posterSrc || undefined}
-                  muted
+                  muted={isMuted}
                   playsInline
                   loop
-                  preload="auto"
+                  preload="metadata"
+                  onLoadedMetadata={onVideoReady}
+                  onError={onVideoError}
                   aria-hidden="true"
                 />
               ) : null}
@@ -311,27 +245,29 @@ export default function Showreel({ showreelConfig }: ShowreelProps) {
               <img
                 src={posterSrc}
                 alt=""
-                className={`${styles.poster} ${posterVisible ? styles.posterVisible : ''}`}
+                loading="lazy"
+                decoding="async"
+                className={`${styles.poster} ${!videoReady ? styles.posterVisible : ''}`}
                 aria-hidden="true"
               />
             ) : null}
 
-            <div className={styles.controls}>
-              <div className={styles.controlsStack}>
-                {isMuted ? (
-                  <span className={styles.experienceTag}>Click for better experience</span>
-                ) : null}
-                <button
-                  type="button"
-                  className={styles.controlBtn}
-                  onClick={toggleMute}
-                  aria-pressed={!isMuted}
-                  aria-label={isMuted ? 'Unmute showreel' : 'Mute showreel'}
-                >
-                  {isMuted ? 'Unmute' : 'Mute'}
-                </button>
+            {videoSrc ? (
+              <div className={styles.controls}>
+                <div className={styles.controlsStack}>
+                  {isMuted ? <span className={styles.experienceTag}>Tap for sound</span> : null}
+                  <button
+                    type="button"
+                    className={styles.controlBtn}
+                    onClick={toggleMute}
+                    aria-pressed={!isMuted}
+                    aria-label={isMuted ? 'Unmute showreel' : 'Mute showreel'}
+                  >
+                    {isMuted ? 'Unmute' : 'Mute'}
+                  </button>
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
       </div>
