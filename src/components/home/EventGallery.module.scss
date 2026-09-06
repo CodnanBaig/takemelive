@@ -198,21 +198,49 @@
 
 @media (max-width: 900px) {
   .section {
-    min-height: 145vh;
+    min-height: 0;
+    padding: clamp(3.5rem, 8vh, 5rem) 0 clamp(4rem, 9vh, 5.5rem);
   }
 
   .header {
     padding-inline: clamp(0.35rem, 2vw, 0.75rem);
+    text-align: left;
+  }
+
+  .title {
+    font-size: clamp(1.9rem, 8vw, 2.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    align-items: flex-start;
+    min-height: 0;
+  }
+
+  .titleLineWrap {
+    width: 100%;
+    overflow: visible;
+    padding-inline: 0;
+  }
+
+  .titleLine {
+    white-space: normal;
+    text-wrap: balance;
   }
 
   .inner {
     position: static;
+    top: auto;
+    min-height: 0;
+    width: min(92vw, 720px);
+    gap: 1.25rem;
+    padding-block: 0;
+    will-change: auto;
   }
 
   .galleryGrid {
     grid-template-columns: 1fr;
     grid-auto-rows: auto;
     min-height: 0;
+    width: 100%;
     gap: 0.85rem;
   }
 
@@ -220,10 +248,21 @@
     position: static;
     margin: 0.35rem 0 0.8rem;
     gap: 0;
+    width: 100%;
   }
 
   .backgroundWords span {
     font-size: clamp(3rem, 18vw, 6rem);
+    will-change: auto;
+  }
+
+  .card {
+    will-change: auto;
+  }
+
+  .image {
+    height: 100%;
+    will-change: auto;
   }
 
   .topLeft,
