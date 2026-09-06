@@ -148,11 +148,25 @@
   .section {
     min-height: 0;
     overflow: clip;
+    padding: clamp(3.5rem, 8vh, 4.75rem) 0;
+  }
+
+  .inner {
+    width: min(92vw, 560px);
   }
 
   .inner h2 {
-    font-size: clamp(2rem, 10.5vw, 3.6rem);
-    max-width: 12ch;
-    overflow-wrap: anywhere;
+    font-size: clamp(2rem, 8.7vw, 3.15rem);
+    line-height: 0.98;
+    max-width: 100%;
+    overflow-wrap: normal;
+    word-break: normal;
+    text-wrap: balance;
+  }
+
+  .lineRow {
+    font-size: clamp(1rem, 4.1vw, 1.08rem);
+    line-height: 1.58;
+    text-align: left;
   }
 }
