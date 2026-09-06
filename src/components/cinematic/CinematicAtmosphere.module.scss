@@ -41,6 +41,23 @@
   opacity: 0.65;
 }
 
+@media (max-width: 959px), (pointer: coarse) {
+  .grain,
+  .beam {
+    display: none;
+  }
+
+  .vignette {
+    background: linear-gradient(
+      180deg,
+      rgb(0 0 0 / 0.18) 0%,
+      transparent 22%,
+      transparent 78%,
+      rgb(0 0 0 / 0.34) 100%
+    );
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .grain {
     opacity: 0.08;
