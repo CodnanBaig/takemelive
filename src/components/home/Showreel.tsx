@@ -40,7 +40,7 @@ export default function Showreel({ showreelConfig }: ShowreelProps) {
     }
 
     const loadVideo = () => {
-      setVideoSrc((current) => current ?? showreelConfig.localSrc || SHOWREEL_LOCAL_SRC);
+      setVideoSrc((current) => current ?? (showreelConfig.localSrc || SHOWREEL_LOCAL_SRC));
     };
 
     if (!('IntersectionObserver' in window)) {
