@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import { sectionRevealScroll } from '@/lib/scrollScene';
@@ -77,26 +78,23 @@ export default function Services() {
     const intro = section.querySelector<HTMLElement>('[data-services-intro]');
     const stripe = section.querySelector<HTMLElement>('[data-services-stripe]');
 
+    const showStaticState = () => {
+      gsap.set([headline, intro, ...panels, ...mediaCards, ...words], {
+        clearProps: 'transform,opacity,visibility,clip-path',
+        autoAlpha: 1,
+      });
+      gsap.set(mediaImages, { clearProps: 'transform' });
+      if (stripe) {
+        gsap.set(stripe, { clearProps: 'transform' });
+      }
+    };
+
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([headline, intro, ...panels, ...mediaCards, ...words], {
-          clearProps: 'all',
-          autoAlpha: 1,
-          y: 0,
-          x: 0,
-          xPercent: 0,
-        });
-        gsap.set(mediaImages, { yPercent: 0, scale: 1 });
-        if (stripe) {
-          gsap.set(stripe, { xPercent: 0 });
-        }
-      });
+      mm.add('(max-width: 980px), (prefers-reduced-motion: reduce)', showStaticState);
 
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const isCompact = window.matchMedia('(max-width: 980px)').matches;
-
+      mm.add('(min-width: 981px) and (prefers-reduced-motion: no-preference)', () => {
         gsap
           .timeline({
             scrollTrigger: sectionRevealScroll(section, 0.7),
@@ -120,15 +118,13 @@ export default function Services() {
           gsap.fromTo(
             panel,
             {
-              y: 0,
-              x: isCompact ? 0 : panelDirection * 180,
-              rotateZ: isCompact ? 0 : panelDirection * 2,
+              x: panelDirection * 180,
+              rotateZ: panelDirection * 2,
               scale: 0.98,
               autoAlpha: 0.15,
               clipPath: 'inset(0% 100% 0% 0%)',
             },
             {
-              y: 0,
               x: 0,
               rotateZ: 0,
               scale: 1,
@@ -153,14 +149,14 @@ export default function Services() {
             card,
             {
               y: 64,
-              x: isCompact ? 0 : cardDirection * 42,
-              rotateZ: isCompact ? 0 : cardDirection * 3.5,
+              x: cardDirection * 42,
+              rotateZ: cardDirection * 3.5,
               autoAlpha: 0.2,
             },
             {
               y: 0,
               x: 0,
-              rotateZ: isCompact ? 0 : cardDirection * 1.2,
+              rotateZ: cardDirection * 1.2,
               autoAlpha: 1,
               ease: 'none',
               scrollTrigger: {
@@ -194,7 +190,7 @@ export default function Services() {
         });
 
         words.forEach((word, index) => {
-          const drift = isCompact ? 0 : index % 2 === 0 ? 28 : -28;
+          const drift = index % 2 === 0 ? 28 : -28;
           gsap.fromTo(
             word,
             { xPercent: -drift, yPercent: index === 0 ? -8 : 8 },
@@ -230,14 +226,10 @@ export default function Services() {
         }
       });
 
-      return () => {
-        mm.revert();
-      };
+      return () => mm.revert();
     }, section);
 
-    return () => {
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -267,7 +259,15 @@ export default function Services() {
         <div className={styles.mediaRail}>
           {SERVICE_MEDIA.map((item, index) => (
             <figure key={item.src} className={styles.mediaCard} data-service-media-card>
-              <img src={item.src} alt={item.alt} loading="lazy" data-service-media-image />
+              <Image
+                src={item.src}
+                alt={item.alt}
+                width={1000}
+                height={800}
+                quality={72}
+                sizes="(max-width: 980px) 92vw, 31vw"
+                data-service-media-image
+              />
               <figcaption>{`0${index + 1}`}</figcaption>
             </figure>
           ))}
