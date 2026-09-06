@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 import {
@@ -63,8 +64,6 @@ const IMAGE_ITEMS = [
   },
 ] as const;
 
-const FALLBACK_IMAGE_SRC = eventImage(EVENT_FOLDERS.qatarLive, 'Qatar_Live-028.webp');
-
 export default function EventGallery() {
   const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -80,21 +79,21 @@ export default function EventGallery() {
     const titleLines = section.querySelectorAll<HTMLElement>('[data-title-line]');
     const stage = section.querySelector<HTMLElement>('[data-gallery-stage]');
 
+    const showStaticState = () => {
+      gsap.set([...cards, ...titleLines].filter(Boolean), { clipPath: MASK_VISIBLE });
+      gsap.set(images, { yPercent: 0, scale: 1 });
+      gsap.set(backgroundWords, { clearProps: 'transform' });
+      if (stage) {
+        gsap.set(stage, { clearProps: 'transform,filter,opacity' });
+      }
+    };
+
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set([...cards, ...titleLines].filter(Boolean), {
-          clipPath: MASK_VISIBLE,
-        });
-        gsap.set(images, { yPercent: 0, scale: 1.16 });
-        gsap.set(backgroundWords, { yPercent: 0, xPercent: 0 });
-        if (stage) {
-          gsap.set(stage, { opacity: 1, y: 0 });
-        }
-      });
+      mm.add('(max-width: 959px), (prefers-reduced-motion: reduce)', showStaticState);
 
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
+      mm.add('(min-width: 960px) and (prefers-reduced-motion: no-preference)', () => {
         if (titleLines.length) {
           setMaskHidden(titleLines);
         }
@@ -148,9 +147,8 @@ export default function EventGallery() {
           const drift = index % 2 === 0 ? 56 : -56;
           gsap.fromTo(
             word,
-            { yPercent: 0, xPercent: index % 2 === 0 ? -drift : drift },
+            { xPercent: index % 2 === 0 ? -drift : drift },
             {
-              yPercent: 0,
               xPercent: index % 2 === 0 ? drift : -drift,
               ease: 'none',
               scrollTrigger: {
@@ -183,27 +181,20 @@ export default function EventGallery() {
         }
       });
 
-      return () => {
-        mm.revert();
-      };
+      return () => mm.revert();
     }, section);
 
-    const refreshParallax = () => {
-      ScrollTrigger.refresh();
-    };
+    if (window.innerWidth >= 960) {
+      const refreshParallax = () => ScrollTrigger.refresh();
+      section.querySelectorAll<HTMLImageElement>('[data-parallax-image]').forEach((image) => {
+        if (!image.complete) {
+          image.addEventListener('load', refreshParallax, { once: true });
+        }
+      });
+      requestAnimationFrame(refreshParallax);
+    }
 
-    section.querySelectorAll<HTMLImageElement>('[data-parallax-image]').forEach((image) => {
-      if (image.complete) {
-        return;
-      }
-      image.addEventListener('load', refreshParallax, { once: true });
-    });
-
-    requestAnimationFrame(refreshParallax);
-
-    return () => {
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -244,19 +235,16 @@ export default function EventGallery() {
               data-parallax-item
               data-speed={item.speed}
             >
-              <img
+              <Image
                 src={item.src}
                 alt={item.alt}
-                loading="lazy"
+                width={1200}
+                height={800}
+                quality={72}
+                sizes="(max-width: 900px) 94vw, (max-width: 1280px) 24vw, 300px"
                 className={styles.image}
                 data-parallax-image
                 data-speed={item.speed}
-                onError={(event) => {
-                  const target = event.currentTarget;
-                  if (target.src !== FALLBACK_IMAGE_SRC) {
-                    target.src = FALLBACK_IMAGE_SRC;
-                  }
-                }}
               />
             </figure>
           ))}
