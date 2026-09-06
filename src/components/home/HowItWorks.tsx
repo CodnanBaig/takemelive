@@ -51,8 +51,9 @@ const PHASES = [
 ] as const;
 
 const HEADLINE_LINES = [
-  'Discover to go live,',
-  'built as one continuous system.',
+  'From first idea',
+  'to final cue.',
+  'One continuous system.',
 ] as const;
 
 const FALLBACK_IMAGE_SRC = eventImage(EVENT_FOLDERS.cinemaMedley, 'cm7.webp');

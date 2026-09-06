@@ -345,3 +345,47 @@
     letter-spacing: 0.14em;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .section,
+  .inner,
+  .stage {
+    min-height: 0;
+  }
+
+  .section {
+    padding: var(--tml-logo-clearance) max(1rem, 3vw) 3rem;
+  }
+
+  .header {
+    position: relative;
+    inset: auto;
+    max-width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .stage {
+    padding: 0;
+    contain: none;
+  }
+
+  .stack {
+    position: relative;
+    inset: auto;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 2.5rem 1.5rem;
+    perspective: none;
+  }
+
+  .card {
+    position: relative;
+    inset: auto;
+    width: 100%;
+  }
+
+  .scrollHint {
+    display: none;
+  }
+}

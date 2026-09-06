@@ -20,14 +20,17 @@ const GROUP_IMAGE = {
 const FALLBACK_IMAGE_SRC = eventImage(EVENT_FOLDERS.dubaiMedia, 'dm2.webp');
 
 const HEADLINE_LINES = [
-  { id: 'experience', text: 'The audience sees one experience.' },
-  { id: 'same-way', text: 'We work the same way.' },
+  { id: 'creators', text: 'Creators.' },
+  { id: 'dreamers', text: 'Dreamers.' },
+  { id: 'doers', text: '& doers.' },
 ] as const;
 
+const ROLES = ['Visionary designers.', 'Technologists.', 'Cultural strategists.', 'Execution experts.'];
+
 const BODY_LINES = [
-  'creators, strategists, technologists, and producers united by one belief.',
-  'Ambitious ideas deserve fearless thinking and flawless execution.',
+  'We’re a crew of creators, strategists, technologists, and producers united by one belief: ambitious ideas deserve fearless thinking and flawless execution.',
   'Different disciplines. One shared standard.',
+  'The audience sees one experience. We work the same way.',
 ];
 
 export default function WhoWeAre() {
@@ -194,6 +197,9 @@ export default function WhoWeAre() {
           <div className={styles.content}>
             <div className={styles.accent} data-accent aria-hidden="true" />
             <h2 className={styles.heading}>
+              <span className={styles.studioLine} data-heading-line>
+                Squad of
+              </span>
               {HEADLINE_LINES.map((line) => (
                 <span key={line.id} className={styles.lineWrap}>
                   <span data-heading-line className={styles.headlineDisplay}>
@@ -202,6 +208,14 @@ export default function WhoWeAre() {
                 </span>
               ))}
             </h2>
+
+            <div className={styles.roles}>
+              {ROLES.map((role) => (
+                <p key={role} className={styles.role} data-body-line>
+                  {role}
+                </p>
+              ))}
+            </div>
 
             <div className={styles.bodyCopy}>
               {BODY_LINES.map((line) => (

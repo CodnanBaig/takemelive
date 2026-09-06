@@ -283,7 +283,7 @@ export default function WhyUs() {
         <div className={styles.grid}>
           <header className={styles.intro}>
             <h2 className={styles.headline}>
-              {['More', 'than', 'a vendor.', 'A creative', 'studio', 'built for live.'].map((word) => (
+              {['More than', 'a vendor.', 'A creative', 'studio built', 'for live.'].map((word) => (
                 <span key={word} className={styles.headlineWrap}>
                   <span data-headline-word>{word}</span>
                 </span>

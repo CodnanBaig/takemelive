@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, type MouseEvent } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
-import { animateMaskReveal, setMaskHidden } from '@/lib/maskReveal';
+import { animateMaskReveal, setMaskHidden, setMaskVisible } from '@/lib/maskReveal';
 import { getPosterTitle, type FeaturedProject } from '@/content/featuredProjects';
 import { resolveProjectCover } from '@/lib/projectMedia';
 import styles from './FeaturedProjects.module.scss';
@@ -174,29 +174,27 @@ export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
       section.querySelectorAll<HTMLElement>('[data-title-line]'),
     );
     const ctx = gsap.context(() => {
-      if (titleLines.length) {
-        setMaskHidden(titleLines);
-      }
+      const mm = gsap.matchMedia();
 
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 78%',
-        once: true,
-        onEnter: () => {
-          if (titleLines.length) {
+      mm.add('(prefers-reduced-motion: reduce)', () => {
+        setMaskVisible(titleLines);
+        gsap.set([...cards, ...frames, ...images], { clearProps: 'all' });
+        stack.style.removeProperty('--stack-card-width');
+      });
+
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        setMaskHidden(titleLines);
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 78%',
+          once: true,
+          onEnter: () => {
             animateMaskReveal(titleLines, 'bottom', {
               duration: 0.82,
               stagger: 0.09,
             });
-          }
-        },
-      });
-
-      const mm = gsap.matchMedia();
-
-      mm.add('(prefers-reduced-motion: reduce)', () => {
-        refreshMetrics();
-        applyStackLayout(1);
+          },
+        });
       });
 
       mm.add('(max-width: 899px)', () => {
@@ -475,7 +473,8 @@ export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
       event.metaKey ||
       event.ctrlKey ||
       event.shiftKey ||
-      event.altKey
+      event.altKey ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
       return;
     }
@@ -515,33 +514,6 @@ export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
     );
 
     gsap.killTweensOf([card, frame, image]);
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      gsap.set(card, {
-        position: 'fixed',
-        left: cardRect.left,
-        top: cardRect.top,
-        bottom: 'auto',
-        width: cardRect.width,
-        height: cardRect.height,
-        x: targetX,
-        y: targetY,
-        rotationY: 0,
-        rotationZ: 0,
-        scale: popupScale,
-        z: 180,
-        zIndex: 20000,
-        transformOrigin: '50% 50%',
-        transformPerspective: 1800,
-      });
-      gsap.set(frame, { rotationY: 0 });
-      gsap.set(image, { scale: 1.02, yPercent: 0 });
-      selectedCardRef.current = card;
-      selectedHrefRef.current = href;
-      selectedIndexRef.current = index;
-      pullingCardRef.current = false;
-      return;
-    }
 
     gsap
       .timeline({
@@ -649,7 +621,7 @@ export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
                 aria-label={`Open ${project.title} project`}
                 onClick={(event) => handleProjectClick(event, `/projects/${project.slug}`, index)}
               >
-                <span className={styles.cardIndex}>{String(index).padStart(2, '0')}</span>
+                <span className={styles.cardIndex}>{String(index + 1).padStart(2, '0')}</span>
                 <div className={styles.cardFrame} data-card-frame>
                   <img
                     src={resolveProjectCover(project)}

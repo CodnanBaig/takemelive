@@ -31,7 +31,7 @@
   margin: 0;
   width: 100%;
   font-family: var(--font-oswald), var(--font-poppins), sans-serif;
-  font-size: clamp(2.85rem, 10vw, 6rem);
+  font-size: clamp(4.5rem, 10vw, 9rem);
   line-height: 0.96;
   text-transform: uppercase;
   letter-spacing: 0.008em;
@@ -125,11 +125,16 @@
 
 .subheadingWrap {
   display: grid;
-  gap: 0.1rem;
   justify-items: center;
   margin: 0 auto;
-  max-width: 54ch;
+  width: min(100%, 78ch);
+  max-width: 100%;
   padding-inline: clamp(0.25rem, 2vw, 1rem);
+}
+
+.subheadingGroup {
+  display: grid;
+  gap: clamp(0.85rem, 1.6vh, 1.25rem);
 }
 
 .subheading {
@@ -141,25 +146,13 @@
   text-align: center;
 }
 
-.scrollIndicator {
-  overflow: hidden;
+.tagline {
   position: absolute;
   left: 50%;
-  bottom: clamp(4.75rem, 9vh, 6rem);
+  bottom: clamp(1.25rem, 4vh, 2.5rem);
+  width: min(92vw, 78ch);
   transform: translateX(-50%);
-  color: rgb(245 245 240 / 0.62);
-  display: grid;
-  place-items: center;
-  gap: 0.15rem;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  z-index: 5;
-}
-
-.arrow {
-  font-size: 1.12rem;
-  line-height: 1;
+  z-index: 1;
 }
 
 @media (max-width: 900px) {

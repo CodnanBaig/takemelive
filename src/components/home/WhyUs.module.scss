@@ -66,14 +66,13 @@
 .headline {
   margin: 0;
   font-family: var(--font-oswald), Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(3rem, 6.6vw, 6.4rem);
+  font-size: clamp(2.8rem, min(5.6vw, 8vh), 5.4rem);
   line-height: 0.88;
   letter-spacing: 0.012em;
   text-transform: uppercase;
   font-weight: var(--tml-display-weight);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.15em 0.32em;
+  display: grid;
+  gap: 0.12em;
   overflow-wrap: anywhere;
   min-width: 0;
 }

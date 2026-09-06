@@ -84,9 +84,10 @@
 }
 
 .studioLine {
+  display: block;
   margin: 0 0 0.15rem;
   max-width: 22ch;
-  font-size: clamp(0.98rem, 1.3vw, 1.2rem);
+  font-size: clamp(1.75rem, 3.2vw, 3rem);
   line-height: 1.35;
   color: rgb(17 18 23 / 0.76);
 }
@@ -123,7 +124,7 @@
   font-weight: var(--tml-display-weight);
   line-height: 1.05;
   letter-spacing: -0.04em;
-  text-transform: none;
+  text-transform: uppercase;
   text-wrap: balance;
   color: rgb(17 18 23 / 0.92);
 }
@@ -154,7 +155,6 @@
 .role {
   margin: 0;
   padding: 0.8rem 0 0.85rem;
-  border-top: 1px solid rgb(17 18 23 / 0.14);
   font-size: clamp(0.78rem, 0.98vw, 0.94rem);
   font-weight: 600;
   letter-spacing: 0.12em;

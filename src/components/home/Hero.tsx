@@ -15,20 +15,18 @@ const HERO_LINES = [
 const SUBHEADING_LINES = [
   'Take Me Live is a creative experience studio that turns ambitious ideas into live productions, immersive environments, and brand experiences.',
   'From first concept to final cue, we bring strategy, design, technology, production, and on-ground delivery together under one accountable team.',
-  'Creative thinking · Production muscle · One team from idea to live.',
+  'Creative thinking • Production muscle • One team from idea to live',
 ];
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
-  const indicatorRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const heading = headingRef.current;
-    const indicator = indicatorRef.current;
 
-    if (!section || !heading || !indicator) {
+    if (!section || !heading) {
       return;
     }
 
@@ -42,14 +40,12 @@ export default function Hero() {
         setMaskVisible([...words, ...subLines]);
         gsap.set(words, { yPercent: 0, clearProps: 'transform' });
         gsap.set(subLines, { clearProps: 'transform' });
-        gsap.set(indicator, { autoAlpha: 1 });
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         setMaskHidden(words, 'bottom');
         setMaskHidden(subLines, 'bottom');
         gsap.set(words, { x: 0, yPercent: 0 });
-        gsap.set(indicator, { clipPath: 'inset(0% 0% 100% 0%)' });
 
         const loadTimeline = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
@@ -67,24 +63,7 @@ export default function Hero() {
               stagger: 0.12,
             }),
             0.42,
-          )
-          .to(
-            indicator,
-            {
-              clipPath: 'inset(0% 0% 0% 0%)',
-              duration: 0.7,
-            },
-            0.72,
           );
-
-        gsap.to(indicator, {
-          y: 12,
-          repeat: -1,
-          yoyo: true,
-          duration: 0.85,
-          ease: 'sine.inOut',
-          delay: 1.1,
-        });
 
         gsap
           .timeline({
@@ -109,16 +88,6 @@ export default function Hero() {
               ease: 'none',
               stagger: 0.05,
               duration: 1,
-            },
-            0,
-          )
-          .to(
-            indicator,
-            {
-              clipPath: 'inset(0% 0% 100% 0%)',
-              y: 28,
-              ease: 'none',
-              duration: 0.65,
             },
             0,
           );
@@ -192,7 +161,6 @@ export default function Hero() {
       aria-label="Take Me Live hero"
     >
       <div className={styles.beam} aria-hidden="true" />
-      <ScrollOrnament variant="glyph-light" position="tr" />
       <ScrollOrnament variant="glyph-dark" position="bl" />
       <div className={styles.inner}>
         <h1 ref={headingRef} className={styles.heading}>
@@ -217,17 +185,18 @@ export default function Hero() {
           </span>
         </h1>
         <div className={styles.subheadingWrap}>
-          {SUBHEADING_LINES.map((line) => (
-            <p key={line} data-subline className={styles.subheading} data-scroll-shift>
-              {line}
-            </p>
-          ))}
+          <div className={styles.subheadingGroup}>
+            {SUBHEADING_LINES.slice(0, 2).map((line) => (
+              <p key={line} data-subline className={styles.subheading} data-scroll-shift>
+                {line}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
-      <div ref={indicatorRef} className={styles.scrollIndicator} aria-hidden="true">
-        <span>Scroll</span>
-        <span className={styles.arrow}>↓</span>
-      </div>
+      <p data-subline className={`${styles.subheading} ${styles.tagline}`} data-scroll-shift>
+        {SUBHEADING_LINES[2]}
+      </p>
     </section>
   );
 }

@@ -207,13 +207,6 @@ export default function Team() {
           <figure className={styles.heroMedia} data-team-hero-media>
             <img src={HERO_IMAGE} alt="" loading="lazy" data-team-hero-image />
             <figcaption className={styles.heroCaption}>
-              <div className={styles.heroMarkers} aria-hidden="true">
-                {TEAM_ROLES.map((role) => (
-                  <span key={role.code} className={styles.heroMarker}>
-                    {role.code}
-                  </span>
-                ))}
-              </div>
               <div className={styles.heroCaptionRow}>
                 <span>One crew</span>
                 <span>From concept to showtime</span>
@@ -224,6 +217,9 @@ export default function Team() {
           <div className={styles.roleStack}>
             {TEAM_ROLES.map((role) => (
               <article key={role.title} className={styles.roleCard} data-team-role>
+                <div className={styles.roleLead} aria-hidden="true">
+                  <span className={styles.roleIndex}>{role.code}</span>
+                </div>
                 <div className={styles.roleBody}>
                   <p className={styles.roleField}>{role.field}</p>
                   <h3>{role.title}</h3>
