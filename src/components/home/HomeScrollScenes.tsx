@@ -21,18 +21,26 @@ export default function HomeScrollScenes() {
       return;
     }
 
+    const resetCompactScene = (section: HTMLElement) => {
+      setSectionProgress(section, 0);
+      const targets = section.querySelectorAll<HTMLElement>(
+        '[data-scroll-ornament], [data-scroll-shift], [data-scroll-depth]',
+      );
+      gsap.set(targets, { clearProps: 'transform,opacity' });
+    };
+
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        sections.forEach((section) => {
-          setSectionProgress(section, 0);
-          const ornaments = section.querySelectorAll<HTMLElement>('[data-scroll-ornament]');
-          gsap.set(ornaments, { clearProps: 'all' });
-        });
+        sections.forEach(resetCompactScene);
       });
 
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
+      mm.add('(max-width: 959px) and (prefers-reduced-motion: no-preference)', () => {
+        sections.forEach(resetCompactScene);
+      });
+
+      mm.add('(min-width: 960px) and (prefers-reduced-motion: no-preference)', () => {
         sections.forEach((section) => {
           const ornaments = Array.from(
             section.querySelectorAll<HTMLElement>('[data-scroll-ornament]'),
@@ -50,14 +58,12 @@ export default function HomeScrollScenes() {
               setSectionProgress(section, self.progress);
 
               ornaments.forEach((ornament) => {
-                const position =
-                  ornament.dataset.ornamentPosition ?? 'tr';
+                const position = ornament.dataset.ornamentPosition ?? 'tr';
                 const offset = ORNAMENT_OFFSET[position] ?? ORNAMENT_OFFSET.tr;
                 const wave = Math.sin(self.progress * Math.PI);
-                const isCompact = window.innerWidth < 900;
                 gsap.set(ornament, {
                   y: gsap.utils.interpolate(offset.y, -offset.y, self.progress),
-                  x: isCompact ? 0 : gsap.utils.interpolate(offset.x * 0.35, offset.x, wave),
+                  x: gsap.utils.interpolate(offset.x * 0.35, offset.x, wave),
                   rotate: gsap.utils.interpolate(
                     offset.rotate * 0.4,
                     offset.rotate,
@@ -70,11 +76,9 @@ export default function HomeScrollScenes() {
 
               shifts.forEach((el, index) => {
                 const direction = index % 2 === 0 ? 1 : -1;
-                const xShift = window.innerWidth < 900 ? 0 : (self.progress - 0.5) * 18 * -direction;
-
                 gsap.set(el, {
                   y: (self.progress - 0.5) * 36 * direction,
-                  x: xShift,
+                  x: (self.progress - 0.5) * 18 * -direction,
                 });
               });
 
@@ -97,10 +101,19 @@ export default function HomeScrollScenes() {
       };
     });
 
-    const onResize = () => ScrollTrigger.refresh();
-    window.addEventListener('resize', onResize);
+    let resizeFrame = 0;
+    const onResize = () => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => {
+        if (window.innerWidth >= 960) {
+          ScrollTrigger.refresh();
+        }
+      });
+    };
+    window.addEventListener('resize', onResize, { passive: true });
 
     return () => {
+      cancelAnimationFrame(resizeFrame);
       window.removeEventListener('resize', onResize);
       ctx.revert();
     };
