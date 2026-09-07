@@ -6,6 +6,7 @@ import { animateMaskReveal, setMaskHidden } from '@/lib/maskReveal';
 import { pickShowreelVideo, SHOWREEL_LOCAL_SRC } from '@/content/showreel';
 import type { ShowreelConfig } from '@/lib/content/types';
 import { prefersReducedMotion } from '@/lib/motionPrefs';
+import { resolveMediaUrl } from '@/lib/projectMedia';
 import styles from './Showreel.module.scss';
 
 type ShowreelProps = {
@@ -20,7 +21,7 @@ export default function Showreel({ showreelConfig }: ShowreelProps) {
   const [videoReady, setVideoReady] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  const posterSrc = showreelConfig.poster.trim();
+  const posterSrc = resolveMediaUrl(showreelConfig.poster.trim());
 
   const playVideo = useCallback(() => {
     const video = videoRef.current;
@@ -40,7 +41,9 @@ export default function Showreel({ showreelConfig }: ShowreelProps) {
     }
 
     const loadVideo = () => {
-      setVideoSrc((current) => current ?? (showreelConfig.localSrc || SHOWREEL_LOCAL_SRC));
+      setVideoSrc((current) =>
+        current ?? resolveMediaUrl(showreelConfig.localSrc || SHOWREEL_LOCAL_SRC),
+      );
     };
 
     if (!('IntersectionObserver' in window)) {
@@ -150,7 +153,7 @@ export default function Showreel({ showreelConfig }: ShowreelProps) {
       return;
     }
 
-    const fallback = pickShowreelVideo(showreelConfig, videoSrc);
+    const fallback = resolveMediaUrl(pickShowreelVideo(showreelConfig, videoSrc));
     if (fallback && fallback !== videoSrc) {
       setVideoReady(false);
       setVideoSrc(fallback);
