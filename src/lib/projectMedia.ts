@@ -1,6 +1,23 @@
 import type { FeaturedProject } from '@/content/featuredProjects';
 
-/** Event folders under public/ — source of truth for project photography */
+/**
+ * Keep heavyweight production media on a dedicated origin instead of bundling it
+ * into every frontend deployment. This can later be switched to Vercel Blob/R2
+ * through NEXT_PUBLIC_MEDIA_ORIGIN without changing content data.
+ */
+export const PUBLIC_MEDIA_ORIGIN =
+  process.env.NEXT_PUBLIC_MEDIA_ORIGIN?.replace(/\/$/, '') || 'https://takemelive.netlify.app';
+
+export function resolveMediaUrl(src: string): string {
+  const value = src.trim();
+  if (!value || /^(https?:|data:|blob:)/i.test(value)) {
+    return value;
+  }
+
+  return `${PUBLIC_MEDIA_ORIGIN}${value.startsWith('/') ? '' : '/'}${value}`;
+}
+
+/** Event folders under the media origin — source of truth for project photography */
 export const EVENT_FOLDERS = {
   blackPink: 'Black Pink Concert',
   cinemaMedley: 'Cinema Medley',
@@ -13,28 +30,26 @@ export const EVENT_FOLDERS = {
   redBullEnergy: 'Red Bull Energy Lounge',
 } as const;
 
-/** Build a URL for a file inside a public event folder */
+/** Build a URL for a file inside an event folder */
 export function eventImage(folder: string, filename: string): string {
-  return `/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`;
+  return resolveMediaUrl(`/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`);
 }
 
 /** @deprecated Use eventImage with EVENT_FOLDERS */
 export function projectMediaPath(slug: string, filename: string): string {
-  return `/assets/projects/${slug}/${filename}`;
+  return resolveMediaUrl(`/assets/projects/${slug}/${filename}`);
 }
 
 /** @deprecated Use eventImage with EVENT_FOLDERS */
 export function projectAsset(filename: string): string {
-  return `/assets/projects/${encodeURI(filename)}`;
+  return resolveMediaUrl(`/assets/projects/${encodeURI(filename)}`);
 }
 
 export function resolveProjectCover(project: FeaturedProject): string {
-  return project.localCover ?? project.coverImage;
+  return resolveMediaUrl(project.localCover ?? project.coverImage);
 }
 
 export function resolveProjectGallery(project: FeaturedProject): string[] {
-  if (project.localGallery?.length) {
-    return project.localGallery;
-  }
-  return project.gallery;
+  const gallery = project.localGallery?.length ? project.localGallery : project.gallery;
+  return gallery.map(resolveMediaUrl);
 }
